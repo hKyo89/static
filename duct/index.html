@@ -1,179 +1,22 @@
 <!doctype html>
-<html lang="en-US">
+<html lang="en" data-visualize-standalone>
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="referrer" content="no-referrer">
 <meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'unsafe-inline' 'unsafe-eval' 'wasm-unsafe-eval' blob: data: https://cdnjs.cloudflare.com https://cdn.jsdelivr.net https://esm.sh https://fonts.bunny.net https://fonts.googleapis.com https://fonts.gstatic.com https://unpkg.com; style-src 'unsafe-inline' blob: data: https://cdnjs.cloudflare.com https://cdn.jsdelivr.net https://esm.sh https://fonts.bunny.net https://fonts.googleapis.com https://fonts.gstatic.com https://unpkg.com; img-src blob: data: https://cdnjs.cloudflare.com https://cdn.jsdelivr.net https://esm.sh https://fonts.bunny.net https://fonts.googleapis.com https://fonts.gstatic.com https://unpkg.com; font-src blob: data: https://cdnjs.cloudflare.com https://cdn.jsdelivr.net https://esm.sh https://fonts.bunny.net https://fonts.googleapis.com https://fonts.gstatic.com https://unpkg.com; media-src blob: data: https://cdnjs.cloudflare.com https://cdn.jsdelivr.net https://esm.sh https://fonts.bunny.net https://fonts.googleapis.com https://fonts.gstatic.com https://unpkg.com; worker-src blob:; connect-src blob: data:; frame-src 'self'; object-src 'none'; base-uri 'none'; form-action 'none'">
-<title>exhaust-duct-option-b.html</title>
-<style>:root{color-scheme:light dark;background:light-dark(rgb(255 255 255), rgb(24 24 24))}html,body{margin:0}body{box-sizing:border-box;padding:1rem;background:inherit}iframe{display:block;width:100%;max-width:736px;height:calc(100vh - 2rem);margin:0 auto;border:0}</style>
+<title>Exhaust Duct Option B</title>
+<style>:root{color-scheme:light dark;background:light-dark(rgb(255 255 255), rgb(24 24 24))}html,body{margin:0}body{box-sizing:border-box;padding:1rem;background:inherit}iframe{display:block;width:100%;height:calc(100vh - 2rem);margin:0 auto;border:0}</style>
 </head>
 <body>
-<iframe id="codex-visualization" sandbox="allow-scripts" scrolling="no" referrerpolicy="no-referrer" title="exhaust-duct-option-b.html" data-srcdoc="&lt;!doctype html&gt;
-&lt;html lang=&quot;en-US&quot;&gt;
+<iframe sandbox="allow-scripts" referrerpolicy="no-referrer" title="Exhaust Duct Option B" srcdoc="&lt;!doctype html&gt;
+&lt;html lang=&quot;en&quot; data-visualize-standalone&gt;
 &lt;head&gt;
 &lt;meta charset=&quot;utf-8&quot;&gt;
 &lt;meta name=&quot;viewport&quot; content=&quot;width=device-width, initial-scale=1&quot;&gt;
 &lt;meta name=&quot;referrer&quot; content=&quot;no-referrer&quot;&gt;
-&lt;meta http-equiv=&quot;Content-Security-Policy&quot; content=&quot;default-src 'none'; script-src 'unsafe-inline' 'unsafe-eval' 'wasm-unsafe-eval' blob: data: https://cdnjs.cloudflare.com https://cdn.jsdelivr.net https://esm.sh https://fonts.bunny.net https://fonts.googleapis.com https://fonts.gstatic.com https://unpkg.com; style-src 'unsafe-inline' blob: data: https://cdnjs.cloudflare.com https://cdn.jsdelivr.net https://esm.sh https://fonts.bunny.net https://fonts.googleapis.com https://fonts.gstatic.com https://unpkg.com; img-src blob: data: https://cdnjs.cloudflare.com https://cdn.jsdelivr.net https://esm.sh https://fonts.bunny.net https://fonts.googleapis.com https://fonts.gstatic.com https://unpkg.com; font-src blob: data: https://cdnjs.cloudflare.com https://cdn.jsdelivr.net https://esm.sh https://fonts.bunny.net https://fonts.googleapis.com https://fonts.gstatic.com https://unpkg.com; media-src blob: data: https://cdnjs.cloudflare.com https://cdn.jsdelivr.net https://esm.sh https://fonts.bunny.net https://fonts.googleapis.com https://fonts.gstatic.com https://unpkg.com; worker-src blob:; connect-src blob: data:; frame-src 'none'; object-src 'none'; base-uri 'none'; form-action 'none'&quot;&gt;
-&lt;title&gt;exhaust-duct-option-b.html&lt;/title&gt;
-&lt;/head&gt;
-&lt;body&gt;
-&lt;script&gt;(() =&gt; {
-  const root = document.documentElement;
-  const mediaQuery = globalThis.matchMedia(&quot;(prefers-color-scheme: dark)&quot;);
-  const apply = Reflect.apply;
-  const isArray = Array.isArray;
-  const parentWindow = globalThis.parent;
-  /**
-   * @param {object} prototype
-   * @param {string} property
-   */
-  const getPrototypeGetter = (prototype, property) =&gt; {
-    // oxlint-disable-next-line typescript/unbound-method -- invoked through captured Reflect.apply
-    const getter = Object.getOwnPropertyDescriptor(prototype, property)?.get;
-    if (getter == null) {
-      throw new Error(`Missing ${property} getter`);
-    }
-    return getter;
-  };
-  const getMessageData = getPrototypeGetter(MessageEvent.prototype, &quot;data&quot;);
-  const getMessagePorts = getPrototypeGetter(MessageEvent.prototype, &quot;ports&quot;);
-  const getMessageSource = getPrototypeGetter(MessageEvent.prototype, &quot;source&quot;);
-  // oxlint-disable-next-line typescript/unbound-method -- captured before the untrusted fragment runs
-  const addHostMessageListener = MessagePort.prototype.addEventListener;
-  // oxlint-disable-next-line typescript/unbound-method -- captured before the untrusted fragment runs
-  const postHostMessage = MessagePort.prototype.postMessage;
-  // oxlint-disable-next-line typescript/unbound-method -- captured before the untrusted fragment runs
-  const startHostPort = MessagePort.prototype.start;
-  // oxlint-disable-next-line typescript/unbound-method -- captured before the untrusted fragment runs
-  const stopMessagePropagation = Event.prototype.stopImmediatePropagation;
-  /** @type {MessagePort | null} */
-  let hostPort = null;
-  const postToHost = (type, payload) =&gt; {
-    if (hostPort != null) {
-      apply(postHostMessage, hostPort, [{ type, ...payload }]);
-    }
-  };
-  const openExternal = ({ href }) =&gt; {
-    if (globalThis.navigator.userActivation?.isActive === true) {
-      postToHost(&quot;open-external&quot;, { href });
-    }
-  };
-  const sendFollowUpMessage = ({ context, prompt, title }) =&gt; {
-    if (globalThis.navigator.userActivation?.isActive === true) {
-      postToHost(&quot;follow-up&quot;, { context, prompt, title });
-    }
-    return Promise.resolve();
-  };
-  const syncTheme = () =&gt; {
-    const theme = mediaQuery.matches ? &quot;dark&quot; : &quot;light&quot;;
-    root.dataset.theme = theme;
-    globalThis.openai = {
-      ...globalThis.openai,
-      openExternal,
-      sendFollowUpMessage,
-      theme,
-      visualizationStyleVariables: {},
-      visualizationTheme: theme,
-    };
-    globalThis.dispatchEvent(
-      new CustomEvent(&quot;openai:set_globals&quot;, {
-        detail: { globals: globalThis.openai },
-      }),
-    );
-  };
-  const sendHeight = () =&gt; {
-    postToHost(&quot;height&quot;, {
-      height: Math.ceil(
-        Math.max(
-          document.body.scrollHeight,
-          document.body.getBoundingClientRect().height,
-        ),
-      ),
-    });
-  };
-
-  globalThis.addEventListener(
-    &quot;message&quot;,
-    (event) =&gt; {
-      const data = apply(getMessageData, event, []);
-      const ports = apply(getMessagePorts, event, []);
-      const source = apply(getMessageSource, event, []);
-      if (
-        source !== parentWindow ||
-        typeof data !== &quot;object&quot; ||
-        data?.type !== &quot;codex-visualization-initialize&quot; ||
-        !isArray(ports) ||
-        ports.length !== 1
-      ) {
-        return;
-      }
-      apply(stopMessagePropagation, event, []);
-      const nextHostPort = ports[0];
-      try {
-        apply(addHostMessageListener, nextHostPort, [
-          &quot;message&quot;,
-          (event) =&gt; {
-            const data = apply(getMessageData, event, []);
-            if (typeof data === &quot;object&quot; &amp;&amp; data?.type === &quot;measure&quot;) {
-              sendHeight();
-            }
-          },
-        ]);
-        apply(startHostPort, nextHostPort, []);
-      } catch {
-        return;
-      }
-      hostPort = nextHostPort;
-      sendHeight();
-    },
-    { capture: true },
-  );
-  document.currentScript?.remove();
-  mediaQuery.addEventListener(&quot;change&quot;, syncTheme);
-  globalThis.addEventListener(&quot;click&quot;, (event) =&gt; {
-    if (event.defaultPrevented) {
-      return;
-    }
-    let element = null;
-    if (event.target instanceof globalThis.Element) {
-      element = event.target;
-    } else if (event.target instanceof globalThis.Node) {
-      element = event.target.parentElement;
-    }
-    const link = element?.closest(&quot;a[href]&quot;);
-    const href = link?.getAttribute(&quot;href&quot;);
-    if (href == null) {
-      return;
-    }
-    if (href.startsWith(&quot;#&quot;)) {
-      let id;
-      try {
-        id = decodeURIComponent(href.slice(1));
-      } catch {
-        return;
-      }
-      const target = id.length === 0 ? root : document.getElementById(id);
-      if (
-        target == null ||
-        globalThis.navigator.userActivation?.isActive !== true
-      ) {
-        return;
-      }
-      event.preventDefault();
-      postToHost(&quot;scroll-to&quot;, {
-        top: target.getBoundingClientRect().top + globalThis.scrollY,
-      });
-      return;
-    }
-    event.preventDefault();
-    openExternal({ href });
-  });
-  new ResizeObserver(sendHeight).observe(document.body);
-  syncTheme();
-})();
-&lt;/script&gt;
+&lt;meta http-equiv=&quot;Content-Security-Policy&quot; content=&quot;default-src &#x27;none&#x27;; script-src &#x27;unsafe-inline&#x27; &#x27;unsafe-eval&#x27; &#x27;wasm-unsafe-eval&#x27; blob: data: https://cdnjs.cloudflare.com https://cdn.jsdelivr.net https://esm.sh https://fonts.bunny.net https://fonts.googleapis.com https://fonts.gstatic.com https://unpkg.com; style-src &#x27;unsafe-inline&#x27; blob: data: https://cdnjs.cloudflare.com https://cdn.jsdelivr.net https://esm.sh https://fonts.bunny.net https://fonts.googleapis.com https://fonts.gstatic.com https://unpkg.com; img-src blob: data: https://cdnjs.cloudflare.com https://cdn.jsdelivr.net https://esm.sh https://fonts.bunny.net https://fonts.googleapis.com https://fonts.gstatic.com https://unpkg.com; font-src blob: data: https://cdnjs.cloudflare.com https://cdn.jsdelivr.net https://esm.sh https://fonts.bunny.net https://fonts.googleapis.com https://fonts.gstatic.com https://unpkg.com; media-src blob: data: https://cdnjs.cloudflare.com https://cdn.jsdelivr.net https://esm.sh https://fonts.bunny.net https://fonts.googleapis.com https://fonts.gstatic.com https://unpkg.com; worker-src blob:; connect-src blob: data:; frame-src &#x27;none&#x27;; object-src &#x27;none&#x27;; base-uri &#x27;none&#x27;; form-action &#x27;none&#x27;&quot;&gt;
+&lt;title&gt;Exhaust Duct Option B&lt;/title&gt;
 &lt;style&gt;:root {
   color-scheme: light dark;
   background-color: var(
@@ -290,7 +133,7 @@
   --radius-2xl: calc(var(--radius) * 1.6);
   --radius-full: 9999px;
   --shadow-sm: 0 1px 2px -1px rgb(0 0 0 / 8%);
-  --checkmark-image: url(&quot;data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 17 17'%3E%3Cpath d='M12.8961 3.64101C13.1297 3.41418 13.4984 3.37523 13.7779 3.56581C14.0571 3.75635 14.1554 4.11331 14.0299 4.41347L13.9615 4.53847L7.71151 13.7045C7.59411 13.8767 7.4063 13.9877 7.19881 14.0072C6.99136 14.0267 6.78564 13.9533 6.63826 13.806L2.88826 10.056L2.79842 9.9457C2.6192 9.67407 2.64927 9.30496 2.88826 9.06581C3.12738 8.82669 3.49647 8.79676 3.76815 8.97597L3.8785 9.06581L7.03084 12.2182L12.8053 3.74941L12.8961 3.64101Z'/%3E%3C/svg%3E&quot;);
+  --checkmark-image: url(&quot;data:image/svg+xml,%3Csvg xmlns=&#x27;http://www.w3.org/2000/svg&#x27; viewBox=&#x27;0 0 17 17&#x27;%3E%3Cpath d=&#x27;M12.8961 3.64101C13.1297 3.41418 13.4984 3.37523 13.7779 3.56581C14.0571 3.75635 14.1554 4.11331 14.0299 4.41347L13.9615 4.53847L7.71151 13.7045C7.59411 13.8767 7.4063 13.9877 7.19881 14.0072C6.99136 14.0267 6.78564 13.9533 6.63826 13.806L2.88826 10.056L2.79842 9.9457C2.6192 9.67407 2.64927 9.30496 2.88826 9.06581C3.12738 8.82669 3.49647 8.79676 3.76815 8.97597L3.8785 9.06581L7.03084 12.2182L12.8053 3.74941L12.8961 3.64101Z&#x27;/%3E%3C/svg%3E&quot;);
 
   /* Legacy aliases; not part of the current agent contract. */
   --viz-bg: transparent;
@@ -1190,103 +1033,28 @@ svg.lucide {
 }
 
 html&gt;body{padding:0}&lt;/style&gt;
-&lt;script&gt;
-(() =&gt; {
-  const root = document.documentElement;
-  const initialGlobals =
-    globalThis.__codexVisualizationInitialGlobals ?? globalThis.openai;
-  delete globalThis.__codexVisualizationInitialGlobals;
-  let appliedProperties = [];
-
-  const applyHostStyleVariables = (styleVariables) =&gt; {
-    if (styleVariables == null || typeof styleVariables !== &quot;object&quot;) {
-      return;
-    }
-    for (const property of appliedProperties) {
-      root.style.removeProperty(property);
-    }
-    appliedProperties = [];
-    for (const [property, value] of Object.entries(styleVariables)) {
-      if (property.startsWith(&quot;--&quot;) &amp;&amp; typeof value === &quot;string&quot;) {
-        root.style.setProperty(property, value);
-        appliedProperties.push(property);
-      }
-    }
-  };
-
-  const syncHostStyles = (globals) =&gt; {
-    applyHostStyleVariables(globals?.visualizationStyleVariables);
-    const sandboxDocument = globalThis.frameElement?.ownerDocument;
-    if (sandboxDocument != null &amp;&amp; globals?.visualizationTheme != null) {
-      let colorSchemeMeta = sandboxDocument.querySelector(
-        'meta[name=&quot;color-scheme&quot;]',
-      );
-      if (colorSchemeMeta == null) {
-        colorSchemeMeta = sandboxDocument.createElement(&quot;meta&quot;);
-        colorSchemeMeta.name = &quot;color-scheme&quot;;
-        sandboxDocument.head.appendChild(colorSchemeMeta);
-      }
-      colorSchemeMeta.content = globals.visualizationTheme;
-      sandboxDocument.documentElement.style.colorScheme =
-        globals.visualizationTheme;
-      // Paint the host surface behind transparent saved visualization documents.
-      sandboxDocument.documentElement.style.backgroundColor =
-        root.style.getPropertyValue(&quot;--background&quot;);
-    }
-  };
-
-  syncHostStyles(initialGlobals);
-  globalThis.addEventListener(&quot;openai:set_globals&quot;, (event) =&gt; {
-    syncHostStyles(event.detail?.globals);
-  });
-})();
-&lt;/script&gt;
-
-
-&lt;style&gt;
-  :root {
-    --background: #ffffff;
-    --foreground: #1a1c1f;
-    --muted: #d0d1d2;
-    --muted-foreground: #77787a;
-    --blue: #339cff;
-    --yellow: #ffc300;
-    --viz-series-1: #339cff;
-    --viz-series-2: #f3883b;
-    --viz-series-3: #5dc977;
-    --viz-series-4: #eb77b1;
-    --viz-series-5: #9b79ec;
-    --viz-series-6: #3ab9b1;
-  }
-  @media (prefers-color-scheme: dark) {
-    :root {
-      --background: #181818;
-      --foreground: #ffffff;
-      --muted: #363636;
-      --muted-foreground: #808080;
-      --blue: #339cff;
-      --yellow: #ffd240;
-      --viz-series-1: #83c3ff;
-      --viz-series-2: #f59a56;
-      --viz-series-3: #74d58b;
-      --viz-series-4: #f08fc0;
-      --viz-series-5: #aa91ef;
-      --viz-series-6: #5acbc2;
-    }
-  }
-&lt;/style&gt;
-
+&lt;/head&gt;
+&lt;body&gt;
 &lt;div id=&quot;duct-option-b-rebuild&quot; aria-label=&quot;Option B exhaust duct reconstruction&quot;&gt;
+  &lt;div class=&quot;viz-row review-controls&quot; role=&quot;group&quot; aria-label=&quot;Review views&quot;&gt;
+    &lt;button class=&quot;btn btn-primary&quot; type=&quot;button&quot; data-camera=&quot;whole&quot; aria-pressed=&quot;true&quot;&gt;Whole system&lt;/button&gt;
+    &lt;button class=&quot;btn&quot; type=&quot;button&quot; data-camera=&quot;ceiling&quot; aria-pressed=&quot;false&quot;&gt;Ceiling route&lt;/button&gt;
+    &lt;button class=&quot;btn&quot; type=&quot;button&quot; data-camera=&quot;elbow2&quot; aria-pressed=&quot;false&quot;&gt;Elbow 2&lt;/button&gt;
+  &lt;/div&gt;
   &lt;div class=&quot;cad-stage&quot; role=&quot;img&quot; aria-label=&quot;Exact equal-scale three-dimensional exhaust model inside a room with twenty centimetre perimeter walls and roof slab, a shaft enclosure extending to Z 762, a one hundred centimetre GRC enclosure rising from the shaft opening, an oversized glass roof, a recessed downlight, five formed 90-degree elbows, and a tapered rain hood outlet.&quot;&gt;&lt;/div&gt;
+  &lt;div class=&quot;review-key&quot;&gt;&lt;span aria-hidden=&quot;true&quot;&gt;&lt;/span&gt;Elbow 2 — rear and left extensions integrated · downlight clearance ≈ 3 cm&lt;/div&gt;
 &lt;/div&gt;
 
 &lt;style&gt;
   #duct-option-b-rebuild { width: 100%; min-width: 0; color: var(--foreground); }
+  #duct-option-b-rebuild .review-controls { justify-content: center; margin-bottom: 8px; }
   #duct-option-b-rebuild .cad-stage {
     width: 100%; height: clamp(500px, 75vw, 720px); min-height: 500px;
     overflow: hidden; touch-action: none;
   }
   #duct-option-b-rebuild canvas { display: block; width: 100%; height: 100%; }
+  #duct-option-b-rebuild .review-key { display: flex; align-items: center; justify-content: center; gap: 7px; color: var(--muted-foreground); }
+  #duct-option-b-rebuild .review-key span { width: 12px; height: 12px; background: var(--red); }
 &lt;/style&gt;
 
 &lt;script type=&quot;importmap&quot;&gt;
@@ -1451,18 +1219,28 @@ html&gt;body{padding:0}&lt;/style&gt;
     scene.add(edges);
   }
 
-  function createSweptRectElbow(ringFactory, colorToken = &quot;--viz-series-3&quot;) {
+  function createSweptRectElbow(
+    ringFactory,
+    colorToken = &quot;--viz-series-3&quot;,
+    extension = {}
+  ) {
     const segments = 32;
-    const positions = [];
-    const indices = [];
+    const rings = [];
+    if (extension.before) rings.push(extension.before);
     for (let ring = 0; ring &lt;= segments; ring += 1) {
       const angle = (ring / segments) * Math.PI / 2;
-      for (const [x, y, z] of ringFactory(angle)) {
+      rings.push(ringFactory(angle));
+    }
+    if (extension.after) rings.push(extension.after);
+    const positions = [];
+    const indices = [];
+    for (const section of rings) {
+      for (const [x, y, z] of section) {
         const point = world(x, y, z);
         positions.push(point.x, point.y, point.z);
       }
     }
-    for (let ring = 0; ring &lt; segments; ring += 1) {
+    for (let ring = 0; ring &lt; rings.length - 1; ring += 1) {
       for (let side = 0; side &lt; 4; side += 1) {
         const nextSide = (side + 1) % 4;
         const a = ring * 4 + side;
@@ -1473,7 +1251,7 @@ html&gt;body{padding:0}&lt;/style&gt;
       }
     }
     indices.push(0, 1, 2, 0, 2, 3);
-    const end = segments * 4;
+    const end = (rings.length - 1) * 4;
     indices.push(end, end + 2, end + 1, end, end + 3, end + 2);
     const geometry = new THREE.BufferGeometry();
     geometry.setAttribute(&quot;position&quot;, new THREE.Float32BufferAttribute(positions, 3));
@@ -1494,6 +1272,176 @@ html&gt;body{padding:0}&lt;/style&gt;
     );
     edges.renderOrder = 7;
     scene.add(edges);
+  }
+
+  // Hollow horizontal elbow with constant 35 × 15 cm nominal section.
+  // The 10 cm allocation behind the former tight bend becomes the throat
+  // radius, producing a fabricable continuous curve instead of a sharp corner.
+  function createHollowElbow2() {
+    const innerRadius = 10;
+    const outerRadius = 45;
+    const thickness = 0.05; // 0.5 mm
+    const bottomZ = 111.5;
+    const topZ = 126.5;
+    const centreX = 72.5;
+    const centreY = 265;
+    const outletX = 71;
+    const segments = 48;
+    const material = new THREE.MeshPhongMaterial({
+      color: theme(&quot;--red&quot;), transparent: true, opacity: 0.58,
+      side: THREE.DoubleSide, depthWrite: true, shininess: 20
+    });
+
+    function sectorSolid(z0, z1, r0, r1) {
+      const positions = [];
+      const indices = [];
+      for (let i = 0; i &lt;= segments; i += 1) {
+        const angle = (i / segments) * Math.PI / 2;
+        for (const z of [z0, z1]) {
+          for (const radius of [r0, r1]) {
+            const point = world(
+              centreX + radius * Math.cos(angle),
+              centreY - radius * Math.sin(angle),
+              z
+            );
+            positions.push(point.x, point.y, point.z);
+          }
+        }
+      }
+      // Continue the same four sheet surfaces into the integrated outlet stub.
+      for (const z of [z0, z1]) {
+        for (const radius of [r0, r1]) {
+          const point = world(outletX, centreY - radius, z);
+          positions.push(point.x, point.y, point.z);
+        }
+      }
+      const stride = 4;
+      const ringCount = segments + 2;
+      for (let i = 0; i &lt; ringCount - 1; i += 1) {
+        const q = i * stride;
+        const n = (i + 1) * stride;
+        indices.push(q, n, n + 2, q, n + 2, q + 2);
+        indices.push(q + 1, q + 3, n + 3, q + 1, n + 3, n + 1);
+        indices.push(q, q + 1, n + 1, q, n + 1, n);
+        indices.push(q + 2, n + 2, n + 3, q + 2, n + 3, q + 3);
+      }
+      indices.push(0, 2, 3, 0, 3, 1);
+      const end = (ringCount - 1) * stride;
+      indices.push(end, end + 1, end + 3, end, end + 3, end + 2);
+      const geometry = new THREE.BufferGeometry();
+      geometry.setAttribute(&quot;position&quot;, new THREE.Float32BufferAttribute(positions, 3));
+      geometry.setIndex(indices);
+      geometry.computeVertexNormals();
+      scene.add(new THREE.Mesh(geometry, material));
+      const edges = new THREE.LineSegments(
+        new THREE.EdgesGeometry(geometry, 28),
+        new THREE.LineBasicMaterial({
+          color: theme(&quot;--foreground&quot;), transparent: true, opacity: 0.72
+        })
+      );
+      edges.renderOrder = 7;
+      scene.add(edges);
+    }
+
+    // Continuous outer and inner curved sheets.
+    sectorSolid(bottomZ + thickness, topZ - thickness, outerRadius - thickness, outerRadius);
+    sectorSolid(bottomZ + thickness, topZ - thickness, innerRadius, innerRadius + thickness);
+    // Bottom and top side cheeks; these carry the fabrication seams.
+    sectorSolid(bottomZ, bottomZ + thickness, innerRadius + thickness, outerRadius - thickness);
+    sectorSolid(topZ - thickness, topZ, innerRadius + thickness, outerRadius - thickness);
+
+    // One outline at the open outlet/joint; no line across the curved plates.
+    const outletOutline = [
+      world(outletX, 220, bottomZ), world(outletX, 255, bottomZ),
+      world(outletX, 255, bottomZ), world(outletX, 255, topZ),
+      world(outletX, 255, topZ), world(outletX, 220, topZ),
+      world(outletX, 220, topZ), world(outletX, 220, bottomZ)
+    ];
+    const outline = lineSegments(outletOutline, theme(&quot;--foreground&quot;), 0.84);
+    outline.renderOrder = 8;
+  }
+
+  // Hollow Elbow 3 uses the same constant-section construction as Elbow 2.
+  // Its added 10 cm is absorbed by the larger front curve.
+  function createHollowElbow3() {
+    const innerRadius = 10;
+    const outerRadius = 45;
+    const thickness = 0.05; // 0.5 mm
+    const bottomZ = 111.5;
+    const topZ = 126.5;
+    const centreX = 69.5;
+    const centreY = 210;
+    const inletX = 71;
+    const segments = 48;
+    const material = new THREE.MeshPhongMaterial({
+      color: theme(&quot;--viz-series-3&quot;), transparent: true, opacity: 0.58,
+      side: THREE.DoubleSide, depthWrite: true, shininess: 20
+    });
+
+    function sectorSolid(z0, z1, r0, r1) {
+      const positions = [];
+      const indices = [];
+      // Begin with the integrated inlet stub, then continue into the curve.
+      for (const z of [z0, z1]) {
+        for (const radius of [r0, r1]) {
+          const point = world(inletX, centreY + radius, z);
+          positions.push(point.x, point.y, point.z);
+        }
+      }
+      for (let i = 0; i &lt;= segments; i += 1) {
+        const angle = (i / segments) * Math.PI / 2;
+        for (const z of [z0, z1]) {
+          for (const radius of [r0, r1]) {
+            const point = world(
+              centreX - radius * Math.sin(angle),
+              centreY + radius * Math.cos(angle),
+              z
+            );
+            positions.push(point.x, point.y, point.z);
+          }
+        }
+      }
+      const stride = 4;
+      const ringCount = segments + 2;
+      for (let i = 0; i &lt; ringCount - 1; i += 1) {
+        const q = i * stride;
+        const n = (i + 1) * stride;
+        indices.push(q, n, n + 2, q, n + 2, q + 2);
+        indices.push(q + 1, q + 3, n + 3, q + 1, n + 3, n + 1);
+        indices.push(q, q + 1, n + 1, q, n + 1, n);
+        indices.push(q + 2, n + 2, n + 3, q + 2, n + 3, q + 3);
+      }
+      indices.push(0, 2, 3, 0, 3, 1);
+      const end = (ringCount - 1) * stride;
+      indices.push(end, end + 1, end + 3, end, end + 3, end + 2);
+      const geometry = new THREE.BufferGeometry();
+      geometry.setAttribute(&quot;position&quot;, new THREE.Float32BufferAttribute(positions, 3));
+      geometry.setIndex(indices);
+      geometry.computeVertexNormals();
+      scene.add(new THREE.Mesh(geometry, material));
+      const edges = new THREE.LineSegments(
+        new THREE.EdgesGeometry(geometry, 28),
+        new THREE.LineBasicMaterial({
+          color: theme(&quot;--foreground&quot;), transparent: true, opacity: 0.72
+        })
+      );
+      edges.renderOrder = 7;
+      scene.add(edges);
+    }
+
+    sectorSolid(bottomZ + thickness, topZ - thickness, outerRadius - thickness, outerRadius);
+    sectorSolid(bottomZ + thickness, topZ - thickness, innerRadius, innerRadius + thickness);
+    sectorSolid(bottomZ, bottomZ + thickness, innerRadius + thickness, outerRadius - thickness);
+    sectorSolid(topZ - thickness, topZ, innerRadius + thickness, outerRadius - thickness);
+
+    const inletOutline = [
+      world(inletX, 220, bottomZ), world(inletX, 255, bottomZ),
+      world(inletX, 255, bottomZ), world(inletX, 255, topZ),
+      world(inletX, 255, topZ), world(inletX, 220, topZ),
+      world(inletX, 220, topZ), world(inletX, 220, bottomZ)
+    ];
+    const outline = lineSegments(inletOutline, theme(&quot;--foreground&quot;), 0.84);
+    outline.renderOrder = 8;
   }
 
   // Shaft opening: 84 W × 38 D cm. Its rear edge is 236 cm from the
@@ -1550,7 +1498,7 @@ html&gt;body{padding:0}&lt;/style&gt;
   // Shaft enclosure outside the clear 84 × 38 cm opening: 20 cm left wall,
   // with 15 cm right, front, and rear walls.
   // It begins 1 cm below the ceiling top at Z=269 and extends 493 cm to Z=762.
-  // The shaft's left side follows the room wall at 20 cm thickness for its full height.
+  // The shaft&#x27;s left side follows the room wall at 20 cm thickness for its full height.
   addBox({
     x: [84, 99], y: [11, 79], z: [94, 587], color: &quot;--muted&quot;,
     opacity: 0.24, edgeOpacity: 0.62
@@ -1652,39 +1600,14 @@ html&gt;body{padding:0}&lt;/style&gt;
     ];
   });
 
-  // Elbow 2 — forward-to-left bend placed immediately after Elbow 1.
-  createSweptRectElbow(angle =&gt; {
-    const sine = Math.sin(angle);
-    const cosine = Math.cos(angle);
-    const centerX = 100 - 17.5 * (1 - cosine);
-    const centerY = 265 - 17.5 * sine;
-    return [
-      [centerX + 17.5 * cosine, centerY - 17.5 * sine, 111.5],
-      [centerX + 17.5 * cosine, centerY - 17.5 * sine, 126.5],
-      [centerX - 17.5 * cosine, centerY + 17.5 * sine, 126.5],
-      [centerX - 17.5 * cosine, centerY + 17.5 * sine, 111.5]
-    ];
-  });
+  // Elbow 2 — hollow 0.5 mm construction, 10 cm throat radius and 45 cm
+  // outside radius. The larger curve absorbs the former rear extension while
+  // preserving the established inlet and outlet connection positions.
+  createHollowElbow2();
 
-  // Straight 2 shifts the route left toward the shaft centreline.
-  addBox({
-    x: [59.5, 82.5], y: [230, 265], z: [111.5, 126.5], color: &quot;--viz-series-4&quot;
-  });
-
-  // Elbow 3 — left-to-forward bend. Its outlet is centred at X=42,
-  // matching the shaft opening and the vertical rise.
-  createSweptRectElbow(angle =&gt; {
-    const sine = Math.sin(angle);
-    const cosine = Math.cos(angle);
-    const centerX = 59.5 - 17.5 * sine;
-    const centerY = 247.5 - 17.5 * (1 - cosine);
-    return [
-      [centerX - 17.5 * sine, centerY + 17.5 * cosine, 111.5],
-      [centerX - 17.5 * sine, centerY + 17.5 * cosine, 126.5],
-      [centerX + 17.5 * sine, centerY - 17.5 * cosine, 126.5],
-      [centerX + 17.5 * sine, centerY - 17.5 * cosine, 111.5]
-    ];
-  });
+  // Elbow 3 — hollow 0.5 mm construction with a 10 cm throat radius and
+  // 45 cm outside radius. It retains the direct joint with Elbow 2.
+  createHollowElbow3();
 
   const transitionSegments = 64;
   const ductCenterX = 42;
@@ -1817,19 +1740,14 @@ html&gt;body{padding:0}&lt;/style&gt;
     createCylinder(12.5, rearY - collarDepth - housingDepth, collarDepth, colorToken);
   }
 
-  // Straight fan chain on the shaft centreline: 40 cm transition, 10 cm
-  // round duct, 20.5 cm fan, 10 cm round duct, and 40 cm reverse transition.
-  createTransition(230, 190, rectangleProfile, circleProfile(12.5), &quot;--viz-series-5&quot;);
-  createCylinder(12.5, 190, 10, &quot;--viz-series-4&quot;);
-  createFan(180);
-  createCylinder(12.5, 159.5, 10, &quot;--viz-series-4&quot;);
-  createTransition(149.5, 109.5, circleProfile(12.5), rectangleProfile, &quot;--viz-series-5&quot;);
-
-  // Straight 3 tangent before the ceiling-exit elbow. Its front edge and the
-  // rise retain the 0.5 cm installation buffer at Y=48.5.
-  addBox({
-    x: [24.5, 59.5], y: [83.5, 109.5], z: [111.5, 126.5], color: &quot;--viz-series-4&quot;
-  });
+  // Straight fan chain on the shaft centreline: 40 cm transition, 13 cm
+  // round duct, 20.5 cm fan, 13 cm round duct, and 40 cm reverse transition.
+  // The former 6 cm Straight 2 is divided equally between the two cylinders.
+  createTransition(210, 170, rectangleProfile, circleProfile(12.5), &quot;--viz-series-5&quot;);
+  createCylinder(12.5, 170, 13, &quot;--viz-series-4&quot;);
+  createFan(157);
+  createCylinder(12.5, 136.5, 13, &quot;--viz-series-4&quot;);
+  createTransition(123.5, 83.5, circleProfile(12.5), rectangleProfile, &quot;--viz-series-5&quot;);
 
   // Elbow 4 — ceiling duct turns upward into the shaft without exceeding the
   // established horizontal duct height.
@@ -1880,6 +1798,35 @@ html&gt;body{padding:0}&lt;/style&gt;
   controls.minDistance = 100;
   controls.maxDistance = 2000;
 
+  const cameraViews = {
+    whole: {
+      position: world(-620, -400, 690),
+      target: world(90, 175, 300)
+    },
+    ceiling: {
+      position: world(-250, 40, 285),
+      target: world(70, 180, 118)
+    },
+    elbow2: {
+      position: world(-75, 125, 215),
+      target: world(88, 240, 119)
+    }
+  };
+  function selectCamera(name) {
+    const view = cameraViews[name];
+    camera.position.copy(view.position);
+    controls.target.copy(view.target);
+    controls.update();
+    root.querySelectorAll(&quot;[data-camera]&quot;).forEach(button =&gt; {
+      const active = button.dataset.camera === name;
+      button.classList.toggle(&quot;btn-primary&quot;, active);
+      button.setAttribute(&quot;aria-pressed&quot;, String(active));
+    });
+  }
+  root.querySelectorAll(&quot;[data-camera]&quot;).forEach(button =&gt; {
+    button.addEventListener(&quot;click&quot;, () =&gt; selectCamera(button.dataset.camera));
+  });
+
   function resize() {
     const width = Math.max(1, stage.clientWidth);
     const height = Math.max(1, stage.clientHeight);
@@ -1897,9 +1844,6 @@ html&gt;body{padding:0}&lt;/style&gt;
   }
   animate();
 &lt;/script&gt;
-
-
-&lt;style id=&quot;codex-visualization-document-scrollbar&quot;&gt;html,body{scrollbar-width:none!important}html::-webkit-scrollbar,body::-webkit-scrollbar{display:none!important}&lt;/style&gt;
 
 &lt;script src=&quot;https://unpkg.com/@floating-ui/core@1.7.3/dist/floating-ui.core.umd.min.js&quot;&gt;&lt;/script&gt;
 &lt;script src=&quot;https://unpkg.com/@floating-ui/dom@1.7.4/dist/floating-ui.dom.umd.min.js&quot;&gt;&lt;/script&gt;
@@ -2170,11 +2114,11 @@ html&gt;body{padding:0}&lt;/style&gt;
 &lt;/script&gt;
 &lt;script id=&quot;codex-visualization-tabs&quot;&gt;
 (() =&gt; {
-  const selector = '.nav[role=&quot;tablist&quot;] [role=&quot;tab&quot;]';
-  const disabled = ':disabled,[aria-disabled=&quot;true&quot;]';
+  const selector = &#x27;.nav[role=&quot;tablist&quot;] [role=&quot;tab&quot;]&#x27;;
+  const disabled = &#x27;:disabled,[aria-disabled=&quot;true&quot;]&#x27;;
   const selectTab = (selected) =&gt; {
     const panelId = selected.getAttribute(&quot;aria-controls&quot;);
-    for (const tab of selected.closest('[role=&quot;tablist&quot;]').querySelectorAll('[role=&quot;tab&quot;]')) {
+    for (const tab of selected.closest(&#x27;[role=&quot;tablist&quot;]&#x27;).querySelectorAll(&#x27;[role=&quot;tab&quot;]&#x27;)) {
       const active = tab === selected;
       tab.classList.toggle(&quot;active&quot;, active);
       tab.setAttribute(&quot;aria-selected&quot;, String(active));
@@ -2198,7 +2142,7 @@ html&gt;body{padding:0}&lt;/style&gt;
       return;
     }
     const tabs = Array.from(
-      tab.closest('[role=&quot;tablist&quot;]').querySelectorAll('[role=&quot;tab&quot;]'),
+      tab.closest(&#x27;[role=&quot;tablist&quot;]&#x27;).querySelectorAll(&#x27;[role=&quot;tab&quot;]&#x27;),
     ).filter((candidate) =&gt; !candidate.matches(disabled));
     const current = tabs.indexOf(tab);
     let next;
@@ -2218,11 +2162,11 @@ html&gt;body{padding:0}&lt;/style&gt;
     selectTab(tabs[next]);
   };
 
-  for (const list of document.querySelectorAll('.nav[role=&quot;tablist&quot;]')) {
+  for (const list of document.querySelectorAll(&#x27;.nav[role=&quot;tablist&quot;]&#x27;)) {
     const selected =
-      list.querySelector('[role=&quot;tab&quot;][aria-selected=&quot;true&quot;]') ??
-      list.querySelector('[role=&quot;tab&quot;].active') ??
-      list.querySelector('[role=&quot;tab&quot;]');
+      list.querySelector(&#x27;[role=&quot;tab&quot;][aria-selected=&quot;true&quot;]&#x27;) ??
+      list.querySelector(&#x27;[role=&quot;tab&quot;].active&#x27;) ??
+      list.querySelector(&#x27;[role=&quot;tab&quot;]&#x27;);
     if (selected != null) {
       selectTab(selected);
     }
@@ -2254,112 +2198,5 @@ html&gt;body{padding:0}&lt;/style&gt;
 &lt;/body&gt;
 &lt;/html&gt;
 "></iframe>
-<script>(() => {
-  const frame = document.getElementById("codex-visualization");
-  if (!(frame instanceof HTMLIFrameElement)) {
-    return;
-  }
-  let viewportHeight = globalThis.innerHeight;
-
-  const channel = new MessageChannel();
-  channel.port1.addEventListener("message", (event) => {
-    const data = event.data;
-    if (typeof data !== "object" || data == null) {
-      return;
-    }
-    if (data.type === "height") {
-      const height = data.height;
-      if (
-        typeof height === "number" &&
-        Number.isFinite(height) &&
-        height >= 0 &&
-        height <= 10_000
-      ) {
-        frame.style.height = Math.ceil(height) + "px";
-      }
-      return;
-    }
-    if (data.type === "scroll-to") {
-      const top = data.top;
-      if (
-        typeof top === "number" &&
-        Number.isFinite(top) &&
-        top >= 0 &&
-        globalThis.navigator.userActivation?.isActive === true
-      ) {
-        globalThis.scrollTo({
-          top: Math.ceil(
-            globalThis.scrollY + frame.getBoundingClientRect().top + top,
-          ),
-        });
-      }
-      return;
-    }
-    if (data.type === "open-external") {
-      const rawHref = data.href;
-      if (typeof rawHref !== "string") {
-        return;
-      }
-      let href;
-      try {
-        const url = new URL(rawHref, document.baseURI);
-        if (url.protocol !== "https:") {
-          return;
-        }
-        href = url.href;
-      } catch {
-        return;
-      }
-      if (globalThis.navigator.userActivation?.isActive === true) {
-        const anchor = document.createElement("a");
-        anchor.href = href;
-        anchor.rel = "noopener noreferrer";
-        anchor.target = "_blank";
-        document.body.appendChild(anchor);
-        anchor.click();
-        anchor.remove();
-      }
-      return;
-    }
-    if (data.type === "follow-up") {
-      const prompt = data.prompt;
-      if (
-        typeof prompt !== "string" ||
-        globalThis.navigator.userActivation?.isActive !== true
-      ) {
-        return;
-      }
-      const title = data.title;
-      globalThis.prompt(typeof title === "string" ? title : prompt, prompt);
-    }
-  });
-  channel.port1.start();
-  const srcdoc = frame.dataset.srcdoc;
-  if (srcdoc == null) {
-    return;
-  }
-  globalThis.addEventListener("resize", () => {
-    const height = Number.parseFloat(frame.style.height);
-    if (!Number.isFinite(height) || height <= viewportHeight) {
-      frame.style.removeProperty("height");
-    }
-    viewportHeight = globalThis.innerHeight;
-    channel.port1.postMessage({ type: "measure" });
-  });
-  frame.addEventListener(
-    "load",
-    () => {
-      frame.contentWindow?.postMessage(
-        { type: "codex-visualization-initialize" },
-        "*",
-        [channel.port2],
-      );
-    },
-    { once: true },
-  );
-  frame.srcdoc = srcdoc;
-  delete frame.dataset.srcdoc;
-})();
-</script>
 </body>
 </html>
