@@ -1,3 +1,4 @@
+
 <!doctype html>
 <html lang="en" data-visualize-standalone>
 <head>
@@ -1039,10 +1040,23 @@ html&gt;body{padding:0}&lt;/style&gt;
   &lt;div class=&quot;viz-row review-controls&quot; role=&quot;group&quot; aria-label=&quot;Review views&quot;&gt;
     &lt;button class=&quot;btn btn-primary&quot; type=&quot;button&quot; data-camera=&quot;whole&quot; aria-pressed=&quot;true&quot;&gt;Whole system&lt;/button&gt;
     &lt;button class=&quot;btn&quot; type=&quot;button&quot; data-camera=&quot;ceiling&quot; aria-pressed=&quot;false&quot;&gt;Ceiling route&lt;/button&gt;
+    &lt;button class=&quot;btn&quot; type=&quot;button&quot; data-camera=&quot;hood&quot; aria-pressed=&quot;false&quot;&gt;Range hood&lt;/button&gt;
+    &lt;button class=&quot;btn&quot; type=&quot;button&quot; data-camera=&quot;straight1&quot; aria-pressed=&quot;false&quot;&gt;Straight 1&lt;/button&gt;
+    &lt;button class=&quot;btn&quot; type=&quot;button&quot; data-camera=&quot;elbow1&quot; aria-pressed=&quot;false&quot;&gt;Elbow 1&lt;/button&gt;
     &lt;button class=&quot;btn&quot; type=&quot;button&quot; data-camera=&quot;elbow2&quot; aria-pressed=&quot;false&quot;&gt;Elbow 2&lt;/button&gt;
+    &lt;button class=&quot;btn&quot; type=&quot;button&quot; data-camera=&quot;elbow3&quot; aria-pressed=&quot;false&quot;&gt;Elbow 3&lt;/button&gt;
+    &lt;button class=&quot;btn&quot; type=&quot;button&quot; data-camera=&quot;transition1&quot; aria-pressed=&quot;false&quot;&gt;Transition 1&lt;/button&gt;
+    &lt;button class=&quot;btn&quot; type=&quot;button&quot; data-camera=&quot;cylinder1&quot; aria-pressed=&quot;false&quot;&gt;Cylinder 1&lt;/button&gt;
+    &lt;button class=&quot;btn&quot; type=&quot;button&quot; data-camera=&quot;fan&quot; aria-pressed=&quot;false&quot;&gt;Fan&lt;/button&gt;
+    &lt;button class=&quot;btn&quot; type=&quot;button&quot; data-camera=&quot;cylinder2&quot; aria-pressed=&quot;false&quot;&gt;Cylinder 2&lt;/button&gt;
+    &lt;button class=&quot;btn&quot; type=&quot;button&quot; data-camera=&quot;transition2&quot; aria-pressed=&quot;false&quot;&gt;Transition 2&lt;/button&gt;
+    &lt;button class=&quot;btn&quot; type=&quot;button&quot; data-camera=&quot;elbow4&quot; aria-pressed=&quot;false&quot;&gt;Elbow 4&lt;/button&gt;
+    &lt;button class=&quot;btn&quot; type=&quot;button&quot; data-camera=&quot;straight2&quot; aria-pressed=&quot;false&quot;&gt;Straight 2&lt;/button&gt;
+    &lt;button class=&quot;btn&quot; type=&quot;button&quot; data-camera=&quot;elbow5&quot; aria-pressed=&quot;false&quot;&gt;Elbow 5&lt;/button&gt;
+    &lt;button class=&quot;btn&quot; type=&quot;button&quot; data-camera=&quot;rainhood&quot; aria-pressed=&quot;false&quot;&gt;Rain hood&lt;/button&gt;
   &lt;/div&gt;
   &lt;div class=&quot;cad-stage&quot; role=&quot;img&quot; aria-label=&quot;Exact equal-scale three-dimensional exhaust model inside a room with twenty centimetre perimeter walls and roof slab, a shaft enclosure extending to Z 762, a one hundred centimetre GRC enclosure rising from the shaft opening, an oversized glass roof, a recessed downlight, five formed 90-degree elbows, and a tapered rain hood outlet.&quot;&gt;&lt;/div&gt;
-  &lt;div class=&quot;review-key&quot;&gt;&lt;span aria-hidden=&quot;true&quot;&gt;&lt;/span&gt;Elbow 2 — rear and left extensions integrated · downlight clearance ≈ 3 cm&lt;/div&gt;
+  &lt;div class=&quot;review-key&quot; aria-live=&quot;polite&quot;&gt;&lt;span aria-hidden=&quot;true&quot;&gt;&lt;/span&gt;&lt;span data-review-text&gt;Complete coloured system with building context&lt;/span&gt;&lt;/div&gt;
 &lt;/div&gt;
 
 &lt;style&gt;
@@ -1072,8 +1086,22 @@ html&gt;body{padding:0}&lt;/style&gt;
 
   const root = document.getElementById(&quot;duct-option-b-rebuild&quot;);
   const stage = root.querySelector(&quot;.cad-stage&quot;);
-  const styles = getComputedStyle(root);
-  const theme = name =&gt; styles.getPropertyValue(name).trim();
+  const colorProbe = document.createElement(&quot;span&quot;);
+  colorProbe.style.cssText = &quot;position:absolute;visibility:hidden;pointer-events:none&quot;;
+  root.appendChild(colorProbe);
+  const colorFallback = {
+    &quot;--viz-series-1&quot;: &quot;--yellow&quot;,
+    &quot;--viz-series-2&quot;: &quot;--blue&quot;,
+    &quot;--viz-series-3&quot;: &quot;--green&quot;,
+    &quot;--viz-series-4&quot;: &quot;--purple&quot;,
+    &quot;--viz-series-5&quot;: &quot;--orange&quot;,
+    &quot;--viz-series-6&quot;: &quot;--red&quot;
+  };
+  const theme = name =&gt; {
+    const fallback = colorFallback[name] || &quot;--foreground&quot;;
+    colorProbe.style.color = `var(${name}, var(${fallback}))`;
+    return getComputedStyle(colorProbe).color;
+  };
 
   const scene = new THREE.Scene();
   const camera = new THREE.PerspectiveCamera(34, 1, 1, 3000);
@@ -1129,7 +1157,7 @@ html&gt;body{padding:0}&lt;/style&gt;
   lineSegments([world(0, -40, -175), world(0, 325, -175)], theme(&quot;--viz-series-2&quot;), 0.95);
   lineSegments([world(0, -40, -175), world(0, -40, 725)], theme(&quot;--viz-series-3&quot;), 0.95);
 
-  function addBox({ x, y, z, color, opacity = 0.46, edgeOpacity = 0.9 }) {
+  function addBox({ x, y, z, color, opacity = 0.72, edgeOpacity = 0.9 }) {
     const width = x[1] - x[0];
     const depth = y[1] - y[0];
     const height = z[1] - z[0];
@@ -1205,7 +1233,7 @@ html&gt;body{padding:0}&lt;/style&gt;
     scene.add(new THREE.Mesh(
       geometry,
       new THREE.MeshPhongMaterial({
-        color: theme(color), transparent: true, opacity: 0.46,
+        color: theme(color), transparent: true, opacity: 0.72,
         side: THREE.DoubleSide, depthWrite: true, shininess: 18
       })
     ));
@@ -1260,7 +1288,7 @@ html&gt;body{padding:0}&lt;/style&gt;
     scene.add(new THREE.Mesh(
       geometry,
       new THREE.MeshPhongMaterial({
-        color: theme(colorToken), transparent: true, opacity: 0.5,
+        color: theme(colorToken), transparent: true, opacity: 0.72,
         side: THREE.DoubleSide, depthWrite: true, shininess: 18
       })
     ));
@@ -1288,7 +1316,7 @@ html&gt;body{padding:0}&lt;/style&gt;
     const outletX = 71;
     const segments = 48;
     const material = new THREE.MeshPhongMaterial({
-      color: theme(&quot;--red&quot;), transparent: true, opacity: 0.58,
+      color: theme(&quot;--red&quot;), transparent: true, opacity: 0.76,
       side: THREE.DoubleSide, depthWrite: true, shininess: 20
     });
 
@@ -1374,7 +1402,7 @@ html&gt;body{padding:0}&lt;/style&gt;
     const inletX = 71;
     const segments = 48;
     const material = new THREE.MeshPhongMaterial({
-      color: theme(&quot;--viz-series-3&quot;), transparent: true, opacity: 0.58,
+      color: theme(&quot;--viz-series-3&quot;), transparent: true, opacity: 0.76,
       side: THREE.DoubleSide, depthWrite: true, shininess: 20
     });
 
@@ -1657,7 +1685,7 @@ html&gt;body{padding:0}&lt;/style&gt;
     scene.add(new THREE.Mesh(
       geometry,
       new THREE.MeshPhongMaterial({
-        color: theme(colorToken), transparent: true, opacity: 0.48,
+        color: theme(colorToken), transparent: true, opacity: 0.72,
         side: THREE.DoubleSide, depthWrite: true, shininess: 18
       })
     ));
@@ -1688,7 +1716,7 @@ html&gt;body{padding:0}&lt;/style&gt;
   function createCylinder(radius, rearY, depth, colorToken) {
     const geometry = new THREE.CylinderGeometry(radius, radius, depth, 64, 1, false);
     const material = new THREE.MeshPhongMaterial({
-      color: theme(colorToken), transparent: true, opacity: 0.46,
+      color: theme(colorToken), transparent: true, opacity: 0.72,
       side: THREE.DoubleSide, depthWrite: true, shininess: 18
     });
     const cylinder = new THREE.Mesh(geometry, material);
@@ -1717,7 +1745,7 @@ html&gt;body{padding:0}&lt;/style&gt;
     const housingCenterY = rearY - collarDepth - housingDepth / 2;
     const geometry = new THREE.CylinderGeometry(housingHeight / 2, housingHeight / 2, housingDepth, 64, 1, false);
     const material = new THREE.MeshPhongMaterial({
-      color: theme(colorToken), transparent: true, opacity: 0.5,
+      color: theme(colorToken), transparent: true, opacity: 0.76,
       side: THREE.DoubleSide, depthWrite: true, shininess: 22
     });
     const housing = new THREE.Mesh(geometry, material);
@@ -1795,21 +1823,89 @@ html&gt;body{padding:0}&lt;/style&gt;
   controls.enableDamping = true;
   controls.dampingFactor = 0.08;
   controls.target.copy(world(90, 175, 300));
-  controls.minDistance = 100;
+  controls.minDistance = 20;
   controls.maxDistance = 2000;
 
   const cameraViews = {
     whole: {
       position: world(-620, -400, 690),
-      target: world(90, 175, 300)
+      target: world(90, 175, 300),
+      label: &quot;Complete coloured system with building context&quot;
     },
     ceiling: {
       position: world(-250, 40, 285),
-      target: world(70, 180, 118)
+      target: world(70, 180, 118),
+      label: &quot;Ceiling route, downlight and shaft opening&quot;
+    },
+    hood: {
+      position: world(-130, 95, 145),
+      target: world(100, 270, 5),
+      label: &quot;Range hood - 150 x 60 x 10 cm&quot;
+    },
+    straight1: {
+      position: world(-80, 135, 225),
+      target: world(100, 292.5, 50.75),
+      label: &quot;Straight 1 - vertical 35 x 15 cm duct&quot;
+    },
+    elbow1: {
+      position: world(-70, 120, 230),
+      target: world(100, 270, 105),
+      label: &quot;Elbow 1 - vertical to forward&quot;
     },
     elbow2: {
       position: world(-75, 125, 215),
-      target: world(88, 240, 119)
+      target: world(88, 240, 119),
+      label: &quot;Elbow 2 - rear and left extensions integrated; about 3 cm from downlight&quot;
+    },
+    elbow3: {
+      position: world(-120, 75, 215),
+      target: world(48, 232, 119),
+      label: &quot;Elbow 3 - direct joint from Elbow 2&quot;
+    },
+    transition1: {
+      position: world(-85, 45, 205),
+      target: world(42, 190, 119),
+      label: &quot;Transition 1 - 35 x 15 cm rectangle to 25 cm diameter&quot;
+    },
+    cylinder1: {
+      position: world(-70, 15, 195),
+      target: world(42, 163.5, 119),
+      label: &quot;Cylinder 1 - 25 cm diameter x 13 cm&quot;
+    },
+    fan: {
+      position: world(-80, 5, 205),
+      target: world(42, 146.75, 119),
+      label: &quot;Fan - purchased CKE CI-CDI250AZ-NO&quot;
+    },
+    cylinder2: {
+      position: world(-70, -20, 195),
+      target: world(42, 130, 119),
+      label: &quot;Cylinder 2 - 25 cm diameter x 13 cm&quot;
+    },
+    transition2: {
+      position: world(-85, -55, 205),
+      target: world(42, 103.5, 119),
+      label: &quot;Transition 2 - 25 cm diameter to 35 x 15 cm rectangle&quot;
+    },
+    elbow4: {
+      position: world(-105, -85, 245),
+      target: world(42, 66, 137),
+      label: &quot;Elbow 4 - ceiling route turns upward into shaft&quot;
+    },
+    straight2: {
+      position: world(-210, -120, 490),
+      target: world(42, 56, 384),
+      label: &quot;Straight 2 - 475 cm vertical rise&quot;
+    },
+    elbow5: {
+      position: world(-95, -75, 735),
+      target: world(42, 70, 640),
+      label: &quot;Elbow 5 - vertical rise turns to outdoor outlet&quot;
+    },
+    rainhood: {
+      position: world(-100, -65, 740),
+      target: world(42, 98, 649),
+      label: &quot;Rain hood - top depth 30 cm; bottom depth 20 cm&quot;
     }
   };
   function selectCamera(name) {
@@ -1822,6 +1918,7 @@ html&gt;body{padding:0}&lt;/style&gt;
       button.classList.toggle(&quot;btn-primary&quot;, active);
       button.setAttribute(&quot;aria-pressed&quot;, String(active));
     });
+    root.querySelector(&quot;[data-review-text]&quot;).textContent = view.label;
   }
   root.querySelectorAll(&quot;[data-camera]&quot;).forEach(button =&gt; {
     button.addEventListener(&quot;click&quot;, () =&gt; selectCamera(button.dataset.camera));
