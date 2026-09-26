@@ -1,1928 +1,1006 @@
-
 <!doctype html>
-<html lang="en" data-visualize-standalone>
+<html lang="en">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="referrer" content="no-referrer">
-<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'unsafe-inline' 'unsafe-eval' 'wasm-unsafe-eval' blob: data: https://cdnjs.cloudflare.com https://cdn.jsdelivr.net https://esm.sh https://fonts.bunny.net https://fonts.googleapis.com https://fonts.gstatic.com https://unpkg.com; style-src 'unsafe-inline' blob: data: https://cdnjs.cloudflare.com https://cdn.jsdelivr.net https://esm.sh https://fonts.bunny.net https://fonts.googleapis.com https://fonts.gstatic.com https://unpkg.com; img-src blob: data: https://cdnjs.cloudflare.com https://cdn.jsdelivr.net https://esm.sh https://fonts.bunny.net https://fonts.googleapis.com https://fonts.gstatic.com https://unpkg.com; font-src blob: data: https://cdnjs.cloudflare.com https://cdn.jsdelivr.net https://esm.sh https://fonts.bunny.net https://fonts.googleapis.com https://fonts.gstatic.com https://unpkg.com; media-src blob: data: https://cdnjs.cloudflare.com https://cdn.jsdelivr.net https://esm.sh https://fonts.bunny.net https://fonts.googleapis.com https://fonts.gstatic.com https://unpkg.com; worker-src blob:; connect-src blob: data:; frame-src 'self'; object-src 'none'; base-uri 'none'; form-action 'none'">
-<title>Exhaust Duct</title>
-<style>:root{color-scheme:light dark;background:light-dark(rgb(255 255 255), rgb(24 24 24))}html,body{margin:0}body{box-sizing:border-box;padding:1rem;background:inherit}iframe{display:block;width:100%;height:calc(100vh - 2rem);margin:0 auto;border:0}</style>
+<meta name="color-scheme" content="light">
+<title>Hood fabrication viewer</title>
+<style>
+  html, body { width: 100%; height: 100%; margin: 0; overflow: hidden; background: #fff; }
+  @media (max-width: 760px) { body { overflow: auto; } }
+</style>
 </head>
 <body>
-<iframe sandbox="allow-scripts" referrerpolicy="no-referrer" title="Exhaust Duct Option B" srcdoc="&lt;!doctype html&gt;
-&lt;html lang=&quot;en&quot; data-visualize-standalone&gt;
-&lt;head&gt;
-&lt;meta charset=&quot;utf-8&quot;&gt;
-&lt;meta name=&quot;viewport&quot; content=&quot;width=device-width, initial-scale=1&quot;&gt;
-&lt;meta name=&quot;referrer&quot; content=&quot;no-referrer&quot;&gt;
-&lt;meta http-equiv=&quot;Content-Security-Policy&quot; content=&quot;default-src &#x27;none&#x27;; script-src &#x27;unsafe-inline&#x27; &#x27;unsafe-eval&#x27; &#x27;wasm-unsafe-eval&#x27; blob: data: https://cdnjs.cloudflare.com https://cdn.jsdelivr.net https://esm.sh https://fonts.bunny.net https://fonts.googleapis.com https://fonts.gstatic.com https://unpkg.com; style-src &#x27;unsafe-inline&#x27; blob: data: https://cdnjs.cloudflare.com https://cdn.jsdelivr.net https://esm.sh https://fonts.bunny.net https://fonts.googleapis.com https://fonts.gstatic.com https://unpkg.com; img-src blob: data: https://cdnjs.cloudflare.com https://cdn.jsdelivr.net https://esm.sh https://fonts.bunny.net https://fonts.googleapis.com https://fonts.gstatic.com https://unpkg.com; font-src blob: data: https://cdnjs.cloudflare.com https://cdn.jsdelivr.net https://esm.sh https://fonts.bunny.net https://fonts.googleapis.com https://fonts.gstatic.com https://unpkg.com; media-src blob: data: https://cdnjs.cloudflare.com https://cdn.jsdelivr.net https://esm.sh https://fonts.bunny.net https://fonts.googleapis.com https://fonts.gstatic.com https://unpkg.com; worker-src blob:; connect-src blob: data:; frame-src &#x27;none&#x27;; object-src &#x27;none&#x27;; base-uri &#x27;none&#x27;; form-action &#x27;none&#x27;&quot;&gt;
-&lt;title&gt;Exhaust Duct Option B&lt;/title&gt;
-&lt;style&gt;:root {
-  color-scheme: light dark;
-  background-color: var(
-    --background,
-    var(--color-background-primary, light-dark(rgb(255 255 255), rgb(24 24 24)))
-  ) !important;
-
-  /* Agent-facing contract; keep in sync with SKILL.md. */
-  --background: var(
-    --color-background-primary,
-    light-dark(rgb(255 255 255), rgb(24 24 24))
-  );
-  --foreground: var(
-    --color-text-primary,
-    light-dark(rgb(26 28 31), rgb(255 255 255))
-  );
-  --card: color-mix(in oklab, var(--foreground) 5%, var(--background));
-  --card-foreground: var(
-    --color-text-primary,
-    light-dark(rgb(26 28 31), rgb(255 255 255))
-  );
-  --popover: var(
-    --color-background-secondary,
-    light-dark(rgb(255 255 255), rgb(45 45 45))
-  );
-  --popover-foreground: var(
-    --color-text-primary,
-    light-dark(rgb(26 28 31), rgb(255 255 255))
-  );
-  --primary: var(
-    --color-text-info,
-    light-dark(rgb(51 156 255), rgb(131 195 255))
-  );
-  --primary-foreground: var(
-    --color-text-inverse,
-    light-dark(rgb(255 255 255), rgb(13 13 13))
-  );
-  --secondary: var(
-    --color-background-secondary,
-    light-dark(rgb(255 255 255 / 96%), rgb(54 54 54 / 96%))
-  );
-  --secondary-foreground: var(
-    --color-text-primary,
-    light-dark(rgb(26 28 31), rgb(255 255 255))
-  );
-  --muted: color-mix(in srgb, var(--foreground) 10%, transparent);
-  --muted-foreground: var(
-    --color-text-secondary,
-    light-dark(rgb(26 28 31 / 49.4%), rgb(255 255 255 / 49.8%))
-  );
-  --accent: var(
-    --color-background-info,
-    light-dark(rgb(229 242 255), rgb(13 39 63))
-  );
-  --accent-foreground: var(
-    --color-text-info,
-    light-dark(rgb(51 156 255), rgb(131 195 255))
-  );
-  --destructive: var(
-    --color-text-warning,
-    light-dark(rgb(226 85 7), rgb(255 133 73))
-  );
-  --border: var(
-    --color-border-secondary,
-    light-dark(rgb(26 28 31 / 8%), rgb(255 255 255 / 8.2%))
-  );
-  --input: var(
-    --color-border-primary,
-    light-dark(
-      rgb(26 28 31 / 11.8%),
-      color-mix(in oklab, rgb(0 0 0) 10%, transparent)
-    )
-  );
-  --ring: var(
-    --color-ring-primary,
-    light-dark(rgb(51 156 255), rgb(131 195 255 / 76%))
-  );
-  --font-size-base: var(--font-text-md-size, 14px);
-  --blue: light-dark(rgb(51 156 255), rgb(51 156 255));
-  --orange: light-dark(rgb(226 85 7), rgb(251 106 34));
-  --green: light-dark(rgb(0 162 64), rgb(64 201 119));
-  --red: light-dark(rgb(224 46 42), rgb(255 103 100));
-  --purple: light-dark(rgb(146 79 247), rgb(173 123 249));
-  --yellow: light-dark(rgb(255 195 0), rgb(255 210 64));
-  --viz-series-1: var(--primary);
-  --viz-series-2: light-dark(rgb(243 136 59), rgb(245 154 86));
-  --viz-series-3: light-dark(rgb(93 201 119), rgb(116 213 139));
-  --viz-series-4: light-dark(rgb(235 119 177), rgb(240 143 192));
-  --viz-series-5: light-dark(rgb(155 121 236), rgb(170 145 239));
-  --viz-series-6: light-dark(rgb(58 185 177), rgb(90 203 194));
-
-  /* Internal implementation variables; not part of the agent contract. */
-  --font-sans: -apple-system, system-ui, &quot;Segoe UI&quot;, sans-serif;
-  --font-mono:
-    ui-monospace, SFMono-Regular, &quot;SF Mono&quot;, Menlo, Consolas, &quot;Liberation Mono&quot;,
-    monospace;
-  --font-size-normal: max(11px, var(--font-size-base));
-  --font-size-tooltip: calc(var(--font-size-base) - 1px);
-  --font-size-small: max(11px, calc(var(--font-size-base) - 2px));
-  --font-size-h1: calc(var(--font-size-normal) * 1.7142857143);
-  --font-size-h2: calc(var(--font-size-normal) * 1.4285714286);
-  --font-size-h3: calc(var(--font-size-normal) * 1.2857142857);
-  --font-weight-normal: 430;
-  --font-weight-medium: 500;
-  --icon-size: 16px;
-  --line-height-normal: calc(var(--font-size-normal) * 1.5);
-  --line-height-tooltip: calc(var(--font-size-tooltip) * 1.4285714286);
-  --line-height-small: calc(var(--font-size-small) + 4px);
-  --corner-shape: round;
-  --radius: var(--border-radius-lg, 10px);
-  --radius-sm: calc(var(--radius) * 0.6);
-  --radius-md: calc(var(--radius) * 0.8);
-  --radius-lg: var(--radius);
-  --radius-2xl: calc(var(--radius) * 1.6);
-  --radius-full: 9999px;
-  --shadow-sm: 0 1px 2px -1px rgb(0 0 0 / 8%);
-  --checkmark-image: url(&quot;data:image/svg+xml,%3Csvg xmlns=&#x27;http://www.w3.org/2000/svg&#x27; viewBox=&#x27;0 0 17 17&#x27;%3E%3Cpath d=&#x27;M12.8961 3.64101C13.1297 3.41418 13.4984 3.37523 13.7779 3.56581C14.0571 3.75635 14.1554 4.11331 14.0299 4.41347L13.9615 4.53847L7.71151 13.7045C7.59411 13.8767 7.4063 13.9877 7.19881 14.0072C6.99136 14.0267 6.78564 13.9533 6.63826 13.806L2.88826 10.056L2.79842 9.9457C2.6192 9.67407 2.64927 9.30496 2.88826 9.06581C3.12738 8.82669 3.49647 8.79676 3.76815 8.97597L3.8785 9.06581L7.03084 12.2182L12.8053 3.74941L12.8961 3.64101Z&#x27;/%3E%3C/svg%3E&quot;);
-
-  /* Legacy aliases; not part of the current agent contract. */
-  --viz-bg: transparent;
-  --viz-panel: var(--card);
-  --viz-border: var(--border);
-  --viz-text: var(--foreground);
-  --viz-muted: var(--muted-foreground);
-  --viz-accent: var(--primary);
-  --viz-accent-text: var(--primary-foreground);
-  --viz-accent-bg: var(--accent);
-  --viz-font-size: var(--font-size-base);
-  --viz-warning: var(--destructive);
-}
-
-:root[data-theme=&quot;light&quot;] {
-  color-scheme: light;
-}
-
-:root[data-theme=&quot;dark&quot;] {
-  color-scheme: dark;
-}
-
-* {
-  box-sizing: border-box;
-}
-
-html &gt; body {
-  /* Preserve MCP aliases for older inline renderers without creating :root cycles. */
-  --color-background-primary: var(
-    --background,
-    light-dark(rgb(255 255 255), rgb(24 24 24))
-  );
-  --color-text-primary: var(
-    --foreground,
-    light-dark(rgb(26 28 31), rgb(255 255 255))
-  );
-  --color-border-secondary: var(
-    --border,
-    light-dark(rgb(26 28 31 / 8%), rgb(255 255 255 / 8.2%))
-  );
-
-  margin: 0;
-  padding: var(--visualize-paint-gutter, 0px);
-  color: var(--foreground);
-  background: transparent !important;
-  font-family: var(--font-sans) !important;
-  font-size: var(--font-size-normal);
-  font-weight: var(--font-weight-normal);
-  line-height: var(--line-height-normal);
-}
-
-a {
-  color: color-mix(in srgb, var(--viz-accent) 80%, var(--viz-text) 20%);
-  cursor: pointer;
-  font-weight: var(--font-weight-medium, 500);
-  text-decoration: none;
-  text-underline-offset: 2px;
-}
-
-a:is(:hover, :focus-visible) {
-  text-decoration-line: underline;
-  text-decoration-style: dashed;
-  text-decoration-thickness: 0.5px;
-}
-
-h1,
-h2,
-h3,
-h4,
-h5,
-h6,
-p {
-  margin-block: 0;
-}
-
-h1 {
-  font-size: var(--font-size-h1);
-  font-weight: var(--font-weight-medium);
-  line-height: 1.25;
-}
-
-h2 {
-  font-size: var(--font-size-h2);
-  font-weight: var(--font-weight-medium);
-  line-height: 1.25;
-}
-
-h3,
-h4,
-h5,
-h6 {
-  font-size: var(--font-size-h3);
-  font-weight: var(--font-weight-medium);
-  line-height: 1.3;
-}
-
-b,
-strong,
-th {
-  font-weight: var(--font-weight-medium);
-}
-
-code:not(pre code) {
-  display: inline;
-  padding: 1px 6px;
-  border-radius: var(--radius-sm);
-  corner-shape: var(--corner-shape);
-  background: var(--muted);
-  font-family: var(--font-mono);
-  font-size: 0.92em;
-  overflow-wrap: anywhere;
-  -webkit-box-decoration-break: clone;
-  box-decoration-break: clone;
-  word-break: break-word;
-}
-
-.table-responsive {
-  width: 100%;
-  overflow-x: auto;
-  scrollbar-width: thin;
-}
-
-.table {
-  width: 100%;
-  border-collapse: collapse;
-  color: var(--foreground);
-  font: inherit;
-  text-align: start;
-}
-
-.table :is(th, td) {
-  padding-block: 10px;
-  padding-inline: 0 24px;
-  overflow-wrap: anywhere;
-  border-bottom: 1px solid var(--border);
-  text-align: start;
-  vertical-align: top;
-}
-
-.table-responsive &gt; .table :is(th, td) {
-  overflow-wrap: break-word;
-}
-
-.table :is(th, td):last-child {
-  padding-inline-end: 0;
-}
-
-.table :is(caption, thead th) {
-  font-weight: 600;
-}
-
-.table thead th {
-  padding-block: 8px;
-  border-bottom-color: color-mix(in srgb, var(--foreground) 16%, transparent);
-}
-
-.table tbody tr:last-child :is(th, td) {
-  border-bottom: 0;
-}
-
-.table.table-sm :is(th, td) {
-  padding-block: 6px;
-}
-
-.table.table-sm :is(th, td):not(:last-child) {
-  padding-inline-end: 16px;
-}
-
-.table :is(.text-end, [align=&quot;right&quot;]) {
-  text-align: end;
-  font-variant-numeric: tabular-nums;
-}
-
-.table :is(.text-center, [align=&quot;center&quot;]) {
-  text-align: center;
-}
-
-.table .text-nowrap {
-  white-space: nowrap;
-}
-
-#widget {
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-  width: 100%;
-  padding: 0;
-  background: transparent !important;
-}
-
-.card {
-  min-width: 0;
-  padding: 12px;
-  overflow: hidden;
-  overflow-wrap: break-word;
-  border-radius: var(--radius-2xl);
-  corner-shape: var(--corner-shape);
-  color: var(--card-foreground);
-  background: var(--card);
-}
-
-#widget &gt; :not(.card, .progress) {
-  width: 100% !important;
-  max-width: none !important;
-  margin: 0 !important;
-  padding: 0 !important;
-  border: 0 !important;
-  border-radius: 0 !important;
-  background: transparent !important;
-  box-shadow: none !important;
-}
-
-.tooltip {
-  position: fixed;
-  z-index: 50;
-  top: 0;
-  left: 0;
-  width: max-content;
-  max-width: min(
-    20rem,
-    var(--tooltip-available-width, calc(100vw - 10px)),
-    calc(100vw - 10px)
-  );
-  max-height: min(
-    var(--tooltip-available-height, calc(100vh - 10px)),
-    calc(100vh - 10px)
-  );
-  padding: 4px 8px;
-  border: 1px solid var(--border);
-  border-radius: var(--radius-lg);
-  corner-shape: var(--corner-shape);
-  color: var(--popover-foreground);
-  background: var(--popover);
-  box-shadow: none;
-  font-size: var(--font-size-tooltip);
-  line-height: var(--line-height-tooltip);
-  overflow-wrap: break-word;
-  white-space: normal;
-  pointer-events: none;
-  user-select: none;
-}
-
-.viz-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(max(180px, 24%), 1fr));
-  gap: 10px;
-}
-
-.viz-stat {
-  display: flex;
-  flex-direction: column;
-  gap: 2px;
-}
-
-.viz-stat-value {
-  font-size: var(--font-size-h2);
-  font-weight: var(--font-weight-medium);
-  line-height: 1.25;
-}
-
-.viz-row {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  gap: 10px;
-}
-
-hr {
-  width: 100%;
-  height: 1px;
-  margin-block: 6px;
-  border: 0;
-  background: var(--border);
-}
-
-.nav {
-  display: flex;
-  min-width: 0;
-  align-items: center;
-  gap: 4px;
-}
-
-.progress {
-  display: flex;
-  height: 8px;
-  margin-block: calc((var(--line-height-normal, 1.5em) - 8px) / 2);
-  overflow: hidden;
-  border: 0;
-  border-radius: var(--radius-full);
-  background: var(--muted);
-}
-
-.progress-bar:only-child {
-  border-radius: var(--radius-full);
-}
-
-.progress-bar {
-  height: 100%;
-  flex-shrink: 0;
-  border: 0;
-  background: var(--viz-series-1);
-}
-
-.viz-badge {
-  padding: 3px 8px;
-  border-radius: var(--radius-full);
-  color: var(--accent-foreground);
-  background: var(--accent);
-  font-weight: var(--font-weight-medium);
-}
-
-small,
-.text-small,
-.viz-badge {
-  font-size: var(--font-size-small);
-  line-height: var(--line-height-small);
-}
-
-.text-muted {
-  color: var(--muted-foreground);
-}
-
-.tabular-nums {
-  font-variant-numeric: tabular-nums;
-}
-
-.sr-only {
-  position: absolute;
-  width: 1px;
-  height: 1px;
-  padding: 0;
-  overflow: hidden;
-  clip: rect(0, 0, 0, 0);
-  white-space: nowrap;
-  border: 0;
-}
-
-.viz-controls {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  gap: 8px;
-}
-
-.viz-controls &gt; .form-label {
-  display: grid;
-  min-width: min(100%, 260px);
-  flex: 1 1 280px;
-  grid-template-columns: minmax(0, 1fr) auto;
-  align-items: baseline;
-  gap: 2px 12px;
-  margin-bottom: 0;
-}
-
-.viz-controls &gt; .form-label &gt; :is(.form-control, .form-range, .form-select) {
-  grid-column: 1 / -1;
-}
-
-.btn,
-.nav-link,
-.form-check-input,
-.form-control,
-.form-range,
-.form-select {
-  font: inherit;
-}
-
-.btn,
-.nav-link {
-  appearance: button;
-  display: inline-flex;
-  inline-size: fit-content;
-  max-inline-size: 100%;
-  min-height: 28px;
-  align-items: center;
-  justify-content: center;
-  gap: 4px;
-  margin: 0;
-  padding: 0 8px;
-  -webkit-app-region: no-drag;
-  border: 1px solid var(--input);
-  border-radius: var(--radius-lg);
-  corner-shape: var(--corner-shape);
-  color: var(--secondary-foreground);
-  background: var(--secondary);
-  cursor: var(--cursor-interaction, pointer);
-  text-align: center;
-  text-decoration: none;
-  white-space: nowrap;
-  user-select: none;
-  -webkit-font-smoothing: antialiased;
-}
-
-.btn:is(.btn-block, .viz-tile) {
-  inline-size: 100%;
-}
-
-.btn.viz-tile {
-  min-width: 0;
-  overflow-wrap: anywhere;
-  white-space: normal;
-}
-
-a.btn {
-  cursor: pointer;
-  text-decoration: none;
-}
-
-.btn:not(:disabled):hover,
-.nav-link:not(:disabled):not([aria-disabled=&quot;true&quot;]):hover {
-  background: color-mix(in srgb, var(--foreground) 6%, var(--secondary));
-}
-
-.btn-primary {
-  border-color: transparent;
-  color: var(--primary-foreground);
-  background: var(--foreground);
-  background-clip: padding-box;
-}
-
-.btn-primary .text-muted {
-  color: color-mix(in srgb, var(--primary-foreground) 50%, transparent);
-}
-
-.btn-primary:not(:disabled):hover {
-  background: color-mix(in srgb, var(--foreground) 80%, transparent);
-  background-clip: padding-box;
-}
-
-.btn-ghost {
-  border-color: transparent;
-  color: var(--muted-foreground);
-  background: transparent;
-}
-
-.btn-ghost:not(:disabled):hover {
-  color: var(--foreground);
-  background: color-mix(in srgb, var(--foreground) 6%, var(--secondary));
-}
-
-.nav-pills .nav-link {
-  min-width: 0;
-  border-color: transparent;
-  color: var(--muted-foreground);
-  background: transparent;
-}
-
-.nav-justified .nav-link {
-  flex: 1 1 0;
-  overflow-wrap: anywhere;
-  white-space: normal;
-}
-
-.nav-pills .nav-link.active {
-  color: var(--foreground);
-  background: var(--muted);
-}
-
-.btn:disabled,
-.nav-link:disabled,
-.nav-link[aria-disabled=&quot;true&quot;] {
-  cursor: not-allowed;
-  opacity: 0.4;
-}
-
-[data-lucide] {
-  stroke-width: 1.6;
-}
-
-.form-label {
-  display: block;
-  margin-bottom: 6px;
-  color: var(--foreground);
-}
-
-.form-control {
-  display: block;
-  width: 100%;
-  min-height: 28px;
-  padding: 0 8px;
-  outline: none;
-  border: 1px solid var(--input);
-  border-radius: var(--radius-lg);
-  corner-shape: var(--corner-shape);
-  color: var(--foreground);
-  background: var(--secondary);
-}
-
-.form-control::placeholder {
-  color: var(--muted-foreground);
-}
-
-.form-control[type=&quot;file&quot;] {
-  padding: 0;
-  overflow: hidden;
-  cursor: var(--cursor-interaction, pointer);
-}
-
-.form-control[type=&quot;file&quot;]::file-selector-button {
-  min-height: 26px;
-  margin-right: 8px;
-  padding: 0 8px;
-  border: 0;
-  border-right: 1px solid var(--input);
-  color: var(--secondary-foreground);
-  background: var(--secondary);
-  cursor: inherit;
-  font: inherit;
-}
-
-.form-control[type=&quot;file&quot;]:not(:disabled):hover::file-selector-button {
-  background: color-mix(in srgb, var(--foreground) 6%, var(--secondary));
-}
-
-.form-control-color[type=&quot;color&quot;] {
-  width: 40px;
-  height: 28px;
-  padding: 3px;
-  cursor: var(--cursor-interaction, pointer);
-}
-
-.form-control-color[type=&quot;color&quot;]::-webkit-color-swatch-wrapper {
-  padding: 0;
-}
-
-.form-control-color[type=&quot;color&quot;]::-webkit-color-swatch {
-  border: 0;
-  border-radius: calc(var(--radius-lg) - 4px);
-  corner-shape: var(--corner-shape);
-}
-
-textarea.form-control {
-  height: auto;
-  min-height: 72px;
-  padding: 8px 10px;
-  resize: vertical;
-}
-
-.form-control:focus-visible {
-  border-color: var(--ring);
-  box-shadow: inset 0 0 0 1px var(--ring);
-}
-
-.form-control:disabled,
-.form-select:disabled {
-  cursor: not-allowed;
-  opacity: 0.4;
-}
-
-.form-select {
-  appearance: none;
-  display: block;
-  width: 100%;
-  min-height: 28px;
-  margin: 0;
-  padding: 0 32px 0 8px;
-  outline: none;
-  border: 1px solid var(--input);
-  border-radius: var(--radius-lg);
-  corner-shape: var(--corner-shape);
-  color: var(--foreground);
-  background-color: var(--secondary);
-  background-image:
-    linear-gradient(45deg, transparent 50%, var(--muted-foreground) 50%),
-    linear-gradient(135deg, var(--muted-foreground) 50%, transparent 50%);
-  background-position:
-    calc(100% - 14px) 50%,
-    calc(100% - 10px) 50%;
-  background-repeat: no-repeat;
-  background-size: 4px 4px;
-  cursor: var(--cursor-interaction, default);
-}
-
-.form-select:not(:disabled):hover {
-  background-color: color-mix(in srgb, var(--foreground) 6%, var(--secondary));
-}
-
-.form-select:focus-visible {
-  border-color: var(--ring);
-  box-shadow: inset 0 0 0 1px var(--ring);
-}
-
-.form-check {
-  display: flex;
-  min-height: 20px;
-  align-items: center;
-  gap: 6px;
-}
-
-.form-check-input {
-  appearance: none;
-  width: 14px;
-  height: 14px;
-  flex: 0 0 auto;
-  margin: 0;
-  border: 1px solid var(--input);
-  color: var(--primary-foreground);
-  background-color: transparent;
-  cursor: var(--cursor-interaction, default);
-  transition:
-    background-color 150ms,
-    border-color 150ms,
-    box-shadow 150ms;
-}
-
-.form-check:not(.form-switch) .form-check-input[type=&quot;checkbox&quot;] {
-  border-color: var(--input);
-  border-radius: var(--radius-sm);
-  corner-shape: var(--corner-shape);
-  background-color: var(--secondary);
-  box-shadow: var(--shadow-sm);
-}
-
-.form-check:not(.form-switch)
-  .form-check-input:not(:disabled):not(:checked):hover {
-  background-color: var(--card);
-}
-
-.form-check:not(.form-switch) .form-check-input[type=&quot;checkbox&quot;]:checked {
-  border-color: var(--primary);
-  background-color: var(--primary);
-}
-
-.form-check:not(.form-switch)
-  .form-check-input[type=&quot;checkbox&quot;]:checked::before {
-  display: block;
-  width: 100%;
-  height: 100%;
-  background: var(--primary-foreground);
-  content: &quot;&quot;;
-  mask: var(--checkmark-image) center / 12px 12px no-repeat;
-}
-
-.form-check-input[type=&quot;radio&quot;] {
-  width: 14px;
-  height: 14px;
-  border-radius: var(--radius-full);
-}
-
-.form-check-input[type=&quot;radio&quot;]:checked {
-  border: 2px solid var(--primary);
-  background:
-    radial-gradient(circle, var(--primary-foreground) 0 2.5px, transparent 3px),
-    var(--primary);
-}
-
-.form-check:not(.form-switch) .form-check-input:focus-visible {
-  outline: 2px solid var(--ring);
-  outline-offset: 2px;
-}
-
-.form-check:not(.form-switch) .form-check-input:disabled {
-  cursor: not-allowed;
-  pointer-events: none;
-}
-
-.form-check:not(.form-switch) .form-check-input:disabled + .form-check-label {
-  cursor: not-allowed;
-}
-
-.form-switch .form-check-input:disabled,
-.form-switch .form-check-input:disabled + .form-check-label {
-  cursor: not-allowed;
-  opacity: 0.6;
-}
-
-.form-check-label {
-  color: var(--foreground);
-  cursor: var(--cursor-interaction, default);
-}
-
-.form-switch .form-check-input {
-  position: relative;
-  width: 32px;
-  height: 20px;
-  border: 0;
-  border-radius: var(--radius-full);
-  background: var(--muted);
-  box-shadow: none;
-  transition: background-color 200ms cubic-bezier(0, 0, 0.2, 1);
-}
-
-.form-switch .form-check-input::before {
-  position: absolute;
-  top: 50%;
-  left: 0;
-  width: 16px;
-  height: 16px;
-  box-sizing: border-box;
-  border: 1px solid light-dark(var(--primary-foreground), var(--foreground));
-  border-radius: var(--radius-full);
-  background: light-dark(var(--primary-foreground), var(--foreground));
-  box-shadow: var(--shadow-sm);
-  content: &quot;&quot;;
-  transform: translate(2px, -50%);
-  transition: transform 200ms cubic-bezier(0, 0, 0.2, 1);
-}
-
-.form-switch .form-check-input:checked {
-  background: var(--primary);
-}
-
-.form-switch .form-check-input:checked::before {
-  transform: translate(14px, -50%);
-}
-
-.form-switch .form-check-input:focus-visible {
-  box-shadow: 0 0 0 2px var(--ring);
-}
-
-.form-range {
-  appearance: none;
-  display: block;
-  width: 100%;
-  height: 28px;
-  flex: 1;
-  margin: 0;
-  padding: 0;
-  outline: none;
-  border: 0;
-  accent-color: var(--primary);
-  background: linear-gradient(
-      color-mix(in srgb, var(--foreground) 7%, transparent),
-      color-mix(in srgb, var(--foreground) 7%, transparent)
-    )
-    center / 100% 2px no-repeat;
-}
-
-.form-range::-webkit-slider-runnable-track {
-  height: 28px;
-  background: transparent;
-}
-
-.form-range::-webkit-slider-thumb {
-  appearance: none;
-  width: 20px;
-  height: 20px;
-  margin-top: 4px;
-  border: 1px solid var(--border);
-  border-radius: var(--radius-full);
-  background: light-dark(var(--primary-foreground), var(--foreground));
-}
-
-.form-range:focus-visible::-webkit-slider-thumb {
-  border-color: var(--ring);
-  box-shadow: inset 0 0 0 1px var(--ring);
-}
-
-.form-range::-moz-range-track {
-  height: 28px;
-  background: transparent;
-}
-
-.form-range::-moz-range-thumb {
-  width: 20px;
-  height: 20px;
-  border: 1px solid var(--border);
-  border-radius: var(--radius-full);
-  background: light-dark(var(--primary-foreground), var(--foreground));
-}
-
-.form-range:focus-visible::-moz-range-thumb {
-  border-color: var(--ring);
-  box-shadow: inset 0 0 0 1px var(--ring);
-}
-
-.form-range:disabled {
-  cursor: not-allowed;
-  opacity: 0.4;
-}
-
-.btn:not(.btn-primary, .viz-tile):is(
-  [aria-pressed=&quot;true&quot;],
-  [aria-selected=&quot;true&quot;],
-  .is-selected
-) {
-  border-color: var(--primary);
-  color: var(--primary-foreground);
-  background: var(--primary);
-}
-
-.btn.viz-tile:is([aria-pressed=&quot;true&quot;], [aria-selected=&quot;true&quot;], .is-selected) {
-  border-color: var(--primary);
-  box-shadow: inset 0 0 0 1px var(--primary);
-}
-
-.btn:focus-visible,
-.nav-link:focus-visible {
-  outline: 2px solid var(--ring);
-  outline-offset: 2px;
-}
-
-@media (pointer: coarse) {
-  .btn,
-  .nav-link,
-  .form-control,
-  .form-select {
-    min-width: 44px;
-    min-height: 44px;
+<div id="hood-left-side-plate" aria-label="Full-screen fabrication viewer for a 1500 millimetre range hood">
+  <main class="viewer-pane">
+    <div class="plate-stage" role="img" aria-label="Range hood fabrication model with black outlines, individually hideable parts, linked dimensions, wall rails, three removable baffle grilles, three LED lights, cable duct and exhaust curb"></div>
+    <div class="plate-caption" aria-live="polite" data-caption>Complete hood assembly — 1,500 mm outside-to-outside</div>
+  </main>
+  <aside class="control-sidebar" aria-label="Viewer controls">
+    <header>
+      <h1>Hood fabrication viewer</h1>
+      <p>Drag to rotate · scroll to zoom</p>
+    </header>
+    <section>
+      <h2>Camera</h2>
+      <div class="control-grid" role="group" aria-label="Camera views">
+        <button type="button" data-view="whole" aria-pressed="true">Whole</button>
+        <button type="button" data-view="left" aria-pressed="false">Left</button>
+        <button type="button" data-view="right" aria-pressed="false">Right</button>
+        <button type="button" data-view="front" aria-pressed="false">Front</button>
+        <button type="button" data-view="covers" aria-pressed="false">Covers</button>
+        <button type="button" data-view="brackets" aria-pressed="false">Rails</button>
+        <button type="button" data-view="l5plate" aria-pressed="false">L5–R5</button>
+        <button type="button" data-view="fl2plate" aria-pressed="false">LED plate</button>
+        <button type="button" data-view="lights" aria-pressed="false">Lights</button>
+        <button type="button" data-view="grilles" aria-pressed="false">Grilles</button>
+        <button type="button" data-view="pdetails" aria-pressed="false">Cable duct</button>
+        <button type="button" data-view="exhaust" aria-pressed="false">Exhaust</button>
+        <button type="button" data-view="flange" aria-pressed="false">Flange</button>
+      </div>
+    </section>
+    <section>
+      <h2>Display</h2>
+      <label class="switch-row">
+        <input type="checkbox" data-colour-mode>
+        <span>Colour-coded parts</span>
+      </label>
+      <label class="switch-row">
+        <input type="checkbox" data-dimensions checked>
+        <span>Dimensions and angles</span>
+      </label>
+      <div class="control-grid">
+        <button type="button" data-parts-action="show">Show all</button>
+        <button type="button" data-parts-action="hide">Hide all</button>
+      </div>
+    </section>
+    <section class="parts-section">
+      <h2>Parts</h2>
+      <div class="parts-list" data-parts></div>
+    </section>
+  </aside>
+</div>
+
+<style>
+  #hood-left-side-plate { width: 100%; height: 100vh; min-width: 0; display: grid; grid-template-columns: minmax(0, 1fr) 330px; background: #fff; color: #111; font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; }
+  #hood-left-side-plate * { box-sizing: border-box; }
+  #hood-left-side-plate .viewer-pane { position: relative; min-width: 0; min-height: 0; overflow: hidden; }
+  #hood-left-side-plate .plate-stage { width: 100%; height: 100%; overflow: hidden; touch-action: none; background: #fff; }
+  #hood-left-side-plate canvas { display: block; width: 100%; height: 100%; }
+  #hood-left-side-plate .plate-caption { position: absolute; left: 18px; right: 18px; bottom: 16px; padding: 9px 12px; background: rgba(255,255,255,.9); border: 1px solid #bbb; color: #222; font-size: 13px; text-align: center; pointer-events: none; }
+  #hood-left-side-plate .control-sidebar { min-height: 0; overflow-y: auto; border-left: 1px solid #c9c9c9; background: #f7f7f7; padding: 18px; }
+  #hood-left-side-plate header { padding-bottom: 14px; border-bottom: 1px solid #d5d5d5; }
+  #hood-left-side-plate h1 { margin: 0; font-size: 19px; line-height: 1.25; font-weight: 650; }
+  #hood-left-side-plate header p { margin: 6px 0 0; color: #666; font-size: 13px; }
+  #hood-left-side-plate section { padding: 16px 0; border-bottom: 1px solid #d5d5d5; }
+  #hood-left-side-plate section:last-child { border-bottom: 0; }
+  #hood-left-side-plate h2 { margin: 0 0 10px; font-size: 13px; letter-spacing: .04em; text-transform: uppercase; font-weight: 700; color: #444; }
+  #hood-left-side-plate .control-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 7px; }
+  #hood-left-side-plate button { min-height: 36px; padding: 7px 9px; border: 1px solid #aaa; border-radius: 5px; background: #fff; color: #222; font: inherit; font-size: 13px; cursor: pointer; }
+  #hood-left-side-plate button:hover { background: #ececec; }
+  #hood-left-side-plate button[aria-pressed="true"] { background: #222; border-color: #222; color: #fff; }
+  #hood-left-side-plate .switch-row, #hood-left-side-plate .part-row { display: flex; align-items: center; gap: 9px; min-height: 34px; font-size: 14px; cursor: pointer; }
+  #hood-left-side-plate .switch-row + .switch-row { margin-bottom: 10px; }
+  #hood-left-side-plate input[type="checkbox"] { width: 17px; height: 17px; flex: 0 0 auto; accent-color: #222; }
+  #hood-left-side-plate .parts-list { display: grid; gap: 1px; }
+  @media (max-width: 760px) {
+    #hood-left-side-plate { height: auto; min-height: 100vh; grid-template-columns: 1fr; grid-template-rows: 62vh auto; }
+    #hood-left-side-plate .control-sidebar { border-left: 0; border-top: 1px solid #c9c9c9; overflow: visible; }
   }
+</style>
 
-  /* Keep small-screen WebKit from zooming when a text field receives focus. */
-  .form-control,
-  .form-select {
-    font-size: max(16px, var(--font-size-normal));
-  }
-
-  .form-control[type=&quot;file&quot;]::file-selector-button {
-    min-width: 44px;
-    min-height: 44px;
-  }
-
-  .form-control-color[type=&quot;color&quot;] {
-    width: 44px;
-    height: 44px;
-  }
-
-  .form-control:is(
-    [type=&quot;date&quot;],
-    [type=&quot;datetime-local&quot;],
-    [type=&quot;month&quot;],
-    [type=&quot;time&quot;],
-    [type=&quot;week&quot;]
-  ) {
-    min-width: 0;
-    max-width: 100%;
-    padding-block: 8px;
-  }
-
-  .form-check {
-    min-height: 44px;
-    padding-inline: 15px;
-  }
-
-  .form-check-input {
-    position: relative;
-  }
-
-  .form-check-input::after {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    width: 44px;
-    height: 44px;
-    content: &quot;&quot;;
-    transform: translate(-50%, -50%);
-  }
-
-  .form-check-label {
-    display: inline-flex;
-    min-width: 44px;
-    min-height: 44px;
-    align-items: center;
-  }
-
-  .form-range {
-    height: 44px;
-    touch-action: pan-y;
-  }
-
-  .form-range::-webkit-slider-runnable-track {
-    height: 44px;
-  }
-
-  .form-range::-moz-range-track {
-    height: 44px;
-  }
-
-  .form-range::-webkit-slider-thumb {
-    margin-top: 12px;
-  }
-}
-
-svg {
-  display: block;
-  max-width: 100%;
-  height: auto;
-}
-
-#widget &gt; svg {
-  width: 100%;
-}
-
-/* Model-authored chart rules can otherwise stretch icons after these styles load. */
-svg.lucide {
-  display: block;
-  width: var(--icon-size) !important;
-  height: var(--icon-size) !important;
-  flex: none;
-  margin: 0 !important;
-  stroke-width: 1.6;
-}
-
-.text-warning,
-.text-destructive {
-  color: var(--destructive);
-}
-
-html&gt;body{padding:0}&lt;/style&gt;
-&lt;/head&gt;
-&lt;body&gt;
-&lt;div id=&quot;duct-option-b-rebuild&quot; aria-label=&quot;Option B exhaust duct reconstruction&quot;&gt;
-  &lt;div class=&quot;viz-row review-controls&quot; role=&quot;group&quot; aria-label=&quot;Review views&quot;&gt;
-    &lt;button class=&quot;btn btn-primary&quot; type=&quot;button&quot; data-camera=&quot;whole&quot; aria-pressed=&quot;true&quot;&gt;Whole system&lt;/button&gt;
-    &lt;button class=&quot;btn&quot; type=&quot;button&quot; data-camera=&quot;ceiling&quot; aria-pressed=&quot;false&quot;&gt;Ceiling route&lt;/button&gt;
-    &lt;button class=&quot;btn&quot; type=&quot;button&quot; data-camera=&quot;hood&quot; aria-pressed=&quot;false&quot;&gt;Range hood&lt;/button&gt;
-    &lt;button class=&quot;btn&quot; type=&quot;button&quot; data-camera=&quot;straight1&quot; aria-pressed=&quot;false&quot;&gt;Straight 1&lt;/button&gt;
-    &lt;button class=&quot;btn&quot; type=&quot;button&quot; data-camera=&quot;elbow1&quot; aria-pressed=&quot;false&quot;&gt;Elbow 1&lt;/button&gt;
-    &lt;button class=&quot;btn&quot; type=&quot;button&quot; data-camera=&quot;elbow2&quot; aria-pressed=&quot;false&quot;&gt;Elbow 2&lt;/button&gt;
-    &lt;button class=&quot;btn&quot; type=&quot;button&quot; data-camera=&quot;elbow3&quot; aria-pressed=&quot;false&quot;&gt;Elbow 3&lt;/button&gt;
-    &lt;button class=&quot;btn&quot; type=&quot;button&quot; data-camera=&quot;transition1&quot; aria-pressed=&quot;false&quot;&gt;Transition 1&lt;/button&gt;
-    &lt;button class=&quot;btn&quot; type=&quot;button&quot; data-camera=&quot;cylinder1&quot; aria-pressed=&quot;false&quot;&gt;Cylinder 1&lt;/button&gt;
-    &lt;button class=&quot;btn&quot; type=&quot;button&quot; data-camera=&quot;fan&quot; aria-pressed=&quot;false&quot;&gt;Fan&lt;/button&gt;
-    &lt;button class=&quot;btn&quot; type=&quot;button&quot; data-camera=&quot;cylinder2&quot; aria-pressed=&quot;false&quot;&gt;Cylinder 2&lt;/button&gt;
-    &lt;button class=&quot;btn&quot; type=&quot;button&quot; data-camera=&quot;transition2&quot; aria-pressed=&quot;false&quot;&gt;Transition 2&lt;/button&gt;
-    &lt;button class=&quot;btn&quot; type=&quot;button&quot; data-camera=&quot;elbow4&quot; aria-pressed=&quot;false&quot;&gt;Elbow 4&lt;/button&gt;
-    &lt;button class=&quot;btn&quot; type=&quot;button&quot; data-camera=&quot;straight2&quot; aria-pressed=&quot;false&quot;&gt;Straight 2&lt;/button&gt;
-    &lt;button class=&quot;btn&quot; type=&quot;button&quot; data-camera=&quot;elbow5&quot; aria-pressed=&quot;false&quot;&gt;Elbow 5&lt;/button&gt;
-    &lt;button class=&quot;btn&quot; type=&quot;button&quot; data-camera=&quot;rainhood&quot; aria-pressed=&quot;false&quot;&gt;Rain hood&lt;/button&gt;
-  &lt;/div&gt;
-  &lt;div class=&quot;cad-stage&quot; role=&quot;img&quot; aria-label=&quot;Exact equal-scale three-dimensional exhaust model inside a room with twenty centimetre perimeter walls and roof slab, a shaft enclosure extending to Z 762, a one hundred centimetre GRC enclosure rising from the shaft opening, an oversized glass roof, a recessed downlight, five formed 90-degree elbows, and a tapered rain hood outlet.&quot;&gt;&lt;/div&gt;
-  &lt;div class=&quot;review-key&quot; aria-live=&quot;polite&quot;&gt;&lt;span aria-hidden=&quot;true&quot;&gt;&lt;/span&gt;&lt;span data-review-text&gt;Complete coloured system with building context&lt;/span&gt;&lt;/div&gt;
-&lt;/div&gt;
-
-&lt;style&gt;
-  #duct-option-b-rebuild { width: 100%; min-width: 0; color: var(--foreground); }
-  #duct-option-b-rebuild .review-controls { justify-content: center; margin-bottom: 8px; }
-  #duct-option-b-rebuild .cad-stage {
-    width: 100%; height: clamp(500px, 75vw, 720px); min-height: 500px;
-    overflow: hidden; touch-action: none;
-  }
-  #duct-option-b-rebuild canvas { display: block; width: 100%; height: 100%; }
-  #duct-option-b-rebuild .review-key { display: flex; align-items: center; justify-content: center; gap: 7px; color: var(--muted-foreground); }
-  #duct-option-b-rebuild .review-key span { width: 12px; height: 12px; background: var(--red); }
-&lt;/style&gt;
-
-&lt;script type=&quot;importmap&quot;&gt;
+<script type="importmap">
 {
-  &quot;imports&quot;: {
-    &quot;three&quot;: &quot;https://cdn.jsdelivr.net/npm/three@0.180.0/build/three.module.js&quot;,
-    &quot;three/addons/&quot;: &quot;https://cdn.jsdelivr.net/npm/three@0.180.0/examples/jsm/&quot;
+  "imports": {
+    "three": "https://cdn.jsdelivr.net/npm/three@0.180.0/build/three.module.js",
+    "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.180.0/examples/jsm/"
   }
 }
-&lt;/script&gt;
+</script>
 
-&lt;script type=&quot;module&quot;&gt;
-  import * as THREE from &quot;three&quot;;
-  import { OrbitControls } from &quot;three/addons/controls/OrbitControls.js&quot;;
+<script type="module">
+  import * as THREE from "three";
+  import { OrbitControls } from "three/addons/controls/OrbitControls.js";
 
-  const root = document.getElementById(&quot;duct-option-b-rebuild&quot;);
-  const stage = root.querySelector(&quot;.cad-stage&quot;);
-  const colorProbe = document.createElement(&quot;span&quot;);
-  colorProbe.style.cssText = &quot;position:absolute;visibility:hidden;pointer-events:none&quot;;
-  root.appendChild(colorProbe);
-  const colorFallback = {
-    &quot;--viz-series-1&quot;: &quot;--yellow&quot;,
-    &quot;--viz-series-2&quot;: &quot;--blue&quot;,
-    &quot;--viz-series-3&quot;: &quot;--green&quot;,
-    &quot;--viz-series-4&quot;: &quot;--purple&quot;,
-    &quot;--viz-series-5&quot;: &quot;--orange&quot;,
-    &quot;--viz-series-6&quot;: &quot;--red&quot;
-  };
-  const theme = name =&gt; {
-    const fallback = colorFallback[name] || &quot;--foreground&quot;;
-    colorProbe.style.color = `var(${name}, var(${fallback}))`;
-    return getComputedStyle(colorProbe).color;
+  const root = document.getElementById("hood-left-side-plate");
+  const stage = root.querySelector(".plate-stage");
+  const probe = document.createElement("span");
+  probe.style.cssText = "position:absolute;visibility:hidden;pointer-events:none";
+  root.appendChild(probe);
+  const theme = token => {
+    probe.style.color = `var(${token})`;
+    return getComputedStyle(probe).color;
   };
 
   const scene = new THREE.Scene();
-  const camera = new THREE.PerspectiveCamera(34, 1, 1, 3000);
-  camera.up.set(0, 1, 0);
-  camera.position.set(-820, 865, 760);
-
+  const camera = new THREE.PerspectiveCamera(32, 1, 1, 4000);
   const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
   renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
-  renderer.setClearColor(0x000000, 0);
+  renderer.setClearColor(0xffffff, 1);
   renderer.outputColorSpace = THREE.SRGBColorSpace;
   stage.appendChild(renderer.domElement);
 
-  scene.add(new THREE.HemisphereLight(theme(&quot;--background&quot;), theme(&quot;--muted&quot;), 2.1));
-  const keyLight = new THREE.DirectionalLight(theme(&quot;--foreground&quot;), 2.4);
-  keyLight.position.set(-160, 260, 220);
-  scene.add(keyLight);
+  scene.add(new THREE.HemisphereLight(0xffffff, 0xb8b8b8, 2.5));
+  const key = new THREE.DirectionalLight(0xffffff, 2.8);
+  key.position.set(-250, 500, 650);
+  scene.add(key);
+  const fill = new THREE.DirectionalLight(0xffffff, 1.2);
+  fill.position.set(700, -100, -500);
+  scene.add(fill);
 
-  // CAD coordinates: +X right, +Y back, +Z up. The wall bottom is Z=0;
-  // legacy component values are shifted upward 175 cm from the hood datum.
-  const zDatumShift = 175;
-  const world = (x, y, z) =&gt; new THREE.Vector3(x, z + zDatumShift, -y);
+  // Assembly seams use a fill-coloured line so touching sheet-metal parts do
+  // not read as open gaps. True perimeter and opening outlines use the darker
+  // detail material declared with the cover-plate helpers below.
+  const sheetEdgeMaterial = new THREE.LineBasicMaterial({
+    color: 0x000000,
+    transparent: false,
+    opacity: 1
+  });
 
-  function lineSegments(points, color, opacity) {
-    const geometry = new THREE.BufferGeometry().setFromPoints(points);
-    const material = new THREE.LineBasicMaterial({ color, transparent: opacity &lt; 1, opacity });
-    const lines = new THREE.LineSegments(geometry, material);
-    scene.add(lines);
-    return lines;
-  }
+  const points = {
+    L1: [600, 200],
+    L2: [600, 300],
+    L3: [0, 300],
+    L4: [0, 0],
+    L5: [100, 0]
+  };
 
-  const minorGrid = [];
-  const majorGrid = [];
-  for (let x = -20; x &lt;= 200; x += 10) {
-    const bucket = x % 50 === 0 ? majorGrid : minorGrid;
-    bucket.push(world(x, -40, -175), world(x, 320, -175));
-  }
-  for (let y = -40; y &lt;= 320; y += 10) {
-    const bucket = y % 50 === 0 ? majorGrid : minorGrid;
-    bucket.push(world(-20, y, -175), world(200, y, -175));
-  }
-  for (let x = -20; x &lt;= 200; x += 10) {
-    const bucket = x % 50 === 0 ? majorGrid : minorGrid;
-    bucket.push(world(x, 300, -175), world(x, 300, 725));
-  }
-  for (let z = -175; z &lt;= 725; z += 10) {
-    const bucket = (z + zDatumShift) % 50 === 0 ? majorGrid : minorGrid;
-    bucket.push(world(0, 300, z), world(200, 300, z));
-  }
-  lineSegments(minorGrid, theme(&quot;--border&quot;), 0.28);
-  lineSegments(majorGrid, theme(&quot;--muted-foreground&quot;), 0.5);
+  const shape = new THREE.Shape();
+  shape.moveTo(...points.L3);
+  shape.lineTo(...points.L2);
+  shape.lineTo(...points.L1);
+  shape.lineTo(...points.L5);
+  shape.lineTo(...points.L4);
+  shape.closePath();
 
-  lineSegments([world(0, -40, -175), world(210, -40, -175)], theme(&quot;--viz-series-1&quot;), 0.95);
-  lineSegments([world(0, -40, -175), world(0, 325, -175)], theme(&quot;--viz-series-2&quot;), 0.95);
-  lineSegments([world(0, -40, -175), world(0, -40, 725)], theme(&quot;--viz-series-3&quot;), 0.95);
+  const geometry = new THREE.ExtrudeGeometry(shape, {
+    depth: 1,
+    bevelEnabled: false,
+    curveSegments: 1,
+    steps: 1
+  });
+  geometry.computeVertexNormals();
+  const plate = new THREE.Mesh(geometry, new THREE.MeshPhongMaterial({
+    color: 0xffffff,
+    transparent: false,
+    opacity: 1,
+    side: THREE.DoubleSide,
+    shininess: 26
+  }));
+  plate.name = "Left-side-plate";
+  scene.add(plate);
 
-  function addBox({ x, y, z, color, opacity = 0.72, edgeOpacity = 0.9 }) {
-    const width = x[1] - x[0];
-    const depth = y[1] - y[0];
-    const height = z[1] - z[0];
-    const geometry = new THREE.BoxGeometry(width, height, depth);
-    const material = new THREE.MeshPhongMaterial({
-      color: theme(color), transparent: true, opacity,
-      side: THREE.DoubleSide, depthWrite: opacity &gt;= 0.3, shininess: 18
-    });
-    const position = world(
-      (x[0] + x[1]) / 2,
-      (y[0] + y[1]) / 2,
-      (z[0] + z[1]) / 2
+  const edges = new THREE.LineSegments(
+    new THREE.EdgesGeometry(geometry, 1),
+    sheetEdgeMaterial
+  );
+  edges.name = "Left-side-plate::outline";
+  edges.renderOrder = 5;
+  scene.add(edges);
+
+  // Integral 30 mm flange folded 90° towards the right-hand side (-Z). L6 is
+  // 60 mm from L5, while the opposite end stops 30 mm before L1.
+  const dxSlope = points.L1[0] - points.L5[0];
+  const dySlope = points.L1[1] - points.L5[1];
+  const lengthSlope = Math.hypot(dxSlope, dySlope);
+  const angleSlope = Math.atan2(dySlope, dxSlope);
+  const unitSlopeX = dxSlope / lengthSlope;
+  const unitSlopeY = dySlope / lengthSlope;
+  const flangeStart = [
+    points.L5[0] + unitSlopeX * 60,
+    points.L5[1] + unitSlopeY * 60
+  ];
+  const flangeEnd = [
+    points.L1[0] - unitSlopeX * 30,
+    points.L1[1] - unitSlopeY * 30
+  ];
+  const flangeLength = lengthSlope - 90;
+  const rightNormalX = Math.sin(angleSlope);
+  const rightNormalY = -Math.cos(angleSlope);
+  const flangeGeometry = new THREE.BoxGeometry(flangeLength, 1, 30);
+  const flange = new THREE.Mesh(flangeGeometry, new THREE.MeshPhongMaterial({
+    color: 0xffffff,
+    transparent: false,
+    opacity: 1,
+    side: THREE.DoubleSide,
+    shininess: 30
+  }));
+  flange.name = "Left-side-flange";
+  flange.rotation.z = angleSlope;
+  flange.position.set(
+    (flangeEnd[0] + flangeStart[0]) / 2 + rightNormalX * 0.5,
+    (flangeEnd[1] + flangeStart[1]) / 2 + rightNormalY * 0.5,
+    -15
+  );
+  scene.add(flange);
+  const flangeEdges = new THREE.LineSegments(
+    new THREE.EdgesGeometry(flangeGeometry),
+    sheetEdgeMaterial
+  );
+  flangeEdges.name = "Left-side-flange::outline";
+  flangeEdges.rotation.copy(flange.rotation);
+  flangeEdges.position.copy(flange.position);
+  flangeEdges.renderOrder = 6;
+  scene.add(flangeEdges);
+
+  // Mirror the complete assembly across its width. The left plate occupies
+  // Z = 0..1 mm; the right plate occupies Z = -1499..-1498 mm. This gives an
+  // exact 1500 mm outside-to-outside width and 1498 mm between inner faces.
+  const rightPlate = plate.clone();
+  rightPlate.name = "Right-side-plate";
+  rightPlate.scale.z = -1;
+  rightPlate.position.z = -1498;
+  scene.add(rightPlate);
+
+  const rightEdges = edges.clone();
+  rightEdges.name = "Right-side-plate::outline";
+  rightEdges.scale.z = -1;
+  rightEdges.position.z = -1498;
+  scene.add(rightEdges);
+
+  const rightFlange = flange.clone();
+  rightFlange.name = "Right-side-flange";
+  rightFlange.scale.z = -1;
+  rightFlange.position.z = -1498 - flange.position.z;
+  scene.add(rightFlange);
+
+  const rightFlangeEdges = flangeEdges.clone();
+  rightFlangeEdges.name = "Right-side-flange::outline";
+  rightFlangeEdges.scale.z = -1;
+  rightFlangeEdges.position.z = -1498 - flangeEdges.position.z;
+  scene.add(rightFlangeEdges);
+
+  // Six 1 mm cover plates connect matching edges of the left and right side
+  // plates. The 1498 mm span is the clear distance between their inner faces.
+  const coverMaterial = new THREE.MeshPhongMaterial({
+    color: 0xffffff,
+    transparent: false,
+    opacity: 1,
+    side: THREE.DoubleSide,
+    shininess: 24
+  });
+  const coverEdgeMaterial = new THREE.LineBasicMaterial({
+    color: 0x000000,
+    transparent: false,
+    opacity: 1
+  });
+  const detailEdgeMaterial = new THREE.LineBasicMaterial({
+    color: 0x000000,
+    transparent: false,
+    opacity: 1
+  });
+
+  function addCoverPlate(name, start, end) {
+    const dx = end[0] - start[0];
+    const dy = end[1] - start[1];
+    const length = Math.hypot(dx, dy);
+    // Add a 1 mm overlap at each end and into both side plates. This models a
+    // closed sheet-metal joint rather than two solids meeting on a zero-width
+    // mathematical line.
+    const panelGeometry = new THREE.BoxGeometry(length + 2, 1, 1500);
+    const panel = new THREE.Mesh(panelGeometry, coverMaterial);
+    panel.name = name;
+    panel.rotation.z = Math.atan2(dy, dx);
+    panel.position.set(
+      (start[0] + end[0]) / 2,
+      (start[1] + end[1]) / 2,
+      -749
     );
-    const mesh = new THREE.Mesh(geometry, material);
-    mesh.position.copy(position);
-    scene.add(mesh);
+    scene.add(panel);
 
-    const edges = new THREE.LineSegments(
-      new THREE.EdgesGeometry(geometry),
-      new THREE.LineBasicMaterial({
-        color: theme(&quot;--foreground&quot;), transparent: true, opacity: edgeOpacity
-      })
+    const panelEdges = new THREE.LineSegments(
+      new THREE.EdgesGeometry(panelGeometry),
+      coverEdgeMaterial
     );
-    edges.position.copy(position);
-    edges.renderOrder = 5;
-    scene.add(edges);
+    panelEdges.name = `${name}::outline`;
+    panelEdges.rotation.copy(panel.rotation);
+    panelEdges.position.copy(panel.position);
+    panelEdges.renderOrder = 4;
+    scene.add(panelEdges);
   }
 
-  function addVerticalCylinder({ radius, x, y, z, color, opacity = 0.7 }) {
-    const height = z[1] - z[0];
-    const geometry = new THREE.CylinderGeometry(radius, radius, height, 64, 1, false);
-    const material = new THREE.MeshPhongMaterial({
-      color: theme(color), transparent: true, opacity,
-      side: THREE.DoubleSide, depthWrite: true, shininess: 20
-    });
-    const mesh = new THREE.Mesh(geometry, material);
-    mesh.position.copy(world(x, y, (z[0] + z[1]) / 2));
-    scene.add(mesh);
-    const edges = new THREE.LineSegments(
-      new THREE.EdgesGeometry(geometry, 12),
-      new THREE.LineBasicMaterial({
-        color: theme(&quot;--foreground&quot;), transparent: true, opacity: 0.9
-      })
+  function addAxisPlate(name, size, position, showEdges = true) {
+    const panelGeometry = new THREE.BoxGeometry(...size);
+    const panel = new THREE.Mesh(panelGeometry, coverMaterial);
+    panel.name = name;
+    panel.position.set(...position);
+    scene.add(panel);
+    if (!showEdges) return;
+    const panelEdges = new THREE.LineSegments(
+      new THREE.EdgesGeometry(panelGeometry),
+      coverEdgeMaterial
     );
-    edges.position.copy(mesh.position);
-    edges.renderOrder = 8;
-    scene.add(edges);
+    panelEdges.name = `${name}::outline`;
+    panelEdges.position.copy(panel.position);
+    panelEdges.renderOrder = 4;
+    scene.add(panelEdges);
   }
 
-  function addTaperedDepthBox({ x, frontY, bottomRearY, topRearY, z, color }) {
-    const cadPoints = [
-      [x[0], frontY, z[0]], [x[1], frontY, z[0]],
-      [x[1], bottomRearY, z[0]], [x[0], bottomRearY, z[0]],
-      [x[0], frontY, z[1]], [x[1], frontY, z[1]],
-      [x[1], topRearY, z[1]], [x[0], topRearY, z[1]]
-    ];
-    const positions = cadPoints.flatMap(([px, py, pz]) =&gt; {
-      const point = world(px, py, pz);
-      return [point.x, point.y, point.z];
-    });
-    const indices = [
-      0, 2, 1, 0, 3, 2,
-      4, 5, 6, 4, 6, 7,
-      0, 1, 5, 0, 5, 4,
-      3, 7, 6, 3, 6, 2,
-      0, 4, 7, 0, 7, 3,
-      1, 2, 6, 1, 6, 5
-    ];
-    const geometry = new THREE.BufferGeometry();
-    geometry.setAttribute(&quot;position&quot;, new THREE.Float32BufferAttribute(positions, 3));
-    geometry.setIndex(indices);
-    geometry.computeVertexNormals();
-    scene.add(new THREE.Mesh(
-      geometry,
-      new THREE.MeshPhongMaterial({
-        color: theme(color), transparent: true, opacity: 0.72,
-        side: THREE.DoubleSide, depthWrite: true, shininess: 18
-      })
-    ));
-    const edges = new THREE.LineSegments(
-      new THREE.EdgesGeometry(geometry),
-      new THREE.LineBasicMaterial({
-        color: theme(&quot;--foreground&quot;), transparent: true, opacity: 0.9
-      })
-    );
-    edges.renderOrder = 6;
-    scene.add(edges);
-  }
-
-  function createSweptRectElbow(
-    ringFactory,
-    colorToken = &quot;--viz-series-3&quot;,
-    extension = {}
-  ) {
-    const segments = 32;
-    const rings = [];
-    if (extension.before) rings.push(extension.before);
-    for (let ring = 0; ring &lt;= segments; ring += 1) {
-      const angle = (ring / segments) * Math.PI / 2;
-      rings.push(ringFactory(angle));
+  function addClosedOutline(name, outlinePoints) {
+    const vertices = [];
+    for (let index = 0; index < outlinePoints.length; index += 1) {
+      const start = outlinePoints[index];
+      const end = outlinePoints[(index + 1) % outlinePoints.length];
+      vertices.push(...start, ...end);
     }
-    if (extension.after) rings.push(extension.after);
-    const positions = [];
-    const indices = [];
-    for (const section of rings) {
-      for (const [x, y, z] of section) {
-        const point = world(x, y, z);
-        positions.push(point.x, point.y, point.z);
-      }
-    }
-    for (let ring = 0; ring &lt; rings.length - 1; ring += 1) {
-      for (let side = 0; side &lt; 4; side += 1) {
-        const nextSide = (side + 1) % 4;
-        const a = ring * 4 + side;
-        const b = ring * 4 + nextSide;
-        const c = (ring + 1) * 4 + side;
-        const d = (ring + 1) * 4 + nextSide;
-        indices.push(a, c, b, b, c, d);
-      }
-    }
-    indices.push(0, 1, 2, 0, 2, 3);
-    const end = (rings.length - 1) * 4;
-    indices.push(end, end + 2, end + 1, end, end + 3, end + 2);
-    const geometry = new THREE.BufferGeometry();
-    geometry.setAttribute(&quot;position&quot;, new THREE.Float32BufferAttribute(positions, 3));
-    geometry.setIndex(indices);
-    geometry.computeVertexNormals();
-    scene.add(new THREE.Mesh(
-      geometry,
-      new THREE.MeshPhongMaterial({
-        color: theme(colorToken), transparent: true, opacity: 0.72,
-        side: THREE.DoubleSide, depthWrite: true, shininess: 18
-      })
-    ));
-    const edges = new THREE.LineSegments(
-      new THREE.EdgesGeometry(geometry, 12),
-      new THREE.LineBasicMaterial({
-        color: theme(&quot;--foreground&quot;), transparent: true, opacity: 0.9
-      })
-    );
-    edges.renderOrder = 7;
-    scene.add(edges);
+    const outlineGeometry = new THREE.BufferGeometry();
+    outlineGeometry.setAttribute("position", new THREE.Float32BufferAttribute(vertices, 3));
+    const outline = new THREE.LineSegments(outlineGeometry, detailEdgeMaterial);
+    outline.name = name;
+    outline.renderOrder = 5;
+    scene.add(outline);
   }
 
-  // Hollow horizontal elbow with constant 35 × 15 cm nominal section.
-  // The 10 cm allocation behind the former tight bend becomes the throat
-  // radius, producing a fabricable continuous curve instead of a sharp corner.
-  function createHollowElbow2() {
-    const innerRadius = 10;
-    const outerRadius = 45;
-    const thickness = 0.05; // 0.5 mm
-    const bottomZ = 111.5;
-    const topZ = 126.5;
-    const centreX = 72.5;
-    const centreY = 265;
-    const outletX = 71;
-    const segments = 48;
-    const material = new THREE.MeshPhongMaterial({
-      color: theme(&quot;--red&quot;), transparent: true, opacity: 0.76,
-      side: THREE.DoubleSide, depthWrite: true, shininess: 20
-    });
+  // Top cover L2–L3–R3–R2, divided around a true 350 × 150 mm opening.
+  // The opening runs from X=30 to X=180 and is centred across the width.
+  addAxisPlate("Top-back-of-exhaust-hole", [30, 1, 1498], [15, 300, -749], false);
+  addAxisPlate("Top-front-of-exhaust-hole", [420, 1, 1498], [390, 300, -749], false);
+  addAxisPlate("Top-left-of-exhaust-hole", [150, 1, 574], [105, 300, -287], false);
+  addAxisPlate("Top-right-of-exhaust-hole", [150, 1, 574], [105, 300, -1211], false);
+  addClosedOutline("Top-outer-outline", [
+    [0, 300.55, 0], [600, 300.55, 0],
+    [600, 300.55, -1498], [0, 300.55, -1498]
+  ]);
+  addClosedOutline("Exhaust-hole-outline", [
+    [180, 300.55, -574], [30, 300.55, -574],
+    [30, 300.55, -924], [180, 300.55, -924]
+  ]);
 
-    function sectorSolid(z0, z1, r0, r1) {
-      const positions = [];
-      const indices = [];
-      for (let i = 0; i &lt;= segments; i += 1) {
-        const angle = (i / segments) * Math.PI / 2;
-        for (const z of [z0, z1]) {
-          for (const radius of [r0, r1]) {
-            const point = world(
-              centreX + radius * Math.cos(angle),
-              centreY - radius * Math.sin(angle),
-              z
-            );
-            positions.push(point.x, point.y, point.z);
-          }
-        }
-      }
-      // Continue the same four sheet surfaces into the integrated outlet stub.
-      for (const z of [z0, z1]) {
-        for (const radius of [r0, r1]) {
-          const point = world(outletX, centreY - radius, z);
-          positions.push(point.x, point.y, point.z);
-        }
-      }
-      const stride = 4;
-      const ringCount = segments + 2;
-      for (let i = 0; i &lt; ringCount - 1; i += 1) {
-        const q = i * stride;
-        const n = (i + 1) * stride;
-        indices.push(q, n, n + 2, q, n + 2, q + 2);
-        indices.push(q + 1, q + 3, n + 3, q + 1, n + 3, n + 1);
-        indices.push(q, q + 1, n + 1, q, n + 1, n);
-        indices.push(q + 2, n + 2, n + 3, q + 2, n + 3, q + 3);
-      }
-      indices.push(0, 2, 3, 0, 3, 1);
-      const end = (ringCount - 1) * stride;
-      indices.push(end, end + 1, end + 3, end, end + 3, end + 2);
-      const geometry = new THREE.BufferGeometry();
-      geometry.setAttribute(&quot;position&quot;, new THREE.Float32BufferAttribute(positions, 3));
-      geometry.setIndex(indices);
-      geometry.computeVertexNormals();
-      scene.add(new THREE.Mesh(geometry, material));
-      const edges = new THREE.LineSegments(
-        new THREE.EdgesGeometry(geometry, 28),
-        new THREE.LineBasicMaterial({
-          color: theme(&quot;--foreground&quot;), transparent: true, opacity: 0.72
-        })
+  // Back cover L3–L4–R4–R3, divided to leave the L3–P4–P5–P6 notch open.
+  addAxisPlate("Back-below-P-notch", [1, 280, 1498], [0, 140, -749], false);
+  addAxisPlate("Back-right-of-P-notch", [1, 20, 1478], [0, 290, -759], false);
+  addClosedOutline("Back-notched-outline", [
+    [0.55, 0, 0], [0.55, 0, -1498], [0.55, 300, -1498],
+    [0.55, 300, -20], [0.55, 280, -20], [0.55, 280, 0]
+  ]);
+
+  // Two external wall-mounting rails on the rear face. Each rail is
+  // 1,400 mm wide, 40 mm high and 3 mm thick. Their centrelines are 50 mm
+  // from the top and bottom edges of the 300 mm-high rear panel.
+  const railMaterial = new THREE.MeshPhongMaterial({
+    color: 0xffffff,
+    side: THREE.DoubleSide,
+    shininess: 36
+  });
+
+  function addWallRail(name, y) {
+    const railGeometry = new THREE.BoxGeometry(3, 40, 1400);
+    const rail = new THREE.Mesh(railGeometry, railMaterial);
+    rail.name = name;
+    rail.position.set(-2, y, -749);
+    scene.add(rail);
+
+    const railEdges = new THREE.LineSegments(
+      new THREE.EdgesGeometry(railGeometry),
+      detailEdgeMaterial
+    );
+    railEdges.name = `${name}::outline`;
+    railEdges.position.copy(rail.position);
+    railEdges.renderOrder = 6;
+    scene.add(railEdges);
+  }
+
+  addWallRail("Upper-wall-mounting-rail", 250);
+  addWallRail("Lower-wall-mounting-rail", 50);
+
+  addCoverPlate("L5-L4-R4-R5", points.L5, points.L4);
+  addCoverPlate("L6-L5-R5-R6", flangeStart, points.L5);
+  addCoverPlate("L1-L2-R2-R1", points.L1, points.L2);
+  addCoverPlate("L1-L7-R7-R1", points.L1, flangeEnd);
+
+  const pPoints = {
+    P1: [500, 280, 0],
+    P2: [500, 280, -20],
+    P3: [500, 300, -20],
+    P4: [0, 280, 0],
+    P5: [0, 280, -20],
+    P6: [0, 300, -20]
+  };
+  addAxisPlate("P1-P2-P5-P4", [500, 1, 20], [250, 280, -10]);
+  addAxisPlate("P2-P3-P6-P5", [500, 20, 1], [250, 290, -20]);
+
+  const exhaustPoints = {
+    EB1: [180, 300, -574],
+    EB2: [30, 300, -574],
+    EB3: [30, 300, -924],
+    EB4: [180, 300, -924],
+    ET1: [180, 330, -574],
+    ET2: [30, 330, -574],
+    ET3: [30, 330, -924],
+    ET4: [180, 330, -924]
+  };
+  // Thirty-millimetre-high curb around the exhaust opening. Each 1 mm wall
+  // sits outside the opening, preserving the full 350 × 150 mm clear size.
+  addAxisPlate("EB1-EB2-ET2-ET1-curb", [150, 30, 1], [105, 315, -573.5]);
+  addAxisPlate("EB2-EB3-ET3-ET2-curb", [1, 30, 350], [29.5, 315, -749]);
+  addAxisPlate("EB3-EB4-ET4-ET3-curb", [150, 30, 1], [105, 315, -924.5]);
+  addAxisPlate("EB4-EB1-ET1-ET4-curb", [1, 30, 350], [180.5, 315, -749]);
+
+  // Full-width upstand at L5–R5: 30 mm high × 1500 mm wide. In the side
+  // profile it is exactly 90° to the L5–L1 and R5–R1 sloping edges.
+  const upNormalX = -Math.sin(angleSlope);
+  const upNormalY = Math.cos(angleSlope);
+  const l5PlateGeometry = new THREE.BoxGeometry(30, 1, 1500);
+  const l5Plate = new THREE.Mesh(l5PlateGeometry, coverMaterial);
+  l5Plate.name = "30H-1500W-L5-R5";
+  l5Plate.rotation.z = angleSlope + Math.PI / 2;
+  l5Plate.position.set(
+    points.L5[0] + upNormalX * 15,
+    points.L5[1] + upNormalY * 15,
+    -749
+  );
+  scene.add(l5Plate);
+
+  const l5PlateEdges = new THREE.LineSegments(
+    new THREE.EdgesGeometry(l5PlateGeometry),
+    coverEdgeMaterial
+  );
+  l5PlateEdges.name = "30H-1500W-L5-R5::outline";
+  l5PlateEdges.rotation.copy(l5Plate.rotation);
+  l5PlateEdges.position.copy(l5Plate.position);
+  l5PlateEdges.renderOrder = 5;
+  scene.add(l5PlateEdges);
+
+  const fl1Point = [
+    points.L5[0] + upNormalX * 30,
+    points.L5[1] + upNormalY * 30
+  ];
+  const fl2Point = [points.L2[0] - 100, points.L2[1] - 50];
+
+  // One-millimetre panel bounded by FL2–FR2–R8–L8. Its lower corners meet
+  // the free edges of the opposed 30 mm flanges.
+  const fl2Corners = [
+    new THREE.Vector3(fl2Point[0], fl2Point[1], 0),
+    new THREE.Vector3(fl2Point[0], fl2Point[1], -1498),
+    new THREE.Vector3(flangeEnd[0], flangeEnd[1], -1468),
+    new THREE.Vector3(flangeEnd[0], flangeEnd[1], -30)
+  ];
+  const fl2Normal = new THREE.Vector3()
+    .subVectors(fl2Corners[1], fl2Corners[0])
+    .cross(new THREE.Vector3().subVectors(fl2Corners[3], fl2Corners[0]))
+    .normalize();
+  const fl2Vertices = [];
+  for (const direction of [0.5, -0.5]) {
+    for (const corner of fl2Corners) {
+      const vertex = corner.clone().addScaledVector(fl2Normal, direction);
+      fl2Vertices.push(vertex.x, vertex.y, vertex.z);
+    }
+  }
+  const fl2Indices = [
+    0, 1, 2, 0, 2, 3,
+    4, 6, 5, 4, 7, 6,
+    0, 4, 5, 0, 5, 1,
+    1, 5, 6, 1, 6, 2,
+    2, 6, 7, 2, 7, 3,
+    3, 7, 4, 3, 4, 0
+  ];
+  const fl2Geometry = new THREE.BufferGeometry();
+  fl2Geometry.setAttribute("position", new THREE.Float32BufferAttribute(fl2Vertices, 3));
+  fl2Geometry.setIndex(fl2Indices);
+  fl2Geometry.computeVertexNormals();
+  const fl2Plate = new THREE.Mesh(fl2Geometry, coverMaterial);
+  fl2Plate.name = "FL2-FR2-R8-L8";
+  scene.add(fl2Plate);
+  const fl2PlateEdges = new THREE.LineSegments(
+    new THREE.EdgesGeometry(fl2Geometry, 2),
+    coverEdgeMaterial
+  );
+  fl2PlateEdges.name = "FL2-FR2-R8-L8::outline";
+  fl2PlateEdges.renderOrder = 5;
+  scene.add(fl2PlateEdges);
+
+  // Three symmetrical Ø30 mm LED lights on the underside of the panel.
+  const ledGeometry = new THREE.CylinderGeometry(15, 15, 3, 32);
+  const ledMaterial = new THREE.MeshPhongMaterial({
+    color: 0xffffff,
+    side: THREE.DoubleSide,
+    shininess: 45
+  });
+  const ledQuaternion = new THREE.Quaternion().setFromUnitVectors(
+    new THREE.Vector3(0, 1, 0),
+    fl2Normal
+  );
+  const lightMountMidpoint = fl2Corners[0].clone().lerp(fl2Corners[3], 0.5);
+  // Overall width runs from Z=+1 to Z=-1499. These centres are therefore
+  // exactly 250, 750 and 1250 mm from the left outside face.
+  [-249, -749, -1249].forEach((centreZ, index) => {
+    const lightPosition = new THREE.Vector3(
+      lightMountMidpoint.x,
+      lightMountMidpoint.y,
+      centreZ
+    ).addScaledVector(fl2Normal, 2);
+    const light = new THREE.Mesh(ledGeometry, ledMaterial);
+    light.name = `LED-${index + 1}`;
+    light.quaternion.copy(ledQuaternion);
+    light.position.copy(lightPosition);
+    scene.add(light);
+    const lightEdges = new THREE.LineSegments(
+      new THREE.EdgesGeometry(ledGeometry, 30),
+      detailEdgeMaterial
+    );
+    lightEdges.name = `LED-${index + 1}::outline`;
+    lightEdges.quaternion.copy(ledQuaternion);
+    lightEdges.position.copy(lightPosition);
+    lightEdges.renderOrder = 6;
+    scene.add(lightEdges);
+  });
+
+  // Three removable 490 × 470 × 30 mm baffle grilles. Together they occupy
+  // 1,470 mm of the internal width, leaving the 20 mm cable-duct zone and
+  // 4 mm fitting clearance at each outside edge. Their lower faces rest on
+  // the line from the L5–R5 support to the FL2–FR2 support.
+  const grilleMaterial = new THREE.MeshPhongMaterial({
+    color: 0xffffff,
+    side: THREE.DoubleSide,
+    shininess: 38
+  });
+  const grilleEdgeMaterial = new THREE.LineBasicMaterial({
+    color: 0x000000,
+    transparent: false,
+    opacity: 1
+  });
+
+  const grilleDepthStart = new THREE.Vector3(points.L5[0], points.L5[1], 0);
+  const grilleDepthEnd = new THREE.Vector3(fl2Point[0], fl2Point[1], 0);
+  const grilleDepthAxis = grilleDepthEnd.clone().sub(grilleDepthStart).normalize();
+  const grilleWidthAxis = new THREE.Vector3(0, 0, -1);
+  const grilleNormalAxis = new THREE.Vector3().crossVectors(grilleDepthAxis, grilleWidthAxis).normalize();
+  const grilleRotation = new THREE.Quaternion().setFromRotationMatrix(
+    new THREE.Matrix4().makeBasis(grilleWidthAxis, grilleNormalAxis, grilleDepthAxis)
+  );
+  const grilleBaseCentre = grilleDepthStart.clone().lerp(grilleDepthEnd, 0.5)
+    .addScaledVector(grilleNormalAxis, 15);
+
+  function addGrillePart(group, name, geometry, position, rotation = [0, 0, 0], edgeAngle = 22) {
+    const part = new THREE.Mesh(geometry, grilleMaterial);
+    part.name = name;
+    part.position.set(...position);
+    part.rotation.set(...rotation);
+    group.add(part);
+
+    const partEdges = new THREE.LineSegments(
+      new THREE.EdgesGeometry(geometry, edgeAngle),
+      grilleEdgeMaterial
+    );
+    partEdges.position.copy(part.position);
+    partEdges.rotation.copy(part.rotation);
+    partEdges.renderOrder = 7;
+    group.add(partEdges);
+  }
+
+  function addRemovableGrille(index, centreZ) {
+    const grille = new THREE.Group();
+    grille.name = `Removable-grille-${index}`;
+
+    addGrillePart(grille, `Grille-${index}-frame-back`, new THREE.BoxGeometry(490, 30, 20), [0, 0, -225]);
+    addGrillePart(grille, `Grille-${index}-frame-front`, new THREE.BoxGeometry(490, 30, 20), [0, 0, 225]);
+    addGrillePart(grille, `Grille-${index}-frame-left`, new THREE.BoxGeometry(20, 30, 430), [-235, 0, 0]);
+    addGrillePart(grille, `Grille-${index}-frame-right`, new THREE.BoxGeometry(20, 30, 430), [235, 0, 0]);
+
+    const bladeWidth = 450;
+    const halfBladeDepth = 12;
+    const bladeRise = 14;
+    const wingLength = Math.hypot(halfBladeDepth, bladeRise);
+    const wingAngle = Math.atan2(bladeRise, halfBladeDepth);
+    for (let bladeIndex = 0; bladeIndex < 14; bladeIndex += 1) {
+      const bladeCentre = -195 + bladeIndex * 30;
+      const wingGeometry = new THREE.BoxGeometry(bladeWidth, 1, wingLength);
+      addGrillePart(
+        grille,
+        `Grille-${index}-baffle-${bladeIndex + 1}-rear`,
+        wingGeometry,
+        [0, 1, bladeCentre - halfBladeDepth / 2],
+        [-wingAngle, 0, 0],
+        30
       );
-      edges.renderOrder = 7;
-      scene.add(edges);
-    }
-
-    // Continuous outer and inner curved sheets.
-    sectorSolid(bottomZ + thickness, topZ - thickness, outerRadius - thickness, outerRadius);
-    sectorSolid(bottomZ + thickness, topZ - thickness, innerRadius, innerRadius + thickness);
-    // Bottom and top side cheeks; these carry the fabrication seams.
-    sectorSolid(bottomZ, bottomZ + thickness, innerRadius + thickness, outerRadius - thickness);
-    sectorSolid(topZ - thickness, topZ, innerRadius + thickness, outerRadius - thickness);
-
-    // One outline at the open outlet/joint; no line across the curved plates.
-    const outletOutline = [
-      world(outletX, 220, bottomZ), world(outletX, 255, bottomZ),
-      world(outletX, 255, bottomZ), world(outletX, 255, topZ),
-      world(outletX, 255, topZ), world(outletX, 220, topZ),
-      world(outletX, 220, topZ), world(outletX, 220, bottomZ)
-    ];
-    const outline = lineSegments(outletOutline, theme(&quot;--foreground&quot;), 0.84);
-    outline.renderOrder = 8;
-  }
-
-  // Hollow Elbow 3 uses the same constant-section construction as Elbow 2.
-  // Its added 10 cm is absorbed by the larger front curve.
-  function createHollowElbow3() {
-    const innerRadius = 10;
-    const outerRadius = 45;
-    const thickness = 0.05; // 0.5 mm
-    const bottomZ = 111.5;
-    const topZ = 126.5;
-    const centreX = 69.5;
-    const centreY = 210;
-    const inletX = 71;
-    const segments = 48;
-    const material = new THREE.MeshPhongMaterial({
-      color: theme(&quot;--viz-series-3&quot;), transparent: true, opacity: 0.76,
-      side: THREE.DoubleSide, depthWrite: true, shininess: 20
-    });
-
-    function sectorSolid(z0, z1, r0, r1) {
-      const positions = [];
-      const indices = [];
-      // Begin with the integrated inlet stub, then continue into the curve.
-      for (const z of [z0, z1]) {
-        for (const radius of [r0, r1]) {
-          const point = world(inletX, centreY + radius, z);
-          positions.push(point.x, point.y, point.z);
-        }
-      }
-      for (let i = 0; i &lt;= segments; i += 1) {
-        const angle = (i / segments) * Math.PI / 2;
-        for (const z of [z0, z1]) {
-          for (const radius of [r0, r1]) {
-            const point = world(
-              centreX - radius * Math.sin(angle),
-              centreY + radius * Math.cos(angle),
-              z
-            );
-            positions.push(point.x, point.y, point.z);
-          }
-        }
-      }
-      const stride = 4;
-      const ringCount = segments + 2;
-      for (let i = 0; i &lt; ringCount - 1; i += 1) {
-        const q = i * stride;
-        const n = (i + 1) * stride;
-        indices.push(q, n, n + 2, q, n + 2, q + 2);
-        indices.push(q + 1, q + 3, n + 3, q + 1, n + 3, n + 1);
-        indices.push(q, q + 1, n + 1, q, n + 1, n);
-        indices.push(q + 2, n + 2, n + 3, q + 2, n + 3, q + 3);
-      }
-      indices.push(0, 2, 3, 0, 3, 1);
-      const end = (ringCount - 1) * stride;
-      indices.push(end, end + 1, end + 3, end, end + 3, end + 2);
-      const geometry = new THREE.BufferGeometry();
-      geometry.setAttribute(&quot;position&quot;, new THREE.Float32BufferAttribute(positions, 3));
-      geometry.setIndex(indices);
-      geometry.computeVertexNormals();
-      scene.add(new THREE.Mesh(geometry, material));
-      const edges = new THREE.LineSegments(
-        new THREE.EdgesGeometry(geometry, 28),
-        new THREE.LineBasicMaterial({
-          color: theme(&quot;--foreground&quot;), transparent: true, opacity: 0.72
-        })
-      );
-      edges.renderOrder = 7;
-      scene.add(edges);
-    }
-
-    sectorSolid(bottomZ + thickness, topZ - thickness, outerRadius - thickness, outerRadius);
-    sectorSolid(bottomZ + thickness, topZ - thickness, innerRadius, innerRadius + thickness);
-    sectorSolid(bottomZ, bottomZ + thickness, innerRadius + thickness, outerRadius - thickness);
-    sectorSolid(topZ - thickness, topZ, innerRadius + thickness, outerRadius - thickness);
-
-    const inletOutline = [
-      world(inletX, 220, bottomZ), world(inletX, 255, bottomZ),
-      world(inletX, 255, bottomZ), world(inletX, 255, topZ),
-      world(inletX, 255, topZ), world(inletX, 220, topZ),
-      world(inletX, 220, topZ), world(inletX, 220, bottomZ)
-    ];
-    const outline = lineSegments(inletOutline, theme(&quot;--foreground&quot;), 0.84);
-    outline.renderOrder = 8;
-  }
-
-  // Shaft opening: 84 W × 38 D cm. Its rear edge is 236 cm from the
-  // back-wall inner face at Y=300, so it spans X=0…84 and Y=26…64.
-  const shaftHoleX = [0, 84];
-  const shaftHoleY = [26, 64];
-
-  function addSlabWithShaftHole(z, color, opacity, edgeOpacity) {
-    addBox({ x: [84, 180], y: [-15, 300], z, color, opacity, edgeOpacity });
-    addBox({ x: shaftHoleX, y: [-15, shaftHoleY[0]], z, color, opacity, edgeOpacity });
-    addBox({ x: shaftHoleX, y: [shaftHoleY[1], 300], z, color, opacity, edgeOpacity });
-  }
-
-  // Suspended ceiling at displayed Z=268…270, with the shaft opening removed.
-  addSlabWithShaftHole([93, 95], &quot;--muted-foreground&quot;, 0.13, 0.42);
-
-  // D150 recessed downlight. Distances are measured to the 16.5 cm outer trim edge:
-  // 85 cm from the left wall and 83 cm from the back wall.
-  const downlightX = 85 + 16.5 / 2;
-  const downlightY = 300 - 83 - 16.5 / 2;
-  addVerticalCylinder({
-    radius: 6.95, x: downlightX, y: downlightY,
-    z: [93, 96.5], color: &quot;--yellow&quot;, opacity: 0.72
-  });
-  addVerticalCylinder({
-    radius: 8.25, x: downlightX, y: downlightY,
-    z: [92.8, 93.2], color: &quot;--yellow&quot;, opacity: 0.82
-  });
-
-  // Back wall: 180 W × 20 D × 338 H cm, displayed at Z=0…338.
-  addBox({
-    x: [0, 180], y: [300, 320], z: [-175, 163], color: &quot;--muted-foreground&quot;,
-    opacity: 0.13, edgeOpacity: 0.42
-  });
-
-  // Remaining 20 cm room walls around the 180 × 315 cm ceiling footprint.
-  // Side walls extend through both end-wall thicknesses for flush outer corners.
-  addBox({
-    x: [-20, 0], y: [-35, 320], z: [-175, 163], color: &quot;--muted-foreground&quot;,
-    opacity: 0.08, edgeOpacity: 0.32
-  });
-  addBox({
-    x: [180, 200], y: [-35, 320], z: [-175, 163], color: &quot;--muted-foreground&quot;,
-    opacity: 0.08, edgeOpacity: 0.32
-  });
-  addBox({
-    x: [0, 180], y: [-35, -15], z: [-175, 163], color: &quot;--muted-foreground&quot;,
-    opacity: 0.08, edgeOpacity: 0.32
-  });
-
-  // 20 cm concrete roof slab at displayed Z=318…338, retaining the aligned opening.
-  addSlabWithShaftHole([143, 163], &quot;--muted&quot;, 0.2, 0.55);
-
-  // Shaft enclosure outside the clear 84 × 38 cm opening: 20 cm left wall,
-  // with 15 cm right, front, and rear walls.
-  // It begins 1 cm below the ceiling top at Z=269 and extends 493 cm to Z=762.
-  // The shaft&#x27;s left side follows the room wall at 20 cm thickness for its full height.
-  addBox({
-    x: [84, 99], y: [11, 79], z: [94, 587], color: &quot;--muted&quot;,
-    opacity: 0.24, edgeOpacity: 0.62
-  });
-  addBox({
-    x: [0, 84], y: [11, 26], z: [94, 587], color: &quot;--muted&quot;,
-    opacity: 0.24, edgeOpacity: 0.62
-  });
-  addBox({
-    x: [-20, 0], y: [11, 79], z: [163, 587], color: &quot;--muted&quot;,
-    opacity: 0.24, edgeOpacity: 0.62
-  });
-  // Rear shaft wall, split around the 35 × 15 cm duct penetration.
-  addBox({
-    x: [0, 24.5], y: [64, 79], z: [94, 587], color: &quot;--muted&quot;,
-    opacity: 0.24, edgeOpacity: 0.62
-  });
-  addBox({
-    x: [59.5, 84], y: [64, 79], z: [94, 587], color: &quot;--muted&quot;,
-    opacity: 0.24, edgeOpacity: 0.62
-  });
-  addBox({
-    x: [24.5, 59.5], y: [64, 79], z: [94, 111.5], color: &quot;--muted&quot;,
-    opacity: 0.24, edgeOpacity: 0.62
-  });
-  addBox({
-    x: [24.5, 59.5], y: [64, 79], z: [126.5, 587], color: &quot;--muted&quot;,
-    opacity: 0.24, edgeOpacity: 0.62
-  });
-
-  // Thin GRC enclosure directly on the 84 × 38 cm hole, not on the shaft walls.
-  // Assumed 1 cm panel thickness; displayed height is Z=762…862 (100 cm).
-  addBox({
-    x: [0, 1], y: [26, 64], z: [587, 687], color: &quot;--green&quot;,
-    opacity: 0.34, edgeOpacity: 0.72
-  });
-  addBox({
-    x: [83, 84], y: [26, 64], z: [587, 687], color: &quot;--green&quot;,
-    opacity: 0.34, edgeOpacity: 0.72
-  });
-  addBox({
-    x: [0, 84], y: [26, 27], z: [587, 687], color: &quot;--green&quot;,
-    opacity: 0.34, edgeOpacity: 0.72
-  });
-  // Rear GRC panel is split around Elbow 5 and the rain-hood outlet.
-  addBox({
-    x: [0, 24.5], y: [63, 64], z: [587, 687], color: &quot;--green&quot;,
-    opacity: 0.34, edgeOpacity: 0.72
-  });
-  addBox({
-    x: [59.5, 84], y: [63, 64], z: [587, 687], color: &quot;--green&quot;,
-    opacity: 0.34, edgeOpacity: 0.72
-  });
-  addBox({
-    x: [24.5, 59.5], y: [63, 64], z: [587, 621.5], color: &quot;--green&quot;,
-    opacity: 0.34, edgeOpacity: 0.72
-  });
-  addBox({
-    x: [24.5, 59.5], y: [63, 64], z: [656.5, 687], color: &quot;--green&quot;,
-    opacity: 0.34, edgeOpacity: 0.72
-  });
-
-  // Glass roof: 94 W × 58 D × 1 H cm. Left edge aligns at X=0;
-  // the extra 10 cm width projects to the right. Depth overhang is 10 cm each end.
-  addBox({
-    x: [0, 94], y: [16, 74], z: [687, 688], color: &quot;--blue&quot;,
-    opacity: 0.2, edgeOpacity: 0.7
-  });
-
-  // Floor slab follows the new wall exteriors; it remains 10 cm thick below Z=0.
-  // Overall footprint is 220 W × 355 D.
-  addBox({
-    x: [-20, 200], y: [-35, 320], z: [-185, -175], color: &quot;--muted&quot;,
-    opacity: 0.24, edgeOpacity: 0.55
-  });
-
-  // Range hood — identical position and envelope to Option A.
-  addBox({
-    x: [25, 175], y: [240, 300], z: [0, 10], color: &quot;--viz-series-1&quot;
-  });
-
-  // Straight 1 remains within the original 116.5 cm overall rise allowance.
-  // Its straight portion ends earlier so the formed elbow does not exceed displayed Z=301.5.
-  addBox({
-    x: [82.5, 117.5], y: [285, 300], z: [10, 91.5], color: &quot;--viz-series-2&quot;
-  });
-
-  // Elbow 1 — formed vertical-to-forward elbow contained below displayed Z=301.5.
-  createSweptRectElbow(angle =&gt; {
-    const sine = Math.sin(angle);
-    const cosine = Math.cos(angle);
-    const centerY = 265 + 27.5 * cosine;
-    const centerZ = 91.5 + 27.5 * sine;
-    return [
-      [82.5, centerY + 7.5 * cosine, centerZ + 7.5 * sine],
-      [117.5, centerY + 7.5 * cosine, centerZ + 7.5 * sine],
-      [117.5, centerY - 7.5 * cosine, centerZ - 7.5 * sine],
-      [82.5, centerY - 7.5 * cosine, centerZ - 7.5 * sine]
-    ];
-  });
-
-  // Elbow 2 — hollow 0.5 mm construction, 10 cm throat radius and 45 cm
-  // outside radius. The larger curve absorbs the former rear extension while
-  // preserving the established inlet and outlet connection positions.
-  createHollowElbow2();
-
-  // Elbow 3 — hollow 0.5 mm construction with a 10 cm throat radius and
-  // 45 cm outside radius. It retains the direct joint with Elbow 2.
-  createHollowElbow3();
-
-  const transitionSegments = 64;
-  const ductCenterX = 42;
-  const ductCenterZ = 119;
-  const rectangleProfile = { type: &quot;rectangle&quot;, halfWidth: 17.5, halfHeight: 7.5 };
-  const circleProfile = radius =&gt; ({ type: &quot;circle&quot;, radius });
-
-  function profileRadius(profile, cosine, sine) {
-    if (profile.type === &quot;circle&quot;) return profile.radius;
-    return Math.min(
-      profile.halfWidth / Math.max(Math.abs(cosine), 1e-9),
-      profile.halfHeight / Math.max(Math.abs(sine), 1e-9)
-    );
-  }
-
-  function createTransition(rearY, frontY, rearProfile, frontProfile, colorToken) {
-    const positions = [];
-    const indices = [];
-    for (let ring = 0; ring &lt; 2; ring += 1) {
-      const y = ring === 0 ? rearY : frontY;
-      const profile = ring === 0 ? rearProfile : frontProfile;
-      for (let i = 0; i &lt; transitionSegments; i += 1) {
-        const angle = (i / transitionSegments) * Math.PI * 2;
-        const cosine = Math.cos(angle);
-        const sine = Math.sin(angle);
-        const radius = profileRadius(profile, cosine, sine);
-        const point = world(
-          ductCenterX + radius * cosine,
-          y,
-          ductCenterZ + radius * sine
-        );
-        positions.push(point.x, point.y, point.z);
-      }
-    }
-    for (let i = 0; i &lt; transitionSegments; i += 1) {
-      const next = (i + 1) % transitionSegments;
-      const rear = i;
-      const rearNext = next;
-      const front = transitionSegments + i;
-      const frontNext = transitionSegments + next;
-      indices.push(rear, front, rearNext, rearNext, front, frontNext);
-    }
-    const geometry = new THREE.BufferGeometry();
-    geometry.setAttribute(&quot;position&quot;, new THREE.Float32BufferAttribute(positions, 3));
-    geometry.setIndex(indices);
-    geometry.computeVertexNormals();
-    scene.add(new THREE.Mesh(
-      geometry,
-      new THREE.MeshPhongMaterial({
-        color: theme(colorToken), transparent: true, opacity: 0.72,
-        side: THREE.DoubleSide, depthWrite: true, shininess: 18
-      })
-    ));
-    const outlinePoints = [];
-    for (let ring = 0; ring &lt; 2; ring += 1) {
-      for (let i = 0; i &lt; transitionSegments; i += 1) {
-        const next = (i + 1) % transitionSegments;
-        const a = (ring * transitionSegments + i) * 3;
-        const b = (ring * transitionSegments + next) * 3;
-        outlinePoints.push(
-          new THREE.Vector3(positions[a], positions[a + 1], positions[a + 2]),
-          new THREE.Vector3(positions[b], positions[b + 1], positions[b + 2])
-        );
-      }
-    }
-    for (let i = 0; i &lt; transitionSegments; i += transitionSegments / 8) {
-      const rear = i * 3;
-      const front = (transitionSegments + i) * 3;
-      outlinePoints.push(
-        new THREE.Vector3(positions[rear], positions[rear + 1], positions[rear + 2]),
-        new THREE.Vector3(positions[front], positions[front + 1], positions[front + 2])
+      addGrillePart(
+        grille,
+        `Grille-${index}-baffle-${bladeIndex + 1}-front`,
+        wingGeometry,
+        [0, 1, bladeCentre + halfBladeDepth / 2],
+        [wingAngle, 0, 0],
+        30
       );
     }
-    const outline = lineSegments(outlinePoints, theme(&quot;--foreground&quot;), 0.9);
-    outline.renderOrder = 6;
-  }
 
-  function createCylinder(radius, rearY, depth, colorToken) {
-    const geometry = new THREE.CylinderGeometry(radius, radius, depth, 64, 1, false);
-    const material = new THREE.MeshPhongMaterial({
-      color: theme(colorToken), transparent: true, opacity: 0.72,
-      side: THREE.DoubleSide, depthWrite: true, shininess: 18
+    [-150, 0, 150].forEach((x, stabiliserIndex) => {
+      addGrillePart(
+        grille,
+        `Grille-${index}-rear-stabiliser-${stabiliserIndex + 1}`,
+        new THREE.BoxGeometry(4, 4, 420),
+        [x, -9, 0]
+      );
     });
-    const cylinder = new THREE.Mesh(geometry, material);
-    cylinder.rotation.x = Math.PI / 2;
-    cylinder.position.copy(world(ductCenterX, rearY - depth / 2, ductCenterZ));
-    scene.add(cylinder);
-    const edges = new THREE.LineSegments(
-      new THREE.EdgesGeometry(geometry, 12),
-      new THREE.LineBasicMaterial({
-        color: theme(&quot;--foreground&quot;), transparent: true, opacity: 0.9
-      })
-    );
-    edges.rotation.copy(cylinder.rotation);
-    edges.position.copy(cylinder.position);
-    edges.renderOrder = 6;
-    scene.add(edges);
+
+    grille.quaternion.copy(grilleRotation);
+    grille.position.set(grilleBaseCentre.x, grilleBaseCentre.y, centreZ);
+    scene.add(grille);
   }
 
-  function createFan(rearY) {
-    const colorToken = &quot;--viz-series-6&quot;;
-    const collarDepth = 2.5;
-    const totalDepth = 20.5;
-    const housingDepth = totalDepth - collarDepth * 2;
-    const housingWidth = 34.9;
-    const housingHeight = 33.5;
-    const housingCenterY = rearY - collarDepth - housingDepth / 2;
-    const geometry = new THREE.CylinderGeometry(housingHeight / 2, housingHeight / 2, housingDepth, 64, 1, false);
-    const material = new THREE.MeshPhongMaterial({
-      color: theme(colorToken), transparent: true, opacity: 0.76,
-      side: THREE.DoubleSide, depthWrite: true, shininess: 22
+  [-269, -759, -1249].forEach((centreZ, index) => {
+    addRemovableGrille(index + 1, centreZ);
+  });
+
+  const annotationGroup = new THREE.Group();
+  annotationGroup.name = "Dimensions-and-labels";
+  scene.add(annotationGroup);
+
+  const annotationLayers = new Map();
+  function annotationLayer(partKey = "global") {
+    if (!annotationLayers.has(partKey)) {
+      const layer = new THREE.Group();
+      layer.name = `Annotations-${partKey}`;
+      annotationLayers.set(partKey, layer);
+      annotationGroup.add(layer);
+    }
+    return annotationLayers.get(partKey);
+  }
+
+  function labelSprite(text, x, y, z, partKey = "global") {
+    const canvas = document.createElement("canvas");
+    canvas.width = 320;
+    canvas.height = 112;
+    const context = canvas.getContext("2d");
+    context.clearRect(0, 0, canvas.width, canvas.height);
+    context.fillStyle = "#000";
+    const longLabel = text.length > 4;
+    let fontSize = longLabel ? 44 : 58;
+    context.font = `500 ${fontSize}px sans-serif`;
+    while (context.measureText(text).width > 292 && fontSize > 24) {
+      fontSize -= 2;
+      context.font = `500 ${fontSize}px sans-serif`;
+    }
+    context.textAlign = "center";
+    context.textBaseline = "middle";
+    context.fillText(text, 160, 58);
+    const texture = new THREE.CanvasTexture(canvas);
+    texture.colorSpace = THREE.SRGBColorSpace;
+    const sprite = new THREE.Sprite(new THREE.SpriteMaterial({ map: texture, transparent: true, depthTest: false }));
+    sprite.position.set(x, y, z);
+    sprite.scale.set(longLabel ? 104 : 72, longLabel ? 36 : 36, 1);
+    sprite.renderOrder = 20;
+    annotationLayer(partKey).add(sprite);
+    return sprite;
+  }
+
+  labelSprite("L1", 620, 190, 3, "left-side");
+  labelSprite("L2", 618, 319, 3, "left-side");
+  labelSprite("L3", -18, 319, 3, "left-side");
+  labelSprite("L4", -18, -20, 3, "left-side");
+  labelSprite("L5", 104, -20, 3, "left-side");
+  labelSprite("L6", flangeStart[0] + 5, flangeStart[1] + 19, 3, "left-flange");
+  labelSprite("L7", flangeEnd[0] - 5, flangeEnd[1] - 19, 3, "left-flange");
+  labelSprite("L8", flangeEnd[0] - 5, flangeEnd[1] - 19, -33, "left-flange");
+  labelSprite("L9", flangeStart[0] + 5, flangeStart[1] + 19, -33, "left-flange");
+  labelSprite("FL1", fl1Point[0] - 7, fl1Point[1] + 8, 3, "left-side");
+  labelSprite("FL2", fl2Point[0] - 8, fl2Point[1] + 8, 3, "left-side");
+
+  labelSprite("R1", 620, 190, -1502, "right-side");
+  labelSprite("R2", 618, 319, -1502, "right-side");
+  labelSprite("R3", -18, 319, -1502, "right-side");
+  labelSprite("R4", -18, -20, -1502, "right-side");
+  labelSprite("R5", 104, -20, -1502, "right-side");
+  labelSprite("R6", flangeStart[0] + 5, flangeStart[1] + 19, -1502, "right-flange");
+  labelSprite("R7", flangeEnd[0] - 5, flangeEnd[1] - 19, -1502, "right-flange");
+  labelSprite("R8", flangeEnd[0] - 5, flangeEnd[1] - 19, -1464, "right-flange");
+  labelSprite("R9", flangeStart[0] + 5, flangeStart[1] + 19, -1464, "right-flange");
+  labelSprite("FR1", fl1Point[0] - 7, fl1Point[1] + 8, -1502, "right-side");
+  labelSprite("FR2", fl2Point[0] - 8, fl2Point[1] + 8, -1502, "right-side");
+
+  labelSprite("P1", pPoints.P1[0], pPoints.P1[1] - 8, 4, "cable-duct");
+  labelSprite("P2", pPoints.P2[0], pPoints.P2[1] - 8, -24, "cable-duct");
+  labelSprite("P3", pPoints.P3[0], pPoints.P3[1] + 8, -24, "cable-duct");
+  labelSprite("P4", pPoints.P4[0] - 8, pPoints.P4[1] - 8, 4, "cable-duct");
+  labelSprite("P5", pPoints.P5[0] - 8, pPoints.P5[1] - 8, -24, "cable-duct");
+  labelSprite("P6", pPoints.P6[0] - 8, pPoints.P6[1] + 8, -24, "cable-duct");
+
+  labelSprite("EB1", exhaustPoints.EB1[0], 292, exhaustPoints.EB1[2], "exhaust-curb");
+  labelSprite("EB2", exhaustPoints.EB2[0], 292, exhaustPoints.EB2[2], "exhaust-curb");
+  labelSprite("EB3", exhaustPoints.EB3[0], 292, exhaustPoints.EB3[2], "exhaust-curb");
+  labelSprite("EB4", exhaustPoints.EB4[0], 292, exhaustPoints.EB4[2], "exhaust-curb");
+  labelSprite("ET1", exhaustPoints.ET1[0], 338, exhaustPoints.ET1[2], "exhaust-curb");
+  labelSprite("ET2", exhaustPoints.ET2[0], 338, exhaustPoints.ET2[2], "exhaust-curb");
+  labelSprite("ET3", exhaustPoints.ET3[0], 338, exhaustPoints.ET3[2], "exhaust-curb");
+  labelSprite("ET4", exhaustPoints.ET4[0], 338, exhaustPoints.ET4[2], "exhaust-curb");
+
+  const dimensionMaterial = new THREE.LineBasicMaterial({ color: 0x000000 });
+  const endpointGeometry = new THREE.SphereGeometry(3.2, 10, 8);
+  const endpointMaterial = new THREE.MeshBasicMaterial({ color: 0x000000 });
+
+  function vector3(value) {
+    return value instanceof THREE.Vector3 ? value.clone() : new THREE.Vector3(...value);
+  }
+
+  function addMetric(text, startValue, endValue, labelValue = null, partKey = "global") {
+    const layer = annotationLayer(partKey);
+    const start = vector3(startValue);
+    const end = vector3(endValue);
+    const geometry = new THREE.BufferGeometry().setFromPoints([start, end]);
+    const line = new THREE.Line(geometry, dimensionMaterial);
+    layer.add(line);
+    for (const point of [start, end]) {
+      const marker = new THREE.Mesh(endpointGeometry, endpointMaterial);
+      marker.position.copy(point);
+      layer.add(marker);
+    }
+    const labelPosition = labelValue ? vector3(labelValue) : start.clone().lerp(end, 0.5);
+    labelSprite(text, labelPosition.x, labelPosition.y, labelPosition.z, partKey);
+  }
+
+  function addAngleMetric(text, centreValue, radius, startAngle, endAngle, z, labelRadius = null, partKey = "global") {
+    const layer = annotationLayer(partKey);
+    const centre = vector3(centreValue);
+    const pointsOnArc = [];
+    for (let index = 0; index <= 32; index += 1) {
+      const angle = startAngle + (endAngle - startAngle) * index / 32;
+      pointsOnArc.push(new THREE.Vector3(
+        centre.x + Math.cos(angle) * radius,
+        centre.y + Math.sin(angle) * radius,
+        z
+      ));
+    }
+    layer.add(new THREE.Line(
+      new THREE.BufferGeometry().setFromPoints(pointsOnArc),
+      dimensionMaterial
+    ));
+    const middleAngle = (startAngle + endAngle) / 2;
+    const labelDistance = labelRadius || radius + 34;
+    labelSprite(
+      text,
+      centre.x + Math.cos(middleAngle) * labelDistance,
+      centre.y + Math.sin(middleAngle) * labelDistance,
+      z,
+      partKey
+    );
+  }
+
+  // Main hood envelope and side-profile fabrication dimensions.
+  addMetric("600 mm", [0, 342, 45], [600, 342, 45], [300, 366, 45], "left-side");
+  addMetric("300 mm", [-42, 0, 45], [-42, 300, 45], [-76, 150, 45], "left-side");
+  addMetric("100 mm", [642, 200, 45], [642, 300, 45], [678, 250, 45], "left-side");
+  addMetric("100 mm", [0, -42, 45], [100, -42, 45], [50, -68, 45], "left-side");
+  addMetric("538.5 mm", [100, 0, 45], [600, 200, 45], [355, 72, 45], "left-side");
+  addMetric("1,500 mm overall", [-68, 338, 1], [-68, 338, -1499], [-68, 382, -749], "top-cover");
+  addMetric("1 mm sheet", [18, 322, 0], [18, 322, 1], [18, 360, 0.5], "left-side");
+
+  // Only the two non-right side-profile corners receive angle labels.
+  addAngleMetric("158.2°", [100, 0, 45], 76, angleSlope, Math.PI, 45, 112, "left-side");
+  addAngleMetric("111.8°", [600, 200, 45], 62, Math.PI / 2, Math.PI + angleSlope, 45, 102, "left-side");
+  addAngleMetric("slope 21.8°", [100, 0, 45], 132, 0, angleSlope, 45, 174, "left-side");
+
+  // Integral side flange.
+  addMetric("60 mm setback", [points.L5[0], points.L5[1], -42], [flangeStart[0], flangeStart[1], -42], null, "left-flange");
+  addMetric("448.5 mm flange", [flangeStart[0], flangeStart[1], -46], [flangeEnd[0], flangeEnd[1], -46], null, "left-flange");
+  addMetric("30 mm setback", [flangeEnd[0], flangeEnd[1], -42], [points.L1[0], points.L1[1], -42], null, "left-flange");
+  const flangeMiddle = new THREE.Vector3(
+    (flangeStart[0] + flangeEnd[0]) / 2,
+    (flangeStart[1] + flangeEnd[1]) / 2,
+    0
+  );
+  addMetric("30 mm flange", flangeMiddle, flangeMiddle.clone().setZ(-30), flangeMiddle.clone().add(new THREE.Vector3(0, 28, -15)), "left-flange");
+
+  // Exhaust opening, curb and rear setback.
+  addMetric("150 mm", [30, 352, -552], [180, 352, -552], [105, 378, -552], "exhaust-curb");
+  addMetric("350 mm", [198, 352, -574], [198, 352, -924], [232, 352, -749], "exhaust-curb");
+  addMetric("30 mm rear setback", [0, 365, -530], [30, 365, -530], [15, 395, -530], "exhaust-curb");
+  addMetric("30 mm curb height", [205, 300, -535], [205, 330, -535], [242, 315, -535], "exhaust-curb");
+
+  // Front light/support panel offsets and LED pattern.
+  addMetric("100 mm back", [600, 334, -35], [500, 334, -35], [550, 362, -35], "light-panel");
+  addMetric("50 mm down", [622, 300, -35], [622, 250, -35], [660, 275, -35], "light-panel");
+  addMetric("Ø30 mm LED", [lightMountMidpoint.x, lightMountMidpoint.y, -234], [lightMountMidpoint.x, lightMountMidpoint.y, -264], [lightMountMidpoint.x + 52, lightMountMidpoint.y, -249], "light-panel");
+  addMetric("250 mm", [570, 286, 1], [570, 286, -249], [606, 286, -124], "light-panel");
+  addMetric("500 mm centres", [570, 286, -249], [570, 286, -749], [606, 286, -499], "light-panel");
+  addMetric("500 mm centres", [570, 286, -749], [570, 286, -1249], [606, 286, -999], "light-panel");
+  addMetric("250 mm", [570, 286, -1249], [570, 286, -1499], [606, 286, -1374], "light-panel");
+
+  // One removable grille represents all three identical units.
+  addMetric("490 mm grille", [grilleBaseCentre.x, grilleBaseCentre.y + 42, -24], [grilleBaseCentre.x, grilleBaseCentre.y + 42, -514], [grilleBaseCentre.x + 48, grilleBaseCentre.y + 42, -269], "removable-grille-1");
+  addMetric("470 mm grille", grilleDepthStart.clone().setZ(-544), grilleDepthEnd.clone().setZ(-544), grilleDepthStart.clone().lerp(grilleDepthEnd, 0.5).add(new THREE.Vector3(42, 22, -544)), "removable-grille-1");
+  addMetric("30 mm grille depth", grilleBaseCentre.clone().setZ(-544), grilleBaseCentre.clone().addScaledVector(grilleNormalAxis, 30).setZ(-544), null, "removable-grille-1");
+
+  // Wall rails and cable duct.
+  addMetric("1,400 mm rail", [-18, 288, -49], [-18, 288, -1449], [-18, 322, -749], "upper-rail");
+  addMetric("40 mm", [-18, 230, -1475], [-18, 270, -1475], [-18, 250, -1530], "upper-rail");
+  addMetric("3 mm thick", [-3.5, 285, -1475], [-0.5, 285, -1475], [28, 285, -1475], "upper-rail");
+  addMetric("50 mm", [-22, 300, -20], [-22, 250, -20], [-52, 275, -20], "upper-rail");
+  addMetric("20 × 20 mm cable duct", [500, 280, -20], [500, 300, -20], [548, 290, -20], "cable-duct");
+
+  function classifyPart(name) {
+    const base = name.replace("::outline", "");
+    if (base.startsWith("Left-side-plate")) return ["left-side", "Left side plate"];
+    if (base.startsWith("Right-side-plate")) return ["right-side", "Right side plate"];
+    if (base.startsWith("Left-side-flange")) return ["left-flange", "Left folded flange"];
+    if (base.startsWith("Right-side-flange")) return ["right-flange", "Right folded flange"];
+    if (base.startsWith("Top-") || base === "Exhaust-hole-outline") return ["top-cover", "Top cover plate"];
+    if (base.startsWith("Back-")) return ["rear-panel", "Rear wall plate"];
+    if (base.startsWith("Upper-wall")) return ["upper-rail", "Upper wall rail"];
+    if (base.startsWith("Lower-wall")) return ["lower-rail", "Lower wall rail"];
+    if (base === "L5-L4-R4-R5") return ["rear-bottom", "Rear bottom plate"];
+    if (base === "L6-L5-R5-R6") return ["rear-grille-lip", "Rear grille support lip"];
+    if (base === "L1-L2-R2-R1") return ["front-face", "Front vertical face"];
+    if (base === "L1-L7-R7-R1") return ["front-grille-lip", "Front grille support lip"];
+    if (base.startsWith("P1-") || base.startsWith("P2-")) return ["cable-duct", "20 × 20 cable duct"];
+    if (base.startsWith("EB")) return ["exhaust-curb", "Exhaust curb"];
+    if (base === "30H-1500W-L5-R5") return ["l5-support", "L5-R5 support"];
+    if (base === "FL2-FR2-R8-L8") return ["light-panel", "LED carrier panel"];
+    if (base.startsWith("LED-")) return [base.toLowerCase(), base.replace("-", " ")];
+    if (base.startsWith("Removable-grille-")) return [base.toLowerCase(), base.replaceAll("-", " ")];
+    return [base.toLowerCase().replaceAll(" ", "-"), base.replaceAll("-", " ")];
+  }
+
+  const partRegistry = new Map();
+  scene.children.forEach(object => {
+    if (!object.name || object === annotationGroup || object.isLight) return;
+    const [keyName, label] = classifyPart(object.name);
+    if (!partRegistry.has(keyName)) partRegistry.set(keyName, { label, objects: [] });
+    partRegistry.get(keyName).objects.push(object);
+  });
+
+  const partsContainer = root.querySelector("[data-parts]");
+  [...partRegistry.entries()]
+    .sort((a, b) => a[1].label.localeCompare(b[1].label))
+    .forEach(([keyName, entry], index) => {
+      const wrapper = document.createElement("label");
+      wrapper.className = "part-row";
+      const input = document.createElement("input");
+      input.type = "checkbox";
+      input.checked = true;
+      input.id = `hood-part-${index}`;
+      input.dataset.partKey = keyName;
+      const label = document.createElement("span");
+      label.className = "form-check-label";
+      label.textContent = entry.label;
+      wrapper.append(input, label);
+      partsContainer.appendChild(wrapper);
+      input.addEventListener("change", () => {
+        entry.objects.forEach(object => { object.visible = input.checked; });
+        const layer = annotationLayers.get(keyName);
+        if (layer) layer.visible = input.checked;
+      });
     });
-    const housing = new THREE.Mesh(geometry, material);
-    housing.rotation.x = Math.PI / 2;
-    housing.scale.x = housingWidth / housingHeight;
-    housing.position.copy(world(ductCenterX, housingCenterY, ductCenterZ));
-    scene.add(housing);
-    const edges = new THREE.LineSegments(
-      new THREE.EdgesGeometry(geometry, 12),
-      new THREE.LineBasicMaterial({
-        color: theme(&quot;--foreground&quot;), transparent: true, opacity: 0.9
-      })
-    );
-    edges.rotation.copy(housing.rotation);
-    edges.scale.copy(housing.scale);
-    edges.position.copy(housing.position);
-    edges.renderOrder = 7;
-    scene.add(edges);
-    createCylinder(12.5, rearY, collarDepth, colorToken);
-    createCylinder(12.5, rearY - collarDepth - housingDepth, collarDepth, colorToken);
+
+  function colourForPart(partKey, colourCoded) {
+    if (!colourCoded) return 0xffffff;
+    if (partKey.startsWith("removable-grille-")) return 0xd95d67;
+    if (partKey.includes("rail") || partKey.startsWith("led-")) return 0xe3b52f;
+    return 0x2f70c9;
   }
 
-  // Straight fan chain on the shaft centreline: 40 cm transition, 13 cm
-  // round duct, 20.5 cm fan, 13 cm round duct, and 40 cm reverse transition.
-  // The former 6 cm Straight 2 is divided equally between the two cylinders.
-  createTransition(210, 170, rectangleProfile, circleProfile(12.5), &quot;--viz-series-5&quot;);
-  createCylinder(12.5, 170, 13, &quot;--viz-series-4&quot;);
-  createFan(157);
-  createCylinder(12.5, 136.5, 13, &quot;--viz-series-4&quot;);
-  createTransition(123.5, 83.5, circleProfile(12.5), rectangleProfile, &quot;--viz-series-5&quot;);
+  function applyColourMode(colourCoded) {
+    partRegistry.forEach((entry, partKey) => {
+      const colour = colourForPart(partKey, colourCoded);
+      entry.objects.forEach(object => {
+        object.traverse(child => {
+          if (!child.isMesh || !child.material) return;
+          const materials = Array.isArray(child.material) ? child.material : [child.material];
+          materials.forEach(material => {
+            if (material.color) material.color.setHex(colour);
+            material.needsUpdate = true;
+          });
+        });
+      });
+    });
+  }
 
-  // Elbow 4 — ceiling duct turns upward into the shaft without exceeding the
-  // established horizontal duct height.
-  createSweptRectElbow(angle =&gt; {
-    const sine = Math.sin(angle);
-    const cosine = Math.cos(angle);
-    const centerY = 83.5 - 27.5 * sine;
-    const centerZ = 119 + 27.5 * (1 - cosine);
-    return [
-      [24.5, centerY + 7.5 * sine, centerZ + 7.5 * cosine],
-      [59.5, centerY + 7.5 * sine, centerZ + 7.5 * cosine],
-      [59.5, centerY - 7.5 * sine, centerZ - 7.5 * cosine],
-      [24.5, centerY - 7.5 * sine, centerZ - 7.5 * cosine]
-    ];
+  const colourModeToggle = root.querySelector("[data-colour-mode]");
+  colourModeToggle.addEventListener("change", event => {
+    applyColourMode(event.currentTarget.checked);
+  });
+  applyColourMode(false);
+
+  root.querySelectorAll("[data-parts-action]").forEach(button => {
+    button.addEventListener("click", () => {
+      const visible = button.dataset.partsAction === "show";
+      root.querySelectorAll("[data-part-key]").forEach(input => {
+        input.checked = visible;
+        const partKey = input.dataset.partKey;
+        partRegistry.get(partKey).objects.forEach(object => { object.visible = visible; });
+        const layer = annotationLayers.get(partKey);
+        if (layer) layer.visible = visible;
+      });
+    });
   });
 
-  // Rise straight section. Together with Elbows 4 and 5, the vertical
-  // centreline rise remains 530 cm and the established top height is unchanged.
-  addBox({
-    x: [24.5, 59.5], y: [48.5, 63.5], z: [146.5, 621.5], color: &quot;--viz-series-2&quot;
-  });
-
-  // Elbow 5 — shaft rise turns toward the rain hood while staying below displayed Z=831.5.
-  createSweptRectElbow(angle =&gt; {
-    const sine = Math.sin(angle);
-    const cosine = Math.cos(angle);
-    const centerY = 56 + 27.5 * (1 - cosine);
-    const centerZ = 621.5 + 27.5 * sine;
-    return [
-      [24.5, centerY + 7.5 * cosine, centerZ - 7.5 * sine],
-      [59.5, centerY + 7.5 * cosine, centerZ - 7.5 * sine],
-      [59.5, centerY - 7.5 * cosine, centerZ + 7.5 * sine],
-      [24.5, centerY - 7.5 * cosine, centerZ + 7.5 * sine]
-    ];
-  });
-
-  // Rain hood outlet — 35 W × 15 H cm, 20 cm deep at the bottom and
-  // 30 cm deep at the top, beginning after Elbow 5.
-  addTaperedDepthBox({
-    x: [24.5, 59.5], frontY: 83.5, bottomRearY: 103.5, topRearY: 113.5,
-    z: [641.5, 656.5], color: &quot;--viz-series-3&quot;
+  root.querySelector("[data-dimensions]").addEventListener("change", event => {
+    annotationGroup.visible = event.currentTarget.checked;
   });
 
   const controls = new OrbitControls(camera, renderer.domElement);
   controls.enableDamping = true;
   controls.dampingFactor = 0.08;
-  controls.target.copy(world(90, 175, 300));
-  controls.minDistance = 20;
-  controls.maxDistance = 2000;
+  controls.minDistance = 250;
+  controls.maxDistance = 4500;
 
-  const cameraViews = {
+  const views = {
     whole: {
-      position: world(-620, -400, 690),
-      target: world(90, 175, 300),
-      label: &quot;Complete coloured system with building context&quot;
+      position: [1450, 820, 1250],
+      target: [300, 150, -749],
+      caption: "Mirrored side plates — overall outside width 1,500 mm, including both 1 mm plate thicknesses"
     },
-    ceiling: {
-      position: world(-250, 40, 285),
-      target: world(70, 180, 118),
-      label: &quot;Ceiling route, downlight and shaft opening&quot;
+    left: {
+      position: [780, 500, 760],
+      target: [300, 150, 0.5],
+      caption: "Left plate — L6–L7 is the fold line; L8–L9 is the opposite free edge of the 30 mm flange"
     },
-    hood: {
-      position: world(-130, 95, 145),
-      target: world(100, 270, 5),
-      label: &quot;Range hood - 150 x 60 x 10 cm&quot;
+    right: {
+      position: [780, 500, -2250],
+      target: [300, 150, -1498.5],
+      caption: "Right plate — R6–R7 is the fold line; R8–R9 is the opposite free edge of the 30 mm flange"
     },
-    straight1: {
-      position: world(-80, 135, 225),
-      target: world(100, 292.5, 50.75),
-      label: &quot;Straight 1 - vertical 35 x 15 cm duct&quot;
+    front: {
+      position: [1450, 350, -749],
+      target: [300, 150, -749],
+      caption: "Front-width view — 1,500 mm outside-to-outside; clear internal width 1,498 mm"
     },
-    elbow1: {
-      position: world(-70, 120, 230),
-      target: world(100, 270, 105),
-      label: &quot;Elbow 1 - vertical to forward&quot;
+    covers: {
+      position: [1250, 900, 1050],
+      target: [300, 150, -749],
+      caption: "Six cover plates connect L2–L3, L3–L4, L5–L4, L6–L5, L1–L2 and L1–L7 to their matching right-side edges"
     },
-    elbow2: {
-      position: world(-75, 125, 215),
-      target: world(88, 240, 119),
-      label: &quot;Elbow 2 - rear and left extensions integrated; about 3 cm from downlight&quot;
+    brackets: {
+      position: [-1100, 470, 450],
+      target: [0, 150, -749],
+      caption: "Two rear wall-mounting rails — each 1,400 W × 40 H × 3 T mm; centred 50 mm from the upper and lower rear-panel edges"
     },
-    elbow3: {
-      position: world(-120, 75, 215),
-      target: world(48, 232, 119),
-      label: &quot;Elbow 3 - direct joint from Elbow 2&quot;
+    l5plate: {
+      position: [700, 430, 850],
+      target: [90, 25, -749],
+      caption: "L5–R5 upstand — 30 mm high × 1,500 mm wide; 90° to the L5–L1 and R5–R1 slopes"
     },
-    transition1: {
-      position: world(-85, 45, 205),
-      target: world(42, 190, 119),
-      label: &quot;Transition 1 - 35 x 15 cm rectangle to 25 cm diameter&quot;
+    fl2plate: {
+      position: [1250, 720, 850],
+      target: [535, 220, -749],
+      caption: "FL2–FR2–R8–L8 panel with three symmetrically spaced Ø30 mm LED lights mounted beneath it"
     },
-    cylinder1: {
-      position: world(-70, 15, 195),
-      target: world(42, 163.5, 119),
-      label: &quot;Cylinder 1 - 25 cm diameter x 13 cm&quot;
+    lights: {
+      position: [1150, -420, 650],
+      target: [535, 220, -749],
+      caption: "Three Ø30 mm LED centres — exactly 250, 750 and 1,250 mm from the hood’s left outside edge"
     },
-    fan: {
-      position: world(-80, 5, 205),
-      target: world(42, 146.75, 119),
-      label: &quot;Fan - purchased CKE CI-CDI250AZ-NO&quot;
+    grilles: {
+      position: [1150, -260, 720],
+      target: [310, 135, -749],
+      caption: "Three removable baffle grilles — each 490 W × 470 D × 30 T mm, resting between the L5–R5 and FL2–FR2 supports"
     },
-    cylinder2: {
-      position: world(-70, -20, 195),
-      target: world(42, 130, 119),
-      label: &quot;Cylinder 2 - 25 cm diameter x 13 cm&quot;
+    pdetails: {
+      position: [850, 560, 420],
+      target: [250, 290, -10],
+      caption: "P plates — P1 is 100 mm behind L2 and 20 mm down; P1–P2 and P4–P5 are 20 mm inward; the L3–P4–P5–P6 notch remains open"
     },
-    transition2: {
-      position: world(-85, -55, 205),
-      target: world(42, 103.5, 119),
-      label: &quot;Transition 2 - 25 cm diameter to 35 x 15 cm rectangle&quot;
+    exhaust: {
+      position: [820, 1050, -180],
+      target: [105, 300, -749],
+      caption: "Exhaust opening EB1–EB4 — 350 × 150 mm clear; ET1–ET4 mark the curb top, 30 mm above the base"
     },
-    elbow4: {
-      position: world(-105, -85, 245),
-      target: world(42, 66, 137),
-      label: &quot;Elbow 4 - ceiling route turns upward into shaft&quot;
+    flange: {
+      position: [860, 50, -500],
+      target: [350, 100, -15],
+      caption: "Flange — L6–L7 is the fold line and L8–L9 is its free edge; width 30 mm, length 448.5 mm"
     },
-    straight2: {
-      position: world(-210, -120, 490),
-      target: world(42, 56, 384),
-      label: &quot;Straight 2 - 475 cm vertical rise&quot;
-    },
-    elbow5: {
-      position: world(-95, -75, 735),
-      target: world(42, 70, 640),
-      label: &quot;Elbow 5 - vertical rise turns to outdoor outlet&quot;
-    },
-    rainhood: {
-      position: world(-100, -65, 740),
-      target: world(42, 98, 649),
-      label: &quot;Rain hood - top depth 30 cm; bottom depth 20 cm&quot;
+    edge: {
+      position: [1450, 150, 0.5],
+      target: [300, 150, 0.5],
+      caption: "True edge view — plate thickness 1 mm"
     }
   };
-  function selectCamera(name) {
-    const view = cameraViews[name];
-    camera.position.copy(view.position);
-    controls.target.copy(view.target);
+
+  function selectView(name) {
+    const view = views[name];
+    camera.position.set(...view.position);
+    controls.target.set(...view.target);
     controls.update();
-    root.querySelectorAll(&quot;[data-camera]&quot;).forEach(button =&gt; {
-      const active = button.dataset.camera === name;
-      button.classList.toggle(&quot;btn-primary&quot;, active);
-      button.setAttribute(&quot;aria-pressed&quot;, String(active));
+    root.querySelector("[data-caption]").textContent = view.caption;
+    root.querySelectorAll("[data-view]").forEach(button => {
+      const active = button.dataset.view === name;
+      button.setAttribute("aria-pressed", String(active));
     });
-    root.querySelector(&quot;[data-review-text]&quot;).textContent = view.label;
   }
-  root.querySelectorAll(&quot;[data-camera]&quot;).forEach(button =&gt; {
-    button.addEventListener(&quot;click&quot;, () =&gt; selectCamera(button.dataset.camera));
+
+  root.querySelectorAll("[data-view]").forEach(button => {
+    button.addEventListener("click", () => selectView(button.dataset.view));
   });
+  selectView("whole");
 
   function resize() {
     const width = Math.max(1, stage.clientWidth);
@@ -1940,360 +1018,6 @@ html&gt;body{padding:0}&lt;/style&gt;
     requestAnimationFrame(animate);
   }
   animate();
-&lt;/script&gt;
-
-&lt;script src=&quot;https://unpkg.com/@floating-ui/core@1.7.3/dist/floating-ui.core.umd.min.js&quot;&gt;&lt;/script&gt;
-&lt;script src=&quot;https://unpkg.com/@floating-ui/dom@1.7.4/dist/floating-ui.dom.umd.min.js&quot;&gt;&lt;/script&gt;
-&lt;script&gt;
-(() =&gt; {
-  if (window.FloatingUIDOM == null) {
-    return;
-  }
-  const { autoUpdate, computePosition, flip, offset, shift, size } =
-    window.FloatingUIDOM;
-  const tooltipPlacements = new Set([&quot;top&quot;, &quot;right&quot;, &quot;bottom&quot;, &quot;left&quot;]);
-  const tooltipId = `codex-visualization-tooltip-${
-    window.crypto?.randomUUID?.() ?? Date.now().toString(36)
-  }`;
-  const tooltipGap = 5;
-  const hoverDelay = 700;
-  const skipDelay = 300;
-  let activeTrigger = null;
-  let pendingTrigger = null;
-  let tooltip = null;
-  let openTimeout = null;
-  let autoUpdateCleanup = null;
-  let positionRequest = 0;
-  let skipDelayUntil = 0;
-  let lastPointerWasTouch = false;
-  let pinnedByTouch = false;
-
-  const getTrigger = (target) =&gt;
-    target?.nodeType === Node.ELEMENT_NODE
-      ? target.closest(&quot;[data-tooltip]&quot;)
-      : null;
-  const containsTarget = (trigger, target) =&gt;
-    target?.nodeType != null &amp;&amp; trigger.contains(target);
-  const getContent = (trigger) =&gt;
-    trigger.getAttribute(&quot;data-tooltip&quot;)?.trim() ?? &quot;&quot;;
-  const getPlacement = (trigger) =&gt; {
-    const placement = trigger.getAttribute(&quot;data-tooltip-placement&quot;);
-    return tooltipPlacements.has(placement) ? placement : &quot;top&quot;;
-  };
-  const getTooltip = () =&gt; {
-    if (tooltip == null) {
-      tooltip = document.createElement(&quot;div&quot;);
-      tooltip.id = tooltipId;
-      tooltip.className = &quot;tooltip&quot;;
-      tooltip.setAttribute(&quot;role&quot;, &quot;tooltip&quot;);
-    }
-    return tooltip;
-  };
-  const setDescribedBy = (trigger, described) =&gt; {
-    const ids = new Set(
-      (trigger.getAttribute(&quot;aria-describedby&quot;) ?? &quot;&quot;)
-        .split(/\s+/)
-        .filter(Boolean),
-    );
-    if (described) {
-      ids.add(tooltipId);
-    } else {
-      ids.delete(tooltipId);
-    }
-    if (ids.size === 0) {
-      trigger.removeAttribute(&quot;aria-describedby&quot;);
-    } else {
-      trigger.setAttribute(&quot;aria-describedby&quot;, [...ids].join(&quot; &quot;));
-    }
-  };
-  const clearOpenTimeout = () =&gt; {
-    if (openTimeout != null) {
-      window.clearTimeout(openTimeout);
-      openTimeout = null;
-    }
-    pendingTrigger = null;
-  };
-  const closeTooltip = (activateSkipDelay = true) =&gt; {
-    clearOpenTimeout();
-    pinnedByTouch = false;
-    positionRequest += 1;
-    autoUpdateCleanup?.();
-    autoUpdateCleanup = null;
-    if (activeTrigger == null) {
-      return;
-    }
-    setDescribedBy(activeTrigger, false);
-    activeTrigger = null;
-    tooltip?.remove();
-    if (activateSkipDelay) {
-      skipDelayUntil = Date.now() + skipDelay;
-    }
-  };
-  const updatePosition = (trigger, floating) =&gt; {
-    const request = ++positionRequest;
-    void computePosition(trigger, floating, {
-      middleware: [
-        offset(tooltipGap),
-        flip({ padding: tooltipGap }),
-        shift({ padding: tooltipGap }),
-        size({
-          padding: tooltipGap,
-          apply({ availableHeight, availableWidth, elements }) {
-            elements.floating.style.setProperty(
-              &quot;--tooltip-available-width&quot;,
-              `${Math.max(0, availableWidth)}px`,
-            );
-            elements.floating.style.setProperty(
-              &quot;--tooltip-available-height&quot;,
-              `${Math.max(0, availableHeight)}px`,
-            );
-          },
-        }),
-      ],
-      placement: getPlacement(trigger),
-      strategy: &quot;fixed&quot;,
-    })
-      .then(({ x, y }) =&gt; {
-        if (activeTrigger !== trigger || request !== positionRequest) {
-          return;
-        }
-        const scale = window.devicePixelRatio || 1;
-        floating.style.transform = `translate(${Math.round(x * scale) / scale}px, ${Math.round(y * scale) / scale}px)`;
-        floating.style.visibility = &quot;visible&quot;;
-      })
-      .catch(() =&gt; {
-        if (activeTrigger === trigger &amp;&amp; request === positionRequest) {
-          closeTooltip(false);
-        }
-      });
-  };
-  const openTooltip = (trigger) =&gt; {
-    const content = getContent(trigger);
-    if (!trigger.isConnected || content.length === 0) {
-      return;
-    }
-    clearOpenTimeout();
-    if (activeTrigger === trigger) {
-      return;
-    }
-    closeTooltip();
-    const floating = getTooltip();
-    floating.textContent = content;
-    floating.style.visibility = &quot;hidden&quot;;
-    floating.style.transform = &quot;translate(0, 0)&quot;;
-    document.body.appendChild(floating);
-    activeTrigger = trigger;
-    setDescribedBy(trigger, true);
-    autoUpdateCleanup = autoUpdate(trigger, floating, () =&gt; {
-      updatePosition(trigger, floating);
-    });
-  };
-  const requestOpen = (trigger, immediate = false) =&gt; {
-    if (
-      getContent(trigger).length === 0 ||
-      activeTrigger === trigger ||
-      pendingTrigger === trigger
-    ) {
-      return;
-    }
-    clearOpenTimeout();
-    pendingTrigger = trigger;
-    const delay =
-      immediate || activeTrigger != null || Date.now() &lt; skipDelayUntil
-        ? 0
-        : hoverDelay;
-    if (delay === 0) {
-      openTooltip(trigger);
-      return;
-    }
-    openTimeout = window.setTimeout(() =&gt; {
-      openTimeout = null;
-      pendingTrigger = null;
-      openTooltip(trigger);
-    }, delay);
-  };
-  const handlePointerOpen = (event) =&gt; {
-    if (event.pointerType === &quot;touch&quot;) {
-      return;
-    }
-    const trigger = getTrigger(event.target);
-    if (trigger == null || containsTarget(trigger, event.relatedTarget)) {
-      return;
-    }
-    requestOpen(trigger);
-  };
-  const handlePointer = (event) =&gt; {
-    lastPointerWasTouch =
-      event.type === &quot;pointerdown&quot; &amp;&amp; event.pointerType === &quot;touch&quot;;
-  };
-  const handleTouchClick = (event) =&gt; {
-    const isTouch = event.pointerType === &quot;touch&quot; || lastPointerWasTouch;
-    lastPointerWasTouch = false;
-    if (!isTouch || event.detail === 0) {
-      return;
-    }
-    const trigger = getTrigger(event.target);
-    if (
-      trigger == null ||
-      !trigger.isConnected ||
-      getContent(trigger).length === 0 ||
-      (pinnedByTouch &amp;&amp; activeTrigger === trigger)
-    ) {
-      if (pinnedByTouch) {
-        closeTooltip();
-      }
-      return;
-    }
-    openTooltip(trigger);
-    pinnedByTouch = activeTrigger === trigger;
-    window.setTimeout(() =&gt; {
-      if (activeTrigger === trigger &amp;&amp; !trigger.isConnected) {
-        closeTooltip(false);
-      }
-    }, 0);
-  };
-  const handleLeave = (event) =&gt; {
-    if (pinnedByTouch) {
-      return;
-    }
-    const trigger = getTrigger(event.target);
-    if (trigger == null || containsTarget(trigger, event.relatedTarget)) {
-      return;
-    }
-    if (activeTrigger === trigger || pendingTrigger === trigger) {
-      closeTooltip();
-    }
-  };
-  const handleFocusIn = (event) =&gt; {
-    const trigger = getTrigger(event.target);
-    if (trigger?.matches(&quot;:focus-visible&quot;)) {
-      requestOpen(trigger, true);
-    }
-  };
-  const handleKeyDown = (event) =&gt; {
-    if (event.key === &quot;Escape&quot;) {
-      closeTooltip();
-    }
-  };
-  const handleContextMenu = (event) =&gt; {
-    lastPointerWasTouch = false;
-    const trigger = getTrigger(event.target);
-    if (activeTrigger === trigger || pendingTrigger === trigger) {
-      closeTooltip();
-    }
-  };
-  const destroy = () =&gt; {
-    closeTooltip(false);
-    lastPointerWasTouch = false;
-    document.removeEventListener(&quot;pointerover&quot;, handlePointerOpen);
-    document.removeEventListener(&quot;pointerdown&quot;, handlePointer);
-    document.removeEventListener(&quot;pointercancel&quot;, handlePointer);
-    document.removeEventListener(&quot;click&quot;, handleTouchClick);
-    document.removeEventListener(&quot;pointerout&quot;, handleLeave);
-    document.removeEventListener(&quot;focusin&quot;, handleFocusIn);
-    document.removeEventListener(&quot;focusout&quot;, handleLeave);
-    document.removeEventListener(&quot;keydown&quot;, handleKeyDown);
-    document.removeEventListener(&quot;contextmenu&quot;, handleContextMenu);
-    tooltip = null;
-  };
-
-  document.addEventListener(&quot;pointerover&quot;, handlePointerOpen);
-  document.addEventListener(&quot;pointerdown&quot;, handlePointer);
-  document.addEventListener(&quot;pointercancel&quot;, handlePointer);
-  document.addEventListener(&quot;click&quot;, handleTouchClick);
-  document.addEventListener(&quot;pointerout&quot;, handleLeave);
-  document.addEventListener(&quot;focusin&quot;, handleFocusIn);
-  document.addEventListener(&quot;focusout&quot;, handleLeave);
-  document.addEventListener(&quot;keydown&quot;, handleKeyDown);
-  document.addEventListener(&quot;contextmenu&quot;, handleContextMenu);
-  window.addEventListener(&quot;pagehide&quot;, destroy, { once: true });
-})();
-&lt;/script&gt;
-&lt;script id=&quot;codex-visualization-tabs&quot;&gt;
-(() =&gt; {
-  const selector = &#x27;.nav[role=&quot;tablist&quot;] [role=&quot;tab&quot;]&#x27;;
-  const disabled = &#x27;:disabled,[aria-disabled=&quot;true&quot;]&#x27;;
-  const selectTab = (selected) =&gt; {
-    const panelId = selected.getAttribute(&quot;aria-controls&quot;);
-    for (const tab of selected.closest(&#x27;[role=&quot;tablist&quot;]&#x27;).querySelectorAll(&#x27;[role=&quot;tab&quot;]&#x27;)) {
-      const active = tab === selected;
-      tab.classList.toggle(&quot;active&quot;, active);
-      tab.setAttribute(&quot;aria-selected&quot;, String(active));
-      const id = tab.getAttribute(&quot;aria-controls&quot;);
-      const panel = id &amp;&amp; document.getElementById(id);
-      if (panel != null) {
-        panel.hidden = id !== panelId;
-        if (!panel.hidden &amp;&amp; selected.id) {
-          panel.setAttribute(&quot;aria-labelledby&quot;, selected.id);
-        }
-      }
-    }
-  };
-  const interact = (event) =&gt; {
-    const tab = event.target?.closest?.(selector);
-    if (event.defaultPrevented || tab == null || tab.matches(disabled)) {
-      return;
-    }
-    if (event.type === &quot;click&quot;) {
-      selectTab(tab);
-      return;
-    }
-    const tabs = Array.from(
-      tab.closest(&#x27;[role=&quot;tablist&quot;]&#x27;).querySelectorAll(&#x27;[role=&quot;tab&quot;]&#x27;),
-    ).filter((candidate) =&gt; !candidate.matches(disabled));
-    const current = tabs.indexOf(tab);
-    let next;
-    if (event.key === &quot;ArrowRight&quot; || event.key === &quot;ArrowDown&quot;) {
-      next = (current + 1) % tabs.length;
-    } else if (event.key === &quot;ArrowLeft&quot; || event.key === &quot;ArrowUp&quot;) {
-      next = (current + tabs.length - 1) % tabs.length;
-    } else if (event.key === &quot;Home&quot;) {
-      next = 0;
-    } else if (event.key === &quot;End&quot;) {
-      next = tabs.length - 1;
-    } else {
-      return;
-    }
-    event.preventDefault();
-    tabs[next].focus();
-    selectTab(tabs[next]);
-  };
-
-  for (const list of document.querySelectorAll(&#x27;.nav[role=&quot;tablist&quot;]&#x27;)) {
-    const selected =
-      list.querySelector(&#x27;[role=&quot;tab&quot;][aria-selected=&quot;true&quot;]&#x27;) ??
-      list.querySelector(&#x27;[role=&quot;tab&quot;].active&#x27;) ??
-      list.querySelector(&#x27;[role=&quot;tab&quot;]&#x27;);
-    if (selected != null) {
-      selectTab(selected);
-    }
-  }
-  document.addEventListener(&quot;click&quot;, interact);
-  document.addEventListener(&quot;keydown&quot;, interact);
-  window.addEventListener(&quot;pagehide&quot;, () =&gt; {
-    document.removeEventListener(&quot;click&quot;, interact);
-    document.removeEventListener(&quot;keydown&quot;, interact);
-  }, { once: true });
-})();
-&lt;/script&gt;
-&lt;script id=&quot;codex-visualization-lucide&quot; async src=&quot;https://unpkg.com/lucide@1.17.0/dist/umd/lucide.js&quot;&gt;&lt;/script&gt;
-&lt;script&gt;
-(() =&gt; {
-  const initialize = () =&gt; {
-    globalThis.lucide?.createIcons({ attrs: { width: 16, height: 16 } });
-  };
-  if (globalThis.lucide != null) {
-    initialize();
-    return;
-  }
-  document
-    .getElementById(&quot;codex-visualization-lucide&quot;)
-    ?.addEventListener(&quot;load&quot;, initialize, { once: true });
-})();
-&lt;/script&gt;
-
-&lt;/body&gt;
-&lt;/html&gt;
-"></iframe>
+</script>
 </body>
 </html>
