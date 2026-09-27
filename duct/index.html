@@ -22,24 +22,6 @@
       <p>Drag to rotate · scroll to zoom</p>
     </header>
     <section>
-      <h2>Camera</h2>
-      <div class="control-grid" role="group" aria-label="Camera views">
-        <button type="button" data-view="whole" aria-pressed="true">Whole</button>
-        <button type="button" data-view="left" aria-pressed="false">Left</button>
-        <button type="button" data-view="right" aria-pressed="false">Right</button>
-        <button type="button" data-view="front" aria-pressed="false">Front</button>
-        <button type="button" data-view="covers" aria-pressed="false">Covers</button>
-        <button type="button" data-view="brackets" aria-pressed="false">Rails</button>
-        <button type="button" data-view="l5plate" aria-pressed="false">L5–R5</button>
-        <button type="button" data-view="fl2plate" aria-pressed="false">LED plate</button>
-        <button type="button" data-view="lights" aria-pressed="false">Lights</button>
-        <button type="button" data-view="grilles" aria-pressed="false">Grilles</button>
-        <button type="button" data-view="pdetails" aria-pressed="false">Cable duct</button>
-        <button type="button" data-view="exhaust" aria-pressed="false">Exhaust</button>
-        <button type="button" data-view="flange" aria-pressed="false">Flange</button>
-      </div>
-    </section>
-    <section>
       <h2>Display</h2>
       <label class="switch-row">
         <input type="checkbox" data-colour-mode>
@@ -48,6 +30,10 @@
       <label class="switch-row">
         <input type="checkbox" data-dimensions checked>
         <span>Dimensions and angles</span>
+      </label>
+      <label class="switch-row">
+        <input type="checkbox" data-points checked>
+        <span>Points</span>
       </label>
       <div class="control-grid">
         <button type="button" data-parts-action="show">Show all</button>
@@ -79,10 +65,22 @@
   #hood-left-side-plate button { min-height: 36px; padding: 7px 9px; border: 1px solid #aaa; border-radius: 5px; background: #fff; color: #222; font: inherit; font-size: 13px; cursor: pointer; }
   #hood-left-side-plate button:hover { background: #ececec; }
   #hood-left-side-plate button[aria-pressed="true"] { background: #222; border-color: #222; color: #fff; }
-  #hood-left-side-plate .switch-row, #hood-left-side-plate .part-row { display: flex; align-items: center; gap: 9px; min-height: 34px; font-size: 14px; cursor: pointer; }
-  #hood-left-side-plate .switch-row + .switch-row { margin-bottom: 10px; }
+  #hood-left-side-plate .switch-row { display: flex; align-items: center; gap: 9px; min-height: 34px; font-size: 14px; cursor: pointer; }
+  #hood-left-side-plate .switch-row:last-of-type { margin-bottom: 10px; }
   #hood-left-side-plate input[type="checkbox"] { width: 17px; height: 17px; flex: 0 0 auto; accent-color: #222; }
-  #hood-left-side-plate .parts-list { display: grid; gap: 1px; }
+  #hood-left-side-plate .parts-list { display: grid; gap: 3px; }
+  #hood-left-side-plate .part-branch { margin: 0; }
+  #hood-left-side-plate .part-branch > summary { min-height: 34px; display: flex; align-items: center; gap: 7px; cursor: pointer; font-size: 14px; font-weight: 600; list-style: none; }
+  #hood-left-side-plate .part-branch > summary::-webkit-details-marker { display: none; }
+  #hood-left-side-plate .part-branch > summary::before { content: "+"; width: 14px; flex: 0 0 14px; color: #555; font-weight: 700; text-align: center; }
+  #hood-left-side-plate .part-branch[open] > summary::before { content: "−"; }
+  #hood-left-side-plate .part-children { margin-left: 12px; padding-left: 10px; border-left: 1px solid #d1d1d1; }
+  #hood-left-side-plate .part-row { min-height: 34px; display: grid; grid-template-columns: 17px minmax(0, 1fr) 34px; align-items: center; gap: 8px; font-size: 14px; }
+  #hood-left-side-plate .part-row label { min-width: 0; cursor: pointer; overflow-wrap: anywhere; }
+  #hood-left-side-plate .part-camera { width: 34px; min-height: 32px; padding: 0; border: 0; background: transparent; font-size: 16px; line-height: 1; justify-self: end; }
+  #hood-left-side-plate .part-camera:hover { background: #e8e8e8; }
+  #hood-left-side-plate .part-camera[aria-pressed="true"] { background: #ffe57a; color: #111; }
+  #hood-left-side-plate .part-camera:disabled { opacity: .3; cursor: not-allowed; background: transparent; }
   @media (max-width: 760px) {
     #hood-left-side-plate { height: auto; min-height: 100vh; grid-template-columns: 1fr; grid-template-rows: 62vh auto; }
     #hood-left-side-plate .control-sidebar { border-left: 0; border-top: 1px solid #c9c9c9; overflow: visible; }
@@ -625,18 +623,27 @@
   annotationGroup.name = "Dimensions-and-labels";
   scene.add(annotationGroup);
 
+  const dimensionGroup = new THREE.Group();
+  dimensionGroup.name = "Dimensions-and-angles";
+  annotationGroup.add(dimensionGroup);
+  const pointGroup = new THREE.Group();
+  pointGroup.name = "Point-labels";
+  annotationGroup.add(pointGroup);
   const annotationLayers = new Map();
-  function annotationLayer(partKey = "global") {
-    if (!annotationLayers.has(partKey)) {
+  const pointLayers = new Map();
+  function annotationLayer(partKey = "global", kind = "dimension") {
+    const layers = kind === "point" ? pointLayers : annotationLayers;
+    const parent = kind === "point" ? pointGroup : dimensionGroup;
+    if (!layers.has(partKey)) {
       const layer = new THREE.Group();
-      layer.name = `Annotations-${partKey}`;
-      annotationLayers.set(partKey, layer);
-      annotationGroup.add(layer);
+      layer.name = `${kind === "point" ? "Points" : "Annotations"}-${partKey}`;
+      layers.set(partKey, layer);
+      parent.add(layer);
     }
-    return annotationLayers.get(partKey);
+    return layers.get(partKey);
   }
 
-  function labelSprite(text, x, y, z, partKey = "global") {
+  function labelSprite(text, x, y, z, partKey = "global", kind = "dimension") {
     const canvas = document.createElement("canvas");
     canvas.width = 320;
     canvas.height = 112;
@@ -659,49 +666,49 @@
     sprite.position.set(x, y, z);
     sprite.scale.set(longLabel ? 104 : 72, longLabel ? 36 : 36, 1);
     sprite.renderOrder = 20;
-    annotationLayer(partKey).add(sprite);
+    annotationLayer(partKey, kind).add(sprite);
     return sprite;
   }
 
-  labelSprite("L1", 620, 190, 3, "left-side");
-  labelSprite("L2", 618, 319, 3, "left-side");
-  labelSprite("L3", -18, 319, 3, "left-side");
-  labelSprite("L4", -18, -20, 3, "left-side");
-  labelSprite("L5", 104, -20, 3, "left-side");
-  labelSprite("L6", flangeStart[0] + 5, flangeStart[1] + 19, 3, "left-flange");
-  labelSprite("L7", flangeEnd[0] - 5, flangeEnd[1] - 19, 3, "left-flange");
-  labelSprite("L8", flangeEnd[0] - 5, flangeEnd[1] - 19, -33, "left-flange");
-  labelSprite("L9", flangeStart[0] + 5, flangeStart[1] + 19, -33, "left-flange");
-  labelSprite("FL1", fl1Point[0] - 7, fl1Point[1] + 8, 3, "left-side");
-  labelSprite("FL2", fl2Point[0] - 8, fl2Point[1] + 8, 3, "left-side");
+  labelSprite("L1", 620, 190, 3, "left-side", "point");
+  labelSprite("L2", 618, 319, 3, "left-side", "point");
+  labelSprite("L3", -18, 319, 3, "left-side", "point");
+  labelSprite("L4", -18, -20, 3, "left-side", "point");
+  labelSprite("L5", 104, -20, 3, "left-side", "point");
+  labelSprite("L6", flangeStart[0] + 5, flangeStart[1] + 19, 3, "left-flange", "point");
+  labelSprite("L7", flangeEnd[0] - 5, flangeEnd[1] - 19, 3, "left-flange", "point");
+  labelSprite("L8", flangeEnd[0] - 5, flangeEnd[1] - 19, -33, "left-flange", "point");
+  labelSprite("L9", flangeStart[0] + 5, flangeStart[1] + 19, -33, "left-flange", "point");
+  labelSprite("FL1", fl1Point[0] - 7, fl1Point[1] + 8, 3, "left-side", "point");
+  labelSprite("FL2", fl2Point[0] - 8, fl2Point[1] + 8, 3, "left-side", "point");
 
-  labelSprite("R1", 620, 190, -1502, "right-side");
-  labelSprite("R2", 618, 319, -1502, "right-side");
-  labelSprite("R3", -18, 319, -1502, "right-side");
-  labelSprite("R4", -18, -20, -1502, "right-side");
-  labelSprite("R5", 104, -20, -1502, "right-side");
-  labelSprite("R6", flangeStart[0] + 5, flangeStart[1] + 19, -1502, "right-flange");
-  labelSprite("R7", flangeEnd[0] - 5, flangeEnd[1] - 19, -1502, "right-flange");
-  labelSprite("R8", flangeEnd[0] - 5, flangeEnd[1] - 19, -1464, "right-flange");
-  labelSprite("R9", flangeStart[0] + 5, flangeStart[1] + 19, -1464, "right-flange");
-  labelSprite("FR1", fl1Point[0] - 7, fl1Point[1] + 8, -1502, "right-side");
-  labelSprite("FR2", fl2Point[0] - 8, fl2Point[1] + 8, -1502, "right-side");
+  labelSprite("R1", 620, 190, -1502, "right-side", "point");
+  labelSprite("R2", 618, 319, -1502, "right-side", "point");
+  labelSprite("R3", -18, 319, -1502, "right-side", "point");
+  labelSprite("R4", -18, -20, -1502, "right-side", "point");
+  labelSprite("R5", 104, -20, -1502, "right-side", "point");
+  labelSprite("R6", flangeStart[0] + 5, flangeStart[1] + 19, -1502, "right-flange", "point");
+  labelSprite("R7", flangeEnd[0] - 5, flangeEnd[1] - 19, -1502, "right-flange", "point");
+  labelSprite("R8", flangeEnd[0] - 5, flangeEnd[1] - 19, -1464, "right-flange", "point");
+  labelSprite("R9", flangeStart[0] + 5, flangeStart[1] + 19, -1464, "right-flange", "point");
+  labelSprite("FR1", fl1Point[0] - 7, fl1Point[1] + 8, -1502, "right-side", "point");
+  labelSprite("FR2", fl2Point[0] - 8, fl2Point[1] + 8, -1502, "right-side", "point");
 
-  labelSprite("P1", pPoints.P1[0], pPoints.P1[1] - 8, 4, "cable-duct");
-  labelSprite("P2", pPoints.P2[0], pPoints.P2[1] - 8, -24, "cable-duct");
-  labelSprite("P3", pPoints.P3[0], pPoints.P3[1] + 8, -24, "cable-duct");
-  labelSprite("P4", pPoints.P4[0] - 8, pPoints.P4[1] - 8, 4, "cable-duct");
-  labelSprite("P5", pPoints.P5[0] - 8, pPoints.P5[1] - 8, -24, "cable-duct");
-  labelSprite("P6", pPoints.P6[0] - 8, pPoints.P6[1] + 8, -24, "cable-duct");
+  labelSprite("P1", pPoints.P1[0], pPoints.P1[1] - 8, 4, "cable-duct", "point");
+  labelSprite("P2", pPoints.P2[0], pPoints.P2[1] - 8, -24, "cable-duct", "point");
+  labelSprite("P3", pPoints.P3[0], pPoints.P3[1] + 8, -24, "cable-duct", "point");
+  labelSprite("P4", pPoints.P4[0] - 8, pPoints.P4[1] - 8, 4, "cable-duct", "point");
+  labelSprite("P5", pPoints.P5[0] - 8, pPoints.P5[1] - 8, -24, "cable-duct", "point");
+  labelSprite("P6", pPoints.P6[0] - 8, pPoints.P6[1] + 8, -24, "cable-duct", "point");
 
-  labelSprite("EB1", exhaustPoints.EB1[0], 292, exhaustPoints.EB1[2], "exhaust-curb");
-  labelSprite("EB2", exhaustPoints.EB2[0], 292, exhaustPoints.EB2[2], "exhaust-curb");
-  labelSprite("EB3", exhaustPoints.EB3[0], 292, exhaustPoints.EB3[2], "exhaust-curb");
-  labelSprite("EB4", exhaustPoints.EB4[0], 292, exhaustPoints.EB4[2], "exhaust-curb");
-  labelSprite("ET1", exhaustPoints.ET1[0], 338, exhaustPoints.ET1[2], "exhaust-curb");
-  labelSprite("ET2", exhaustPoints.ET2[0], 338, exhaustPoints.ET2[2], "exhaust-curb");
-  labelSprite("ET3", exhaustPoints.ET3[0], 338, exhaustPoints.ET3[2], "exhaust-curb");
-  labelSprite("ET4", exhaustPoints.ET4[0], 338, exhaustPoints.ET4[2], "exhaust-curb");
+  labelSprite("EB1", exhaustPoints.EB1[0], 292, exhaustPoints.EB1[2], "exhaust-curb", "point");
+  labelSprite("EB2", exhaustPoints.EB2[0], 292, exhaustPoints.EB2[2], "exhaust-curb", "point");
+  labelSprite("EB3", exhaustPoints.EB3[0], 292, exhaustPoints.EB3[2], "exhaust-curb", "point");
+  labelSprite("EB4", exhaustPoints.EB4[0], 292, exhaustPoints.EB4[2], "exhaust-curb", "point");
+  labelSprite("ET1", exhaustPoints.ET1[0], 338, exhaustPoints.ET1[2], "exhaust-curb", "point");
+  labelSprite("ET2", exhaustPoints.ET2[0], 338, exhaustPoints.ET2[2], "exhaust-curb", "point");
+  labelSprite("ET3", exhaustPoints.ET3[0], 338, exhaustPoints.ET3[2], "exhaust-curb", "point");
+  labelSprite("ET4", exhaustPoints.ET4[0], 338, exhaustPoints.ET4[2], "exhaust-curb", "point");
 
   const dimensionMaterial = new THREE.LineBasicMaterial({ color: 0x000000 });
   const endpointGeometry = new THREE.SphereGeometry(3.2, 10, 8);
@@ -838,30 +845,116 @@
   });
 
   const partsContainer = root.querySelector("[data-parts]");
-  [...partRegistry.entries()]
-    .sort((a, b) => a[1].label.localeCompare(b[1].label))
-    .forEach(([keyName, entry], index) => {
-      const wrapper = document.createElement("label");
-      wrapper.className = "part-row";
-      const input = document.createElement("input");
-      input.type = "checkbox";
-      input.checked = true;
-      input.id = `hood-part-${index}`;
-      input.dataset.partKey = keyName;
-      const label = document.createElement("span");
-      label.className = "form-check-label";
-      label.textContent = entry.label;
-      wrapper.append(input, label);
-      partsContainer.appendChild(wrapper);
-      input.addEventListener("change", () => {
-        entry.objects.forEach(object => { object.visible = input.checked; });
-        const layer = annotationLayers.get(keyName);
-        if (layer) layer.visible = input.checked;
-      });
+  const partInputs = new Map();
+  const cameraButtons = new Map();
+  let highlightedPartKey = null;
+
+  const partTree = [{
+    label: "Hood",
+    children: [
+      {
+        label: "Side panels",
+        children: ["left-side", "left-flange", "right-side", "right-flange"]
+      },
+      {
+        label: "Top panel",
+        children: ["top-cover", "exhaust-curb"]
+      },
+      {
+        label: "Back panel",
+        children: [
+          "rear-panel",
+          "cable-duct",
+          { label: "Mounting rails", children: ["upper-rail", "lower-rail"] }
+        ]
+      },
+      {
+        label: "Bottom panels",
+        children: [
+          "rear-bottom",
+          "rear-grille-lip",
+          "l5-support",
+          "front-face",
+          "front-grille-lip",
+          "light-panel",
+          { label: "LED lights", children: ["led-1", "led-2", "led-3"] }
+        ]
+      },
+      {
+        label: "Removable grilles",
+        children: ["removable-grille-1", "removable-grille-2", "removable-grille-3"]
+      }
+    ]
+  }];
+
+  function setPartVisibility(partKey, visible) {
+    const entry = partRegistry.get(partKey);
+    if (!entry) return;
+    entry.objects.forEach(object => { object.visible = visible; });
+    const dimensionLayer = annotationLayers.get(partKey);
+    if (dimensionLayer) dimensionLayer.visible = visible;
+    const pointsLayer = pointLayers.get(partKey);
+    if (pointsLayer) pointsLayer.visible = visible;
+    const cameraButton = cameraButtons.get(partKey);
+    if (cameraButton) cameraButton.disabled = !visible;
+  }
+
+  function renderPartLeaf(partKey, parent, index) {
+    const entry = partRegistry.get(partKey);
+    if (!entry) return;
+    const row = document.createElement("div");
+    row.className = "part-row";
+    const input = document.createElement("input");
+    input.type = "checkbox";
+    input.checked = true;
+    input.id = `hood-part-${index}`;
+    input.dataset.partKey = partKey;
+    const label = document.createElement("label");
+    label.htmlFor = input.id;
+    label.textContent = entry.label;
+    const cameraButton = document.createElement("button");
+    cameraButton.type = "button";
+    cameraButton.className = "part-camera";
+    cameraButton.dataset.focusPart = partKey;
+    cameraButton.setAttribute("aria-label", `Focus camera on ${entry.label}`);
+    cameraButton.setAttribute("aria-pressed", "false");
+    cameraButton.textContent = "📷";
+    row.append(input, label, cameraButton);
+    parent.appendChild(row);
+    partInputs.set(partKey, input);
+    cameraButtons.set(partKey, cameraButton);
+    input.addEventListener("change", () => {
+      setPartVisibility(partKey, input.checked);
+      if (!input.checked && highlightedPartKey === partKey) {
+        highlightedPartKey = null;
+        cameraButton.setAttribute("aria-pressed", "false");
+        applyColourMode(colourModeToggle.checked);
+      }
     });
+  }
+
+  let partIndex = 0;
+  function renderPartNode(node, parent, depth = 0) {
+    if (typeof node === "string") {
+      renderPartLeaf(node, parent, partIndex++);
+      return;
+    }
+    const details = document.createElement("details");
+    details.className = "part-branch";
+    details.open = depth < 2;
+    const summary = document.createElement("summary");
+    summary.textContent = node.label;
+    const children = document.createElement("div");
+    children.className = "part-children";
+    node.children.forEach(child => renderPartNode(child, children, depth + 1));
+    details.append(summary, children);
+    parent.appendChild(details);
+  }
+  partTree.forEach(node => renderPartNode(node, partsContainer));
 
   function colourForPart(partKey, colourCoded) {
-    if (!colourCoded) return 0xffffff;
+    if (partKey === highlightedPartKey) return 0xffd21f;
+    if (!colourCoded) return 0xc4c9cf;
     if (partKey.startsWith("removable-grille-")) return 0xd95d67;
     if (partKey.includes("rail") || partKey.startsWith("led-")) return 0xe3b52f;
     return 0x2f70c9;
@@ -873,6 +966,12 @@
       entry.objects.forEach(object => {
         object.traverse(child => {
           if (!child.isMesh || !child.material) return;
+          if (!child.userData.viewerMaterialCloned) {
+            child.material = Array.isArray(child.material)
+              ? child.material.map(material => material.clone())
+              : child.material.clone();
+            child.userData.viewerMaterialCloned = true;
+          }
           const materials = Array.isArray(child.material) ? child.material : [child.material];
           materials.forEach(material => {
             if (material.color) material.color.setHex(colour);
@@ -892,18 +991,24 @@
   root.querySelectorAll("[data-parts-action]").forEach(button => {
     button.addEventListener("click", () => {
       const visible = button.dataset.partsAction === "show";
-      root.querySelectorAll("[data-part-key]").forEach(input => {
+      partInputs.forEach((input, partKey) => {
         input.checked = visible;
-        const partKey = input.dataset.partKey;
-        partRegistry.get(partKey).objects.forEach(object => { object.visible = visible; });
-        const layer = annotationLayers.get(partKey);
-        if (layer) layer.visible = visible;
+        setPartVisibility(partKey, visible);
       });
+      if (!visible && highlightedPartKey) {
+        highlightedPartKey = null;
+        cameraButtons.forEach(cameraButton => cameraButton.setAttribute("aria-pressed", "false"));
+        applyColourMode(colourModeToggle.checked);
+      }
     });
   });
 
   root.querySelector("[data-dimensions]").addEventListener("change", event => {
-    annotationGroup.visible = event.currentTarget.checked;
+    dimensionGroup.visible = event.currentTarget.checked;
+  });
+
+  root.querySelector("[data-points]").addEventListener("change", event => {
+    pointGroup.visible = event.currentTarget.checked;
   });
 
   const controls = new OrbitControls(camera, renderer.domElement);
@@ -912,95 +1017,47 @@
   controls.minDistance = 250;
   controls.maxDistance = 4500;
 
-  const views = {
-    whole: {
-      position: [1450, 820, 1250],
-      target: [300, 150, -749],
-      caption: "Mirrored side plates — overall outside width 1,500 mm, including both 1 mm plate thicknesses"
-    },
-    left: {
-      position: [780, 500, 760],
-      target: [300, 150, 0.5],
-      caption: "Left plate — L6–L7 is the fold line; L8–L9 is the opposite free edge of the 30 mm flange"
-    },
-    right: {
-      position: [780, 500, -2250],
-      target: [300, 150, -1498.5],
-      caption: "Right plate — R6–R7 is the fold line; R8–R9 is the opposite free edge of the 30 mm flange"
-    },
-    front: {
-      position: [1450, 350, -749],
-      target: [300, 150, -749],
-      caption: "Front-width view — 1,500 mm outside-to-outside; clear internal width 1,498 mm"
-    },
-    covers: {
-      position: [1250, 900, 1050],
-      target: [300, 150, -749],
-      caption: "Six cover plates connect L2–L3, L3–L4, L5–L4, L6–L5, L1–L2 and L1–L7 to their matching right-side edges"
-    },
-    brackets: {
-      position: [-1100, 470, 450],
-      target: [0, 150, -749],
-      caption: "Two rear wall-mounting rails — each 1,400 W × 40 H × 3 T mm; centred 50 mm from the upper and lower rear-panel edges"
-    },
-    l5plate: {
-      position: [700, 430, 850],
-      target: [90, 25, -749],
-      caption: "L5–R5 upstand — 30 mm high × 1,500 mm wide; 90° to the L5–L1 and R5–R1 slopes"
-    },
-    fl2plate: {
-      position: [1250, 720, 850],
-      target: [535, 220, -749],
-      caption: "FL2–FR2–R8–L8 panel with three symmetrically spaced Ø30 mm LED lights mounted beneath it"
-    },
-    lights: {
-      position: [1150, -420, 650],
-      target: [535, 220, -749],
-      caption: "Three Ø30 mm LED centres — exactly 250, 750 and 1,250 mm from the hood’s left outside edge"
-    },
-    grilles: {
-      position: [1150, -260, 720],
-      target: [310, 135, -749],
-      caption: "Three removable baffle grilles — each 490 W × 470 D × 30 T mm, resting between the L5–R5 and FL2–FR2 supports"
-    },
-    pdetails: {
-      position: [850, 560, 420],
-      target: [250, 290, -10],
-      caption: "P plates — P1 is 100 mm behind L2 and 20 mm down; P1–P2 and P4–P5 are 20 mm inward; the L3–P4–P5–P6 notch remains open"
-    },
-    exhaust: {
-      position: [820, 1050, -180],
-      target: [105, 300, -749],
-      caption: "Exhaust opening EB1–EB4 — 350 × 150 mm clear; ET1–ET4 mark the curb top, 30 mm above the base"
-    },
-    flange: {
-      position: [860, 50, -500],
-      target: [350, 100, -15],
-      caption: "Flange — L6–L7 is the fold line and L8–L9 is its free edge; width 30 mm, length 448.5 mm"
-    },
-    edge: {
-      position: [1450, 150, 0.5],
-      target: [300, 150, 0.5],
-      caption: "True edge view — plate thickness 1 mm"
-    }
-  };
+  camera.position.set(1450, 820, 1250);
+  controls.target.set(300, 150, -749);
+  controls.update();
 
-  function selectView(name) {
-    const view = views[name];
-    camera.position.set(...view.position);
-    controls.target.set(...view.target);
+  function focusCameraOnPart(partKey) {
+    const entry = partRegistry.get(partKey);
+    if (!entry) return;
+    const bounds = new THREE.Box3();
+    entry.objects.forEach(object => bounds.expandByObject(object, true));
+    if (bounds.isEmpty()) return;
+    const centre = bounds.getCenter(new THREE.Vector3());
+    const sphere = bounds.getBoundingSphere(new THREE.Sphere());
+    const direction = camera.position.clone().sub(controls.target);
+    if (direction.lengthSq() < 0.001) direction.set(1, 0.7, 1);
+    direction.normalize();
+    const halfFov = THREE.MathUtils.degToRad(camera.fov * 0.5);
+    const distance = Math.max(220, sphere.radius / Math.max(Math.sin(halfFov), 0.15) * 1.35);
+    camera.position.copy(centre).add(direction.multiplyScalar(distance));
+    camera.near = Math.max(1, distance / 200);
+    camera.far = Math.max(4000, distance * 8);
+    camera.updateProjectionMatrix();
+    controls.target.copy(centre);
     controls.update();
-    root.querySelector("[data-caption]").textContent = view.caption;
-    root.querySelectorAll("[data-view]").forEach(button => {
-      const active = button.dataset.view === name;
-      button.setAttribute("aria-pressed", String(active));
-    });
+    root.querySelector("[data-caption]").textContent = entry.label;
   }
 
-  root.querySelectorAll("[data-view]").forEach(button => {
-    button.addEventListener("click", () => selectView(button.dataset.view));
+  cameraButtons.forEach((button, partKey) => {
+    button.addEventListener("click", () => {
+      if (highlightedPartKey === partKey) {
+        highlightedPartKey = null;
+        button.setAttribute("aria-pressed", "false");
+        applyColourMode(colourModeToggle.checked);
+        return;
+      }
+      highlightedPartKey = partKey;
+      cameraButtons.forEach(otherButton => otherButton.setAttribute("aria-pressed", "false"));
+      button.setAttribute("aria-pressed", "true");
+      applyColourMode(colourModeToggle.checked);
+      focusCameraOnPart(partKey);
+    });
   });
-  selectView("whole");
 
   function resize() {
     const width = Math.max(1, stage.clientWidth);
