@@ -794,14 +794,18 @@ import { createDuctSystem, systemAngles, systemDimensions, systemPoint } from ".
   });
   systemAngles.forEach(({ key: partKey, text }) => {
     const anchors = {
-      "elbow-1": systemPoint(72.5, 289.5, 119),
-      "elbow-2": systemPoint(20.5, 262, 119),
-      "elbow-3": systemPoint(20.5, 53.5, 146.5),
-      "elbow-4": systemPoint(20.5, 26, 595.5)
+      "elbow-1": systemPoint(100, 262, 119),
+      "elbow-2": systemPoint(72.5, 234.5, 119),
+      "elbow-3": systemPoint(20.5, 207, 119),
+      "elbow-4": systemPoint(20.5, 53.5, 146.5),
+      "elbow-5": systemPoint(20.5, 26, 595.5)
     };
     const centre = anchors[partKey];
     labelSprite(text, centre.x + 64, centre.y + 64, centre.z + 64, partKey);
-    labelSprite({ "elbow-1": "S-1", "elbow-2": "S-2", "elbow-3": "S-3", "elbow-4": "S-4" }[partKey], centre.x + 64, centre.y + 108, centre.z + 64, partKey, "point");
+    labelSprite({
+      "elbow-1": "S-1", "elbow-2": "S-2", "elbow-3": "S-3",
+      "elbow-4": "S-4", "elbow-5": "S-5"
+    }[partKey], centre.x + 64, centre.y + 108, centre.z + 64, partKey, "point");
   });
 
   function classifyPart(name) {

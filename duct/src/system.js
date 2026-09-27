@@ -294,37 +294,65 @@ export function createDuctSystem(scene) {
   const elbow1 = partGroup(scene, "elbow-1");
   addSweptSurface(elbow1, "elbow-1-shell", angle => {
     const si = Math.sin(angle), co = Math.cos(angle);
-    const point = (radius, side) => [100 - 27.5 + radius * co, 289.5 + side, 91.5 + radius * si];
-    return [point(45, -7.5), point(10, -7.5), point(10, 7.5), point(45, 7.5)];
+    const cy = 262 + 27.5 * co;
+    const cz = 91.5 + 27.5 * si;
+    return [
+      [82.5, cy - 7.5 * co, cz - 7.5 * si],
+      [117.5, cy - 7.5 * co, cz - 7.5 * si],
+      [117.5, cy + 7.5 * co, cz + 7.5 * si],
+      [82.5, cy + 7.5 * co, cz + 7.5 * si]
+    ];
   });
   addFlangeZ(elbow1, "elbow-1-inlet-flange", 100, 289.5, 91.5, 35, 15);
-  addFlangeX(elbow1, "elbow-1-outlet-flange", 72.5, 289.5, 119, 15, 35);
-
-  const straight2 = partGroup(scene, "straight-2");
-  addRectShell(straight2, "straight-2", "x", { x0: 48, x1: 72.5, y0: 282, y1: 297, z0: 101.5, z1: 136.5 });
-  addFlangeX(straight2, "straight-2-start-flange", 72.5, 289.5, 119, 15, 35);
-  addFlangeX(straight2, "straight-2-end-flange", 48, 289.5, 119, 15, 35);
+  addFlangeY(elbow1, "elbow-1-outlet-flange", 100, 262, 119, 35, 15);
 
   const elbow2 = partGroup(scene, "elbow-2");
   addSweptSurface(elbow2, "elbow-2-shell", angle => {
     const si = Math.sin(angle), co = Math.cos(angle);
-    return [[48 - 35 * si, 262 + 35 * co, 101.5], [48 - 20 * si, 262 + 20 * co, 101.5], [48 - 20 * si, 262 + 20 * co, 136.5], [48 - 35 * si, 262 + 35 * co, 136.5]];
+    const cx = 72.5 + 27.5 * co;
+    const cy = 262 - 27.5 * si;
+    return [
+      [cx - 17.5 * co, cy + 17.5 * si, 111.5],
+      [cx + 17.5 * co, cy - 17.5 * si, 111.5],
+      [cx + 17.5 * co, cy - 17.5 * si, 126.5],
+      [cx - 17.5 * co, cy + 17.5 * si, 126.5]
+    ];
   });
-  addFlangeX(elbow2, "elbow-2-inlet-flange", 48, 289.5, 119, 15, 35);
-  addFlangeY(elbow2, "elbow-2-outlet-flange", 20.5, 262, 119, 15, 35);
+  addFlangeY(elbow2, "elbow-2-inlet-flange", 100, 262, 119, 35, 15);
+  addFlangeX(elbow2, "elbow-2-outlet-flange", 72.5, 234.5, 119, 35, 15);
+
+  const straight2 = partGroup(scene, "straight-2");
+  addRectShell(straight2, "straight-2", "x", { x0: 48, x1: 72.5, y0: 217, y1: 252, z0: 111.5, z1: 126.5 });
+  addFlangeX(straight2, "straight-2-start-flange", 72.5, 234.5, 119, 35, 15);
+  addFlangeX(straight2, "straight-2-end-flange", 48, 234.5, 119, 35, 15);
+
+  const elbow3 = partGroup(scene, "elbow-3");
+  addSweptSurface(elbow3, "elbow-3-shell", angle => {
+    const si = Math.sin(angle), co = Math.cos(angle);
+    const cx = 48 - 27.5 * si;
+    const cy = 207 + 27.5 * co;
+    return [
+      [cx - 17.5 * si, cy + 17.5 * co, 111.5],
+      [cx + 17.5 * si, cy - 17.5 * co, 111.5],
+      [cx + 17.5 * si, cy - 17.5 * co, 126.5],
+      [cx - 17.5 * si, cy + 17.5 * co, 126.5]
+    ];
+  });
+  addFlangeX(elbow3, "elbow-3-inlet-flange", 48, 234.5, 119, 35, 15);
+  addFlangeY(elbow3, "elbow-3-outlet-flange", 20.5, 207, 119, 35, 15);
 
   const straight3 = partGroup(scene, "straight-3");
-  addRectShell(straight3, "straight-3", "y", { x0: 13, x1: 28, y0: 159.5, y1: 262, z0: 101.5, z1: 136.5 });
-  addFlangeY(straight3, "straight-3-start-flange", 20.5, 262, 119, 15, 35);
-  addFlangeY(straight3, "straight-3-end-flange", 20.5, 159.5, 119, 15, 35);
+  addRectShell(straight3, "straight-3", "y", { x0: 3, x1: 38, y0: 159.5, y1: 207, z0: 111.5, z1: 126.5 });
+  addFlangeY(straight3, "straight-3-start-flange", 20.5, 207, 119, 35, 15);
+  addFlangeY(straight3, "straight-3-end-flange", 20.5, 159.5, 119, 35, 15);
 
   const rectTall = { type: "rectangle", hw: 7.5, hh: 17.5 };
   const rectWide = { type: "rectangle", hw: 17.5, hh: 7.5 };
   const circle = { type: "circle", radius: 12.5 };
   const transition1 = partGroup(scene, "transition-1");
-  addTransition(transition1, "transition-1-shell", 159.5, 134.5, rectTall, circle);
+  addTransition(transition1, "transition-1-shell", 159.5, 134.5, rectWide, circle);
   addCylinderY(transition1, "transition-1-collar", 20.5, 119, 134.5, 4, 12.5);
-  addFlangeY(transition1, "transition-1-flange", 20.5, 159.5, 119, 15, 35);
+  addFlangeY(transition1, "transition-1-flange", 20.5, 159.5, 119, 35, 15);
 
   const fan = partGroup(scene, "fan");
   addCylinderY(fan, "fan-inlet-collar", 20.5, 119, 130.5, 2.5, 12.5);
@@ -338,14 +366,14 @@ export function createDuctSystem(scene) {
   addTransition(transition2, "transition-2-shell", 106, 81, circle, rectWide);
   addFlangeY(transition2, "transition-2-flange", 20.5, 81, 119, 35, 15);
 
-  const elbow3 = partGroup(scene, "elbow-3");
-  addSweptSurface(elbow3, "elbow-3-shell", angle => {
+  const elbow4 = partGroup(scene, "elbow-4");
+  addSweptSurface(elbow4, "elbow-4-shell", angle => {
     const si = Math.sin(angle), co = Math.cos(angle);
     const cy = 81 - 27.5 * si, cz = 119 + 27.5 * (1 - co);
     return [[3, cy + 7.5 * si, cz + 7.5 * co], [38, cy + 7.5 * si, cz + 7.5 * co], [38, cy - 7.5 * si, cz - 7.5 * co], [3, cy - 7.5 * si, cz - 7.5 * co]];
   });
-  addFlangeY(elbow3, "elbow-3-inlet-flange", 20.5, 81, 119, 35, 15);
-  addFlangeZ(elbow3, "elbow-3-outlet-flange", 20.5, 53.5, 146.5, 35, 15);
+  addFlangeY(elbow4, "elbow-4-inlet-flange", 20.5, 81, 119, 35, 15);
+  addFlangeZ(elbow4, "elbow-4-outlet-flange", 20.5, 53.5, 146.5, 35, 15);
 
   for (const [key, start, end] of [
     ["straight-4a", 146.5, 266.5],
@@ -359,14 +387,14 @@ export function createDuctSystem(scene) {
     addFlangeZ(group, `${key}-top-flange`, 20.5, 53.5, end, 35, 15);
   }
 
-  const elbow4 = partGroup(scene, "elbow-4");
-  addSweptSurface(elbow4, "elbow-4-shell", angle => {
+  const elbow5 = partGroup(scene, "elbow-5");
+  addSweptSurface(elbow5, "elbow-5-shell", angle => {
     const si = Math.sin(angle), co = Math.cos(angle);
     const cy = 53.5 - 27.5 * (1 - co), cz = 568 + 27.5 * si;
     return [[3, cy - 7.5 * co, cz - 7.5 * si], [38, cy - 7.5 * co, cz - 7.5 * si], [38, cy + 7.5 * co, cz + 7.5 * si], [3, cy + 7.5 * co, cz + 7.5 * si]];
   });
-  addFlangeZ(elbow4, "elbow-4-inlet-flange", 20.5, 53.5, 568, 35, 15);
-  addFlangeY(elbow4, "elbow-4-outlet-flange", 20.5, 26, 595.5, 35, 15);
+  addFlangeZ(elbow5, "elbow-5-inlet-flange", 20.5, 53.5, 568, 35, 15);
+  addFlangeY(elbow5, "elbow-5-outlet-flange", 20.5, 26, 595.5, 35, 15);
 
   const rainHood = partGroup(scene, "rain-hood");
   addRainHood(rainHood);
@@ -375,8 +403,8 @@ export function createDuctSystem(scene) {
 
 export const systemDimensions = [
   { key: "straight-1", text: "715 mm", a: [100, 279, 20.1], b: [100, 279, 91.5] },
-  { key: "straight-2", text: "245 mm", a: [48, 278, 140], b: [72.5, 278, 140] },
-  { key: "straight-3", text: "1,025 mm", a: [31, 159.5, 140], b: [31, 262, 140] },
+  { key: "straight-2", text: "245 mm", a: [48, 212, 132], b: [72.5, 212, 132] },
+  { key: "straight-3", text: "475 mm", a: [42, 159.5, 132], b: [42, 207, 132] },
   { key: "transition-1", text: "250 + 40 mm", a: [31, 130.5, 143], b: [31, 159.5, 143] },
   { key: "fan", text: "205 mm total", a: [42, 110, 143], b: [42, 130.5, 143] },
   { key: "transition-2", text: "40 + 250 mm", a: [31, 81, 143], b: [31, 110, 143] },
@@ -388,4 +416,4 @@ export const systemDimensions = [
   { key: "rain-hood", text: "bottom +4,940 mm", a: [44, 3, 94], b: [44, 3, 588] }
 ];
 
-export const systemAngles = ["elbow-1", "elbow-2", "elbow-3", "elbow-4"].map(key => ({ key, text: "90°" }));
+export const systemAngles = ["elbow-1", "elbow-2", "elbow-3", "elbow-4", "elbow-5"].map(key => ({ key, text: "90°" }));
