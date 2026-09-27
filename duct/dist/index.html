@@ -15,8 +15,8 @@
       }
     }
   </script>
-  <script type="module" crossorigin src="./assets/index-Cp4xFIat.js"></script>
-  <link rel="stylesheet" crossorigin href="./assets/index-DLw6Yh2s.css">
+  <script type="module" crossorigin src="./assets/index-DoFvssWI.js"></script>
+  <link rel="stylesheet" crossorigin href="./assets/index-DF83ebcf.css">
 </head>
 <body>
   <div id="hood-left-side-plate" aria-label="Viewer sistem exhaust dapur Opsi D">
@@ -24,6 +24,7 @@
       <div class="language-switch" role="group" aria-label="Bahasa">
         <button type="button" data-language="id" aria-pressed="true">ID</button>
         <button type="button" data-language="en" aria-pressed="false">EN</button>
+        <button type="button" class="guide-button" data-onboarding-open aria-label="Buka panduan penggunaan">? <span data-guide-label>Panduan</span></button>
       </div>
       <header>
         <h1 data-i18n="viewerTitle">Viewer sistem exhaust Opsi D</h1>
@@ -92,6 +93,23 @@
         <ul data-info-instructions></ul>
       </section>
     </aside>
+  </div>
+
+  <div class="onboarding" data-onboarding hidden>
+    <div class="onboarding-backdrop"></div>
+    <section class="onboarding-card" role="dialog" aria-modal="true" aria-labelledby="onboarding-title" aria-describedby="onboarding-description">
+      <div class="onboarding-progress" data-onboarding-progress aria-hidden="true"></div>
+      <p class="onboarding-counter" data-onboarding-counter></p>
+      <h2 id="onboarding-title" data-onboarding-title></h2>
+      <p id="onboarding-description" data-onboarding-description></p>
+      <p class="onboarding-tip" data-onboarding-tip></p>
+      <div class="onboarding-actions">
+        <button type="button" class="onboarding-skip" data-onboarding-skip></button>
+        <span class="onboarding-spacer"></span>
+        <button type="button" data-onboarding-back></button>
+        <button type="button" class="onboarding-next" data-onboarding-next></button>
+      </div>
+    </section>
   </div>
 </body>
 </html>

@@ -1,6 +1,6 @@
 import * as THREE from "three";
 import { OrbitControls } from "three/addons/controls/OrbitControls.js";
-import { infoContent, partInfoKey, partLabels, partTree, uiText } from "./content.js";
+import { infoContent, onboardingCopy, partInfoKey, partLabels, partTree, uiText } from "./content.js";
 import { createDuctSystem, systemAngles, systemDimensions, systemPoint } from "./system.js";
 
   const root = document.getElementById("hood-left-side-plate");
@@ -835,6 +835,7 @@ import { createDuctSystem, systemAngles, systemDimensions, systemPoint } from ".
   let visibilityWasManuallyChanged = false;
 
   let currentLanguage = "id";
+  const onboardingState = { active: false, step: 0, highlighted: null };
 
   function translatedPartLabel(key) {
     return partLabels[currentLanguage]?.[key] || partLabels.en[key] || key;
@@ -983,6 +984,10 @@ import { createDuctSystem, systemAngles, systemDimensions, systemPoint } from ".
     root.querySelector("[data-nav-zoom]").textContent = text.zoom;
     root.querySelector("[data-nav-focus]").textContent = text.focus;
     root.querySelector("[data-info-eyebrow]").textContent = text.activeComponent;
+    const guide = onboardingCopy[language];
+    const guideButton = root.querySelector("[data-onboarding-open]");
+    guideButton.setAttribute("aria-label", guide.openLabel);
+    guideButton.querySelector("[data-guide-label]").textContent = guide.guide;
     root.querySelectorAll("[data-info-heading]").forEach(element => {
       element.textContent = text[element.dataset.infoHeading];
     });
@@ -991,6 +996,7 @@ import { createDuctSystem, systemAngles, systemDimensions, systemPoint } from ".
       ? translatedPartLabel(activeControl.labelKey)
       : text.completeCaption;
     updateNodeControls();
+    if (onboardingState.active) renderOnboardingStep();
   }
 
   root.querySelectorAll("[data-language]").forEach(button => {
@@ -1177,3 +1183,89 @@ import { createDuctSystem, systemAngles, systemDimensions, systemPoint } from ".
     requestAnimationFrame(animate);
   }
   animate();
+
+  const onboardingRoot = document.querySelector("[data-onboarding]");
+  const onboardingStorageKey = "duct-option-d-onboarding-v1-complete";
+
+  function clearOnboardingHighlight() {
+    if (!onboardingState.highlighted) return;
+    onboardingState.highlighted.classList.remove("onboarding-highlight");
+    onboardingState.highlighted = null;
+  }
+
+  function renderOnboardingStep() {
+    if (!onboardingState.active) return;
+    const copy = onboardingCopy[currentLanguage];
+    const step = copy.steps[onboardingState.step];
+    clearOnboardingHighlight();
+    if (step.target) {
+      const target = document.querySelector(step.target);
+      if (target) {
+        target.classList.add("onboarding-highlight");
+        target.scrollIntoView({ block: "center", inline: "nearest", behavior: "smooth" });
+        onboardingState.highlighted = target;
+      }
+    }
+    onboardingRoot.dataset.position = step.target ? "guided" : "welcome";
+    onboardingRoot.querySelector("[data-onboarding-counter]").textContent =
+      `${copy.step} ${onboardingState.step + 1} ${copy.of} ${copy.steps.length}`;
+    onboardingRoot.querySelector("[data-onboarding-title]").textContent = step.title;
+    onboardingRoot.querySelector("[data-onboarding-description]").textContent = step.description;
+    onboardingRoot.querySelector("[data-onboarding-tip]").textContent = step.tip;
+    onboardingRoot.querySelector("[data-onboarding-back]").textContent = copy.back;
+    onboardingRoot.querySelector("[data-onboarding-back]").disabled = onboardingState.step === 0;
+    onboardingRoot.querySelector("[data-onboarding-next]").textContent =
+      onboardingState.step === copy.steps.length - 1 ? copy.finish : copy.next;
+    onboardingRoot.querySelector("[data-onboarding-skip]").textContent = copy.skip;
+    const progress = onboardingRoot.querySelector("[data-onboarding-progress]");
+    progress.replaceChildren(...copy.steps.map((_, index) => {
+      const dot = document.createElement("span");
+      dot.className = index === onboardingState.step ? "is-active" : "";
+      return dot;
+    }));
+  }
+
+  function openOnboarding() {
+    onboardingState.active = true;
+    onboardingState.step = 0;
+    onboardingRoot.hidden = false;
+    document.body.classList.add("onboarding-open");
+    renderOnboardingStep();
+    onboardingRoot.querySelector("[data-onboarding-next]").focus();
+  }
+
+  function closeOnboarding(remember = true) {
+    onboardingState.active = false;
+    clearOnboardingHighlight();
+    onboardingRoot.hidden = true;
+    document.body.classList.remove("onboarding-open");
+    if (remember) localStorage.setItem(onboardingStorageKey, "true");
+    root.querySelector("[data-onboarding-open]").focus();
+  }
+
+  onboardingRoot.querySelector("[data-onboarding-next]").addEventListener("click", () => {
+    const finalStep = onboardingCopy[currentLanguage].steps.length - 1;
+    if (onboardingState.step >= finalStep) closeOnboarding(true);
+    else {
+      onboardingState.step += 1;
+      renderOnboardingStep();
+    }
+  });
+  onboardingRoot.querySelector("[data-onboarding-back]").addEventListener("click", () => {
+    if (onboardingState.step > 0) {
+      onboardingState.step -= 1;
+      renderOnboardingStep();
+    }
+  });
+  onboardingRoot.querySelector("[data-onboarding-skip]").addEventListener("click", () => closeOnboarding(true));
+  root.querySelector("[data-onboarding-open]").addEventListener("click", openOnboarding);
+  document.addEventListener("keydown", event => {
+    if (!onboardingState.active) return;
+    if (event.key === "Escape") closeOnboarding(true);
+    if (event.key === "ArrowRight") onboardingRoot.querySelector("[data-onboarding-next]").click();
+    if (event.key === "ArrowLeft") onboardingRoot.querySelector("[data-onboarding-back]").click();
+  });
+
+  if (localStorage.getItem(onboardingStorageKey) !== "true") {
+    requestAnimationFrame(openOnboarding);
+  }

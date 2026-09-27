@@ -98,6 +98,115 @@ export const uiText = {
   }
 };
 
+export const onboardingCopy = {
+  id: {
+    guide: "Panduan",
+    step: "Langkah",
+    of: "dari",
+    back: "Kembali",
+    next: "Lanjut",
+    finish: "Mulai memeriksa",
+    skip: "Lewati panduan",
+    openLabel: "Buka panduan penggunaan",
+    steps: [
+      {
+        title: "Selamat datang di viewer Opsi D",
+        description: "Panduan singkat ini menunjukkan cara memeriksa seluruh sistem exhaust, dari hood sampai tudung hujan.",
+        tip: "Panduan hanya muncul otomatis pada kunjungan pertama. Buka kembali kapan saja melalui tombol Panduan."
+      },
+      {
+        target: ".language-switch",
+        title: "Pilih bahasa",
+        description: "Gunakan ID atau EN untuk mengganti seluruh nama komponen, tombol, serta informasi teknis.",
+        tip: "Bahasa awal adalah Bahasa Indonesia."
+      },
+      {
+        target: ".left-sidebar section:first-of-type",
+        title: "Atur tampilan model",
+        description: "Aktifkan warna komponen, dimensi dan sudut, atau titik notasi secara terpisah. Tampilkan semua dan Sembunyikan semua mengubah seluruh assembly.",
+        tip: "Lampu LED tetap kuning agar mudah dikenali pada kedua mode warna."
+      },
+      {
+        target: ".parts-section",
+        title: "Periksa pohon komponen",
+        description: "Buka atau tutup cabang dengan tanda +/−. Ikon mata menyembunyikan atau menampilkan bagian. Ikon target ◎ mengisolasi bagian, memberi warna kuning, dan mengarahkan kamera kepadanya.",
+        tip: "Klik target yang sama lagi untuk memulihkan assembly sebelumnya."
+      },
+      {
+        target: ".plate-stage",
+        title: "Navigasikan model 3D",
+        description: "Tarik untuk memutar. Klik kanan lalu tarik untuk menggeser. Gunakan roda gulir atau cubit untuk memperbesar dan memperkecil.",
+        tip: "Anda dapat melanjutkan memutar model setelah menggunakan fokus ◎."
+      },
+      {
+        target: ".info-sidebar",
+        title: "Baca informasi fabrikasi",
+        description: "Panel kanan mengikuti komponen atau induk yang sedang aktif dan menampilkan deskripsi, material, ukuran, sudut, serta petunjuk pemasangan.",
+        tip: "Isolasi satu komponen untuk membuka data paling spesifik."
+      },
+      {
+        target: ".navigation-footer",
+        title: "Referensi navigasi selalu tersedia",
+        description: "Ringkasan kontrol mouse dan trackpad tetap terlihat di bagian bawah viewer.",
+        tip: "Sekarang Anda siap memeriksa sistem Opsi D."
+      }
+    ]
+  },
+  en: {
+    guide: "Guide",
+    step: "Step",
+    of: "of",
+    back: "Back",
+    next: "Next",
+    finish: "Start inspecting",
+    skip: "Skip guide",
+    openLabel: "Open usage guide",
+    steps: [
+      {
+        title: "Welcome to the Option D viewer",
+        description: "This short guide shows you how to inspect the complete exhaust system, from the hood to the rain hood.",
+        tip: "The guide opens automatically only on your first visit. Reopen it at any time with the Guide button."
+      },
+      {
+        target: ".language-switch",
+        title: "Choose a language",
+        description: "Use ID or EN to switch all component names, controls, and technical information.",
+        tip: "The default language is Indonesian."
+      },
+      {
+        target: ".left-sidebar section:first-of-type",
+        title: "Control the model display",
+        description: "Toggle component colours, dimensions and angles, or point notations independently. Show all and Hide all affect the complete assembly.",
+        tip: "The LED lights remain yellow in both colour modes for easy identification."
+      },
+      {
+        target: ".parts-section",
+        title: "Inspect the component tree",
+        description: "Expand or collapse branches with +/−. The eye hides or shows a part. The ◎ target isolates it, highlights it yellow, and moves the camera to it.",
+        tip: "Select the same target again to restore the previous assembly."
+      },
+      {
+        target: ".plate-stage",
+        title: "Navigate the 3D model",
+        description: "Drag to rotate. Right-click and drag to pan. Use the wheel or pinch gesture to zoom.",
+        tip: "You can continue rotating after using ◎ focus."
+      },
+      {
+        target: ".info-sidebar",
+        title: "Read fabrication information",
+        description: "The right panel follows the active part or parent and shows its description, materials, measurements, angles, and installation instructions.",
+        tip: "Isolate one component to view its most specific data."
+      },
+      {
+        target: ".navigation-footer",
+        title: "Navigation help stays available",
+        description: "A compact mouse and trackpad reference remains visible below the viewer.",
+        tip: "You are ready to inspect the Option D system."
+      }
+    ]
+  }
+};
+
 export const partLabels = {
   id: {
     "complete-system": "Sistem exhaust lengkap",
