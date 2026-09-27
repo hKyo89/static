@@ -309,7 +309,9 @@ function addBuilding(scene) {
   for (let z = 593; z <= 606; z += 3.25) {
     addPdfBox(groups.frontMesh, `shaft-front-mesh-h-${z}`, 3, 81, 11, 12, z - 0.15, z + 0.15, { fixedColour: 0x707780 });
   }
-  addPdfBox(groups.glass, "glass-roof", 0, 94, 16, 74, 612, 613, { opacity: 0.28, fixedColour: glass, edgeOpacity: 0.7 });
+  // Glass follows the complete outside faces of the shaft-top walls, with the
+  // surveyed 50 mm overhang only at the front and right sides.
+  addPdfBox(groups.glass, "glass-roof", -20, 104, 6, 79, 612, 613, { opacity: 0.28, fixedColour: glass, edgeOpacity: 0.7 });
 }
 
 export function createDuctSystem(scene) {
@@ -457,7 +459,11 @@ export const systemDimensions = [
   { key: "shaft-front-mesh", text: "250 mm roof zone", a: [102, 10, 587], b: [102, 10, 612] },
   { key: "shaft-front-mesh", text: "30 mm lower frame", a: [105, 8, 587], b: [105, 8, 590] },
   { key: "shaft-front-mesh", text: "190 mm clear access", a: [108, 8, 590], b: [108, 8, 609] },
-  { key: "shaft-front-mesh", text: "30 mm upper frame", a: [111, 8, 609], b: [111, 8, 612] }
+  { key: "shaft-front-mesh", text: "30 mm upper frame", a: [111, 8, 609], b: [111, 8, 612] },
+  { key: "glass-roof", text: "1240 mm glass width", a: [-20, 3, 614], b: [104, 3, 614] },
+  { key: "glass-roof", text: "730 mm glass depth", a: [107, 6, 614], b: [107, 79, 614] },
+  { key: "glass-roof", text: "50 mm front overhang", a: [110, 6, 615], b: [110, 11, 615] },
+  { key: "glass-roof", text: "50 mm right overhang", a: [99, 2, 615], b: [104, 2, 615] }
 ];
 
 export const systemAngles = ["elbow-1", "elbow-2", "elbow-3", "elbow-4", "elbow-5"].map(key => ({ key, text: "90°" }));
