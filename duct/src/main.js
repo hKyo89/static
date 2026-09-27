@@ -1,6 +1,7 @@
 import * as THREE from "three";
 import { OrbitControls } from "three/addons/controls/OrbitControls.js";
 import { infoContent, partInfoKey, partLabels, partTree, uiText } from "./content.js";
+import { createDuctSystem, systemAngles, systemDimensions, systemPoint } from "./system.js";
 
   const root = document.getElementById("hood-left-side-plate");
   const stage = root.querySelector(".plate-stage");
@@ -13,7 +14,7 @@ import { infoContent, partInfoKey, partLabels, partTree, uiText } from "./conten
   };
 
   const scene = new THREE.Scene();
-  const camera = new THREE.PerspectiveCamera(32, 1, 1, 4000);
+  const camera = new THREE.PerspectiveCamera(32, 1, 30000);
   const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
   renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
   renderer.setClearColor(0xffffff, 1);
@@ -558,6 +559,11 @@ import { infoContent, partInfoKey, partLabels, partTree, uiText } from "./conten
     addRemovableGrille(index + 1, centreZ);
   });
 
+  // Final Option D assembly. The detailed hood above remains the canonical
+  // hood; this adds the connected duct, fan, shaft rise, outlet, and building
+  // context using the last approved fabrication dimensions.
+  createDuctSystem(scene);
+
   const annotationGroup = new THREE.Group();
   annotationGroup.name = "Dimensions-and-labels";
   scene.add(annotationGroup);
@@ -757,8 +763,39 @@ import { infoContent, partInfoKey, partLabels, partTree, uiText } from "./conten
   addMetric("50 mm", [-22, 300, -20], [-22, 250, -20], [-52, 275, -20], "upper-rail");
   addMetric("20 × 20 mm cable duct", [500, 280, -20], [500, 300, -20], [548, 290, -20], "cable-duct");
 
+  // Complete-system dimensions. Labels live in the same per-part layers as
+  // the hood annotations, so hiding or isolating a part also hides its notes.
+  systemDimensions.forEach(({ key: partKey, text, a, b }) => {
+    const start = systemPoint(...a);
+    const end = systemPoint(...b);
+    const lateral = new THREE.Vector3(42, 24, 42);
+    addMetric(text, start, end, start.clone().lerp(end, 0.5).add(lateral), partKey);
+    const notation = {
+      "straight-1": "L-1", "straight-2": "L-2", "straight-3": "L-3",
+      "transition-1": "T-1", fan: "FAN-1", "transition-2": "T-2",
+      "straight-4a": "L-4A", "straight-4b": "L-4B", "straight-4c": "L-4C",
+      "rain-hood": "RNH-1"
+    }[partKey] || partKey;
+    labelSprite(notation, end.x + 56, end.y + 42, end.z + 56, partKey, "point");
+  });
+  systemAngles.forEach(({ key: partKey, text }) => {
+    const anchors = {
+      "elbow-1": systemPoint(72.5, 289.5, 119),
+      "elbow-2": systemPoint(20.5, 262, 119),
+      "elbow-3": systemPoint(20.5, 53.5, 146.5),
+      "elbow-4": systemPoint(20.5, 26, 595.5)
+    };
+    const centre = anchors[partKey];
+    labelSprite(text, centre.x + 64, centre.y + 64, centre.z + 64, partKey);
+    labelSprite({ "elbow-1": "S-1", "elbow-2": "S-2", "elbow-3": "S-3", "elbow-4": "S-4" }[partKey], centre.x + 64, centre.y + 108, centre.z + 64, partKey, "point");
+  });
+
   function classifyPart(name) {
     const base = name.replace("::outline", "");
+    if (base.startsWith("SYS:")) {
+      const keyName = base.slice(4);
+      return [keyName, partLabels.en[keyName] || keyName];
+    }
     if (base.startsWith("Left-side-plate")) return ["left-side", "Left side plate"];
     if (base.startsWith("Right-side-plate")) return ["right-side", "Right side plate"];
     if (base.startsWith("Left-side-flange")) return ["left-flange", "Left folded flange"];
@@ -794,6 +831,7 @@ import { infoContent, partInfoKey, partLabels, partTree, uiText } from "./conten
   let highlightedPartKeys = new Set();
   let activeFocusNodeId = null;
   let visibilityBeforeFocus = null;
+  let visibilityWasManuallyChanged = false;
 
   let currentLanguage = "id";
 
@@ -901,7 +939,8 @@ import { infoContent, partInfoKey, partLabels, partTree, uiText } from "./conten
   function currentInfoKey() {
     if (activeFocusNodeId) return nodeControls.get(activeFocusNodeId)?.infoKey || "hood";
     const hoodNode = partTree[0];
-    const allVisible = collectPartKeys(hoodNode).every(partKey => partVisibility.get(partKey));
+    if (!visibilityWasManuallyChanged) return hoodNode.id;
+    const allVisible = [...partVisibility.values()].every(Boolean);
     if (allVisible) return "hood";
     return hoodNode.children.find(hasVisibleParts)?.id || "hood";
   }
@@ -1001,6 +1040,7 @@ import { infoContent, partInfoKey, partLabels, partTree, uiText } from "./conten
     if (activeFocusNodeId) clearFocusMode(true);
     const shouldShow = !control.partKeys.every(partKey => partVisibility.get(partKey));
     control.partKeys.forEach(partKey => setPartVisibility(partKey, shouldShow));
+    visibilityWasManuallyChanged = true;
     updateNodeControls();
   }
 
@@ -1032,6 +1072,10 @@ import { infoContent, partInfoKey, partLabels, partTree, uiText } from "./conten
     if (!colourCoded) return 0xc4c9cf;
     if (partKey.startsWith("removable-grille-")) return 0xd95d67;
     if (partKey.includes("rail")) return 0xe3b52f;
+    if (partKey.startsWith("elbow-")) return 0xb15aa0;
+    if (partKey.startsWith("transition-")) return 0x49a96f;
+    if (partKey === "fan") return 0xe8893f;
+    if (partKey === "rain-hood") return 0xc99c2b;
     return 0x2f70c9;
   }
 
@@ -1068,6 +1112,7 @@ import { infoContent, partInfoKey, partLabels, partTree, uiText } from "./conten
       const visible = button.dataset.partsAction === "show";
       if (activeFocusNodeId) clearFocusMode(true);
       partRegistry.forEach((entry, partKey) => setPartVisibility(partKey, visible));
+      visibilityWasManuallyChanged = true;
       updateNodeControls();
     });
   });
@@ -1084,10 +1129,10 @@ import { infoContent, partInfoKey, partLabels, partTree, uiText } from "./conten
   controls.enableDamping = true;
   controls.dampingFactor = 0.08;
   controls.minDistance = 250;
-  controls.maxDistance = 4500;
+  controls.maxDistance = 30000;
 
-  camera.position.set(1450, 820, 1250);
-  controls.target.set(300, 150, -749);
+  camera.position.set(8200, 6500, 7200);
+  controls.target.set(1300, 2300, -720);
   controls.update();
 
   function focusCameraOnParts(partKeys, label) {
@@ -1112,6 +1157,8 @@ import { infoContent, partInfoKey, partLabels, partTree, uiText } from "./conten
     controls.update();
     root.querySelector("[data-caption]").textContent = label;
   }
+
+  focusCameraOnParts([...partRegistry.keys()], uiText[currentLanguage].completeCaption);
 
   function resize() {
     const width = Math.max(1, stage.clientWidth);

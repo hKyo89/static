@@ -1,45 +1,52 @@
 export const partTree = [{
-  id: "hood",
+  id: "complete-system",
   children: [
     {
-      id: "side-panels",
-      children: ["left-side", "left-flange", "right-side", "right-flange"]
-    },
-    {
-      id: "top-panel",
-      children: ["top-cover", "exhaust-curb"]
-    },
-    {
-      id: "back-panel",
+      id: "hood",
       children: [
-        "rear-panel",
-        "cable-duct",
-        { id: "mounting-rails", children: ["upper-rail", "lower-rail"] }
+        {
+          id: "side-panels",
+          children: ["left-side", "left-flange", "cable-duct", "right-side", "right-flange"]
+        },
+        { id: "top-panel", children: ["top-cover", "exhaust-curb"] },
+        {
+          id: "back-panel",
+          children: ["rear-panel", { id: "mounting-rails", children: ["upper-rail", "lower-rail"] }]
+        },
+        {
+          id: "bottom-panels",
+          children: [
+            "rear-bottom", "rear-grille-lip", "l5-support", "front-face",
+            "front-grille-lip", "light-panel",
+            { id: "led-lights", children: ["led-1", "led-2", "led-3"] }
+          ]
+        },
+        {
+          id: "removable-grilles",
+          children: ["removable-grille-1", "removable-grille-2", "removable-grille-3"]
+        }
       ]
     },
     {
-      id: "bottom-panels",
+      id: "duct-system",
       children: [
-        "rear-bottom",
-        "rear-grille-lip",
-        "l5-support",
-        "front-face",
-        "front-grille-lip",
-        "light-panel",
-        { id: "led-lights", children: ["led-1", "led-2", "led-3"] }
+        { id: "ceiling-route", children: ["straight-1", "elbow-1", "straight-2", "elbow-2", "straight-3"] },
+        { id: "fan-chain", children: ["transition-1", "fan", "transition-2"] },
+        { id: "shaft-rise", children: ["elbow-3", "straight-4a", "straight-4b", "straight-4c"] },
+        { id: "outlet", children: ["elbow-4", "rain-hood"] }
       ]
     },
     {
-      id: "removable-grilles",
-      children: ["removable-grille-1", "removable-grille-2", "removable-grille-3"]
+      id: "building-context",
+      children: ["room-structure", "ceiling-roof", "shaft-structure", "grc-enclosure", "glass-roof"]
     }
   ]
 }];
 
 export const uiText = {
   id: {
-    viewerTitle: "Viewer fabrikasi hood",
-    viewerHint: "Putar dan periksa setiap komponen",
+    viewerTitle: "Viewer sistem exhaust Opsi D",
+    viewerHint: "Periksa hood, duct, kipas, shaft, dan outlet",
     displayTitle: "Tampilan",
     colourParts: "Warna komponen",
     dimensionsAngles: "Dimensi dan sudut",
@@ -61,11 +68,11 @@ export const uiText = {
     hide: "Sembunyikan",
     show: "Tampilkan",
     isolate: "Isolasi dan fokus",
-    completeCaption: "Hood lengkap — lebar luar 1.500 mm"
+    completeCaption: "Sistem exhaust lengkap — Opsi D"
   },
   en: {
-    viewerTitle: "Hood fabrication viewer",
-    viewerHint: "Rotate and inspect each component",
+    viewerTitle: "Option D exhaust-system viewer",
+    viewerHint: "Inspect the hood, duct, fan, shaft, and outlet",
     displayTitle: "Display",
     colourParts: "Colour-coded parts",
     dimensionsAngles: "Dimensions and angles",
@@ -87,12 +94,13 @@ export const uiText = {
     hide: "Hide",
     show: "Show",
     isolate: "Isolate and focus",
-    completeCaption: "Complete hood — 1,500 mm overall width"
+    completeCaption: "Complete exhaust system — Option D"
   }
 };
 
 export const partLabels = {
   id: {
+    "complete-system": "Sistem exhaust lengkap",
     hood: "Hood",
     "side-panels": "Panel samping",
     "left-side": "Panel samping kiri",
@@ -123,8 +131,34 @@ export const partLabels = {
     "removable-grille-1": "Grille lepas-pasang 1",
     "removable-grille-2": "Grille lepas-pasang 2",
     "removable-grille-3": "Grille lepas-pasang 3"
+    ,"duct-system": "Sistem ducting"
+    ,"ceiling-route": "Rute di atas plafon"
+    ,"fan-chain": "Transisi dan kipas"
+    ,"shaft-rise": "Saluran tegak shaft"
+    ,outlet: "Keluaran luar ruang"
+    ,"straight-1": "Lurus 1"
+    ,"elbow-1": "Siku 1"
+    ,"straight-2": "Lurus 2"
+    ,"elbow-2": "Siku 2"
+    ,"straight-3": "Lurus 3"
+    ,"transition-1": "Transisi 1"
+    ,fan: "Kipas CKE"
+    ,"transition-2": "Transisi 2"
+    ,"elbow-3": "Siku 3"
+    ,"straight-4a": "Lurus 4 — bagian 1"
+    ,"straight-4b": "Lurus 4 — bagian 2"
+    ,"straight-4c": "Lurus 4 — bagian 3"
+    ,"elbow-4": "Siku 4"
+    ,"rain-hood": "Tudung hujan"
+    ,"building-context": "Konteks bangunan"
+    ,"room-structure": "Dinding dan lantai"
+    ,"ceiling-roof": "Plafon dan pelat atap"
+    ,"shaft-structure": "Dinding shaft"
+    ,"grc-enclosure": "Penutup GRC 19 cm"
+    ,"glass-roof": "Atap kaca"
   },
   en: {
+    "complete-system": "Complete exhaust system",
     hood: "Hood",
     "side-panels": "Side panels",
     "left-side": "Left side plate",
@@ -154,7 +188,32 @@ export const partLabels = {
     "removable-grilles": "Removable grilles",
     "removable-grille-1": "Removable grille 1",
     "removable-grille-2": "Removable grille 2",
-    "removable-grille-3": "Removable grille 3"
+    "removable-grille-3": "Removable grille 3",
+    "duct-system": "Duct system",
+    "ceiling-route": "Above-ceiling route",
+    "fan-chain": "Transitions and fan",
+    "shaft-rise": "Shaft riser",
+    outlet: "Outdoor outlet",
+    "straight-1": "Straight 1",
+    "elbow-1": "Elbow 1",
+    "straight-2": "Straight 2",
+    "elbow-2": "Elbow 2",
+    "straight-3": "Straight 3",
+    "transition-1": "Transition 1",
+    fan: "CKE fan",
+    "transition-2": "Transition 2",
+    "elbow-3": "Elbow 3",
+    "straight-4a": "Straight 4 — section 1",
+    "straight-4b": "Straight 4 — section 2",
+    "straight-4c": "Straight 4 — section 3",
+    "elbow-4": "Elbow 4",
+    "rain-hood": "Rain hood",
+    "building-context": "Building context",
+    "room-structure": "Walls and floor",
+    "ceiling-roof": "Ceiling and roof slab",
+    "shaft-structure": "Shaft walls",
+    "grc-enclosure": "19 cm GRC enclosure",
+    "glass-roof": "Glass roof"
   }
 };
 
@@ -166,7 +225,7 @@ export const partInfoKey = {
   "top-cover": "top-panel",
   "exhaust-curb": "top-panel",
   "rear-panel": "back-panel",
-  "cable-duct": "back-panel",
+  "cable-duct": "side-panels",
   "upper-rail": "mounting-rails",
   "lower-rail": "mounting-rails",
   "rear-bottom": "bottom-panels",
@@ -182,6 +241,14 @@ export const partInfoKey = {
   "removable-grille-2": "removable-grilles",
   "removable-grille-3": "removable-grilles"
 };
+
+Object.assign(partInfoKey, {
+  "room-structure": "building-context",
+  "ceiling-roof": "building-context",
+  "shaft-structure": "building-context",
+  "grc-enclosure": "building-context",
+  "glass-roof": "building-context"
+});
 
 export const infoContent = {
   id: {
@@ -302,3 +369,66 @@ infoContent.en = {
     instructions: ["Install without bolts for easy cleaning.", "Seat every grille edge on the front and rear supports."]
   }
 };
+
+const ductPartsId = {
+  "complete-system": ["Rangkaian lengkap Opsi D dari hood sampai tudung hujan, ditampilkan bersama konteks bangunan.", ["Hood stainless steel 1 mm", "Duct persegi panjang dan transisi pelat 0,5 mm", "Flange integral 30 mm", "Kipas CKE CI-CDI250AZ-NO"], ["Hood 1.500 × 600 mm", "Duct utama 350 × 150 mm", "Shaft bersih 840 × 380 mm", "Bawah kotak tudung hujan +4.940 mm dari dasar shaft"], ["Semua siku 90°", "Kemiringan hood 21,8°"], ["Survei semua datum bangunan sebelum fabrikasi.", "Jaga akses ke kipas dan semua sambungan sampai pengujian selesai."]],
+  "duct-system": ["Rangkaian duct dari curb hood menuju outlet luar melalui plafon dan shaft.", ["Pelat galvanis/stainless 0,5 mm", "Flange integral 30 mm pada sambungan persegi"], ["Penampang nominal 350 × 150 mm", "Leher bulat Ø250 mm pada kipas"], ["Empat siku 90°"], ["Segel semua flange dan sambungan.", "Sangga duct secara mandiri; jangan membebani hood atau kipas."]],
+  "ceiling-route": ["Rute awal dari hood, berbelok ke kiri lalu maju menuju kipas.", ["Duct 350 × 150 / 150 × 350 mm", "Flange integral 30 mm"], ["Lurus 1: 715 mm", "Lurus 2: 245 mm", "Lurus 3: 1.025 mm"], ["Siku 1 dan 2: 90°"], ["Verifikasi clearance plafon, lampu, dan dinding sebelum dipasang."]],
+  "fan-chain": ["Dua transisi menghubungkan duct persegi dengan kipas inline Ø250 mm.", ["Transisi pelat 0,5 mm", "Kipas CKE CI-CDI250AZ-NO"], ["Badan transisi masing-masing 250 mm", "Leher silinder 40 mm", "Kipas total 205 mm"], ["Semua pusat sambungan segaris"], ["Kipas adalah barang jadi; jangan difabrikasi.", "Sediakan akses servis dan dudukan mandiri."]],
+  "shaft-rise": ["Siku masuk shaft dan tiga bagian duct tegak berflange.", ["Duct 350 × 150 mm", "Flange integral 30 mm"], ["Bagian 1: 1.500 mm", "Bagian 2: 1.500 mm", "Bagian 3: 1.215 mm"], ["Siku masuk shaft 90°"], ["Pasang penyangga pada struktur shaft.", "Baut dan segel setiap sambungan flange."]],
+  outlet: ["Siku atas mengarahkan aliran ke tudung hujan melalui GRC.", ["Duct 350 × 150 mm", "Tudung hujan berongga"], ["Tudung: 350 lebar × 150 tinggi", "Kedalaman bawah 200; atas 300 mm", "Bawah kotak +4.940 mm dari dasar shaft"], ["Siku 4: 90°", "Muka tudung meruncing"], ["Ujung keluar tanpa flange.", "Pasang kisi hujan yang tidak terlalu rapat."]],
+  "straight-1": ["Duct tegak dari curb hood menuju Siku 1.", ["Pelat 0,5 mm", "Dua flange integral 30 mm"], ["350 × 150 mm", "Tinggi 715 mm", "Flange luar 410 × 210 mm"], ["Tegak lurus terhadap hood"], ["Flange adalah bagian dari Lurus 1.", "Cocokkan lubang hood sebelum pemasangan."]],
+  "elbow-1": ["Siku pertama membelokkan aliran dari vertikal ke arah kiri.", ["Pelat 0,5 mm", "Flange 30 mm di kedua ujung"], ["Penampang 350 × 150 mm", "Radius dalam 100; luar 450 mm"], ["Belokan 90°"], ["Gunakan pelat lengkung menerus."]],
+  "straight-2": ["Duct pendek mendatar di antara Siku 1 dan Siku 2.", ["Pelat 0,5 mm", "Flange 30 mm"], ["Penampang 150 × 350 mm", "Panjang bersih 245 mm"], ["Mendatar"], ["Ukur panjang bersih antar muka sambungan."]],
+  "elbow-2": ["Siku kedua mengubah arah kiri menjadi maju menuju shaft.", ["Pelat 0,5 mm", "Flange 30 mm"], ["Penampang 150 × 350 mm", "Radius dalam 200; luar 350 mm"], ["Belokan 90°"], ["Pertahankan penampang aliran tanpa penyempitan."]],
+  "straight-3": ["Duct mendatar menuju Transisi 1.", ["Pelat 0,5 mm", "Flange 30 mm"], ["150 × 350 mm", "Kedalaman 1.025 mm"], ["Mendatar"], ["Jaga flange bebas dari dinding shaft."]],
+  "transition-1": ["Transisi dari 150 × 350 mm menjadi Ø250 mm sebelum kipas.", ["Pelat 0,5 mm", "Flange hanya pada sisi persegi"], ["Badan 250 mm", "Leher Ø250 × 40 mm"], ["Sumbu lurus"], ["Ujung bulat tidak memakai flange persegi."]],
+  fan: ["Kipas sentrifugal duct inline yang sudah dibeli.", ["CKE CI-CDI250AZ-NO", "Collar Ø250 mm"], ["Lebar keseluruhan 380 mm", "Muka 349; badan 335 mm", "Panjang total 205 mm", "Collar 25 mm tiap sisi"], ["Sumbu horizontal"], ["Jangan dibuat oleh fabrikator duct.", "Terminal listrik di kanan; dudukan berada di atas."]],
+  "transition-2": ["Transisi setelah kipas dari Ø250 mm ke 350 × 150 mm.", ["Pelat 0,5 mm", "Flange hanya pada sisi persegi"], ["Leher Ø250 × 40 mm", "Badan 250 mm"], ["Sumbu lurus"], ["Ujung bulat awal tanpa flange persegi."]],
+  "elbow-3": ["Siku masuk shaft mengubah duct mendatar menjadi tegak.", ["Pelat 0,5 mm", "Flange 30 mm"], ["350 × 150 mm", "Radius dalam 200; luar 350 mm"], ["Belokan 90°"], ["Flange atas berada 525 mm di atas dasar shaft."]],
+  "straight-4a": ["Bagian pertama duct tegak di dalam shaft.", ["Pelat 0,5 mm", "Flange 30 mm"], ["350 × 150 × 1.500 mm", "Bawah +525; atas +2.025 mm"], ["Vertikal"], ["Pasang penyangga pada struktur shaft."]],
+  "straight-4b": ["Bagian kedua duct tegak di dalam shaft.", ["Pelat 0,5 mm", "Flange 30 mm"], ["350 × 150 × 1.500 mm", "Bawah +2.025; atas +3.525 mm"], ["Vertikal"], ["Baut dan segel sambungan flange."]],
+  "straight-4c": ["Bagian terakhir duct tegak sebelum siku outlet.", ["Pelat 0,5 mm", "Flange 30 mm"], ["350 × 150 × 1.215 mm", "Bawah +3.525; atas +4.740 mm"], ["Vertikal"], ["Panjang menjaga flange atas tidak menyentuh kaca."]],
+  "elbow-4": ["Siku atas mengarahkan aliran keluar melalui GRC.", ["Pelat 0,5 mm", "Flange 30 mm"], ["350 × 150 mm", "Radius dalam 200; luar 350 mm", "Flange keluar 410 × 210 mm"], ["Belokan 90°"], ["Bukaan GRC terlihat 410 × 190 mm."]],
+  "rain-hood": ["Outlet berongga dan meruncing untuk mengurangi masuknya hujan.", ["Pelat 0,5 mm", "Flange 30 mm hanya pada inlet"], ["350 × 150 mm", "Kedalaman bawah 200; atas 300 mm", "Bawah kotak +4.940 mm"], ["Muka keluar miring"], ["Tanpa flange pada ujung keluar.", "Segel pertemuan dengan GRC."]],
+  "building-context": ["Konteks bangunan dipakai untuk memeriksa clearance sistem, bukan bagian fabrikasi duct.", ["Dinding/shaft", "GRC", "Kaca", "Plafon dan pelat atap"], ["Bukaan shaft bersih 840 × 380 mm", "GRC tinggi 190 mm", "Kaca 940 × 580 × 10 mm"], ["Semua bidang bangunan mengikuti datum proyek"], ["Verifikasi lapangan sebelum pemotongan.", "Jangan memotong struktur tanpa persetujuan engineer."]]
+};
+
+for (const [key, [description, materials, measurements, angles, instructions]] of Object.entries(ductPartsId)) {
+  infoContent.id[key] = { description, materials, measurements, angles, instructions };
+  infoContent.en[key] = {
+    description,
+    materials,
+    measurements,
+    angles,
+    instructions
+  };
+}
+
+const ductPartsEn = {
+  "complete-system": ["Complete Option D route from the hood to the rain hood, shown with its building context.", ["1 mm stainless-steel hood", "0.5 mm rectangular duct and transitions", "30 mm integral flanges", "CKE CI-CDI250AZ-NO fan"], ["1,500 × 600 mm hood", "350 × 150 mm main duct", "840 × 380 mm clear shaft", "Rain-hood box bottom +4,940 mm from shaft base"], ["All elbows 90°", "Hood slope 21.8°"], ["Survey every building datum before fabrication.", "Keep the fan and every joint accessible until testing is complete."]],
+  "duct-system": ["The complete duct route from the hood curb to the outdoor outlet through the ceiling and shaft.", ["0.5 mm galvanized/stainless sheet", "30 mm integral flanges at rectangular joints"], ["350 × 150 mm nominal rectangular section", "Ø250 mm fan collars"], ["Four 90° elbows"], ["Seal every flange and joint.", "Support the duct independently from the hood and fan."]],
+  "ceiling-route": ["The initial route rises from the hood, turns left, then runs forward to the fan.", ["350 × 150 / 150 × 350 mm duct", "30 mm integral flanges"], ["Straight 1: 715 mm", "Straight 2: 245 mm", "Straight 3: 1,025 mm"], ["Elbows 1 and 2: 90°"], ["Verify ceiling, light, and wall clearances before installation."]],
+  "fan-chain": ["Two transitions connect the rectangular duct to the Ø250 mm inline fan.", ["0.5 mm transition sheet", "CKE CI-CDI250AZ-NO fan"], ["Each transition body: 250 mm", "Cylindrical collar: 40 mm", "Fan overall depth: 205 mm"], ["All connection axes are aligned"], ["The fan is purchased equipment; do not fabricate it.", "Provide independent support and service access."]],
+  "shaft-rise": ["The shaft-entry elbow and three flanged vertical duct sections.", ["350 × 150 mm duct", "30 mm integral flanges"], ["Section 1: 1,500 mm", "Section 2: 1,500 mm", "Section 3: 1,215 mm"], ["Shaft-entry elbow: 90°"], ["Support the riser from the shaft structure.", "Bolt and seal every flange joint."]],
+  outlet: ["The upper elbow discharges through the GRC enclosure into the rain hood.", ["350 × 150 mm duct", "Hollow tapered rain hood"], ["Rain hood: 350 × 150 mm", "Bottom depth 200; top depth 300 mm", "Box bottom +4,940 mm from shaft base"], ["Elbow 4: 90°", "Tapered outlet face"], ["No flange at the open outlet.", "Fit a free-flowing rain grille."]],
+  "straight-1": ["Vertical duct from the hood curb to Elbow 1.", ["0.5 mm sheet", "Two 30 mm integral flanges with 12 holes each"], ["350 × 150 mm", "715 mm high", "410 × 210 mm flange envelope"], ["Normal to the hood top"], ["The flanges belong to Straight 1.", "Match the hood opening before installation."]],
+  "elbow-1": ["The first elbow turns the route from vertical toward the left.", ["0.5 mm sheet", "30 mm flanges with fastener holes"], ["350 × 150 mm", "100 mm throat radius; 450 mm outer radius"], ["90° bend"], ["Form the curved sheets continuously."]],
+  "straight-2": ["Short horizontal duct between Elbows 1 and 2.", ["0.5 mm sheet", "30 mm flanges"], ["150 × 350 mm section", "245 mm clear length"], ["Horizontal"], ["Measure the clear length between connection faces."]],
+  "elbow-2": ["The second elbow redirects the leftward run toward the shaft.", ["0.5 mm sheet", "30 mm flanges"], ["150 × 350 mm", "200 mm throat radius; 350 mm outer radius"], ["90° bend"], ["Maintain the full airflow section."]],
+  "straight-3": ["Horizontal duct leading to Transition 1.", ["0.5 mm sheet", "30 mm flanges"], ["150 × 350 mm", "1,025 mm depth"], ["Horizontal"], ["Keep the flange clear of the shaft wall."]],
+  "transition-1": ["Transition from 150 × 350 mm rectangular to Ø250 mm round before the fan.", ["0.5 mm sheet", "Flange only at the rectangular end"], ["250 mm body", "Ø250 × 40 mm collar"], ["Concentric axis"], ["Do not add a rectangular flange to the round end."]],
+  fan: ["Purchased centrifugal inline duct fan.", ["CKE CI-CDI250AZ-NO", "Ø250 mm collars"], ["380 mm overall width", "349 mm face; 335 mm body", "205 mm total depth", "25 mm collar at each end"], ["Horizontal axis"], ["Do not fabricate the fan.", "Electrical terminal is on the right; support foot is above."]],
+  "transition-2": ["Transition after the fan from Ø250 mm round to 350 × 150 mm rectangular.", ["0.5 mm sheet", "Flange only at the rectangular end"], ["Ø250 × 40 mm collar", "250 mm body"], ["Concentric axis"], ["No rectangular flange at the round inlet."]],
+  "elbow-3": ["The shaft-entry elbow changes the horizontal route to vertical.", ["0.5 mm sheet", "30 mm flanges"], ["350 × 150 mm", "200 mm throat radius; 350 mm outer radius"], ["90° bend"], ["Upper flange is 525 mm above the shaft base."]],
+  "straight-4a": ["First vertical riser section inside the shaft.", ["0.5 mm sheet", "30 mm flanges"], ["350 × 150 × 1,500 mm", "Bottom +525; top +2,025 mm"], ["Vertical"], ["Support it from the shaft structure."]],
+  "straight-4b": ["Second vertical riser section inside the shaft.", ["0.5 mm sheet", "30 mm flanges"], ["350 × 150 × 1,500 mm", "Bottom +2,025; top +3,525 mm"], ["Vertical"], ["Bolt and seal the flange joint."]],
+  "straight-4c": ["Final vertical riser section before the outlet elbow.", ["0.5 mm sheet", "30 mm flanges"], ["350 × 150 × 1,215 mm", "Bottom +3,525; top +4,740 mm"], ["Vertical"], ["The adjusted length keeps the upper flange clear of the glass."]],
+  "elbow-4": ["The upper elbow directs airflow outward through the GRC enclosure.", ["0.5 mm sheet", "30 mm flanges"], ["350 × 150 mm", "200 mm throat radius; 350 mm outer radius", "410 × 210 mm outlet flange"], ["90° bend"], ["Visible GRC opening is 410 × 190 mm."]],
+  "rain-hood": ["A hollow tapered outlet that limits rain entry.", ["0.5 mm sheet", "30 mm flange at the inlet only"], ["350 × 150 mm", "Bottom depth 200; top depth 300 mm", "Box bottom +4,940 mm"], ["Sloping outlet face"], ["No flange at the open end.", "Weather-seal the GRC junction."]],
+  "building-context": ["Building geometry used to verify system clearances; it is not part of duct fabrication.", ["Walls and shaft", "GRC", "Glass", "Ceiling and roof slab"], ["840 × 380 mm clear shaft opening", "190 mm GRC height", "940 × 580 × 10 mm glass"], ["All building planes follow project datums"], ["Verify dimensions on site before cutting.", "Do not cut structural work without engineer approval."]]
+};
+
+for (const [key, [description, materials, measurements, angles, instructions]] of Object.entries(ductPartsEn)) {
+  infoContent.en[key] = { description, materials, measurements, angles, instructions };
+}
