@@ -40,7 +40,10 @@ export const partTree = [{
       id: "building-context",
       children: [
         "room-structure",
-        { id: "ceiling-assembly", children: ["ceiling-roof", "downlight"] },
+        { id: "ceiling-assembly", children: [
+          "ceiling-roof",
+          { id: "downlights", children: ["downlight-1", "downlight-2"] }
+        ] },
         "shaft-structure", "grc-enclosure", "glass-roof"
       ]
     }
@@ -269,7 +272,9 @@ export const partLabels = {
     ,"room-structure": "Dinding dan lantai"
     ,"ceiling-assembly": "Plafon"
     ,"ceiling-roof": "Plafon dan pelat atap"
-    ,downlight: "Downlight plafon"
+    ,downlights: "Downlight plafon"
+    ,"downlight-1": "Downlight 1 — belakang"
+    ,"downlight-2": "Downlight 2 — depan"
     ,"shaft-structure": "Dinding shaft"
     ,"grc-enclosure": "Penutup GRC 19 cm"
     ,"glass-roof": "Atap kaca"
@@ -331,7 +336,9 @@ export const partLabels = {
     "room-structure": "Walls and floor",
     "ceiling-assembly": "Ceiling",
     "ceiling-roof": "Ceiling and roof slab",
-    downlight: "Ceiling downlight",
+    downlights: "Ceiling downlights",
+    "downlight-1": "Downlight 1 — rear",
+    "downlight-2": "Downlight 2 — front",
     "shaft-structure": "Shaft walls",
     "grc-enclosure": "19 cm GRC enclosure",
     "glass-roof": "Glass roof"
@@ -366,7 +373,8 @@ export const partInfoKey = {
 Object.assign(partInfoKey, {
   "room-structure": "building-context",
   "ceiling-roof": "ceiling-assembly",
-  downlight: "downlight",
+  "downlight-1": "downlight-1",
+  "downlight-2": "downlight-2",
   "shaft-structure": "building-context",
   "grc-enclosure": "building-context",
   "glass-roof": "building-context"
@@ -515,9 +523,11 @@ const ductPartsId = {
   "straight-4d": ["Bagian terakhir duct tegak sebelum siku outlet.", ["Pelat 0,5 mm", "Flange 30 mm"], ["350 × 150 × 615 mm", "Bawah +4.125; atas +4.740 mm"], ["Vertikal"], ["Panjang menjaga flange atas tidak menyentuh kaca."]],
   "elbow-5": ["Siku atas mengarahkan aliran keluar melalui GRC.", ["Pelat 0,5 mm", "Flange 30 mm"], ["350 × 150 mm", "Radius dalam 200; luar 350 mm", "Flange keluar 410 × 210 mm"], ["Belokan 90°"], ["Bukaan GRC terlihat 410 × 190 mm."]],
   "rain-hood": ["Outlet berongga dan meruncing untuk mengurangi masuknya hujan.", ["Pelat 0,5 mm", "Flange 30 mm hanya pada inlet"], ["350 × 150 mm", "Kedalaman bawah 200; atas 300 mm", "Bawah kotak +4.940 mm"], ["Muka keluar miring"], ["Tanpa flange pada ujung keluar.", "Segel pertemuan dengan GRC."]],
-  "building-context": ["Konteks bangunan dipakai untuk memeriksa clearance sistem, bukan bagian fabrikasi duct.", ["Dinding/shaft", "GRC", "Kaca", "Plafon, pelat atap, dan downlight"], ["Bukaan shaft bersih 840 × 380 mm", "GRC tinggi 190 mm", "Kaca 940 × 580 × 10 mm"], ["Semua bidang bangunan mengikuti datum proyek"], ["Verifikasi lapangan sebelum pemotongan.", "Jangan memotong struktur tanpa persetujuan engineer."]],
-  "ceiling-assembly": ["Plafon dan pelat atap dengan posisi downlight yang disurvei untuk pemeriksaan clearance duct.", ["Bidang plafon", "Pelat atap", "Downlight recessed"], ["Elevasi plafon +930 mm pada model", "Trim downlight Ø165 mm", "Cutout Ø139 mm"], ["Downlight tegak lurus terhadap plafon"], ["Jangan menempatkan hanger duct pada bukaan downlight.", "Pertahankan akses ke driver lampu."]],
-  downlight: ["Downlight recessed pada plafon yang harus tetap bebas dari duct dan penyangganya.", ["Trim dan body lampu", "Bukaan plafon Ø139 mm"], ["Trim Ø165 mm", "Cutout Ø139 mm", "Pusat 932,5 mm dari dinding kiri", "Pusat 912,5 mm maju dari dinding belakang"], ["Sumbu lampu tegak lurus plafon"], ["Jaga rute duct dan hanger di luar trim.", "Sisakan akses servis untuk lampu dan driver."]]
+  "building-context": ["Konteks bangunan dipakai untuk memeriksa clearance sistem, bukan bagian fabrikasi duct.", ["Dinding/shaft", "GRC", "Kaca", "Plafon, pelat atap, dan dua downlight"], ["Bukaan shaft bersih 840 × 380 mm", "GRC tinggi 190 mm", "Kaca 940 × 580 × 10 mm", "Jarak pusat downlight 1.200 mm"], ["Semua bidang bangunan mengikuti datum proyek"], ["Verifikasi lapangan sebelum pemotongan.", "Jangan memotong struktur tanpa persetujuan engineer."]],
+  "ceiling-assembly": ["Plafon dan pelat atap dengan dua downlight pada garis tengah ruangan untuk pencahayaan yang lebih merata.", ["Bidang plafon", "Pelat atap", "Dua downlight recessed"], ["Elevasi plafon +930 mm pada model", "Trim masing-masing Ø165 mm", "Cutout masing-masing Ø139 mm", "Jarak antarpusat 1.200 mm"], ["Kedua downlight tegak lurus terhadap plafon"], ["Jangan menempatkan hanger duct pada bukaan downlight.", "Pertahankan akses ke kedua driver lampu."]],
+  downlights: ["Sepasang downlight recessed pada garis tengah lebar ruangan; lampu belakang digeser 150 mm ke depan untuk menambah clearance duct.", ["Dua trim dan body lampu", "Dua bukaan plafon Ø139 mm"], ["Trim Ø165 mm", "Cutout Ø139 mm", "Jarak antarpusat 1.200 mm", "Garis pusat 932,5 mm dari dinding kiri"], ["Sumbu lampu tegak lurus plafon"], ["Gunakan output dan temperatur warna yang sama.", "Sisakan akses servis untuk lampu dan driver."]],
+  "downlight-1": ["Downlight belakang dipindahkan 150 mm ke depan dari posisi survei awal agar lebih jauh dari duct plafon.", ["Trim dan body lampu recessed", "Bukaan plafon Ø139 mm"], ["Trim Ø165 mm", "Cutout Ø139 mm", "Pusat 932,5 mm dari dinding kiri", "Pusat 1.062,5 mm maju dari dinding belakang", "Clearance plan ke duct sekitar 207 mm", "Clearance vertikal ke flange duct sekitar 120 mm"], ["Sumbu lampu tegak lurus plafon"], ["Jaga hanger dan driver di luar envelope duct.", "Verifikasi posisi terhadap rangka plafon sebelum melubangi."]],
+  "downlight-2": ["Downlight depan melengkapi pencahayaan ambient di bagian depan ruangan dan berada pada garis tengah yang sama dengan Downlight 1.", ["Trim dan body lampu recessed", "Bukaan plafon Ø139 mm"], ["Trim Ø165 mm", "Cutout Ø139 mm", "Pusat 932,5 mm dari dinding kiri", "Pusat 2.262,5 mm maju dari dinding belakang", "Jarak ke Downlight 1: 1.200 mm", "Jarak pusat ke dinding depan: 737,5 mm"], ["Sumbu lampu tegak lurus plafon"], ["Gunakan output lampu yang sama dengan Downlight 1.", "Verifikasi posisi terhadap rangka plafon sebelum melubangi."]]
 };
 
 for (const [key, [description, materials, measurements, angles, instructions]] of Object.entries(ductPartsId)) {
@@ -554,9 +564,11 @@ const ductPartsEn = {
   "straight-4d": ["Final vertical riser section before the outlet elbow.", ["0.5 mm sheet", "30 mm flanges"], ["350 × 150 × 615 mm", "Bottom +4,125; top +4,740 mm"], ["Vertical"], ["The adjusted length keeps the upper flange clear of the glass."]],
   "elbow-5": ["The upper elbow directs airflow outward through the GRC enclosure.", ["0.5 mm sheet", "30 mm flanges"], ["350 × 150 mm", "200 mm throat radius; 350 mm outer radius", "410 × 210 mm outlet flange"], ["90° bend"], ["Visible GRC opening is 410 × 190 mm."]],
   "rain-hood": ["A hollow tapered outlet that limits rain entry.", ["0.5 mm sheet", "30 mm flange at the inlet only"], ["350 × 150 mm", "Bottom depth 200; top depth 300 mm", "Box bottom +4,940 mm"], ["Sloping outlet face"], ["No flange at the open end.", "Weather-seal the GRC junction."]],
-  "building-context": ["Building geometry used to verify system clearances; it is not part of duct fabrication.", ["Walls and shaft", "GRC", "Glass", "Ceiling, roof slab, and downlight"], ["840 × 380 mm clear shaft opening", "190 mm GRC height", "940 × 580 × 10 mm glass"], ["All building planes follow project datums"], ["Verify dimensions on site before cutting.", "Do not cut structural work without engineer approval."]],
-  "ceiling-assembly": ["Ceiling and roof slab with the surveyed downlight position for checking duct clearances.", ["Ceiling plane", "Roof slab", "Recessed downlight"], ["Ceiling elevation +930 mm in the model", "Ø165 mm downlight trim", "Ø139 mm cut-out"], ["Downlight is normal to the ceiling"], ["Keep duct hangers clear of the downlight opening.", "Preserve access to the lamp driver."]],
-  downlight: ["Recessed ceiling downlight that must remain clear of the duct route and its supports.", ["Lamp trim and recessed body", "Ø139 mm ceiling cut-out"], ["Ø165 mm trim", "Ø139 mm cut-out", "Centre 932.5 mm from the left wall", "Centre 912.5 mm forward from the back wall"], ["Lamp axis is normal to the ceiling"], ["Keep ductwork and hangers outside the trim.", "Retain service access to the lamp and driver."]]
+  "building-context": ["Building geometry used to verify system clearances; it is not part of duct fabrication.", ["Walls and shaft", "GRC", "Glass", "Ceiling, roof slab, and two downlights"], ["840 × 380 mm clear shaft opening", "190 mm GRC height", "940 × 580 × 10 mm glass", "1,200 mm downlight centre spacing"], ["All building planes follow project datums"], ["Verify dimensions on site before cutting.", "Do not cut structural work without engineer approval."]],
+  "ceiling-assembly": ["Ceiling and roof slab with two downlights on the room centreline for more even illumination.", ["Ceiling plane", "Roof slab", "Two recessed downlights"], ["Ceiling elevation +930 mm in the model", "Ø165 mm trim each", "Ø139 mm cut-out each", "1,200 mm centre spacing"], ["Both downlights are normal to the ceiling"], ["Keep duct hangers clear of both openings.", "Preserve access to both lamp drivers."]],
+  downlights: ["A pair of recessed downlights on the room width centreline; the rear light is moved 150 mm forward to improve duct clearance.", ["Two lamp trims and recessed bodies", "Two Ø139 mm ceiling cut-outs"], ["Ø165 mm trim", "Ø139 mm cut-out", "1,200 mm centre spacing", "Centreline 932.5 mm from the left wall"], ["Lamp axes are normal to the ceiling"], ["Use matching light output and colour temperature.", "Retain service access to both lamps and drivers."]],
+  "downlight-1": ["The rear downlight is moved 150 mm forward from its original surveyed position to increase clearance from the ceiling duct.", ["Recessed lamp trim and body", "Ø139 mm ceiling cut-out"], ["Ø165 mm trim", "Ø139 mm cut-out", "Centre 932.5 mm from the left wall", "Centre 1,062.5 mm forward from the back wall", "Approx. 207 mm plan clearance to duct", "Approx. 120 mm vertical clearance to duct flange"], ["Lamp axis is normal to the ceiling"], ["Keep hangers and the driver outside the duct envelope.", "Verify the ceiling frame before cutting."]],
+  "downlight-2": ["The front downlight completes the room's ambient-light coverage and shares the same width centreline as Downlight 1.", ["Recessed lamp trim and body", "Ø139 mm ceiling cut-out"], ["Ø165 mm trim", "Ø139 mm cut-out", "Centre 932.5 mm from the left wall", "Centre 2,262.5 mm forward from the back wall", "1,200 mm from Downlight 1", "Centre 737.5 mm from the front wall"], ["Lamp axis is normal to the ceiling"], ["Match the output of Downlight 1.", "Verify the ceiling frame before cutting."]]
 };
 
 for (const [key, [description, materials, measurements, angles, instructions]] of Object.entries(ductPartsEn)) {

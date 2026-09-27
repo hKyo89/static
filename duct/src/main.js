@@ -768,7 +768,7 @@ import { createDuctSystem, systemAngles, systemDimensions, systemPoint } from ".
   systemDimensions.forEach(({ key: partKey, text, a, b }) => {
     const start = systemPoint(...a);
     const end = systemPoint(...b);
-    const lateral = partKey === "downlight"
+    const lateral = partKey.startsWith("downlight-")
       ? new THREE.Vector3(180, 150, 0)
       : new THREE.Vector3(42, 24, 42);
     addMetric(text, start, end, start.clone().lerp(end, 0.5).add(lateral), partKey);
@@ -777,10 +777,10 @@ import { createDuctSystem, systemAngles, systemDimensions, systemPoint } from ".
       "transition-1": "T-1", fan: "FAN-1", "transition-2": "T-2",
       "straight-4a": "L-4A", "straight-4b": "L-4B", "straight-4c": "L-4C",
       "straight-4d": "L-4D",
-      downlight: "DL-1",
+      "downlight-1": "DL-1", "downlight-2": "DL-2",
       "rain-hood": "RNH-1"
     }[partKey] || partKey;
-    const notationOffset = partKey === "downlight"
+    const notationOffset = partKey.startsWith("downlight-")
       ? new THREE.Vector3(-170, 90, 0)
       : new THREE.Vector3(56, 42, 56);
     labelSprite(
@@ -1091,7 +1091,7 @@ import { createDuctSystem, systemAngles, systemDimensions, systemPoint } from ".
   applyLanguage("id");
 
   function colourForPart(partKey, colourCoded) {
-    if (partKey.startsWith("led-") || partKey === "downlight") return 0xe3b52f;
+    if (partKey.startsWith("led-") || partKey.startsWith("downlight-")) return 0xe3b52f;
     if (highlightedPartKeys.has(partKey)) return 0xffd21f;
     if (!colourCoded) return 0xc4c9cf;
     if (partKey.startsWith("removable-grille-")) return 0xd95d67;
