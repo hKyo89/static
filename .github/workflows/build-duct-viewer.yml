@@ -1,0 +1,42 @@
+name: Build duct viewer
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "duct/**"
+      - ".github/workflows/build-duct-viewer.yml"
+  pull_request:
+    paths:
+      - "duct/**"
+      - ".github/workflows/build-duct-viewer.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: duct
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+          cache-dependency-path: duct/package-lock.json
+      - name: Install dependencies
+        run: npm ci
+      - name: Build static viewer
+        run: npm run build
+      - name: Upload compiled viewer
+        uses: actions/upload-artifact@v4
+        with:
+          name: duct-viewer-dist
+          path: duct/dist
+          if-no-files-found: error
