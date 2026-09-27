@@ -774,6 +774,7 @@ import { createDuctSystem, systemAngles, systemDimensions, systemPoint } from ".
       "straight-1": "L-1", "straight-2": "L-2", "straight-3": "L-3",
       "transition-1": "T-1", fan: "FAN-1", "transition-2": "T-2",
       "straight-4a": "L-4A", "straight-4b": "L-4B", "straight-4c": "L-4C",
+      "straight-4d": "L-4D",
       "rain-hood": "RNH-1"
     }[partKey] || partKey;
     labelSprite(notation, end.x + 56, end.y + 42, end.z + 56, partKey, "point");

@@ -329,7 +329,12 @@ export function createDuctSystem(scene) {
   addFlangeY(elbow3, "elbow-3-inlet-flange", 20.5, 81, 119, 35, 15);
   addFlangeZ(elbow3, "elbow-3-outlet-flange", 20.5, 53.5, 146.5, 35, 15);
 
-  for (const [key, start, end] of [["straight-4a", 146.5, 296.5], ["straight-4b", 296.5, 446.5], ["straight-4c", 446.5, 568]]) {
+  for (const [key, start, end] of [
+    ["straight-4a", 146.5, 266.5],
+    ["straight-4b", 266.5, 386.5],
+    ["straight-4c", 386.5, 506.5],
+    ["straight-4d", 506.5, 568]
+  ]) {
     const group = partGroup(scene, key);
     addRectShell(group, key, "z", { x0: 3, x1: 38, y0: 46, y1: 61, z0: start, z1: end });
     addFlangeZ(group, `${key}-bottom-flange`, 20.5, 53.5, start, 35, 15);
@@ -357,9 +362,10 @@ export const systemDimensions = [
   { key: "transition-1", text: "250 + 40 mm", a: [31, 130.5, 143], b: [31, 159.5, 143] },
   { key: "fan", text: "205 mm total", a: [42, 110, 143], b: [42, 130.5, 143] },
   { key: "transition-2", text: "40 + 250 mm", a: [31, 81, 143], b: [31, 110, 143] },
-  { key: "straight-4a", text: "1,500 mm", a: [42, 66, 146.5], b: [42, 66, 296.5] },
-  { key: "straight-4b", text: "1,500 mm", a: [42, 66, 296.5], b: [42, 66, 446.5] },
-  { key: "straight-4c", text: "1,215 mm", a: [42, 66, 446.5], b: [42, 66, 568] },
+  { key: "straight-4a", text: "1,200 mm", a: [42, 66, 146.5], b: [42, 66, 266.5] },
+  { key: "straight-4b", text: "1,200 mm", a: [42, 66, 266.5], b: [42, 66, 386.5] },
+  { key: "straight-4c", text: "1,200 mm", a: [42, 66, 386.5], b: [42, 66, 506.5] },
+  { key: "straight-4d", text: "615 mm", a: [42, 66, 506.5], b: [42, 66, 568] },
   { key: "rain-hood", text: "bottom +4,940 mm", a: [44, 3, 94], b: [44, 3, 588] }
 ];
 
