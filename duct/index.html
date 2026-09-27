@@ -70,17 +70,23 @@
   #hood-left-side-plate input[type="checkbox"] { width: 17px; height: 17px; flex: 0 0 auto; accent-color: #222; }
   #hood-left-side-plate .parts-list { display: grid; gap: 3px; }
   #hood-left-side-plate .part-branch { margin: 0; }
-  #hood-left-side-plate .part-branch > summary { min-height: 34px; display: flex; align-items: center; gap: 7px; cursor: pointer; font-size: 14px; font-weight: 600; list-style: none; }
+  #hood-left-side-plate .part-branch > summary { min-height: 36px; display: flex; align-items: center; gap: 7px; cursor: pointer; font-size: 14px; font-weight: 600; list-style: none; }
   #hood-left-side-plate .part-branch > summary::-webkit-details-marker { display: none; }
   #hood-left-side-plate .part-branch > summary::before { content: "+"; width: 14px; flex: 0 0 14px; color: #555; font-weight: 700; text-align: center; }
   #hood-left-side-plate .part-branch[open] > summary::before { content: "−"; }
+  #hood-left-side-plate .branch-label { min-width: 0; flex: 1; overflow-wrap: anywhere; }
   #hood-left-side-plate .part-children { margin-left: 12px; padding-left: 10px; border-left: 1px solid #d1d1d1; }
-  #hood-left-side-plate .part-row { min-height: 34px; display: grid; grid-template-columns: 17px minmax(0, 1fr) 34px; align-items: center; gap: 8px; font-size: 14px; }
-  #hood-left-side-plate .part-row label { min-width: 0; cursor: pointer; overflow-wrap: anywhere; }
-  #hood-left-side-plate .part-camera { width: 34px; min-height: 32px; padding: 0; border: 0; background: transparent; font-size: 16px; line-height: 1; justify-self: end; }
-  #hood-left-side-plate .part-camera:hover { background: #e8e8e8; }
-  #hood-left-side-plate .part-camera[aria-pressed="true"] { background: #ffe57a; color: #111; }
-  #hood-left-side-plate .part-camera:disabled { opacity: .3; cursor: not-allowed; background: transparent; }
+  #hood-left-side-plate .part-row { min-height: 36px; display: grid; grid-template-columns: minmax(0, 1fr) auto; align-items: center; gap: 8px; font-size: 14px; }
+  #hood-left-side-plate .part-name { min-width: 0; overflow-wrap: anywhere; }
+  #hood-left-side-plate .part-actions { display: flex; align-items: center; gap: 2px; margin-left: auto; }
+  #hood-left-side-plate .part-icon { width: 32px; min-height: 32px; padding: 0; border: 0; background: transparent; font-size: 17px; line-height: 1; }
+  #hood-left-side-plate .part-icon:hover { background: #e8e8e8; }
+  #hood-left-side-plate .part-eye { position: relative; }
+  #hood-left-side-plate .part-eye::after { content: ""; position: absolute; left: 7px; top: 15px; width: 19px; height: 2px; background: currentColor; transform: rotate(-42deg); opacity: 0; }
+  #hood-left-side-plate .part-eye[data-visibility="hidden"] { opacity: .42; }
+  #hood-left-side-plate .part-eye[data-visibility="hidden"]::after { opacity: 1; }
+  #hood-left-side-plate .part-eye[data-visibility="partial"] { opacity: .65; }
+  #hood-left-side-plate .part-target[aria-pressed="true"] { background: #ffe57a; color: #111; }
   @media (max-width: 760px) {
     #hood-left-side-plate { height: auto; min-height: 100vh; grid-template-columns: 1fr; grid-template-rows: 62vh auto; }
     #hood-left-side-plate .control-sidebar { border-left: 0; border-top: 1px solid #c9c9c9; overflow: visible; }
@@ -360,6 +366,11 @@
     side: THREE.DoubleSide,
     shininess: 36
   });
+  const anchorHoleMaterial = new THREE.MeshBasicMaterial({
+    color: 0x111111,
+    side: THREE.DoubleSide
+  });
+  const anchorHoleZPositions = [-149, -549, -949, -1349];
 
   function addWallRail(name, y) {
     const railGeometry = new THREE.BoxGeometry(3, 40, 1400);
@@ -376,10 +387,42 @@
     railEdges.position.copy(rail.position);
     railEdges.renderOrder = 6;
     scene.add(railEdges);
+
+    const holes = new THREE.Group();
+    holes.name = `${name}-anchor-holes`;
+    anchorHoleZPositions.forEach((z, index) => {
+      const hole = new THREE.Mesh(
+        new THREE.CylinderGeometry(6, 6, 3.2, 24),
+        anchorHoleMaterial
+      );
+      hole.name = `${name}-anchor-hole-${index + 1}`;
+      hole.rotation.z = Math.PI / 2;
+      hole.position.set(-2, y, z);
+      hole.userData.fixedColour = 0x111111;
+      holes.add(hole);
+    });
+    scene.add(holes);
   }
 
   addWallRail("Upper-wall-mounting-rail", 250);
   addWallRail("Lower-wall-mounting-rail", 50);
+
+  const backPanelAnchorHoles = new THREE.Group();
+  backPanelAnchorHoles.name = "Back-panel-anchor-holes";
+  [50, 250].forEach(y => {
+    anchorHoleZPositions.forEach((z, index) => {
+      const hole = new THREE.Mesh(
+        new THREE.CylinderGeometry(6, 6, 1.2, 24),
+        anchorHoleMaterial
+      );
+      hole.name = `Back-panel-anchor-hole-${y}-${index + 1}`;
+      hole.rotation.z = Math.PI / 2;
+      hole.position.set(0, y, z);
+      hole.userData.fixedColour = 0x111111;
+      backPanelAnchorHoles.add(hole);
+    });
+  });
+  scene.add(backPanelAnchorHoles);
 
   addCoverPlate("L5-L4-R4-R5", points.L5, points.L4);
   addCoverPlate("L6-L5-R5-R6", flangeStart, points.L5);
@@ -845,9 +888,11 @@
   });
 
   const partsContainer = root.querySelector("[data-parts]");
-  const partInputs = new Map();
-  const cameraButtons = new Map();
-  let highlightedPartKey = null;
+  const partVisibility = new Map([...partRegistry.keys()].map(partKey => [partKey, true]));
+  const nodeControls = new Map();
+  let highlightedPartKeys = new Set();
+  let activeFocusNodeId = null;
+  let visibilityBeforeFocus = null;
 
   const partTree = [{
     label: "Hood",
@@ -890,47 +935,58 @@
   function setPartVisibility(partKey, visible) {
     const entry = partRegistry.get(partKey);
     if (!entry) return;
+    partVisibility.set(partKey, visible);
     entry.objects.forEach(object => { object.visible = visible; });
     const dimensionLayer = annotationLayers.get(partKey);
     if (dimensionLayer) dimensionLayer.visible = visible;
     const pointsLayer = pointLayers.get(partKey);
     if (pointsLayer) pointsLayer.visible = visible;
-    const cameraButton = cameraButtons.get(partKey);
-    if (cameraButton) cameraButton.disabled = !visible;
+  }
+
+  function collectPartKeys(node) {
+    if (typeof node === "string") return partRegistry.has(node) ? [node] : [];
+    return node.children.flatMap(collectPartKeys);
+  }
+
+  function createNodeActions(nodeId, label, partKeys) {
+    const actions = document.createElement("span");
+    actions.className = "part-actions";
+    const eyeButton = document.createElement("button");
+    eyeButton.type = "button";
+    eyeButton.className = "part-icon part-eye";
+    eyeButton.textContent = "👁";
+    eyeButton.setAttribute("aria-label", `Hide ${label}`);
+    eyeButton.dataset.visibility = "visible";
+    const targetButton = document.createElement("button");
+    targetButton.type = "button";
+    targetButton.className = "part-icon part-target";
+    targetButton.textContent = "◎";
+    targetButton.setAttribute("aria-label", `Isolate and focus ${label}`);
+    targetButton.setAttribute("aria-pressed", "false");
+    for (const button of [eyeButton, targetButton]) {
+      button.addEventListener("click", event => {
+        event.preventDefault();
+        event.stopPropagation();
+      });
+    }
+    eyeButton.addEventListener("click", () => toggleNodeVisibility(nodeId));
+    targetButton.addEventListener("click", () => toggleNodeFocus(nodeId));
+    actions.append(eyeButton, targetButton);
+    nodeControls.set(nodeId, { label, partKeys, eyeButton, targetButton });
+    return actions;
   }
 
   function renderPartLeaf(partKey, parent, index) {
     const entry = partRegistry.get(partKey);
     if (!entry) return;
+    const nodeId = `part-${partKey}`;
     const row = document.createElement("div");
     row.className = "part-row";
-    const input = document.createElement("input");
-    input.type = "checkbox";
-    input.checked = true;
-    input.id = `hood-part-${index}`;
-    input.dataset.partKey = partKey;
-    const label = document.createElement("label");
-    label.htmlFor = input.id;
+    const label = document.createElement("span");
+    label.className = "part-name";
     label.textContent = entry.label;
-    const cameraButton = document.createElement("button");
-    cameraButton.type = "button";
-    cameraButton.className = "part-camera";
-    cameraButton.dataset.focusPart = partKey;
-    cameraButton.setAttribute("aria-label", `Focus camera on ${entry.label}`);
-    cameraButton.setAttribute("aria-pressed", "false");
-    cameraButton.textContent = "📷";
-    row.append(input, label, cameraButton);
+    row.append(label, createNodeActions(nodeId, entry.label, [partKey]));
     parent.appendChild(row);
-    partInputs.set(partKey, input);
-    cameraButtons.set(partKey, cameraButton);
-    input.addEventListener("change", () => {
-      setPartVisibility(partKey, input.checked);
-      if (!input.checked && highlightedPartKey === partKey) {
-        highlightedPartKey = null;
-        cameraButton.setAttribute("aria-pressed", "false");
-        applyColourMode(colourModeToggle.checked);
-      }
-    });
   }
 
   let partIndex = 0;
@@ -943,7 +999,11 @@
     details.className = "part-branch";
     details.open = depth < 2;
     const summary = document.createElement("summary");
-    summary.textContent = node.label;
+    const label = document.createElement("span");
+    label.className = "branch-label";
+    label.textContent = node.label;
+    const nodeId = `group-${partIndex++}`;
+    summary.append(label, createNodeActions(nodeId, node.label, collectPartKeys(node)));
     const children = document.createElement("div");
     children.className = "part-children";
     node.children.forEach(child => renderPartNode(child, children, depth + 1));
@@ -952,8 +1012,68 @@
   }
   partTree.forEach(node => renderPartNode(node, partsContainer));
 
+  function updateNodeControls() {
+    nodeControls.forEach((control, nodeId) => {
+      const visibleCount = control.partKeys.filter(partKey => partVisibility.get(partKey)).length;
+      const visibility = visibleCount === 0
+        ? "hidden"
+        : visibleCount === control.partKeys.length ? "visible" : "partial";
+      control.eyeButton.dataset.visibility = visibility;
+      control.eyeButton.textContent = "👁";
+      control.eyeButton.setAttribute(
+        "aria-label",
+        `${visibility === "visible" ? "Hide" : "Show"} ${control.label}`
+      );
+      control.targetButton.setAttribute("aria-pressed", String(activeFocusNodeId === nodeId));
+    });
+  }
+
+  function restoreFocusVisibility() {
+    if (!visibilityBeforeFocus) return;
+    visibilityBeforeFocus.forEach((visible, partKey) => setPartVisibility(partKey, visible));
+  }
+
+  function clearFocusMode(restoreVisibility = true) {
+    if (restoreVisibility) restoreFocusVisibility();
+    activeFocusNodeId = null;
+    visibilityBeforeFocus = null;
+    highlightedPartKeys = new Set();
+    updateNodeControls();
+    applyColourMode(colourModeToggle.checked);
+  }
+
+  function toggleNodeVisibility(nodeId) {
+    const control = nodeControls.get(nodeId);
+    if (!control) return;
+    if (activeFocusNodeId) clearFocusMode(true);
+    const shouldShow = !control.partKeys.every(partKey => partVisibility.get(partKey));
+    control.partKeys.forEach(partKey => setPartVisibility(partKey, shouldShow));
+    updateNodeControls();
+  }
+
+  function toggleNodeFocus(nodeId) {
+    const control = nodeControls.get(nodeId);
+    if (!control) return;
+    if (activeFocusNodeId === nodeId) {
+      clearFocusMode(true);
+      return;
+    }
+    if (activeFocusNodeId) restoreFocusVisibility();
+    visibilityBeforeFocus = new Map(partVisibility);
+    activeFocusNodeId = nodeId;
+    highlightedPartKeys = new Set(control.partKeys);
+    partRegistry.forEach((entry, partKey) => {
+      setPartVisibility(partKey, highlightedPartKeys.has(partKey));
+    });
+    updateNodeControls();
+    applyColourMode(colourModeToggle.checked);
+    focusCameraOnParts(control.partKeys, control.label);
+  }
+
+  updateNodeControls();
+
   function colourForPart(partKey, colourCoded) {
-    if (partKey === highlightedPartKey) return 0xffd21f;
+    if (highlightedPartKeys.has(partKey)) return 0xffd21f;
     if (!colourCoded) return 0xc4c9cf;
     if (partKey.startsWith("removable-grille-")) return 0xd95d67;
     if (partKey.includes("rail") || partKey.startsWith("led-")) return 0xe3b52f;
@@ -974,7 +1094,7 @@
           }
           const materials = Array.isArray(child.material) ? child.material : [child.material];
           materials.forEach(material => {
-            if (material.color) material.color.setHex(colour);
+            if (material.color) material.color.setHex(child.userData.fixedColour ?? colour);
             material.needsUpdate = true;
           });
         });
@@ -991,15 +1111,9 @@
   root.querySelectorAll("[data-parts-action]").forEach(button => {
     button.addEventListener("click", () => {
       const visible = button.dataset.partsAction === "show";
-      partInputs.forEach((input, partKey) => {
-        input.checked = visible;
-        setPartVisibility(partKey, visible);
-      });
-      if (!visible && highlightedPartKey) {
-        highlightedPartKey = null;
-        cameraButtons.forEach(cameraButton => cameraButton.setAttribute("aria-pressed", "false"));
-        applyColourMode(colourModeToggle.checked);
-      }
+      if (activeFocusNodeId) clearFocusMode(true);
+      partRegistry.forEach((entry, partKey) => setPartVisibility(partKey, visible));
+      updateNodeControls();
     });
   });
 
@@ -1021,11 +1135,12 @@
   controls.target.set(300, 150, -749);
   controls.update();
 
-  function focusCameraOnPart(partKey) {
-    const entry = partRegistry.get(partKey);
-    if (!entry) return;
+  function focusCameraOnParts(partKeys, label) {
     const bounds = new THREE.Box3();
-    entry.objects.forEach(object => bounds.expandByObject(object, true));
+    partKeys.forEach(partKey => {
+      const entry = partRegistry.get(partKey);
+      if (entry) entry.objects.forEach(object => bounds.expandByObject(object, true));
+    });
     if (bounds.isEmpty()) return;
     const centre = bounds.getCenter(new THREE.Vector3());
     const sphere = bounds.getBoundingSphere(new THREE.Sphere());
@@ -1040,24 +1155,8 @@
     camera.updateProjectionMatrix();
     controls.target.copy(centre);
     controls.update();
-    root.querySelector("[data-caption]").textContent = entry.label;
+    root.querySelector("[data-caption]").textContent = label;
   }
-
-  cameraButtons.forEach((button, partKey) => {
-    button.addEventListener("click", () => {
-      if (highlightedPartKey === partKey) {
-        highlightedPartKey = null;
-        button.setAttribute("aria-pressed", "false");
-        applyColourMode(colourModeToggle.checked);
-        return;
-      }
-      highlightedPartKey = partKey;
-      cameraButtons.forEach(otherButton => otherButton.setAttribute("aria-pressed", "false"));
-      button.setAttribute("aria-pressed", "true");
-      applyColourMode(colourModeToggle.checked);
-      focusCameraOnPart(partKey);
-    });
-  });
 
   function resize() {
     const width = Math.max(1, stage.clientWidth);
