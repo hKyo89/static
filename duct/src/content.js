@@ -38,7 +38,11 @@ export const partTree = [{
     },
     {
       id: "building-context",
-      children: ["room-structure", "ceiling-roof", "shaft-structure", "grc-enclosure", "glass-roof"]
+      children: [
+        "room-structure",
+        { id: "ceiling-assembly", children: ["ceiling-roof", "downlight"] },
+        "shaft-structure", "grc-enclosure", "glass-roof"
+      ]
     }
   ]
 }];
@@ -262,7 +266,9 @@ export const partLabels = {
     ,"rain-hood": "Tudung hujan"
     ,"building-context": "Konteks bangunan"
     ,"room-structure": "Dinding dan lantai"
+    ,"ceiling-assembly": "Plafon"
     ,"ceiling-roof": "Plafon dan pelat atap"
+    ,downlight: "Downlight plafon"
     ,"shaft-structure": "Dinding shaft"
     ,"grc-enclosure": "Penutup GRC 19 cm"
     ,"glass-roof": "Atap kaca"
@@ -321,7 +327,9 @@ export const partLabels = {
     "rain-hood": "Rain hood",
     "building-context": "Building context",
     "room-structure": "Walls and floor",
+    "ceiling-assembly": "Ceiling",
     "ceiling-roof": "Ceiling and roof slab",
+    downlight: "Ceiling downlight",
     "shaft-structure": "Shaft walls",
     "grc-enclosure": "19 cm GRC enclosure",
     "glass-roof": "Glass roof"
@@ -355,7 +363,8 @@ export const partInfoKey = {
 
 Object.assign(partInfoKey, {
   "room-structure": "building-context",
-  "ceiling-roof": "building-context",
+  "ceiling-roof": "ceiling-assembly",
+  downlight: "downlight",
   "shaft-structure": "building-context",
   "grc-enclosure": "building-context",
   "glass-roof": "building-context"
@@ -503,7 +512,9 @@ const ductPartsId = {
   "straight-4d": ["Bagian terakhir duct tegak sebelum siku outlet.", ["Pelat 0,5 mm", "Flange 30 mm"], ["350 × 150 × 615 mm", "Bawah +4.125; atas +4.740 mm"], ["Vertikal"], ["Panjang menjaga flange atas tidak menyentuh kaca."]],
   "elbow-4": ["Siku atas mengarahkan aliran keluar melalui GRC.", ["Pelat 0,5 mm", "Flange 30 mm"], ["350 × 150 mm", "Radius dalam 200; luar 350 mm", "Flange keluar 410 × 210 mm"], ["Belokan 90°"], ["Bukaan GRC terlihat 410 × 190 mm."]],
   "rain-hood": ["Outlet berongga dan meruncing untuk mengurangi masuknya hujan.", ["Pelat 0,5 mm", "Flange 30 mm hanya pada inlet"], ["350 × 150 mm", "Kedalaman bawah 200; atas 300 mm", "Bawah kotak +4.940 mm"], ["Muka keluar miring"], ["Tanpa flange pada ujung keluar.", "Segel pertemuan dengan GRC."]],
-  "building-context": ["Konteks bangunan dipakai untuk memeriksa clearance sistem, bukan bagian fabrikasi duct.", ["Dinding/shaft", "GRC", "Kaca", "Plafon dan pelat atap"], ["Bukaan shaft bersih 840 × 380 mm", "GRC tinggi 190 mm", "Kaca 940 × 580 × 10 mm"], ["Semua bidang bangunan mengikuti datum proyek"], ["Verifikasi lapangan sebelum pemotongan.", "Jangan memotong struktur tanpa persetujuan engineer."]]
+  "building-context": ["Konteks bangunan dipakai untuk memeriksa clearance sistem, bukan bagian fabrikasi duct.", ["Dinding/shaft", "GRC", "Kaca", "Plafon, pelat atap, dan downlight"], ["Bukaan shaft bersih 840 × 380 mm", "GRC tinggi 190 mm", "Kaca 940 × 580 × 10 mm"], ["Semua bidang bangunan mengikuti datum proyek"], ["Verifikasi lapangan sebelum pemotongan.", "Jangan memotong struktur tanpa persetujuan engineer."]],
+  "ceiling-assembly": ["Plafon dan pelat atap dengan posisi downlight yang disurvei untuk pemeriksaan clearance duct.", ["Bidang plafon", "Pelat atap", "Downlight recessed"], ["Elevasi plafon +930 mm pada model", "Trim downlight Ø165 mm", "Cutout Ø139 mm"], ["Downlight tegak lurus terhadap plafon"], ["Jangan menempatkan hanger duct pada bukaan downlight.", "Pertahankan akses ke driver lampu."]],
+  downlight: ["Downlight recessed pada plafon yang harus tetap bebas dari duct dan penyangganya.", ["Trim dan body lampu", "Bukaan plafon Ø139 mm"], ["Trim Ø165 mm", "Cutout Ø139 mm", "Pusat 932,5 mm dari dinding kiri", "Pusat 912,5 mm maju dari dinding belakang"], ["Sumbu lampu tegak lurus plafon"], ["Jaga rute duct dan hanger di luar trim.", "Sisakan akses servis untuk lampu dan driver."]]
 };
 
 for (const [key, [description, materials, measurements, angles, instructions]] of Object.entries(ductPartsId)) {
@@ -539,7 +550,9 @@ const ductPartsEn = {
   "straight-4d": ["Final vertical riser section before the outlet elbow.", ["0.5 mm sheet", "30 mm flanges"], ["350 × 150 × 615 mm", "Bottom +4,125; top +4,740 mm"], ["Vertical"], ["The adjusted length keeps the upper flange clear of the glass."]],
   "elbow-4": ["The upper elbow directs airflow outward through the GRC enclosure.", ["0.5 mm sheet", "30 mm flanges"], ["350 × 150 mm", "200 mm throat radius; 350 mm outer radius", "410 × 210 mm outlet flange"], ["90° bend"], ["Visible GRC opening is 410 × 190 mm."]],
   "rain-hood": ["A hollow tapered outlet that limits rain entry.", ["0.5 mm sheet", "30 mm flange at the inlet only"], ["350 × 150 mm", "Bottom depth 200; top depth 300 mm", "Box bottom +4,940 mm"], ["Sloping outlet face"], ["No flange at the open end.", "Weather-seal the GRC junction."]],
-  "building-context": ["Building geometry used to verify system clearances; it is not part of duct fabrication.", ["Walls and shaft", "GRC", "Glass", "Ceiling and roof slab"], ["840 × 380 mm clear shaft opening", "190 mm GRC height", "940 × 580 × 10 mm glass"], ["All building planes follow project datums"], ["Verify dimensions on site before cutting.", "Do not cut structural work without engineer approval."]]
+  "building-context": ["Building geometry used to verify system clearances; it is not part of duct fabrication.", ["Walls and shaft", "GRC", "Glass", "Ceiling, roof slab, and downlight"], ["840 × 380 mm clear shaft opening", "190 mm GRC height", "940 × 580 × 10 mm glass"], ["All building planes follow project datums"], ["Verify dimensions on site before cutting.", "Do not cut structural work without engineer approval."]],
+  "ceiling-assembly": ["Ceiling and roof slab with the surveyed downlight position for checking duct clearances.", ["Ceiling plane", "Roof slab", "Recessed downlight"], ["Ceiling elevation +930 mm in the model", "Ø165 mm downlight trim", "Ø139 mm cut-out"], ["Downlight is normal to the ceiling"], ["Keep duct hangers clear of the downlight opening.", "Preserve access to the lamp driver."]],
+  downlight: ["Recessed ceiling downlight that must remain clear of the duct route and its supports.", ["Lamp trim and recessed body", "Ø139 mm ceiling cut-out"], ["Ø165 mm trim", "Ø139 mm cut-out", "Centre 932.5 mm from the left wall", "Centre 912.5 mm forward from the back wall"], ["Lamp axis is normal to the ceiling"], ["Keep ductwork and hangers outside the trim.", "Retain service access to the lamp and driver."]]
 };
 
 for (const [key, [description, materials, measurements, angles, instructions]] of Object.entries(ductPartsEn)) {

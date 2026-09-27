@@ -236,6 +236,7 @@ function addBuilding(scene) {
   const groups = {
     room: partGroup(scene, "room-structure"),
     ceiling: partGroup(scene, "ceiling-roof"),
+    downlight: partGroup(scene, "downlight"),
     shaft: partGroup(scene, "shaft-structure"),
     grc: partGroup(scene, "grc-enclosure"),
     glass: partGroup(scene, "glass-roof")
@@ -249,6 +250,23 @@ function addBuilding(scene) {
   };
   slab(groups.ceiling, "ceiling", 93, 95);
   slab(groups.ceiling, "roof", 143, 163);
+
+  // Surveyed recessed ceiling downlight. The trim is Ø165 mm, the ceiling
+  // cut-out/body is Ø139 mm, and the centre is 932.5 mm from the left wall
+  // and 912.5 mm forward from the back wall.
+  const addDownlightCylinder = (name, radius, height, centreZ) => {
+    const mesh = new THREE.Mesh(
+      new THREE.CylinderGeometry(radius * MM, radius * MM, height * MM, 48),
+      material(1, 0xe3b52f)
+    );
+    mesh.name = name;
+    mesh.position.copy(systemPoint(93.25, 208.75, centreZ));
+    mesh.userData.fixedColour = 0xe3b52f;
+    groups.downlight.add(mesh);
+    addEdges(groups.downlight, mesh);
+  };
+  addDownlightCylinder("downlight-trim", 8.25, 0.4, 93.0);
+  addDownlightCylinder("downlight-recessed-body", 6.95, 3.5, 94.75);
   addPdfBox(groups.room, "back-wall", 0, 180, 300, 320, -175, 163, { opacity: 0.08, fixedColour: fixed, edgeOpacity: 0.35 });
   addPdfBox(groups.room, "left-wall", -20, 0, -35, 320, -175, 163, { opacity: 0.06, fixedColour: fixed, edgeOpacity: 0.3 });
   addPdfBox(groups.room, "right-wall", 180, 200, -35, 320, -175, 163, { opacity: 0.06, fixedColour: fixed, edgeOpacity: 0.3 });
@@ -366,6 +384,7 @@ export const systemDimensions = [
   { key: "straight-4b", text: "1,200 mm", a: [42, 66, 266.5], b: [42, 66, 386.5] },
   { key: "straight-4c", text: "1,200 mm", a: [42, 66, 386.5], b: [42, 66, 506.5] },
   { key: "straight-4d", text: "615 mm", a: [42, 66, 506.5], b: [42, 66, 568] },
+  { key: "downlight", text: "Ø165 / Ø139 mm", a: [85, 208.75, 92.6], b: [101.5, 208.75, 92.6] },
   { key: "rain-hood", text: "bottom +4,940 mm", a: [44, 3, 94], b: [44, 3, 588] }
 ];
 
