@@ -765,6 +765,7 @@ import { createDuctSystem, systemAngles, systemDimensions, systemPoint } from ".
 
   // Complete-system dimensions. Labels live in the same per-part layers as
   // the hood annotations, so hiding or isolating a part also hides its notes.
+  const notatedSystemParts = new Set();
   systemDimensions.forEach(({ key: partKey, text, a, b }) => {
     const start = systemPoint(...a);
     const end = systemPoint(...b);
@@ -772,13 +773,21 @@ import { createDuctSystem, systemAngles, systemDimensions, systemPoint } from ".
       ? new THREE.Vector3(180, 150, 0)
       : new THREE.Vector3(42, 24, 42);
     addMetric(text, start, end, start.clone().lerp(end, 0.5).add(lateral), partKey);
+    if (notatedSystemParts.has(partKey)) return;
+    notatedSystemParts.add(partKey);
     const notation = {
       "straight-1": "L-1", "straight-2": "L-2", "straight-3": "L-3",
       "transition-1": "T-1", fan: "FAN-1", "transition-2": "T-2",
       "straight-4a": "L-4A", "straight-4b": "L-4B", "straight-4c": "L-4C",
       "straight-4d": "L-4D",
       downlight: "DL-1",
-      "rain-hood": "RNH-1"
+      "rain-hood": "RNH-1",
+      "room-structure": "ROOM",
+      "ceiling-roof": "CEILING",
+      "shaft-structure": "SHAFT",
+      "elbow-4-opening": "OPENING E4",
+      "shaft-side-access": "SIDE ACCESS",
+      "shaft-front-mesh": "FRONT MESH"
     }[partKey] || partKey;
     const notationOffset = partKey === "downlight"
       ? new THREE.Vector3(-170, 90, 0)
@@ -796,9 +805,9 @@ import { createDuctSystem, systemAngles, systemDimensions, systemPoint } from ".
     const anchors = {
       "elbow-1": systemPoint(100, 262, 119),
       "elbow-2": systemPoint(72.5, 234.5, 119),
-      "elbow-3": systemPoint(20.5, 207, 119),
-      "elbow-4": systemPoint(20.5, 53.5, 146.5),
-      "elbow-5": systemPoint(20.5, 26, 595.5)
+      "elbow-3": systemPoint(21.5, 207, 119),
+      "elbow-4": systemPoint(21.5, 53.5, 146.5),
+      "elbow-5": systemPoint(21.5, 26, 599.5)
     };
     const centre = anchors[partKey];
     labelSprite(text, centre.x + 64, centre.y + 64, centre.z + 64, partKey);
