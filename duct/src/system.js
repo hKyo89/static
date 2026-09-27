@@ -236,8 +236,7 @@ function addBuilding(scene) {
   const groups = {
     room: partGroup(scene, "room-structure"),
     ceiling: partGroup(scene, "ceiling-roof"),
-    downlight1: partGroup(scene, "downlight-1"),
-    downlight2: partGroup(scene, "downlight-2"),
+    downlight: partGroup(scene, "downlight"),
     shaft: partGroup(scene, "shaft-structure"),
     grc: partGroup(scene, "grc-enclosure"),
     glass: partGroup(scene, "glass-roof")
@@ -252,8 +251,8 @@ function addBuilding(scene) {
   slab(groups.ceiling, "ceiling", 93, 95);
   slab(groups.ceiling, "roof", 143, 163);
 
-  // Two recessed ceiling downlights. The original rear light is moved 150 mm
-  // forward for duct clearance; the second light is 1,200 mm farther forward.
+  // One recessed ceiling downlight, moved 150 mm forward from the surveyed
+  // position for duct clearance and kept clear of the shaft-wall footprint.
   const addDownlightCylinder = (parent, name, x, y, radius, height, centreZ) => {
     const mesh = new THREE.Mesh(
       new THREE.CylinderGeometry(radius * MM, radius * MM, height * MM, 48),
@@ -265,13 +264,8 @@ function addBuilding(scene) {
     parent.add(mesh);
     addEdges(parent, mesh);
   };
-  for (const [parent, key, y] of [
-    [groups.downlight1, "downlight-1", 193.75],
-    [groups.downlight2, "downlight-2", 73.75]
-  ]) {
-    addDownlightCylinder(parent, `${key}-trim`, 93.25, y, 8.25, 0.4, 93.0);
-    addDownlightCylinder(parent, `${key}-recessed-body`, 93.25, y, 6.95, 3.5, 94.75);
-  }
+  addDownlightCylinder(groups.downlight, "downlight-trim", 93.25, 193.75, 8.25, 0.4, 93.0);
+  addDownlightCylinder(groups.downlight, "downlight-recessed-body", 93.25, 193.75, 6.95, 3.5, 94.75);
   addPdfBox(groups.room, "back-wall", 0, 180, 300, 320, -175, 163, { opacity: 0.08, fixedColour: fixed, edgeOpacity: 0.35 });
   addPdfBox(groups.room, "left-wall", -20, 0, -35, 320, -175, 163, { opacity: 0.06, fixedColour: fixed, edgeOpacity: 0.3 });
   addPdfBox(groups.room, "right-wall", 180, 200, -35, 320, -175, 163, { opacity: 0.06, fixedColour: fixed, edgeOpacity: 0.3 });
@@ -417,8 +411,7 @@ export const systemDimensions = [
   { key: "straight-4b", text: "1,200 mm", a: [42, 66, 266.5], b: [42, 66, 386.5] },
   { key: "straight-4c", text: "1,200 mm", a: [42, 66, 386.5], b: [42, 66, 506.5] },
   { key: "straight-4d", text: "615 mm", a: [42, 66, 506.5], b: [42, 66, 568] },
-  { key: "downlight-1", text: "Ø165 / Ø139 mm", a: [85, 193.75, 92.6], b: [101.5, 193.75, 92.6] },
-  { key: "downlight-2", text: "Ø165 / Ø139 mm", a: [85, 73.75, 92.6], b: [101.5, 73.75, 92.6] },
+  { key: "downlight", text: "Ø165 / Ø139 mm", a: [85, 193.75, 92.6], b: [101.5, 193.75, 92.6] },
   { key: "rain-hood", text: "bottom +4,940 mm", a: [44, 3, 94], b: [44, 3, 588] }
 ];
 
