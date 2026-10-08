@@ -92,6 +92,8 @@ button {
 button:hover { background: #ececec; }
 button[aria-pressed="true"] { background: #222222; border-color: #222222; color: #ffffff; }
 
+.mobile-menu-button { display: none; }
+
 .control-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 7px; }
 .switch-row { display: flex; align-items: center; gap: 9px; min-height: 34px; font-size: 14px; cursor: pointer; }
 .switch-row:last-of-type { margin-bottom: 10px; }
@@ -124,15 +126,75 @@ input[type="checkbox"] { width: 17px; height: 17px; flex: 0 0 auto; accent-color
 .info-sidebar ul { margin: 0; padding-left: 18px; }
 .info-sidebar li + li { margin-top: 6px; }
 
+.info-tabs {
+  display: flex;
+  gap: 5px;
+  overflow-x: auto;
+  padding: 14px 0 8px;
+  scrollbar-width: thin;
+}
+.info-tabs button {
+  flex: 0 0 auto;
+  min-height: 32px;
+  padding: 6px 9px;
+  border-color: #c7c7c7;
+  border-radius: 999px;
+  color: #555555;
+  white-space: nowrap;
+}
+.info-tabs button[aria-selected="true"] {
+  border-color: #222222;
+  background: #222222;
+  color: #ffffff;
+}
+.info-tab-panel { padding-top: 10px; }
+.info-tab-panel[hidden] { display: none; }
+
 @media (max-width: 1180px) {
   #hood-left-side-plate { grid-template-columns: 280px minmax(0, 1fr) 280px; }
 }
 
 @media (max-width: 860px) {
   html, body { height: auto; overflow: auto; }
-  #hood-left-side-plate { height: auto; min-height: 100vh; grid-template-columns: 1fr; grid-template-rows: auto 64vh auto; }
-  .left-sidebar, .info-sidebar { overflow: visible; }
-  .viewer-pane { grid-row: 2; min-height: 64vh; border: 1px solid #c9c9c9; }
+  #hood-left-side-plate { height: auto; min-height: 100vh; grid-template-columns: 1fr; grid-template-rows: 64vh auto; }
+  .mobile-menu-button {
+    position: fixed;
+    z-index: 32;
+    top: 12px;
+    left: 12px;
+    display: grid;
+    place-items: center;
+    width: 44px;
+    min-height: 44px;
+    padding: 0;
+    border-color: #8f969e;
+    border-radius: 9px;
+    background: rgba(255, 255, 255, 0.96);
+    box-shadow: 0 4px 16px rgb(0 0 0 / 18%);
+    font-size: 22px;
+  }
+  .left-sidebar {
+    position: fixed;
+    z-index: 31;
+    inset: 0 auto 0 0;
+    width: min(88vw, 340px);
+    padding-top: 70px;
+    overflow-y: auto;
+    box-shadow: 8px 0 28px rgb(0 0 0 / 20%);
+    transform: translateX(-105%);
+    transition: transform 180ms ease;
+  }
+  #hood-left-side-plate.controls-open .left-sidebar { transform: translateX(0); }
+  #hood-left-side-plate.controls-open::after {
+    content: "";
+    position: fixed;
+    z-index: 30;
+    inset: 0;
+    background: rgb(0 0 0 / 28%);
+  }
+  .info-sidebar { overflow: visible; }
+  .viewer-pane { grid-row: 1; min-height: 64vh; border: 1px solid #c9c9c9; }
+  .info-sidebar { grid-row: 2; }
   .plate-caption { bottom: 82px; }
 }
 

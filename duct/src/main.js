@@ -5,6 +5,30 @@ import { createDuctSystem, systemAngles, systemDimensions, systemPoint } from ".
 
   const root = document.getElementById("hood-left-side-plate");
   const stage = root.querySelector(".plate-stage");
+  const controlsToggle = root.querySelector("[data-controls-toggle]");
+  const controlsSidebar = root.querySelector(".left-sidebar");
+  let controlsOpen = false;
+
+  function setControlsOpen(open) {
+    controlsOpen = open;
+    root.classList.toggle("controls-open", open);
+    controlsToggle.setAttribute("aria-expanded", String(open));
+    const language = document.documentElement.lang === "en" ? "en" : "id";
+    controlsToggle.setAttribute("aria-label", uiText[language][open ? "menuClose" : "menuOpen"]);
+  }
+
+  controlsToggle.addEventListener("click", () => setControlsOpen(!controlsOpen));
+  document.addEventListener("click", event => {
+    if (!controlsOpen || window.innerWidth > 860) return;
+    if (controlsSidebar.contains(event.target) || controlsToggle.contains(event.target)) return;
+    setControlsOpen(false);
+  });
+  document.addEventListener("keydown", event => {
+    if (event.key === "Escape" && controlsOpen) setControlsOpen(false);
+  });
+  window.addEventListener("resize", () => {
+    if (window.innerWidth > 860 && controlsOpen) setControlsOpen(false);
+  });
   const probe = document.createElement("span");
   probe.style.cssText = "position:absolute;visibility:hidden;pointer-events:none";
   root.appendChild(probe);
@@ -959,6 +983,37 @@ import { createDuctSystem, systemAngles, systemDimensions, systemPoint } from ".
     angles: root.querySelector("[data-info-angles]"),
     instructions: root.querySelector("[data-info-instructions]")
   };
+  const infoTabs = [...root.querySelectorAll("[data-info-tab]")];
+  const infoPanels = [...root.querySelectorAll("[data-info-panel]")];
+  let activeInfoTab = "description";
+
+  function selectInfoTab(tabKey, focus = false) {
+    activeInfoTab = tabKey;
+    infoTabs.forEach(tab => {
+      const selected = tab.dataset.infoTab === tabKey;
+      tab.setAttribute("aria-selected", String(selected));
+      tab.tabIndex = selected ? 0 : -1;
+      if (selected && focus) tab.focus();
+    });
+    infoPanels.forEach(panel => {
+      panel.hidden = panel.dataset.infoPanel !== tabKey;
+    });
+  }
+
+  infoTabs.forEach((tab, index) => {
+    tab.addEventListener("click", () => selectInfoTab(tab.dataset.infoTab));
+    tab.addEventListener("keydown", event => {
+      if (!["ArrowLeft", "ArrowRight", "Home", "End"].includes(event.key)) return;
+      event.preventDefault();
+      let nextIndex = index;
+      if (event.key === "ArrowLeft") nextIndex = (index - 1 + infoTabs.length) % infoTabs.length;
+      if (event.key === "ArrowRight") nextIndex = (index + 1) % infoTabs.length;
+      if (event.key === "Home") nextIndex = 0;
+      if (event.key === "End") nextIndex = infoTabs.length - 1;
+      selectInfoTab(infoTabs[nextIndex].dataset.infoTab, true);
+    });
+  });
+  selectInfoTab(activeInfoTab);
 
   function hasVisibleParts(node) {
     return collectPartKeys(node).some(partKey => partVisibility.get(partKey));
@@ -1017,6 +1072,7 @@ import { createDuctSystem, systemAngles, systemDimensions, systemPoint } from ".
     root.querySelectorAll("[data-info-heading]").forEach(element => {
       element.textContent = text[element.dataset.infoHeading];
     });
+    controlsToggle.setAttribute("aria-label", text[controlsOpen ? "menuClose" : "menuOpen"]);
     const activeControl = activeFocusNodeId ? nodeControls.get(activeFocusNodeId) : null;
     root.querySelector("[data-caption]").textContent = activeControl
       ? translatedPartLabel(activeControl.labelKey)

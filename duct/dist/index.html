@@ -15,12 +15,15 @@
       }
     }
   </script>
-  <script type="module" crossorigin src="./assets/index-BrMHjg3v.js"></script>
-  <link rel="stylesheet" crossorigin href="./assets/index-DF83ebcf.css">
+  <script type="module" crossorigin src="./assets/index-3AWVC1HO.js"></script>
+  <link rel="stylesheet" crossorigin href="./assets/index-BUofWQvG.css">
 </head>
 <body>
   <div id="hood-left-side-plate" aria-label="Viewer sistem exhaust dapur Opsi D">
-    <aside class="control-sidebar left-sidebar" aria-label="Kontrol viewer">
+    <button type="button" class="mobile-menu-button" data-controls-toggle aria-controls="viewer-controls" aria-expanded="false" aria-label="Buka panel kontrol">
+      <span aria-hidden="true">☰</span>
+    </button>
+    <aside id="viewer-controls" class="control-sidebar left-sidebar" aria-label="Kontrol viewer">
       <div class="language-switch" role="group" aria-label="Bahasa">
         <button type="button" data-language="id" aria-pressed="true">ID</button>
         <button type="button" data-language="en" aria-pressed="false">EN</button>
@@ -72,24 +75,26 @@
         <p class="eyebrow" data-info-eyebrow>Komponen aktif</p>
         <h2 data-info-title>Hood</h2>
       </header>
-      <section>
-        <h3 data-info-heading="description">Deskripsi</h3>
+      <div class="info-tabs" role="tablist" aria-label="Informasi teknis">
+        <button type="button" role="tab" data-info-tab="description" data-info-heading="description" aria-selected="true">Deskripsi</button>
+        <button type="button" role="tab" data-info-tab="materials" data-info-heading="materials" aria-selected="false">Material</button>
+        <button type="button" role="tab" data-info-tab="measurements" data-info-heading="measurements" aria-selected="false">Ukuran</button>
+        <button type="button" role="tab" data-info-tab="angles" data-info-heading="angles" aria-selected="false">Sudut</button>
+        <button type="button" role="tab" data-info-tab="instructions" data-info-heading="instructions" aria-selected="false">Petunjuk</button>
+      </div>
+      <section class="info-tab-panel" role="tabpanel" data-info-panel="description">
         <p data-info-description></p>
       </section>
-      <section>
-        <h3 data-info-heading="materials">Material</h3>
+      <section class="info-tab-panel" role="tabpanel" data-info-panel="materials" hidden>
         <ul data-info-materials></ul>
       </section>
-      <section>
-        <h3 data-info-heading="measurements">Ukuran</h3>
+      <section class="info-tab-panel" role="tabpanel" data-info-panel="measurements" hidden>
         <ul data-info-measurements></ul>
       </section>
-      <section>
-        <h3 data-info-heading="angles">Sudut</h3>
+      <section class="info-tab-panel" role="tabpanel" data-info-panel="angles" hidden>
         <ul data-info-angles></ul>
       </section>
-      <section>
-        <h3 data-info-heading="instructions">Petunjuk</h3>
+      <section class="info-tab-panel" role="tabpanel" data-info-panel="instructions" hidden>
         <ul data-info-instructions></ul>
       </section>
     </aside>
