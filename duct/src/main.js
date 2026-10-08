@@ -776,7 +776,7 @@ import { createDuctSystem, systemAngles, systemDimensions, systemPoint } from ".
     if (notatedSystemParts.has(partKey)) return;
     notatedSystemParts.add(partKey);
     const notation = {
-      "straight-1": "L-1", "straight-2": "L-2", "straight-3": "L-3", "entry-drop": "L-3D",
+      "straight-1": "L-1", "straight-2": "L-2", "straight-3": "L-3",
       "entry-elbow-1": "S-3A", "entry-elbow-2": "S-3B",
       "transition-1": "T-1", fan: "FAN-1", "transition-2": "T-2",
       "straight-4a": "L-4A", "straight-4b": "L-4B", "straight-4c": "L-4C",
@@ -806,11 +806,11 @@ import { createDuctSystem, systemAngles, systemDimensions, systemPoint } from ".
       "elbow-1": systemPoint(100, 262, 119),
       "elbow-2": systemPoint(72.5, 234.5, 119),
       "elbow-3": systemPoint(21.5, 207, 119),
-      "entry-elbow-1": systemPoint(21.5, 88.5, 110),
+      "entry-elbow-1": systemPoint(21.5, 88.5, 100),
       "entry-elbow-2": systemPoint(21.5, 88.5, 100),
       "elbow-4": systemPoint(21.5, 53.5, 100),
       "elbow-5": systemPoint(21.5, 26, 599.5)
-      ,"straight-3": systemPoint(21.5, 117.25, 123.25)
+      ,"straight-3": systemPoint(21.5, 117.25, 118.25)
     };
     const centre = anchors[partKey];
     labelSprite(text, centre.x + 64, centre.y + 64, centre.z + 64, partKey);
