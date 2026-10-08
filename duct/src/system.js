@@ -78,6 +78,27 @@ function addRectShell(parent, name, axis, bounds) {
   }
 }
 
+function addQuad(parent, name, points) {
+  const vertices = points.map(point => systemPoint(...point));
+  const geometry = new THREE.BufferGeometry();
+  geometry.setAttribute("position", new THREE.Float32BufferAttribute(vertices.flatMap(point => [point.x, point.y, point.z]), 3));
+  geometry.setIndex([0, 1, 2, 0, 2, 3]);
+  geometry.computeVertexNormals();
+  const mesh = new THREE.Mesh(geometry, material());
+  mesh.name = name;
+  parent.add(mesh);
+  addEdges(parent, mesh);
+}
+
+function addSlopedRectShellY(parent, name, { x0, x1, y0, y1, z0, z1, height }) {
+  const low0 = z0 - height / 2, high0 = z0 + height / 2;
+  const low1 = z1 - height / 2, high1 = z1 + height / 2;
+  addQuad(parent, `${name}-left`, [[x0, y0, low0], [x0, y1, low1], [x0, y1, high1], [x0, y0, high0]]);
+  addQuad(parent, `${name}-right`, [[x1, y1, low1], [x1, y0, low0], [x1, y0, high0], [x1, y1, high1]]);
+  addQuad(parent, `${name}-bottom`, [[x0, y0, low0], [x1, y0, low0], [x1, y1, low1], [x0, y1, low1]]);
+  addQuad(parent, `${name}-top`, [[x0, y1, high1], [x1, y1, high1], [x1, y0, high0], [x0, y0, high0]]);
+}
+
 function addFastenerHole(parent, name, plane, x, y, z) {
   const geometry = new THREE.CylinderGeometry(3, 3, 1.6, 14);
   const mesh = new THREE.Mesh(geometry, new THREE.MeshBasicMaterial({ color: 0x111111 }));
@@ -171,6 +192,80 @@ function addSweptSurface(parent, name, ringFactory, segments = 36) {
   addEdges(parent, mesh);
 }
 
+// Compact square-throat, radius-heel shaft-entry elbow. The sharp throat is
+// the centre of a 150 mm outer quarter-circle, so every section through the
+// bend retains the full 350 x 150 mm minimum airflow area. The actual
+// fabricated side envelope is 250 x 250 mm: 100 mm straight neck plus the
+// 150 mm heel radius on each leg. It sits below the shaft wall and aligns
+// directly with the vertical riser.
+function addSquareThroatElbow(parent, name, segments = 40) {
+  addSweptSurface(parent, name, angle => {
+    const t = angle / (Math.PI / 2);
+    let innerY;
+    let innerZ;
+    let outerY;
+    let outerZ;
+
+    if (t <= 0.25) {
+      const neckT = t / 0.25;
+      innerY = outerY = 71 - 10 * neckT;
+      innerZ = 90;
+      outerZ = 75;
+    } else if (t <= 0.75) {
+      const bendAngle = (t - 0.25) / 0.5 * Math.PI / 2;
+      innerY = 61;
+      innerZ = 90;
+      outerY = 61 - 15 * Math.sin(bendAngle);
+      outerZ = 90 - 15 * Math.cos(bendAngle);
+    } else {
+      const neckT = (t - 0.75) / 0.25;
+      innerY = 61;
+      outerY = 46;
+      innerZ = outerZ = 90 + 10 * neckT;
+    }
+
+    return [
+      [4, innerY, innerZ],
+      [39, innerY, innerZ],
+      [39, outerY, outerZ],
+      [4, outerY, outerZ]
+    ];
+  }, segments);
+}
+
+// Square-throat/radius-heel elbow from a vertical inlet to a -Y outlet.
+// The 200 mm straight legs preserve the existing connection faces while the
+// 150 mm heel radius matches Elbow 4's throat construction.
+function addSquareThroatVerticalToY(parent, name, x0, x1, innerY, innerZ, inletZ, outletY, segments = 40) {
+  addSweptSurface(parent, name, angle => {
+    const t = angle / (Math.PI / 2);
+    let inY;
+    let inZ;
+    let outY;
+    let outZ;
+
+    if (t <= 0.25) {
+      const neckT = t / 0.25;
+      inY = innerY;
+      outY = innerY + 15;
+      inZ = outZ = inletZ + (innerZ - inletZ) * neckT;
+    } else if (t <= 0.75) {
+      const bendAngle = (t - 0.25) / 0.5 * Math.PI / 2;
+      inY = innerY;
+      inZ = innerZ;
+      outY = innerY + 15 * Math.cos(bendAngle);
+      outZ = innerZ + 15 * Math.sin(bendAngle);
+    } else {
+      const neckT = (t - 0.75) / 0.25;
+      inY = outY = innerY + (outletY - innerY) * neckT;
+      inZ = innerZ;
+      outZ = innerZ + 15;
+    }
+
+    return [[x0, inY, inZ], [x1, inY, inZ], [x1, outY, outZ], [x0, outY, outZ]];
+  }, segments);
+}
+
 function addTransition(parent, name, rearY, frontY, rearProfile, frontProfile) {
   const ringCount = 48;
   const profile = (spec, angle) => {
@@ -237,7 +332,6 @@ function addBuilding(scene) {
     ceiling: partGroup(scene, "ceiling-roof"),
     downlight: partGroup(scene, "downlight"),
     shaft: partGroup(scene, "shaft-structure"),
-    elbowOpening: partGroup(scene, "elbow-4-opening"),
     sideAccess: partGroup(scene, "shaft-side-access"),
     topWalls: partGroup(scene, "shaft-top-walls"),
     frontMesh: partGroup(scene, "shaft-front-mesh"),
@@ -279,16 +373,11 @@ function addBuilding(scene) {
   addPdfBox(groups.shaft, "shaft-right-above-access", 84, 99, 26, 64, 414, 587, { opacity: 0.12, fixedColour: fixed, edgeOpacity: 0.5 });
   addPdfBox(groups.shaft, "shaft-front", 0, 84, 11, 26, 94, 587, { opacity: 0.12, fixedColour: fixed, edgeOpacity: 0.5 });
   addPdfBox(groups.shaft, "shaft-left", -20, 0, 11, 79, 163, 587, { opacity: 0.12, fixedColour: fixed, edgeOpacity: 0.5 });
-  // Rear wall: 500 x 450 mm Elbow 4 fabrication opening kept entirely below
-  // the confirmed structural roof slab. Elbow 4 must be assembled in the shaft.
-  addPdfBox(groups.shaft, "shaft-rear-right", 50, 84, 64, 79, 94, 587, { opacity: 0.12, fixedColour: fixed, edgeOpacity: 0.5 });
-  addPdfBox(groups.shaft, "shaft-rear-below-opening", 0, 50, 64, 79, 94, 98, { opacity: 0.12, fixedColour: fixed, edgeOpacity: 0.5 });
-  addPdfBox(groups.shaft, "shaft-rear-above-opening", 0, 50, 64, 79, 143, 587, { opacity: 0.12, fixedColour: fixed, edgeOpacity: 0.5 });
+  // Rear shaft wall is continuous. The duct now passes below/around the shaft
+  // bottom, so the brick, practical column and ring beam are not penetrated.
+  addPdfBox(groups.shaft, "shaft-rear", 0, 84, 64, 79, 94, 587, { opacity: 0.12, fixedColour: fixed, edgeOpacity: 0.5 });
 
   const openingFrame = 0xe3b52f;
-  addPdfBox(groups.elbowOpening, "elbow-4-opening-bottom", 0, 50, 63.8, 79.2, 96, 98, { fixedColour: openingFrame });
-  addPdfBox(groups.elbowOpening, "elbow-4-opening-top", 0, 50, 63.8, 79.2, 143, 145, { fixedColour: openingFrame });
-  addPdfBox(groups.elbowOpening, "elbow-4-opening-right", 50, 52, 63.8, 79.2, 98, 143, { fixedColour: openingFrame });
   addPdfBox(groups.sideAccess, "shaft-side-access-bottom", 83.8, 99.2, 24, 66, 242, 244, { fixedColour: openingFrame });
   addPdfBox(groups.sideAccess, "shaft-side-access-top", 83.8, 99.2, 24, 66, 414, 416, { fixedColour: openingFrame });
   addPdfBox(groups.sideAccess, "shaft-side-access-front", 83.8, 99.2, 24, 26, 244, 414, { fixedColour: openingFrame });
@@ -321,17 +410,7 @@ export function createDuctSystem(scene) {
   addFlangeZ(straight1, "straight-1-top-flange", 100, 289.5, 91.5, 35, 15);
 
   const elbow1 = partGroup(scene, "elbow-1");
-  addSweptSurface(elbow1, "elbow-1-shell", angle => {
-    const si = Math.sin(angle), co = Math.cos(angle);
-    const cy = 262 + 27.5 * co;
-    const cz = 91.5 + 27.5 * si;
-    return [
-      [82.5, cy - 7.5 * co, cz - 7.5 * si],
-      [117.5, cy - 7.5 * co, cz - 7.5 * si],
-      [117.5, cy + 7.5 * co, cz + 7.5 * si],
-      [82.5, cy + 7.5 * co, cz + 7.5 * si]
-    ];
-  });
+  addSquareThroatVerticalToY(elbow1, "elbow-1-shell", 82.5, 117.5, 282, 111.5, 91.5, 262);
   addFlangeZ(elbow1, "elbow-1-inlet-flange", 100, 289.5, 91.5, 35, 15);
   addFlangeY(elbow1, "elbow-1-outlet-flange", 100, 262, 119, 35, 15);
 
@@ -370,45 +449,46 @@ export function createDuctSystem(scene) {
   addFlangeX(elbow3, "elbow-3-inlet-flange", 49, 234.5, 119, 35, 15);
   addFlangeY(elbow3, "elbow-3-outlet-flange", 21.5, 207, 119, 35, 15);
 
-  const straight3 = partGroup(scene, "straight-3");
-  addRectShell(straight3, "straight-3", "y", { x0: 4, x1: 39, y0: 159.5, y1: 207, z0: 111.5, z1: 126.5 });
-  addFlangeY(straight3, "straight-3-start-flange", 21.5, 207, 119, 35, 15);
-  addFlangeY(straight3, "straight-3-end-flange", 21.5, 159.5, 119, 35, 15);
-
   const rectTall = { type: "rectangle", hw: 7.5, hh: 17.5 };
   const rectWide = { type: "rectangle", hw: 17.5, hh: 7.5 };
   const circle = { type: "circle", radius: 12.5 };
   const transition1 = partGroup(scene, "transition-1");
-  addTransition(transition1, "transition-1-shell", 159.5, 134.5, rectWide, circle);
-  addCylinderY(transition1, "transition-1-collar", 21.5, 119, 134.5, 4, 12.5);
-  addFlangeY(transition1, "transition-1-flange", 21.5, 159.5, 119, 35, 15);
+  addTransition(transition1, "transition-1-shell", 207, 182, rectWide, circle);
+  addCylinderY(transition1, "transition-1-collar", 21.5, 119, 182, 4, 12.5);
+  addFlangeY(transition1, "transition-1-flange", 21.5, 207, 119, 35, 15);
 
   const fan = partGroup(scene, "fan");
-  addCylinderY(fan, "fan-inlet-collar", 21.5, 119, 130.5, 2.5, 12.5);
-  addCylinderY(fan, "fan-housing", 21.5, 119, 128, 15.5, 1, 17.45, 16.75);
-  addCylinderY(fan, "fan-outlet-collar", 21.5, 119, 112.5, 2.5, 12.5);
-  addPdfBox(fan, "fan-terminal-box", 38.95, 42.05, 115.5, 125.5, 111, 127);
-  addPdfBox(fan, "fan-support-foot", 10.25, 32.75, 116.5, 124.5, 136.45, 139.45);
+  addCylinderY(fan, "fan-inlet-collar", 21.5, 119, 178, 2.5, 12.5);
+  addCylinderY(fan, "fan-housing", 21.5, 119, 175.5, 15.5, 1, 17.45, 16.75);
+  addCylinderY(fan, "fan-outlet-collar", 21.5, 119, 160, 2.5, 12.5);
+  addPdfBox(fan, "fan-terminal-box", 38.95, 42.05, 163, 173, 111, 127);
+  addPdfBox(fan, "fan-support-foot", 10.25, 32.75, 164, 172, 136.45, 139.45);
 
   const transition2 = partGroup(scene, "transition-2");
-  addCylinderY(transition2, "transition-2-collar", 21.5, 119, 110, 4, 12.5);
-  addTransition(transition2, "transition-2-shell", 106, 81, circle, rectWide);
-  addFlangeY(transition2, "transition-2-flange", 21.5, 81, 119, 35, 15);
+  addCylinderY(transition2, "transition-2-collar", 21.5, 119, 157.5, 4, 12.5);
+  addTransition(transition2, "transition-2-shell", 153.5, 128.5, circle, rectWide);
+  addFlangeY(transition2, "transition-2-flange", 21.5, 128.5, 119, 35, 15);
+
+  const straight3 = partGroup(scene, "straight-3");
+  addSlopedRectShellY(straight3, "straight-3", { x0: 4, x1: 39, y0: 81, y1: 128.5, z0: 82.5, z1: 119, height: 15 });
+  addFlangeY(straight3, "straight-3-high-flange", 21.5, 128.5, 119, 35, 15);
+  addFlangeY(straight3, "straight-3-low-flange", 21.5, 81, 82.5, 35, 15);
+
+  const straight3Connector = partGroup(scene, "straight-3-connector");
+  addRectShell(straight3Connector, "straight-3-connector", "y", { x0: 4, x1: 39, y0: 71, y1: 81, z0: 75, z1: 90 });
+  addFlangeY(straight3Connector, "straight-3-connector-high-flange", 21.5, 81, 82.5, 35, 15);
+  addFlangeY(straight3Connector, "straight-3-connector-low-flange", 21.5, 71, 82.5, 35, 15);
 
   const elbow4 = partGroup(scene, "elbow-4");
-  addSweptSurface(elbow4, "elbow-4-shell", angle => {
-    const si = Math.sin(angle), co = Math.cos(angle);
-    const cy = 81 - 27.5 * si, cz = 119 + 27.5 * (1 - co);
-    return [[4, cy + 7.5 * si, cz + 7.5 * co], [39, cy + 7.5 * si, cz + 7.5 * co], [39, cy - 7.5 * si, cz - 7.5 * co], [4, cy - 7.5 * si, cz - 7.5 * co]];
-  });
-  addFlangeY(elbow4, "elbow-4-inlet-flange", 21.5, 81, 119, 35, 15);
-  addFlangeZ(elbow4, "elbow-4-outlet-flange", 21.5, 53.5, 146.5, 35, 15);
+  addSquareThroatElbow(elbow4, "elbow-4-shell");
+  addFlangeY(elbow4, "elbow-4-inlet-flange", 21.5, 71, 82.5, 35, 15);
+  addFlangeZ(elbow4, "elbow-4-outlet-flange", 21.5, 53.5, 100, 35, 15);
 
   for (const [key, start, end] of [
-    ["straight-4a", 146.5, 266.5],
-    ["straight-4b", 266.5, 386.5],
-    ["straight-4c", 386.5, 506.5],
-    ["straight-4d", 506.5, 572]
+    ["straight-4a", 100, 220],
+    ["straight-4b", 220, 340],
+    ["straight-4c", 340, 460],
+    ["straight-4d", 460, 572]
   ]) {
     const group = partGroup(scene, key);
     addRectShell(group, key, "z", { x0: 4, x1: 39, y0: 46, y1: 61, z0: start, z1: end });
@@ -417,11 +497,7 @@ export function createDuctSystem(scene) {
   }
 
   const elbow5 = partGroup(scene, "elbow-5");
-  addSweptSurface(elbow5, "elbow-5-shell", angle => {
-    const si = Math.sin(angle), co = Math.cos(angle);
-    const cy = 53.5 - 27.5 * (1 - co), cz = 572 + 27.5 * si;
-    return [[4, cy - 7.5 * co, cz - 7.5 * si], [39, cy - 7.5 * co, cz - 7.5 * si], [39, cy + 7.5 * co, cz + 7.5 * si], [4, cy + 7.5 * co, cz + 7.5 * si]];
-  });
+  addSquareThroatVerticalToY(elbow5, "elbow-5-shell", 4, 39, 46, 592, 572, 26);
   addFlangeZ(elbow5, "elbow-5-inlet-flange", 21.5, 53.5, 572, 35, 15);
 
   const rainHood = partGroup(scene, "rain-hood");
@@ -431,16 +507,25 @@ export function createDuctSystem(scene) {
 
 export const systemDimensions = [
   { key: "straight-1", text: "715 mm", a: [100, 279, 20.1], b: [100, 279, 91.5] },
+  { key: "elbow-1", text: "350 × 350 mm body span", a: [121, 262, 86], b: [121, 297, 86] },
+  { key: "elbow-1", text: "R150 mm outer heel / square throat", a: [121, 282, 111.5], b: [121, 297, 126.5] },
   { key: "straight-2", text: "235 mm", a: [49, 212, 132], b: [72.5, 212, 132] },
-  { key: "straight-3", text: "475 mm", a: [43, 159.5, 132], b: [43, 207, 132] },
-  { key: "transition-1", text: "250 + 40 mm", a: [32, 130.5, 143], b: [32, 159.5, 143] },
-  { key: "fan", text: "205 mm total", a: [43, 110, 143], b: [43, 130.5, 143] },
-  { key: "transition-2", text: "40 + 250 mm", a: [32, 81, 143], b: [32, 110, 143] },
-  { key: "straight-4a", text: "10 mm wall gap", a: [0, 43, 151], b: [1, 43, 151] },
-  { key: "straight-4a", text: "1,200 mm", a: [43, 66, 146.5], b: [43, 66, 266.5] },
-  { key: "straight-4b", text: "1,200 mm", a: [43, 66, 266.5], b: [43, 66, 386.5] },
-  { key: "straight-4c", text: "1,200 mm", a: [43, 66, 386.5], b: [43, 66, 506.5] },
-  { key: "straight-4d", text: "655 mm", a: [43, 66, 506.5], b: [43, 66, 572] },
+  { key: "straight-3", text: "475 mm plan / 365 mm drop", a: [43, 81, 82.5], b: [43, 128.5, 119] },
+  { key: "straight-3-connector", text: "100 mm", a: [43, 71, 75], b: [43, 81, 75] },
+  { key: "transition-1", text: "250 + 40 mm", a: [32, 178, 143], b: [32, 207, 143] },
+  { key: "fan", text: "205 mm total", a: [43, 157.5, 143], b: [43, 178, 143] },
+  { key: "transition-2", text: "40 + 250 mm", a: [32, 128.5, 143], b: [32, 157.5, 143] },
+  { key: "straight-3-connector", text: "10 mm flange clearance below shaft", a: [46, 76, 93], b: [46, 76, 94] },
+  { key: "elbow-4", text: "250 × 250 mm body span", a: [43, 71, 72], b: [43, 46, 72] },
+  { key: "elbow-4", text: "R150 mm outer heel", a: [43, 61, 75], b: [43, 46, 90] },
+  { key: "elbow-4", text: "350 × 150 mm minimum", a: [42, 71, 75], b: [42, 71, 90] },
+  { key: "straight-4a", text: "10 mm wall gap", a: [0, 43, 105], b: [1, 43, 105] },
+  { key: "straight-4a", text: "1,200 mm / +60 to +1,260", a: [43, 66, 100], b: [43, 66, 220] },
+  { key: "straight-4b", text: "1,200 mm / +1,260 to +2,460", a: [43, 66, 220], b: [43, 66, 340] },
+  { key: "straight-4c", text: "1,200 mm / +2,460 to +3,660", a: [43, 66, 340], b: [43, 66, 460] },
+  { key: "straight-4d", text: "1,120 mm / +3,660 to +4,780", a: [43, 66, 460], b: [43, 66, 572] },
+  { key: "elbow-5", text: "350 × 350 mm body span", a: [43, 26, 616], b: [43, 61, 616] },
+  { key: "elbow-5", text: "R150 mm outer heel / square throat", a: [43, 46, 592], b: [43, 61, 607] },
   { key: "downlight", text: "Ø165 / Ø139 mm", a: [85, 193.75, 92.6], b: [101.5, 193.75, 92.6] },
   { key: "rain-hood", text: "box +4,980 to +5,130 mm", a: [45, 3, 592], b: [45, 3, 607] },
   { key: "room-structure", text: "1,800 mm room width", a: [0, 305, -175], b: [180, 305, -175] },
@@ -450,9 +535,6 @@ export const systemDimensions = [
   { key: "shaft-structure", text: "4,930 mm shaft wall", a: [104, 82, 94], b: [104, 82, 587] },
   { key: "shaft-structure", text: "840 mm clear width", a: [0, 70, 90], b: [84, 70, 90] },
   { key: "shaft-structure", text: "380 mm clear depth", a: [102, 26, 90], b: [102, 64, 90] },
-  { key: "elbow-4-opening", text: "500 mm opening", a: [0, 82, 98], b: [50, 82, 98] },
-  { key: "elbow-4-opening", text: "450 mm opening", a: [52, 82, 98], b: [52, 82, 143] },
-  { key: "elbow-4-opening", text: "sill +40 mm", a: [55, 82, 94], b: [55, 82, 98] },
   { key: "shaft-side-access", text: "sill +1,500 mm", a: [104, 70, 94], b: [104, 70, 244] },
   { key: "shaft-side-access", text: "1,700 mm opening height", a: [107, 70, 244], b: [107, 70, 414] },
   { key: "shaft-side-access", text: "380 mm clear depth", a: [102, 26, 329], b: [102, 64, 329] },
@@ -466,4 +548,7 @@ export const systemDimensions = [
   { key: "glass-roof", text: "50 mm right overhang", a: [99, 2, 615], b: [104, 2, 615] }
 ];
 
-export const systemAngles = ["elbow-1", "elbow-2", "elbow-3", "elbow-4", "elbow-5"].map(key => ({ key, text: "90°" }));
+export const systemAngles = [
+  ...["elbow-1", "elbow-2", "elbow-3", "elbow-4", "elbow-5"].map(key => ({ key, text: "90°" })),
+  { key: "straight-3", text: "37.5° slope" }
+];
