@@ -266,6 +266,61 @@ function addSquareThroatVerticalToY(parent, name, x0, x1, innerY, innerZ, inletZ
   }, segments);
 }
 
+// Horizontal -Y inlet turning vertically downward. Connection centres are
+// (106, 127.5) and (88.5, 110), giving the same 100 mm neck and R150 heel as
+// Elbow 4.
+function addEntryElbowDown(parent, name, segments = 40) {
+  addSweptSurface(parent, name, angle => {
+    const t = angle / (Math.PI / 2);
+    let innerY, innerZ, outerY, outerZ;
+    if (t <= 0.25) {
+      const neckT = t / 0.25;
+      innerY = outerY = 106 - 10 * neckT;
+      innerZ = 120;
+      outerZ = 135;
+    } else if (t <= 0.75) {
+      const bendAngle = (t - 0.25) / 0.5 * Math.PI / 2;
+      innerY = 96;
+      innerZ = 120;
+      outerY = 96 - 15 * Math.sin(bendAngle);
+      outerZ = 120 + 15 * Math.cos(bendAngle);
+    } else {
+      const neckT = (t - 0.75) / 0.25;
+      innerY = 96;
+      outerY = 81;
+      innerZ = outerZ = 120 - 10 * neckT;
+    }
+    return [[4, innerY, innerZ], [39, innerY, innerZ], [39, outerY, outerZ], [4, outerY, outerZ]];
+  }, segments);
+}
+
+// Vertical downward inlet turning toward the shaft (-Y). Its horizontal
+// outlet shares a paired 30 mm flange with Elbow 4 at y=71.
+function addEntryElbowToShaft(parent, name, segments = 40) {
+  addSweptSurface(parent, name, angle => {
+    const t = angle / (Math.PI / 2);
+    let innerY, innerZ, outerY, outerZ;
+    if (t <= 0.25) {
+      const neckT = t / 0.25;
+      innerY = 81;
+      outerY = 96;
+      innerZ = outerZ = 100 - 10 * neckT;
+    } else if (t <= 0.75) {
+      const bendAngle = (t - 0.25) / 0.5 * Math.PI / 2;
+      innerY = 81;
+      innerZ = 90;
+      outerY = 81 + 15 * Math.cos(bendAngle);
+      outerZ = 90 - 15 * Math.sin(bendAngle);
+    } else {
+      const neckT = (t - 0.75) / 0.25;
+      innerY = outerY = 81 - 10 * neckT;
+      innerZ = 90;
+      outerZ = 75;
+    }
+    return [[4, innerY, innerZ], [39, innerY, innerZ], [39, outerY, outerZ], [4, outerY, outerZ]];
+  }, segments);
+}
+
 function addTransition(parent, name, rearY, frontY, rearProfile, frontProfile) {
   const ringCount = 48;
   const profile = (spec, angle) => {
@@ -470,14 +525,24 @@ export function createDuctSystem(scene) {
   addFlangeY(transition2, "transition-2-flange", 21.5, 128.5, 119, 35, 15);
 
   const straight3 = partGroup(scene, "straight-3");
-  addSlopedRectShellY(straight3, "straight-3", { x0: 4, x1: 39, y0: 81, y1: 128.5, z0: 82.5, z1: 119, height: 15 });
+  addSlopedRectShellY(straight3, "straight-3", { x0: 4, x1: 39, y0: 106, y1: 128.5, z0: 127.5, z1: 119, height: 15 });
   addFlangeY(straight3, "straight-3-high-flange", 21.5, 128.5, 119, 35, 15);
-  addFlangeY(straight3, "straight-3-low-flange", 21.5, 81, 82.5, 35, 15);
+  addFlangeY(straight3, "straight-3-end-flange", 21.5, 106, 127.5, 35, 15);
 
-  const straight3Connector = partGroup(scene, "straight-3-connector");
-  addRectShell(straight3Connector, "straight-3-connector", "y", { x0: 4, x1: 39, y0: 71, y1: 81, z0: 75, z1: 90 });
-  addFlangeY(straight3Connector, "straight-3-connector-high-flange", 21.5, 81, 82.5, 35, 15);
-  addFlangeY(straight3Connector, "straight-3-connector-low-flange", 21.5, 71, 82.5, 35, 15);
+  const entryElbow1 = partGroup(scene, "entry-elbow-1");
+  addEntryElbowDown(entryElbow1, "entry-elbow-1-shell");
+  addFlangeY(entryElbow1, "entry-elbow-1-inlet-flange", 21.5, 106, 127.5, 35, 15);
+  addFlangeZ(entryElbow1, "entry-elbow-1-outlet-flange", 21.5, 88.5, 110, 35, 15);
+
+  const entryDrop = partGroup(scene, "entry-drop");
+  addRectShell(entryDrop, "entry-drop", "z", { x0: 4, x1: 39, y0: 81, y1: 96, z0: 100, z1: 110 });
+  addFlangeZ(entryDrop, "entry-drop-top-flange", 21.5, 88.5, 110, 35, 15);
+  addFlangeZ(entryDrop, "entry-drop-bottom-flange", 21.5, 88.5, 100, 35, 15);
+
+  const entryElbow2 = partGroup(scene, "entry-elbow-2");
+  addEntryElbowToShaft(entryElbow2, "entry-elbow-2-shell");
+  addFlangeZ(entryElbow2, "entry-elbow-2-inlet-flange", 21.5, 88.5, 100, 35, 15);
+  addFlangeY(entryElbow2, "entry-elbow-2-outlet-flange", 21.5, 71, 82.5, 35, 15);
 
   const elbow4 = partGroup(scene, "elbow-4");
   addSquareThroatElbow(elbow4, "elbow-4-shell");
@@ -510,12 +575,15 @@ export const systemDimensions = [
   { key: "elbow-1", text: "350 × 350 mm body span", a: [121, 262, 86], b: [121, 297, 86] },
   { key: "elbow-1", text: "R150 mm outer heel / square throat", a: [121, 282, 111.5], b: [121, 297, 126.5] },
   { key: "straight-2", text: "235 mm", a: [49, 212, 132], b: [72.5, 212, 132] },
-  { key: "straight-3", text: "475 mm plan / 365 mm drop", a: [43, 81, 82.5], b: [43, 128.5, 119] },
-  { key: "straight-3-connector", text: "100 mm", a: [43, 71, 75], b: [43, 81, 75] },
+  { key: "straight-3", text: "225 mm plan / 85 mm rise", a: [43, 106, 127.5], b: [43, 128.5, 119] },
+  { key: "entry-elbow-1", text: "250 × 250 mm / R150", a: [43, 81, 139], b: [43, 106, 139] },
+  { key: "entry-drop", text: "100 mm", a: [43, 99, 100], b: [43, 99, 110] },
+  { key: "entry-elbow-2", text: "250 × 250 mm / R150", a: [43, 71, 70], b: [43, 96, 70] },
   { key: "transition-1", text: "250 + 40 mm", a: [32, 178, 143], b: [32, 207, 143] },
   { key: "fan", text: "205 mm total", a: [43, 157.5, 143], b: [43, 178, 143] },
   { key: "transition-2", text: "40 + 250 mm", a: [32, 128.5, 143], b: [32, 157.5, 143] },
-  { key: "straight-3-connector", text: "10 mm flange clearance below shaft", a: [46, 76, 93], b: [46, 76, 94] },
+  { key: "entry-elbow-2", text: "paired 30 mm flange to Elbow 4", a: [46, 71, 72], b: [46, 71, 93] },
+  { key: "entry-elbow-2", text: "10 mm flange clearance below shaft", a: [46, 76, 93], b: [46, 76, 94] },
   { key: "elbow-4", text: "250 × 250 mm body span", a: [43, 71, 72], b: [43, 46, 72] },
   { key: "elbow-4", text: "R150 mm outer heel", a: [43, 61, 75], b: [43, 46, 90] },
   { key: "elbow-4", text: "350 × 150 mm minimum", a: [42, 71, 75], b: [42, 71, 90] },
@@ -549,6 +617,6 @@ export const systemDimensions = [
 ];
 
 export const systemAngles = [
-  ...["elbow-1", "elbow-2", "elbow-3", "elbow-4", "elbow-5"].map(key => ({ key, text: "90°" })),
-  { key: "straight-3", text: "37.5° slope" }
+  ...["elbow-1", "elbow-2", "elbow-3", "entry-elbow-1", "entry-elbow-2", "elbow-4", "elbow-5"].map(key => ({ key, text: "90°" })),
+  { key: "straight-3", text: "20.7° rise" }
 ];
