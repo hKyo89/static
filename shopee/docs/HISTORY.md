@@ -52,3 +52,11 @@ Added a standalone web app manifest, app icons, browser installation control,
 and a network-only worker. This lets installed launches omit Chrome's address
 bar while avoiding stale offline invoices. [Current state](STATE.md) records
 platform limitations.
+
+## Delivery banner and footer — 2026-10-10
+
+Updated from
+[`94a6989028ff429346c871fad8cfff5a134b1da6`](https://github.com/hKyo89/static/commit/94a6989028ff429346c871fad8cfff5a134b1da6).
+Changed the banner to Delivered on 9 Oct, replaced Buy Again with Return/Refund,
+and added the cropped screenshot coin and +140 to Rate.
+[Current state](STATE.md) records the final UI.

@@ -209,19 +209,33 @@ export function OrderPage() {
           <p class="notice">Independent website</p>
         </main>
         <footer>
-          {data.actions.buyAgainUrl
-            ? <a href={data.actions.buyAgainUrl}>Buy Again</a>
+          {data.actions.returnRefundUrl
+            ? (
+              <a href={data.actions.returnRefundUrl}>
+                {data.actions.returnRefundLabel}
+              </a>
+            )
             : (
               <button
                 type="button"
                 disabled
-                title="Set actions.buyAgainUrl in order.json"
+                title="Set actions.returnRefundUrl in order.json"
               >
-                Buy Again
+                {data.actions.returnRefundLabel}
               </button>
             )}
           {data.actions.rateUrl
-            ? <a class="accent" href={data.actions.rateUrl}>Rate</a>
+            ? (
+              <a class="accent" href={data.actions.rateUrl}>
+                {data.actions.rateLabel}{" "}
+                <img
+                  class="reward-coin"
+                  src={data.actions.rateCoinIcon}
+                  alt="coin"
+                />{" "}
+                +{data.actions.rateReward}
+              </a>
+            )
             : (
               <button
                 type="button"
@@ -229,7 +243,13 @@ export function OrderPage() {
                 disabled
                 title="Set actions.rateUrl in order.json"
               >
-                Rate
+                {data.actions.rateLabel}{" "}
+                <img
+                  class="reward-coin"
+                  src={data.actions.rateCoinIcon}
+                  alt="coin"
+                />{" "}
+                +{data.actions.rateReward}
               </button>
             )}
         </footer>

@@ -2,7 +2,7 @@
   "locale": "id-ID",
   "currency": "IDR",
   "pageTitle": "Order Details",
-  "status": "Your Order is Completed",
+  "status": "Delivered on 9 Oct",
   "shop": {
     "name": "Bintang Ducting",
     "badge": "Star+"
@@ -83,8 +83,12 @@
     "paidAt": "28-09-2026 10:36"
   },
   "actions": {
-    "buyAgainUrl": "",
-    "rateUrl": ""
+    "rateUrl": "",
+    "returnRefundUrl": "",
+    "returnRefundLabel": "Return/Refund",
+    "rateLabel": "Rate",
+    "rateReward": 140,
+    "rateCoinIcon": "./icons/coin.png"
   },
   "support": [
     {

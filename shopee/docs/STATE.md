@@ -65,3 +65,8 @@ passed; all icon dimensions match the manifest; the static build succeeded.
 Browser inspection confirmed the manifest link and no captured console errors.
 The test browser did not expose Android installation or service-worker lifecycle
 inspection, so device installation remains unverified.
+
+The delivery banner reads “Delivered on 9 Oct”. Footer labels are
+“Return/Refund” and “Rate” with the cropped reference coin and +140 reward.
+These labels and the reward value are stored in the order JSON. Return/refund
+and rating URLs remain unconfigured; both actions remain disabled.
