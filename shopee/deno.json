@@ -24,13 +24,16 @@
       "images/",
       "styles.css",
       "interactions.js",
-      "dist/"
+      "dist/",
+      "manifest.webmanifest",
+      "sw.js"
     ]
   },
   "lint": {
     "exclude": [
       "interactions.js",
-      "dist/"
+      "dist/",
+      "sw.js"
     ]
   }
 }

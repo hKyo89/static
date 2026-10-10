@@ -17,3 +17,13 @@ The build workflow validates and uploads `dist/` as an artifact. It does not
 replace the existing duct workflow or change repository-wide Pages settings.
 
 [Usage](../README.md) · [Current state](STATE.md)
+
+## Installed app
+
+The page links a [web manifest](../static/manifest.webmanifest) with
+project-relative ID, scope, start URL, and app icons. The browser script
+conditionally exposes the installation prompt and registers
+[sw.js](../static/sw.js) beneath the same project scope. The worker forwards GET
+requests to the network and stores no invoice cache. Installed launches request
+standalone browser display. See
+[usage](../README.md#install-without-the-chrome-address-bar).

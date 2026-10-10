@@ -48,3 +48,20 @@ repository Markdown files passed formatting and relative-link checks.
 Pre-Order labels sit directly below item names when variants are empty,
 alongside quantities. The seller configuration note has been removed. The back
 icon is raised by 3 pixels.
+
+## Installable app
+
+A web app manifest, 192/512-pixel icons, maskable icon, Apple touch icon,
+installation prompt button, and scoped service worker are included. Installed
+launch uses `standalone` display, which hides the normal browser address bar.
+Browser tabs retain their normal interface. Start URL, app ID, and service
+worker scope remain under `/static/shopee/`. Requests use the network without
+invoice caching. Actual installation on the user's Android device has not been
+tested; install controls depend on browser support and eligibility. See
+[installation instructions](../README.md#install-without-the-chrome-address-bar).
+
+Validation for app installation: manifest scope and standalone display tests
+passed; all icon dimensions match the manifest; the static build succeeded.
+Browser inspection confirmed the manifest link and no captured console errors.
+The test browser did not expose Android installation or service-worker lifecycle
+inspection, so device installation remains unverified.

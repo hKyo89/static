@@ -43,3 +43,12 @@ Updated from
 [`90f12e04bf5f34186f925a1393d29feae8e146a0`](https://github.com/hKyo89/static/commit/90f12e04bf5f34186f925a1393d29feae8e146a0).
 Removed the shop logo and renamed all five products exactly as requested. Prices
 and quantities remain unchanged. See [current state](STATE.md).
+
+## Installable web app — 2026-10-10
+
+Updated from
+[`12f65122404c0c0b447d4d89cbbf9e2d02558e41`](https://github.com/hKyo89/static/commit/12f65122404c0c0b447d4d89cbbf9e2d02558e41).
+Added a standalone web app manifest, app icons, browser installation control,
+and a network-only worker. This lets installed launches omit Chrome's address
+bar while avoiding stale offline invoices. [Current state](STATE.md) records
+platform limitations.

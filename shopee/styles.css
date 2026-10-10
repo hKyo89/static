@@ -501,3 +501,42 @@ footer button:disabled {
   color: #999;
   font-size: 15px;
 }
+
+.header-actions {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-left: auto;
+}
+.header-actions .print {
+  margin-left: 0;
+}
+.install {
+  border: 1px solid #ee4d2d;
+  border-radius: 5px;
+  background: white;
+  color: #ee4d2d;
+  padding: 4px 8px;
+  font-size: 13px;
+  cursor: pointer;
+}
+.install[hidden] {
+  display: none;
+}
+@media (max-width: 420px) {
+  header {
+    gap: 12px;
+    padding: 0 14px;
+  }
+  .header-actions {
+    gap: 8px;
+  }
+  .header-actions .print {
+    font-size: 12px;
+  }
+}
+@media print {
+  .header-actions {
+    display: none;
+  }
+}

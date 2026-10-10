@@ -30,6 +30,11 @@ export function OrderPage() {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <title>{data.pageTitle} · {data.order.id}</title>
         <link rel="stylesheet" href="./styles.css" />
+        <link rel="manifest" href="./manifest.webmanifest" />
+        <meta name="theme-color" content="#ffffff" />
+        <meta name="apple-mobile-web-app-capable" content="yes" />
+        <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+        <link rel="apple-touch-icon" href="./app-icons/apple-touch-icon.png" />
       </head>
       <body>
         <header>
@@ -37,7 +42,14 @@ export function OrderPage() {
             <Icon kind="back" />
           </a>
           <h1>{data.pageTitle}</h1>
-          <button type="button" class="print" data-print>Print invoice</button>
+          <div class="header-actions">
+            <button type="button" class="install" data-install hidden>
+              Install
+            </button>
+            <button type="button" class="print" data-print>
+              Print invoice
+            </button>
+          </div>
         </header>
         <main>
           <section class="card delivery">

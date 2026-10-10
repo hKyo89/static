@@ -40,3 +40,19 @@ The `totalsExpanded` setting controls the initial breakdown state.
 without a shop logo. Delivery and Shipping Time both read
 `shipping.deliveredAt`. The displayed service fee is the buyer service fee. UI
 crops live in [static/icons](static/icons).
+
+## Install without the Chrome address bar
+
+Open [the published invoice](https://hkyo89.github.io/static/shopee/) in Chrome
+on Android. Choose **Install** if the page shows the button, or use Chrome’s
+menu → **Install app** / **Add to Home screen**, then launch from its installed
+icon. Opening a normal browser tab still shows the address bar. On iPhone, use
+Safari → Share → Add to Home Screen and enable Open as Web App when offered.
+Browser wording and availability vary.
+
+The [manifest](static/manifest.webmanifest) sets the app name, icons, start URL,
+and `standalone` display. Its scope is confined to this project. The Install
+button appears only when the browser supplies an installation prompt; no
+automatic installation occurs. The [service worker](static/sw.js) uses
+network-only requests, so the invoice needs internet and does not retain an
+offline invoice cache.
