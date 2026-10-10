@@ -1,7 +1,7 @@
 import { app } from "../main.tsx";
 import { subtotal, total } from "../components/OrderPage.tsx";
 Deno.test("invoice arithmetic and static response", async () => {
-  if (subtotal !== 3129170 || total !== 3759170) {
+  if (subtotal !== 3079170 || total !== 3609170) {
     throw new Error("Incorrect ducting totals");
   }
   const response = await app.handler()(new Request("http://localhost/"));

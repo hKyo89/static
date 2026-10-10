@@ -483,3 +483,27 @@ footer button:disabled {
     font-size: 10px;
   }
 }
+
+.back .ui-icon {
+  transform: translateY(-3px);
+}
+.item-secondary {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 10px;
+  margin-top: 3px;
+}
+.item-labels {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 3px;
+}
+.item-secondary .pre-order {
+  margin-top: 0;
+}
+.quantity {
+  color: #999;
+  font-size: 15px;
+}

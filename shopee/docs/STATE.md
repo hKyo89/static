@@ -12,11 +12,11 @@ screenshots; product photographs come from the supplied detail images.
 | Elbow 90 130x200mm - 0.5mm    |        2 |          191,835 |          383,670 |
 | Transisi 5 inch ke 35 X 35cm  |        2 |          195,000 |          390,000 |
 | Ducting 200x130x800mm         |        5 |          135,000 |          675,000 |
-| Elbow 90 degree pesanan MR M  |        1 |          300,000 |          300,000 |
+| Elbow 90 degree pesanan MR A  |        1 |          250,000 |          250,000 |
 | Hood 150 x 60 x 30 with Lamps |        1 |        1,380,500 |        1,380,500 |
 
-Merchandise subtotal: IDR 3,129,170. Shipping: IDR 400,000. Buyer service fee:
-IDR 230,000. Discounts: zero. Total: IDR 3,759,170. The hood price is the
+Merchandise subtotal: IDR 3,079,170. Shipping: IDR 400,000. Buyer service fee:
+IDR 130,000. Discounts: zero. Total: IDR 3,609,170. The hood price is the
 reference IDR 380,500 plus the requested IDR 1,000,000.
 
 Payment method: CIMB [*2863]. Carrier: Shop Courier. Order and payment date:
@@ -44,3 +44,7 @@ Formatting, linting, type checks, the invoice arithmetic/render test, and static
 export passed. Mobile browser checks verified the cropped assets, five pre-order
 products, recipient metadata, and collapse/re-expansion of the totals. All five
 repository Markdown files passed formatting and relative-link checks.
+
+Pre-Order labels sit directly below item names when variants are empty,
+alongside quantities. The seller configuration note has been removed. The back
+icon is raised by 3 pixels.

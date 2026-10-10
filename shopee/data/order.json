@@ -52,12 +52,12 @@
     },
     {
       "id": "4",
-      "name": "Elbow 90 degree pesanan MR M",
+      "name": "Elbow 90 degree pesanan MR A",
       "variant": "",
       "quantity": 1,
-      "unitPrice": 300000,
+      "unitPrice": 250000,
       "image": "./images/elbow-large.jpg",
-      "imageAlt": "Elbow 90 degree pesanan MR M",
+      "imageAlt": "Elbow 90 degree pesanan MR A",
       "preOrder": true
     },
     {
@@ -74,7 +74,7 @@
   "costs": {
     "shipping": 400000,
     "shippingDiscount": 0,
-    "serviceFee": 230000,
+    "serviceFee": 130000,
     "discount": 0
   },
   "order": {

@@ -27,3 +27,12 @@ logo, recipient details, payment method, fees, and relative dates. Replaced the
 sample pens, cropped reference UI icons, added pre-order labels and Shipping
 Time, and made the cost breakdown expanded by default. Current values and
 uncertainties are recorded in [current state](STATE.md).
+
+## Layout and fee refinement — 2026-10-10
+
+Updated from
+[`1151dda7279c7aa40ba578016687b5296bb7c1e9`](https://github.com/hKyo89/static/commit/1151dda7279c7aa40ba578016687b5296bb7c1e9).
+Moved pre-order labels under names without variants, reduced buyer service fee
+by IDR 100,000, renamed the large elbow to MR A and reduced its unit price by
+IDR 50,000, removed the support configuration note, and raised the back arrow by
+3 pixels. See [current state](STATE.md) for final values.

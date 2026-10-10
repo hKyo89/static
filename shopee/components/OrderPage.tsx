@@ -109,11 +109,17 @@ export function OrderPage() {
                   />
                   <div class="item-info">
                     <h3 title={item.name}>{item.name}</h3>
-                    <div class="variant">
-                      <span>{item.variant}</span>
-                      <span>x{item.quantity}</span>
+                    <div class="item-secondary">
+                      <div class="item-labels">
+                        {item.variant && (
+                          <span class="variant">{item.variant}</span>
+                        )}
+                        {item.preOrder && (
+                          <span class="pre-order">Pre-Order</span>
+                        )}
+                      </div>
+                      <span class="quantity">x{item.quantity}</span>
                     </div>
-                    {item.preOrder && <span class="pre-order">Pre-Order</span>}
                     <p class="price">{money(item.unitPrice)}</p>
                   </div>
                 </article>
@@ -159,9 +165,6 @@ export function OrderPage() {
                 </span>
               </div>
             ))}
-            <p class="hint">
-              Support links are available when configured by the seller.
-            </p>
           </section>
           <section class="card metadata">
             <div class="order-id">
