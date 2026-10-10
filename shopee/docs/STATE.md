@@ -70,3 +70,6 @@ The delivery banner reads “Delivered on 9 Oct”. Footer labels are
 “Return/Refund” and “Rate” with the cropped reference coin and +140 reward.
 These labels and the reward value are stored in the order JSON. Return/refund
 and rating URLs remain unconfigured; both actions remain disabled.
+
+The top-right Print invoice button is removed. Invoice printing remains
+available through the View action in the invoice metadata.

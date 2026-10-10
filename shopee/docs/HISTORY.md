@@ -60,3 +60,8 @@ Updated from
 Changed the banner to Delivered on 9 Oct, replaced Buy Again with Return/Refund,
 and added the cropped screenshot coin and +140 to Rate.
 [Current state](STATE.md) records the final UI.
+
+## Header cleanup — 2026-10-10
+
+Removed the top-right Print invoice button at the user’s request. The invoice
+metadata View action still invokes printing. See [current state](STATE.md).

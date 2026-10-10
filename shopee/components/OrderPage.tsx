@@ -46,9 +46,6 @@ export function OrderPage() {
             <button type="button" class="install" data-install hidden>
               Install
             </button>
-            <button type="button" class="print" data-print>
-              Print invoice
-            </button>
           </div>
         </header>
         <main>
