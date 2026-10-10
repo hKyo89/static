@@ -405,3 +405,81 @@ footer button:disabled {
     font-size: 15px;
   }
 }
+
+.ui-icon {
+  display: inline-block;
+  width: 24px;
+  height: 24px;
+  object-fit: contain;
+  vertical-align: middle;
+}
+.back .ui-icon {
+  width: 28px;
+  height: 28px;
+}
+.chevron .ui-icon, .shipping-title .ui-icon {
+  width: 12px;
+  height: 18px;
+}
+.shipping-title {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.shop-logo {
+  width: 32px;
+  height: 32px;
+  object-fit: contain;
+  border-radius: 50%;
+}
+.badge-image {
+  width: 43px;
+  height: 21px;
+  object-fit: contain;
+}
+.pre-order {
+  align-self: flex-start;
+  color: #ee4d2d;
+  border: 1px solid #ee4d2d;
+  border-radius: 2px;
+  padding: 1px 4px;
+  font-size: 13px;
+  margin-top: 4px;
+}
+.totals {
+  display: flex;
+  flex-direction: column;
+}
+.totals > summary {
+  order: 2;
+  border-top: 1px solid #eee;
+}
+.totals > dl {
+  order: 1;
+  padding: 10px 16px;
+}
+.totals[open] summary .ui-icon {
+  transform: rotate(180deg);
+}
+.totals dt .ui-icon {
+  width: 14px;
+  height: 14px;
+}
+.text-button .ui-icon {
+  width: 12px;
+  height: 16px;
+}
+.item-info .variant:has(span:first-child:empty) {
+  justify-content: flex-end;
+}
+.shop {
+  gap: 7px;
+}
+@media print {
+  .totals {
+    display: flex;
+  }
+  .pre-order {
+    font-size: 10px;
+  }
+}

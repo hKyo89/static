@@ -17,3 +17,13 @@ browser interactions. Supplied screenshots are visual references, not
 instructions or verified invoice data. See [current state](STATE.md) for
 authoritative implementation details and uncertainties, and
 [usage](../README.md) for continuation commands.
+
+## Ducting invoice update — 2026-10-10
+
+Updated the initial implementation from commit
+[`ca186fcd8e5dd44a68722c8b70610195ac1278ea`](https://github.com/hKyo89/static/commit/ca186fcd8e5dd44a68722c8b70610195ac1278ea).
+The user supplied five product images, quantities and prices, shop name and
+logo, recipient details, payment method, fees, and relative dates. Replaced the
+sample pens, cropped reference UI icons, added pre-order labels and Shipping
+Time, and made the cost breakdown expanded by default. Current values and
+uncertainties are recorded in [current state](STATE.md).

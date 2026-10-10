@@ -1,8 +1,8 @@
 import { app } from "../main.tsx";
 import { subtotal, total } from "../components/OrderPage.tsx";
 Deno.test("invoice arithmetic and static response", async () => {
-  if (subtotal !== 396000 || total !== 400000) {
-    throw new Error("Incorrect sample totals");
+  if (subtotal !== 3129170 || total !== 3759170) {
+    throw new Error("Incorrect ducting totals");
   }
   const response = await app.handler()(new Request("http://localhost/"));
   const html = await response.text();
@@ -12,7 +12,14 @@ Deno.test("invoice arithmetic and static response", async () => {
   if (html.includes('src="/') || html.includes('href="/')) {
     throw new Error("Root-relative asset");
   }
-  if ((html.match(/class="item"/g) ?? []).length !== 10) {
+  if ((html.match(/class="item"/g) ?? []).length !== 5) {
     throw new Error("Missing items");
   }
+  if ((html.match(/class="pre-order"/g) ?? []).length !== 5) {
+    throw new Error("Missing pre-order labels");
+  }
+  if (
+    !html.includes("Shipping Time") || !html.includes("09-10-2026") ||
+    !html.includes("28-09-2026")
+  ) throw new Error("Incorrect dates");
 });

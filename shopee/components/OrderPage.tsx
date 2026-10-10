@@ -12,34 +12,16 @@ const money = (value: number) =>
     maximumFractionDigits: 0,
   }).format(value);
 function Icon({ kind }: { kind: string }) {
-  const paths: Record<string, string> = {
-    truck:
-      "M3 6h12v11H3z M15 10h4l3 4v3h-7 M6 17a2 2 0 1 0 0 4 2 2 0 0 0 0-4 M18 17a2 2 0 1 0 0 4 2 2 0 0 0 0-4",
-    pin:
-      "M12 22s8-8 8-13a8 8 0 0 0-16 0c0 5 8 13 8 13 M12 5a4 4 0 1 0 0 8 4 4 0 0 0 0-8",
-    return:
-      "M8 8h7a5 5 0 0 1 0 10h-3 M8 8l4-4 M8 8l4 4 M12 2a10 10 0 1 0 0 20 10 10 0 0 0 0-20",
-    chat:
-      "M21 11a9 9 0 0 1-9 9H4l-2 2v-7a9 9 0 1 1 19-4 M7 11h1 M11 11h1 M15 11h1",
-    headset:
-      "M3 13v-2a9 9 0 0 1 18 0v2 M3 12h3v7H3z M18 12h3v7h-3z M21 19v2h-7 M10 21h4",
-  };
   return (
-    <svg
-      width="24"
-      height="24"
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="1.6"
-      strokeLinecap="round"
-      strokeLinejoin="round"
+    <img
+      class="ui-icon"
+      src={`./icons/${kind}.png`}
+      alt=""
       aria-hidden="true"
-    >
-      <path d={paths[kind] ?? paths.chat} />
-    </svg>
+    />
   );
 }
+
 export function OrderPage() {
   return (
     <html lang="en">
@@ -51,7 +33,9 @@ export function OrderPage() {
       </head>
       <body>
         <header>
-          <a class="back" href="../" aria-label="Back to website">←</a>
+          <a class="back" href="../" aria-label="Back to website">
+            <Icon kind="back" />
+          </a>
           <h1>{data.pageTitle}</h1>
           <button type="button" class="print" data-print>Print invoice</button>
         </header>
@@ -59,9 +43,14 @@ export function OrderPage() {
           <section class="card delivery">
             <div class="status">{data.status}</div>
             <div class="section">
-              <h2>Shipping Information</h2>
+              <h2 class="shipping-title">
+                Shipping Information <Icon kind="right" />
+              </h2>
               <p class="muted">
-                {data.shipping.carrier}: {data.shipping.trackingNumber}
+                {data.shipping.carrier}
+                {data.shipping.trackingNumber
+                  ? `: ${data.shipping.trackingNumber}`
+                  : ""}
               </p>
               <div class="icon-row">
                 <span class="icon">
@@ -94,9 +83,20 @@ export function OrderPage() {
           </section>
           <section class="card products">
             <h2 class="shop">
-              <span class="badge">{data.shop.badge}</span>
+              <img
+                class="shop-logo"
+                src={data.shop.logo}
+                alt={`${data.shop.name} logo`}
+              />
+              <img
+                class="badge-image"
+                src="./icons/badge.png"
+                alt={data.shop.badge}
+              />
               {data.shop.name}
-              <span class="chevron">›</span>
+              <span class="chevron">
+                <Icon kind="right" />
+              </span>
             </h2>
             <div class="items">
               {data.items.map((item) => (
@@ -113,36 +113,33 @@ export function OrderPage() {
                       <span>{item.variant}</span>
                       <span>x{item.quantity}</span>
                     </div>
+                    {item.preOrder && <span class="pre-order">Pre-Order</span>}
                     <p class="price">{money(item.unitPrice)}</p>
                   </div>
                 </article>
               ))}
             </div>
-            <details class="totals">
+            <details class="totals" open={data.totalsExpanded}>
               <summary>
                 Order Total: <strong>{money(total)}</strong>
-                <span class="chevron">⌄</span>
+                <span class="chevron">
+                  <Icon kind="down" />
+                </span>
               </summary>
               <dl>
                 <div>
-                  <dt>Merchandise subtotal</dt>
+                  <dt>Merchandise Subtotal</dt>
                   <dd>{money(subtotal)}</dd>
                 </div>
                 <div>
-                  <dt>Shipping</dt>
+                  <dt>Shipping Fee</dt>
                   <dd>{money(data.costs.shipping)}</dd>
                 </div>
                 <div>
-                  <dt>Shipping discount</dt>
-                  <dd>−{money(data.costs.shippingDiscount)}</dd>
-                </div>
-                <div>
-                  <dt>Service fee</dt>
+                  <dt>
+                    Buyer Service Fee <Icon kind="info" />
+                  </dt>
                   <dd>{money(data.costs.serviceFee)}</dd>
-                </div>
-                <div>
-                  <dt>Discount</dt>
-                  <dd>−{money(data.costs.discount)}</dd>
                 </div>
               </dl>
             </details>
@@ -157,7 +154,9 @@ export function OrderPage() {
                 {action.url
                   ? <a href={action.url}>{action.label}</a>
                   : <span>{action.label}</span>}
-                <span class="chevron">›</span>
+                <span class="chevron">
+                  <Icon kind="right" />
+                </span>
               </div>
             ))}
             <p class="hint">
@@ -179,7 +178,7 @@ export function OrderPage() {
                 <dt>Nota Pesanan / Faktur</dt>
                 <dd>
                   <button type="button" class="text-button" data-print>
-                    View ›
+                    View <Icon kind="right" />
                   </button>
                 </dd>
               </div>
@@ -191,9 +190,13 @@ export function OrderPage() {
                 <dt>Payment Time</dt>
                 <dd>{data.order.paidAt}</dd>
               </div>
+              <div>
+                <dt>Shipping Time</dt>
+                <dd>{data.shipping.deliveredAt}</dd>
+              </div>
             </dl>
           </section>
-          <p class="notice">Sample invoice · Independent website</p>
+          <p class="notice">Independent website</p>
         </main>
         <footer>
           {data.actions.buyAgainUrl

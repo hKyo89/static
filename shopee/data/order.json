@@ -4,123 +4,84 @@
   "pageTitle": "Order Details",
   "status": "Your Order is Completed",
   "shop": {
-    "name": "Howl Art Stationery",
-    "badge": "Star+"
+    "name": "Bintang Ducting",
+    "badge": "Star+",
+    "logo": "./images/shop-logo.png"
   },
   "shipping": {
-    "carrier": "SPX Standard",
-    "trackingNumber": "SPXID062305510099",
+    "carrier": "Shop Courier",
+    "trackingNumber": "",
     "status": "Parcel has been delivered to the recipient address",
-    "deliveredAt": "07-09-2026 12:42"
+    "deliveredAt": "09-10-2026 12:42"
   },
   "recipient": {
-    "name": "Sample Customer",
-    "phone": "+62 811-000-000",
-    "address": "Jl. Grandura 2 No. 28, Cluster Grandura, Indonesia"
+    "name": "Argi",
+    "phone": "(+62) 811-814-596",
+    "address": "Jalan Eldora III No. 69 (Rumah pojok renovasi), KAB. TANGERANG, SINDANG JAYA, BANTEN, ID, 15560"
   },
   "items": [
     {
       "id": "1",
-      "name": "Uni Ball Signo RT1 UMN-155N-05mm Pen Gel",
-      "variant": "Black",
-      "quantity": 4,
-      "unitPrice": 18000,
-      "image": "./images/pen-0.svg",
-      "imageAlt": "Black gel pen"
+      "name": "pesanan Elbow 90 130x200mm - 0.5mm",
+      "variant": "",
+      "quantity": 2,
+      "unitPrice": 191835,
+      "image": "./images/elbow-small.jpg",
+      "imageAlt": "pesanan Elbow 90 130x200mm - 0.5mm",
+      "preOrder": true
     },
     {
       "id": "2",
-      "name": "Uni Ball Signo RT1 UMN-155N-05mm Pen Gel",
-      "variant": "Blue",
+      "name": "Transisi pesanan ukuran 5 inch ke 35 X 35cm",
+      "variant": "",
       "quantity": 2,
-      "unitPrice": 18000,
-      "image": "./images/pen-1.svg",
-      "imageAlt": "Blue gel pen"
+      "unitPrice": 195000,
+      "image": "./images/transition.jpg",
+      "imageAlt": "Transisi pesanan ukuran 5 inch ke 35 X 35cm",
+      "preOrder": true
     },
     {
       "id": "3",
-      "name": "Uni Ball Signo RT1 UMN-155N-05mm Pen Gel",
-      "variant": "Light Blue",
-      "quantity": 2,
-      "unitPrice": 18000,
-      "image": "./images/pen-2.svg",
-      "imageAlt": "Light Blue gel pen"
+      "name": "Incian Ducting Uk. 200x130x800mm pesanan",
+      "variant": "",
+      "quantity": 5,
+      "unitPrice": 135000,
+      "image": "./images/duct.jpg",
+      "imageAlt": "Incian Ducting Uk. 200x130x800mm pesanan",
+      "preOrder": true
     },
     {
       "id": "4",
-      "name": "Uni Ball Signo RT1 UMN-155N-05mm Pen Gel",
-      "variant": "BLUE BLACK",
-      "quantity": 2,
-      "unitPrice": 18000,
-      "image": "./images/pen-3.svg",
-      "imageAlt": "BLUE BLACK gel pen"
+      "name": "Elbow 90 degree pesanan MR M",
+      "variant": "",
+      "quantity": 1,
+      "unitPrice": 300000,
+      "image": "./images/elbow-large.jpg",
+      "imageAlt": "Elbow 90 degree pesanan MR M",
+      "preOrder": true
     },
     {
       "id": "5",
-      "name": "Uni Ball Signo RT1 UMN-155N-05mm Pen Gel",
-      "variant": "Lime green",
-      "quantity": 2,
-      "unitPrice": 18000,
-      "image": "./images/pen-4.svg",
-      "imageAlt": "Lime green gel pen"
-    },
-    {
-      "id": "6",
-      "name": "Uni Ball Signo RT1 UMN-155N-05mm Pen Gel",
-      "variant": "Baby Pink",
-      "quantity": 2,
-      "unitPrice": 18000,
-      "image": "./images/pen-5.svg",
-      "imageAlt": "Baby Pink gel pen"
-    },
-    {
-      "id": "7",
-      "name": "Uni Ball Signo RT1 UMN-155N-05mm Pen Gel",
-      "variant": "Red",
-      "quantity": 2,
-      "unitPrice": 18000,
-      "image": "./images/pen-6.svg",
-      "imageAlt": "Red gel pen"
-    },
-    {
-      "id": "8",
-      "name": "Uni Ball Signo RT1 UMN-155N-05mm Pen Gel",
-      "variant": "Green",
-      "quantity": 2,
-      "unitPrice": 18000,
-      "image": "./images/pen-7.svg",
-      "imageAlt": "Green gel pen"
-    },
-    {
-      "id": "9",
-      "name": "Uni Ball Signo RT1 UMN-155N-05mm Pen Gel",
-      "variant": "Violet",
-      "quantity": 2,
-      "unitPrice": 18000,
-      "image": "./images/pen-8.svg",
-      "imageAlt": "Violet gel pen"
-    },
-    {
-      "id": "10",
-      "name": "Uni Ball Signo RT1 UMN-155N-05mm Pen Gel",
-      "variant": "Orange",
-      "quantity": 2,
-      "unitPrice": 18000,
-      "image": "./images/pen-9.svg",
-      "imageAlt": "Orange gel pen"
+      "name": "Hood 150 x 60 x 30 with Lamps",
+      "variant": "",
+      "quantity": 1,
+      "unitPrice": 1380500,
+      "image": "./images/hood.jpg",
+      "imageAlt": "Hood 150 x 60 x 30 with Lamps",
+      "preOrder": true
     }
   ],
   "costs": {
-    "shipping": 16000,
-    "shippingDiscount": 12000,
-    "serviceFee": 0,
+    "shipping": 400000,
+    "shippingDiscount": 0,
+    "serviceFee": 230000,
     "discount": 0
   },
   "order": {
     "id": "260906AKVP4BHB",
-    "paymentType": "QRIS",
-    "orderedAt": "06-09-2026 10:36",
-    "paidAt": "06-09-2026 10:36"
+    "paymentType": "CIMB [*2863]",
+    "orderedAt": "28-09-2026 10:36",
+    "paidAt": "28-09-2026 10:36"
   },
   "actions": {
     "buyAgainUrl": "",
@@ -142,5 +103,6 @@
       "icon": "headset",
       "url": ""
     }
-  ]
+  ],
+  "totalsExpanded": true
 }
