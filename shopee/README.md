@@ -36,7 +36,7 @@ See [current state](docs/STATE.md), [architecture](docs/ARCHITECTURE.md), and
 [session history](docs/HISTORY.md).
 
 The `totalsExpanded` setting controls the initial breakdown state.
-`items[].preOrder` controls each Pre-Order label. `shop.logo` sets the seller
-logo. Delivery and Shipping Time both read `shipping.deliveredAt`. The displayed
-service fee is the buyer service fee. UI crops live in
-[static/icons](static/icons).
+`items[].preOrder` controls each Pre-Order label. The seller name is shown
+without a shop logo. Delivery and Shipping Time both read
+`shipping.deliveredAt`. The displayed service fee is the buyer service fee. UI
+crops live in [static/icons](static/icons).

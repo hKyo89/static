@@ -84,11 +84,6 @@ export function OrderPage() {
           <section class="card products">
             <h2 class="shop">
               <img
-                class="shop-logo"
-                src={data.shop.logo}
-                alt={`${data.shop.name} logo`}
-              />
-              <img
                 class="badge-image"
                 src="./icons/badge.png"
                 alt={data.shop.badge}

@@ -1,19 +1,19 @@
 # Current state
 
-As of 2026-10-10, this Fresh static invoice shows Bintang Ducting and the
-supplied shop logo. Five products replace the original demonstration pens. All
-products have Pre-Order labels. UI icons are cropped from the supplied mobile
-screenshots; product photographs come from the supplied detail images.
+As of 2026-10-10, this Fresh static invoice shows Bintang Ducting without a shop
+logo. Five products replace the original demonstration pens. All products have
+Pre-Order labels. UI icons are cropped from the supplied mobile screenshots;
+product photographs come from the supplied detail images.
 
 ## Order data
 
-| Product                       | Quantity | Unit price (IDR) | Line total (IDR) |
-| ----------------------------- | -------: | ---------------: | ---------------: |
-| Elbow 90 130x200mm - 0.5mm    |        2 |          191,835 |          383,670 |
-| Transisi 5 inch ke 35 X 35cm  |        2 |          195,000 |          390,000 |
-| Ducting 200x130x800mm         |        5 |          135,000 |          675,000 |
-| Elbow 90 degree pesanan MR A  |        1 |          250,000 |          250,000 |
-| Hood 150 x 60 x 30 with Lamps |        1 |        1,380,500 |        1,380,500 |
+| Product                           | Quantity | Unit price (IDR) | Line total (IDR) |
+| --------------------------------- | -------: | ---------------: | ---------------: |
+| 400x400mm                         |        2 |          191,835 |          383,670 |
+| 10 inch ke 350x150mm - 0.5mm      |        2 |          195,000 |          390,000 |
+| 1200x350x150mm                    |        5 |          135,000 |          675,000 |
+| Elbow 90 degree pesanan 350x150mm |        1 |          250,000 |          250,000 |
+| Hood 1500x600x300 dengan lampu    |        1 |        1,380,500 |        1,380,500 |
 
 Merchandise subtotal: IDR 3,079,170. Shipping: IDR 400,000. Buyer service fee:
 IDR 130,000. Discounts: zero. Total: IDR 3,609,170. The hood price is the

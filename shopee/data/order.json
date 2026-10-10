@@ -5,8 +5,7 @@
   "status": "Your Order is Completed",
   "shop": {
     "name": "Bintang Ducting",
-    "badge": "Star+",
-    "logo": "./images/shop-logo.png"
+    "badge": "Star+"
   },
   "shipping": {
     "carrier": "Shop Courier",
@@ -22,52 +21,52 @@
   "items": [
     {
       "id": "1",
-      "name": "pesanan Elbow 90 130x200mm - 0.5mm",
+      "name": "400x400mm",
       "variant": "",
       "quantity": 2,
       "unitPrice": 191835,
       "image": "./images/elbow-small.jpg",
-      "imageAlt": "pesanan Elbow 90 130x200mm - 0.5mm",
+      "imageAlt": "400x400mm",
       "preOrder": true
     },
     {
       "id": "2",
-      "name": "Transisi pesanan ukuran 5 inch ke 35 X 35cm",
+      "name": "10 inch ke 350x150mm - 0.5mm",
       "variant": "",
       "quantity": 2,
       "unitPrice": 195000,
       "image": "./images/transition.jpg",
-      "imageAlt": "Transisi pesanan ukuran 5 inch ke 35 X 35cm",
+      "imageAlt": "10 inch ke 350x150mm - 0.5mm",
       "preOrder": true
     },
     {
       "id": "3",
-      "name": "Incian Ducting Uk. 200x130x800mm pesanan",
+      "name": "1200x350x150mm",
       "variant": "",
       "quantity": 5,
       "unitPrice": 135000,
       "image": "./images/duct.jpg",
-      "imageAlt": "Incian Ducting Uk. 200x130x800mm pesanan",
+      "imageAlt": "1200x350x150mm",
       "preOrder": true
     },
     {
       "id": "4",
-      "name": "Elbow 90 degree pesanan MR A",
+      "name": "Elbow 90 degree pesanan 350x150mm",
       "variant": "",
       "quantity": 1,
       "unitPrice": 250000,
       "image": "./images/elbow-large.jpg",
-      "imageAlt": "Elbow 90 degree pesanan MR A",
+      "imageAlt": "Elbow 90 degree pesanan 350x150mm",
       "preOrder": true
     },
     {
       "id": "5",
-      "name": "Hood 150 x 60 x 30 with Lamps",
+      "name": "Hood 1500x600x300 dengan lampu",
       "variant": "",
       "quantity": 1,
       "unitPrice": 1380500,
       "image": "./images/hood.jpg",
-      "imageAlt": "Hood 150 x 60 x 30 with Lamps",
+      "imageAlt": "Hood 1500x600x300 dengan lampu",
       "preOrder": true
     }
   ],

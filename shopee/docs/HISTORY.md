@@ -36,3 +36,10 @@ Moved pre-order labels under names without variants, reduced buyer service fee
 by IDR 100,000, renamed the large elbow to MR A and reduced its unit price by
 IDR 50,000, removed the support configuration note, and raised the back arrow by
 3 pixels. See [current state](STATE.md) for final values.
+
+## Product names and shop logo — 2026-10-10
+
+Updated from
+[`90f12e04bf5f34186f925a1393d29feae8e146a0`](https://github.com/hKyo89/static/commit/90f12e04bf5f34186f925a1393d29feae8e146a0).
+Removed the shop logo and renamed all five products exactly as requested. Prices
+and quantities remain unchanged. See [current state](STATE.md).

@@ -426,12 +426,6 @@ footer button:disabled {
   justify-content: space-between;
   align-items: center;
 }
-.shop-logo {
-  width: 32px;
-  height: 32px;
-  object-fit: contain;
-  border-radius: 50%;
-}
 .badge-image {
   width: 43px;
   height: 21px;
