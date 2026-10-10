@@ -1,0 +1,36 @@
+{
+  "imports": {
+    "fresh": "jsr:@fresh/core@2.3.0",
+    "preact": "npm:preact@10.29.8",
+    "preact/jsx-runtime": "npm:preact@10.29.8/jsx-runtime"
+  },
+  "compilerOptions": {
+    "jsx": "react-jsx",
+    "jsxImportSource": "preact",
+    "lib": [
+      "deno.window",
+      "dom",
+      "dom.iterable"
+    ]
+  },
+  "tasks": {
+    "dev": "deno run -A main.tsx",
+    "build": "deno run -A scripts/build.ts",
+    "check": "deno fmt --check && deno lint && deno check main.tsx scripts/build.ts && deno test -A"
+  },
+  "fmt": {
+    "exclude": [
+      "index.html",
+      "images/",
+      "styles.css",
+      "interactions.js",
+      "dist/"
+    ]
+  },
+  "lint": {
+    "exclude": [
+      "interactions.js",
+      "dist/"
+    ]
+  }
+}

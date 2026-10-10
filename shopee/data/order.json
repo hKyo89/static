@@ -1,0 +1,146 @@
+{
+  "locale": "id-ID",
+  "currency": "IDR",
+  "pageTitle": "Order Details",
+  "status": "Your Order is Completed",
+  "shop": {
+    "name": "Howl Art Stationery",
+    "badge": "Star+"
+  },
+  "shipping": {
+    "carrier": "SPX Standard",
+    "trackingNumber": "SPXID062305510099",
+    "status": "Parcel has been delivered to the recipient address",
+    "deliveredAt": "07-09-2026 12:42"
+  },
+  "recipient": {
+    "name": "Sample Customer",
+    "phone": "+62 811-000-000",
+    "address": "Jl. Grandura 2 No. 28, Cluster Grandura, Indonesia"
+  },
+  "items": [
+    {
+      "id": "1",
+      "name": "Uni Ball Signo RT1 UMN-155N-05mm Pen Gel",
+      "variant": "Black",
+      "quantity": 4,
+      "unitPrice": 18000,
+      "image": "./images/pen-0.svg",
+      "imageAlt": "Black gel pen"
+    },
+    {
+      "id": "2",
+      "name": "Uni Ball Signo RT1 UMN-155N-05mm Pen Gel",
+      "variant": "Blue",
+      "quantity": 2,
+      "unitPrice": 18000,
+      "image": "./images/pen-1.svg",
+      "imageAlt": "Blue gel pen"
+    },
+    {
+      "id": "3",
+      "name": "Uni Ball Signo RT1 UMN-155N-05mm Pen Gel",
+      "variant": "Light Blue",
+      "quantity": 2,
+      "unitPrice": 18000,
+      "image": "./images/pen-2.svg",
+      "imageAlt": "Light Blue gel pen"
+    },
+    {
+      "id": "4",
+      "name": "Uni Ball Signo RT1 UMN-155N-05mm Pen Gel",
+      "variant": "BLUE BLACK",
+      "quantity": 2,
+      "unitPrice": 18000,
+      "image": "./images/pen-3.svg",
+      "imageAlt": "BLUE BLACK gel pen"
+    },
+    {
+      "id": "5",
+      "name": "Uni Ball Signo RT1 UMN-155N-05mm Pen Gel",
+      "variant": "Lime green",
+      "quantity": 2,
+      "unitPrice": 18000,
+      "image": "./images/pen-4.svg",
+      "imageAlt": "Lime green gel pen"
+    },
+    {
+      "id": "6",
+      "name": "Uni Ball Signo RT1 UMN-155N-05mm Pen Gel",
+      "variant": "Baby Pink",
+      "quantity": 2,
+      "unitPrice": 18000,
+      "image": "./images/pen-5.svg",
+      "imageAlt": "Baby Pink gel pen"
+    },
+    {
+      "id": "7",
+      "name": "Uni Ball Signo RT1 UMN-155N-05mm Pen Gel",
+      "variant": "Red",
+      "quantity": 2,
+      "unitPrice": 18000,
+      "image": "./images/pen-6.svg",
+      "imageAlt": "Red gel pen"
+    },
+    {
+      "id": "8",
+      "name": "Uni Ball Signo RT1 UMN-155N-05mm Pen Gel",
+      "variant": "Green",
+      "quantity": 2,
+      "unitPrice": 18000,
+      "image": "./images/pen-7.svg",
+      "imageAlt": "Green gel pen"
+    },
+    {
+      "id": "9",
+      "name": "Uni Ball Signo RT1 UMN-155N-05mm Pen Gel",
+      "variant": "Violet",
+      "quantity": 2,
+      "unitPrice": 18000,
+      "image": "./images/pen-8.svg",
+      "imageAlt": "Violet gel pen"
+    },
+    {
+      "id": "10",
+      "name": "Uni Ball Signo RT1 UMN-155N-05mm Pen Gel",
+      "variant": "Orange",
+      "quantity": 2,
+      "unitPrice": 18000,
+      "image": "./images/pen-9.svg",
+      "imageAlt": "Orange gel pen"
+    }
+  ],
+  "costs": {
+    "shipping": 16000,
+    "shippingDiscount": 12000,
+    "serviceFee": 0,
+    "discount": 0
+  },
+  "order": {
+    "id": "260906AKVP4BHB",
+    "paymentType": "QRIS",
+    "orderedAt": "06-09-2026 10:36",
+    "paidAt": "06-09-2026 10:36"
+  },
+  "actions": {
+    "buyAgainUrl": "",
+    "rateUrl": ""
+  },
+  "support": [
+    {
+      "label": "Request for Return/Refund",
+      "icon": "return",
+      "url": ""
+    },
+    {
+      "label": "Contact Seller",
+      "icon": "chat",
+      "url": ""
+    },
+    {
+      "label": "Priority Customer Service",
+      "icon": "headset",
+      "url": ""
+    }
+  ]
+}

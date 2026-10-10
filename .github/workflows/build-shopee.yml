@@ -1,0 +1,29 @@
+name: Build Shopee invoice
+on:
+  push:
+    branches: [main]
+    paths: ["shopee/**", ".github/workflows/build-shopee.yml"]
+  pull_request:
+    paths: ["shopee/**", ".github/workflows/build-shopee.yml"]
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: shopee
+    steps:
+      - uses: actions/checkout@v4
+      - uses: denoland/setup-deno@v2
+        with:
+          deno-version: v2.7.14
+      - run: deno install --frozen
+      - run: deno task check
+      - run: deno task build
+      - uses: actions/upload-artifact@v4
+        with:
+          name: shopee-static
+          path: shopee/dist
+          if-no-files-found: error

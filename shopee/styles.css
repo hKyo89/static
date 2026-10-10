@@ -1,0 +1,407 @@
+* {
+  box-sizing: border-box;
+}
+body {
+  margin: 0;
+  background: #f5f5f5;
+  color: #292929;
+  font-family: "Arial", sans-serif;
+  font-size: 16px;
+  line-height: 1.4;
+}
+header {
+  height: 78px;
+  background: white;
+  display: flex;
+  align-items: center;
+  gap: 22px;
+  padding: 0 22px;
+  position: sticky;
+  top: 0;
+  z-index: 2;
+  border-bottom: 1px solid #f1f1f1;
+}
+h1 {
+  font-size: 24px;
+  font-weight: 400;
+  margin: 0;
+}
+h2 {
+  font-size: 18px;
+  font-weight: 400;
+  margin: 0 0 6px;
+}
+h3 {
+  font-size: 17px;
+  font-weight: 400;
+  margin: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+p {
+  margin: 0;
+}
+.back {
+  color: #ee4d2d;
+  font-size: 36px;
+  text-decoration: none;
+}
+.print {
+  margin-left: auto;
+  border: 0;
+  background: transparent;
+  color: #ee4d2d;
+  cursor: pointer;
+}
+main {
+  max-width: 740px;
+  margin: auto;
+  padding: 10px 10px 110px;
+}
+.card {
+  background: white;
+  border-radius: 14px;
+  margin-bottom: 10px;
+  overflow: hidden;
+}
+.status {
+  background: #229889;
+  color: white;
+  font-size: 20px;
+  padding: 16px 20px;
+}
+.section {
+  padding: 18px 16px;
+}
+.border {
+  border-top: 1px solid #eee;
+}
+.muted, .variant {
+  color: #999;
+}
+.small {
+  font-size: 14px;
+}
+.teal {
+  color: #26968a;
+}
+.icon-row {
+  display: flex;
+  gap: 12px;
+  margin-top: 20px;
+}
+.icon-row > div {
+  min-width: 0;
+}
+.icon {
+  font-size: 25px;
+  color: #747474;
+  line-height: 1.2;
+}
+.address summary {
+  color: #999;
+  cursor: pointer;
+  display: block;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+.address[open] summary {
+  white-space: normal;
+}
+.address p {
+  margin-top: 8px;
+}
+.shop {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 20px 16px 14px;
+}
+.badge {
+  background: #ee4d2d;
+  color: #fff;
+  font-size: 13px;
+  font-weight: bold;
+  padding: 1px 5px;
+  border-radius: 2px;
+}
+.chevron {
+  color: #bbb;
+  margin-left: 8px;
+  font-size: 24px;
+}
+.items {
+  padding: 0 16px;
+}
+.item {
+  display: flex;
+  gap: 12px;
+  margin: 0 0 16px;
+  min-height: 100px;
+}
+.item img {
+  width: 100px;
+  height: 100px;
+  object-fit: contain;
+  border: 1px solid #eee;
+  border-radius: 8px;
+}
+.item-info {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+}
+.variant {
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+  font-size: 15px;
+}
+.price {
+  text-align: right;
+  margin-top: auto;
+  font-size: 18px;
+}
+.totals {
+  border-top: 1px solid #eee;
+}
+.totals summary {
+  padding: 16px;
+  cursor: pointer;
+  text-align: right;
+  list-style: none;
+  font-size: 18px;
+}
+.totals strong {
+  font-weight: 400;
+}
+.support {
+  padding: 18px 16px 10px;
+}
+.support-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 16px 0;
+  border-bottom: 1px solid #eee;
+}
+.support-row .chevron {
+  margin-left: auto;
+}
+.support-row a {
+  color: inherit;
+  text-decoration: none;
+}
+.hint {
+  font-size: 11px;
+  color: #999;
+  padding-top: 10px;
+}
+.metadata {
+  padding: 18px 16px;
+}
+.order-id {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.order-id h2 {
+  margin: 0 auto 0 0;
+}
+.order-id span {
+  font-size: 14px;
+}
+button {
+  font: inherit;
+}
+.order-id button {
+  background: white;
+  border: 1px solid #bbb;
+  border-radius: 4px;
+  font-size: 14px;
+  padding: 2px 9px;
+  cursor: pointer;
+}
+dl {
+  margin: 12px 0 0;
+  color: #777;
+  font-size: 15px;
+}
+dl > div {
+  display: flex;
+  justify-content: space-between;
+  gap: 15px;
+  padding: 8px 0;
+}
+dd {
+  margin: 0;
+  text-align: right;
+}
+dt {
+  flex-shrink: 0;
+}
+.totals dl {
+  margin: 0;
+  padding: 0 16px 12px;
+}
+.text-button {
+  border: 0;
+  padding: 0;
+  background: transparent;
+  color: inherit;
+  cursor: pointer;
+}
+.notice {
+  text-align: center;
+  font-size: 11px;
+  color: #aaa;
+  margin: 20px;
+}
+footer {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 3;
+  background: white;
+  border-top: 1px solid #eee;
+  display: flex;
+  gap: 10px;
+  padding: 14px max(14px, calc((100vw - 720px) / 2));
+  padding-bottom: calc(14px + env(safe-area-inset-bottom));
+}
+footer button, footer a {
+  flex: 1;
+  border: 1px solid #bbb;
+  background: white;
+  border-radius: 6px;
+  padding: 12px;
+  text-align: center;
+  color: #292929;
+  text-decoration: none;
+  font-size: 20px;
+}
+footer .accent {
+  border-color: #ee4d2d;
+  color: #ee4d2d;
+}
+footer button:disabled {
+  cursor: not-allowed;
+  opacity: 0.65;
+}
+#feedback {
+  position: fixed;
+  bottom: 100px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: #333;
+  color: white;
+  border-radius: 8px;
+  padding: 10px 16px;
+  display: none;
+}
+#feedback.visible {
+  display: block;
+}
+@media (min-width: 800px) {
+  header {
+    padding: 0 max(24px, calc((100vw - 708px) / 2));
+  }
+  main {
+    padding-top: 22px;
+  }
+  .card {
+    margin-bottom: 16px;
+  }
+  .item img {
+    width: 112px;
+    height: 112px;
+  }
+  .item {
+    min-height: 112px;
+  }
+}
+@media (max-width: 370px) {
+  h1 {
+    font-size: 20px;
+  }
+  .print {
+    font-size: 12px;
+  }
+  header {
+    gap: 12px;
+    padding: 0 12px;
+  }
+  .order-id {
+    flex-wrap: wrap;
+  }
+  .item img {
+    width: 85px;
+    height: 85px;
+  }
+  h3 {
+    font-size: 15px;
+  }
+}
+@media print {
+  body {
+    background: white;
+    font-size: 12px;
+  }
+  header {
+    position: static;
+    height: 55px;
+    padding: 0;
+  }
+  main {
+    padding: 0;
+    max-width: none;
+  }
+  .back, .print, footer, .support, .notice, #feedback, button {
+    display: none !important;
+  }
+  .card {
+    border: 1px solid #ddd;
+    margin-bottom: 10px;
+    break-inside: avoid;
+  }
+  .items {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+  }
+  .item {
+    min-height: 65px;
+    margin-bottom: 8px;
+    break-inside: avoid;
+  }
+  .item img {
+    width: 65px;
+    height: 65px;
+  }
+  h3 {
+    font-size: 12px;
+    white-space: normal;
+  }
+  .price, .variant {
+    font-size: 12px;
+  }
+  .status {
+    padding: 8px;
+  }
+  .section {
+    padding: 10px;
+  }
+  .icon-row {
+    margin-top: 8px;
+  }
+  .totals dl {
+    display: block !important;
+  }
+  .totals summary {
+    font-size: 15px;
+  }
+}
