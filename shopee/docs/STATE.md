@@ -73,3 +73,12 @@ and rating URLs remain unconfigured; both actions remain disabled.
 
 The top-right Print invoice button is removed. Invoice printing remains
 available through the View action in the invoice metadata.
+
+## Shared application migration — 2026-10-11
+
+Shopee now runs from the root Fresh application alongside Duct and Backyard
+Garden. Its nested Deno configuration, main entry, lockfile and build script
+were removed. Root tasks replace the old project-local commands. Invoice data,
+UI, local assets, existing URL and scoped PWA remain unchanged. Tests import the
+root app and request `/static/shopee/`. See [architecture](ARCHITECTURE.md) and
+[shared instructions](../../STATIC_PROJECTS.md).

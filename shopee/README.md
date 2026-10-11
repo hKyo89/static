@@ -5,41 +5,36 @@ for [GitHub Pages](https://hkyo89.github.io/static/shopee/).
 
 ## Edit and build
 
-Requires Deno 2.7 or later. From this directory:
+This project uses the repository's **one root Fresh app**. From the repository
+root (not this directory):
 
 ```sh
-deno install
+deno install --frozen --allow-scripts=npm:esbuild
 deno task dev
-deno task build
-```
-
-Edit [data/order.json](data/order.json) for all order-specific values: shop,
-status, delivery, items, image paths, quantities, unit prices, fees, currency,
-payment, timestamps, and action URLs. Replace illustrations in
-[static/images](static/images). Images use relative `./images/...` paths. The
-total is computed from item quantities × unit prices plus shipping and service
-fee, minus shipping discount and discount. It is not an independently editable
-number that could become inconsistent.
-
-The build renders the Fresh handler directly, copies static assets into `dist/`,
-then publishes the same assets and HTML into this directory. Commit the root
-`index.html`, `styles.css`, `interactions.js`, and `images/` after changing data
-or source. GitHub Pages branch publishing uses these files at `/static/shopee/`;
-`dist/` is ignored. No server or API is required at runtime. Do not publish
-confidential invoice data.
-
-```sh
 deno task check
+deno task publish:files
 ```
 
-See [current state](docs/STATE.md), [architecture](docs/ARCHITECTURE.md), and
-[session history](docs/HISTORY.md).
+The local route is `http://localhost:8000/static/shopee/`. Edit
+[data/order.json](data/order.json) for shop, delivery, items, quantities,
+prices, fees, currency, payment, timestamps and action URLs. Replace images in
+[static/images](static/images). Totals are calculated from the data.
 
-The `totalsExpanded` setting controls the initial breakdown state.
-`items[].preOrder` controls each Pre-Order label. The seller name is shown
-without a shop logo. Delivery and Shipping Time both read
-`shipping.deliveredAt`. The displayed service fee is the buyer service fee. UI
-crops live in [static/icons](static/icons).
+Root `projects.ts` registers this page, and the shared exporter renders the
+Fresh handler and copies `static/` assets. `build` creates `dist/shopee/`;
+`publish:files` refreshes the tracked files in this directory for existing
+GitHub Pages `main`/root publishing. Commit regenerated outputs after changing
+source. No runtime server or API is needed. The separate nested Deno app and
+exporter were retired; do not recreate them.
+
+`totalsExpanded` controls the initial breakdown. `items[].preOrder` controls
+Pre-Order labels. Shipping Time and delivery use `shipping.deliveredAt`. Service
+fee is the buyer service fee. The seller has no shop logo. Invoice printing,
+order-ID copying and the scoped installable app remain.
+
+See [shared instructions](../STATIC_PROJECTS.md),
+[current state](docs/STATE.md), [architecture](docs/ARCHITECTURE.md), and
+[session history](docs/HISTORY.md).
 
 ## Install without the Chrome address bar
 

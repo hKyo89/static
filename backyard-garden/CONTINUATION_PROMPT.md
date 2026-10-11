@@ -1,0 +1,76 @@
+# Continue Backyard Garden
+
+Copy this prompt into a new session:
+
+```text
+Continue my Backyard Garden project. Read these first:
+- /Users/hkyo89/Codes/github.com/hkyo89/static/AGENTS.md
+- /Users/hkyo89/Codes/github.com/hkyo89/static/STATIC_PROJECTS.md
+- /Users/hkyo89/Codes/github.com/hkyo89/static/backyard-garden/README.md
+- The PRD.md, SPECIFICATIONS.md and DECISIONS.md in that project directory.
+
+Repository: git@github.com:hKyo89/static
+Local: /Users/hkyo89/Codes/github.com/hkyo89/static
+Branch: main
+Baseline before this project: 7c163bb5648ee1992a01ad4812da23506c713373
+Implementation source commit: 9df12f94a2bb6fe018fd98d3faba6588d337c4e8
+Public route: https://hkyo89.github.io/static/backyard-garden/
+Project directory name: backyard-garden
+Chat name: Backyard Garden
+
+This is one shared root Deno Fresh 2.3.0 app, not an independent app per site.
+Root main.tsx and projects.ts serve /static/, /static/backyard-garden/,
+/static/duct/ and /static/shopee/. Root deno.json and deno.lock own dependencies.
+The explicit shared static exporter renders Fresh handlers at build time and
+bundles browser code; GitHub Pages runs no Fresh server. It currently publishes
+main at repository root. Preserve that setup unless I ask to change it.
+
+Backyard source: backyard-garden/Page.tsx, model.ts, src/viewer.js,
+static/styles.css, static/reference/floor-plan.png and three window close-ups.
+Generated project index.html/viewer.js/styles.css/reference are outputs; edit
+sources and rebuild. The project package follows my session backup template,
+but my latest instruction placed it in static/backyard-garden rather than the
+prompts repository. Do not move it back or create an unnecessary duplicate.
+
+Model units are metres. Origin is rear-left, X to drawing-right, Z toward house,
+Y up. Wall height 3 m is confirmed. Interpreted footprint: width 6.775 m,
+main strip depth 1.225 m, return width 1.350 m and total return depth 2.025 m.
+Area = 9.379375 m². Three window sections: main 5.425 m, short return 1.350 m,
+left 2.025 m. Inset vertical return is solid. Wall thickness 0.120 m,
+window bottom 0.120 m, top 2.850 m, framing and paving are assumptions.
+Do not present screenshot readings as construction-ready measurements.
+No plant, furniture, roof, drainage, lighting or structure design is approved.
+
+The true Three.js viewer supports orbit/pan/zoom, 3D/plan/inside presets,
+cutaway outer walls, glazing and dimension visibility, reset and source dialog.
+Preserve desktop/touch controls, fallback drawing links and responsive layout.
+Preserve the existing Duct viewer model/control behavior, Shopee JSON/order
+values, images, interactions, and /static/shopee/ PWA scope.
+
+From repository root:
+deno install --frozen --allow-scripts=npm:esbuild
+deno task dev
+# Fresh local: http://localhost:8000/static/backyard-garden/
+deno task check
+deno task test:links
+deno task preview
+# Pure static: http://localhost:8001/static/backyard-garden/
+deno task publish:files
+
+Use a repo-local DENO_DIR=$PWD/.deno-cache only if sandbox cache writes require
+it. Inspect route/render tests, model area/opening tests, exported asset checks
+and invoice tests. Test actual desktop/mobile browser interactions and inspect
+console/asset failures. Regenerate tracked Pages output before a source commit.
+Keep root instructions and the five project docs synchronized with the final
+implementation. Record validation actually completed and unresolved assumptions.
+
+Check branch, remote and dirty state before touching Git. Preserve unrelated
+work. For authorized GitHub operations use /Users/hkyo89/.ssh/id_rsa with
+IdentitiesOnly=yes and StrictHostKeyChecking=yes; it is a symlink to
+/Users/hkyo89/Codes/github.com/hkyo89/mac-setup/.ssh/id_rsa. Never print or copy
+private-key contents or credentials. Update safely, never force-push, and
+verify remote state plus CI/Pages build after any publication.
+```
+
+[Overview](README.md) · [Current decisions](DECISIONS.md) ·
+[Shared instructions](../STATIC_PROJECTS.md)

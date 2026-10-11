@@ -1,0 +1,112 @@
+# Decisions and continuation state
+
+[Overview](README.md) · [Requirements](PRD.md) ·
+[Specifications](SPECIFICATIONS.md)
+
+## Confirmed decisions
+
+1. Chat name: **Backyard Garden**. Project directory and URL slug:
+   **backyard-garden**.
+2. The target is only the red-highlighted L-shaped rear area of the supplied
+   plan. Wall height is **3 m**. The close-ups indicate wall-wide windows.
+3. The working repository is `hkyo89/static`, with the project directory inside
+   that repository. This overrides the backup template's default destination in
+   `hkyo89/prompts`. No prompts-repository changes are needed.
+4. Use one root Deno Fresh application for this, Duct and Shopee, and future
+   projects. A shared project registry registers routes and drives export.
+5. Preserve existing `/static/duct/` and `/static/shopee/` URLs and keep the
+   invoice's scoped PWA/data and Duct viewer behavior.
+6. Export Fresh-rendered HTML and bundled browser JavaScript. Preserve current
+   GitHub Pages branch publishing from `main` at repository root.
+7. Keep complete root instructions and the five-document project continuation
+   package, with source drawings copied from transient attachments.
+8. Use `/Users/hkyo89/.ssh/id_rsa` for GitHub SSH operations; it is the symlink
+   to the key path in the supplied backup prompt. Never include key contents.
+
+## History and superseded approaches
+
+- The initial conversation delivered a lightweight inline Canvas projection. It
+  was a spatial sketch, not a standalone Fresh project or WebGL website. The
+  website now uses a true Three.js 3D scene and locally bundled controls.
+- That sketch treated the inset vertical return as another glazed edge. The
+  website interprets that inset as solid and retains the three close-up-backed
+  glazing sections; final construction details remain unconfirmed.
+- Duct previously had a Vite/npm app and committed `duct/dist` output. Shopee
+  had its own Fresh setup and copied assets to its project root. The shared root
+  app/exporter replaces the independent toolchains. Historical source is
+  recoverable from baseline `7c163bb5648ee1992a01ad4812da23506c713373`.
+- GitHub Pages Actions deployment was not introduced: inspected existing branch
+  publishing already supports the preserved URLs. Shared CI validates all
+  projects and confirms generated outputs are current.
+
+## Reasoning and trade-offs
+
+A single registry prevents route/export drift and provides one place to add a
+future project. Fresh is used for actual page rendering; client interactions
+remain portable static JavaScript. Bundling Three.js separately in each viewer
+adds repeated download bytes across pages but keeps each site independent and
+removes runtime CDN availability concerns. The Duct page adapter reuses trusted
+checked-in markup, reducing risk to its existing complex controls.
+
+Default cutaway hides the two exterior walls so the narrow footprint is visible.
+Toggling it restores the 3 m boundary walls. Neutral paving illustrates scale
+without inventing a landscape proposal. The page exposes measurement assumptions
+instead of treating screenshot readings as surveyed facts.
+
+## Known risks and unanswered questions
+
+- Confirm whether the plan dimensions are clear, face-to-face, or centreline
+  measurements. The model currently uses reference-line geometry.
+- Confirm glazing height, framing, the short/left openings, wall thickness and
+  material. Only wall height was explicitly stated by the user.
+- No plant layout, roof, furniture, drainage, lighting or structural decisions
+  have been made.
+- WebGL requires compatible hardware/browser settings. The reference drawing
+  remains accessible when rendering is unavailable.
+- Future server-side features require a separate deployment/service; GitHub
+  Pages cannot run Fresh request handlers.
+- Branch publishing requires regenerated files to be committed. CI checks their
+  freshness. Removed assets require explicitly removing old generated copies.
+
+## Validation and publication
+
+Implementation source commit: `9df12f94a2bb6fe018fd98d3faba6588d337c4e8`
+(`feat: consolidate static projects and add backyard garden viewer`).
+
+Validated locally on 2026-10-11:
+
+- Formatting, lint, TypeScript checks and all **seven Deno tests** passed.
+- Fresh rendering of the home and all three project routes, origin-preserving
+  slash redirects, the legacy Duct URL, unknown/source-file 404s, polygon area,
+  window lengths, invoice arithmetic and PWA scope were checked.
+- Complete static build and export verification passed: document-relative assets
+  exist, clients are bundled locally, and no transient nonce remains.
+- All repository Markdown relative links passed validation.
+- Static output was rebuilt twice and was byte-for-byte reproducible; published
+  copies matched the export. Local Fresh development served the page and bundled
+  viewer with HTTP 200.
+- Actual static browser preview loaded the garden, Duct and invoice without
+  captured console warnings/errors. All source-plan images loaded.
+- Garden presets, switches, reference dialog, reset, direct orbit and zoom were
+  exercised. Camera fitting was corrected after browser review exposed clipping;
+  dimension labels now avoid one another in narrow views.
+- Desktop layout and 390 px / 320 px responsive layouts were reviewed; neither
+  mobile size had horizontal overflow. This does not claim physical touch-device
+  or Android installation testing.
+- Duct's onboarding and English language switch worked. The invoice retained
+  five items, loaded images, and its collapsible total. Collection navigation
+  from invoice back to home and then garden worked.
+
+The shared workflow performs frozen dependency installation, full checks,
+Markdown-link validation, rebuild comparison with committed Pages files, and
+artifact upload. Branch publishing uses the same generated files. See the
+repository's commit history and GitHub Actions for remote publication state; a
+successful local build alone is not proof of a deployed site.
+
+## Recommended next work
+
+After this delivery, confirm the floor and window measurements from an original
+PDF or site survey. If a garden layout is wanted, obtain the user's preferences
+before adding planting, furniture, finishes or lighting. Continue through
+[CONTINUATION_PROMPT.md](CONTINUATION_PROMPT.md), preserving the single-app
+design.

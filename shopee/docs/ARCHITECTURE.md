@@ -1,20 +1,23 @@
 # Architecture
 
-[main.tsx](../main.tsx) registers a Fresh handler and local static files.
-[OrderPage.tsx](../components/OrderPage.tsx) reads the JSON data and renders
-semantic HTML using Preact. [build.ts](../scripts/build.ts) requests the handler
-in process and writes the response as static HTML. This avoids requiring Fresh
-server deployment or island hydration on GitHub Pages. The small browser script
-provides copying and printing; native details elements expand the address and
-totals.
+The [root main.tsx](../../main.tsx) registers this project at `/static/shopee/`
+in the single shared Fresh app. The [registry](../../projects.ts) drives routing
+and static export. [OrderPage.tsx](../components/OrderPage.tsx) reads JSON and
+renders semantic HTML using Preact. The
+[shared exporter](../../scripts/build.ts) calls the actual Fresh handler and
+copies this project's static assets into `dist/shopee/`.
+[publish.ts](../../scripts/publish.ts) also refreshes the tracked project files
+used by branch publishing.
 
-All assets use document-relative paths, so the static export works beneath
-`/static/shopee/`. Print styles hide navigation and actions; the print action
-opens the breakdown and restores its previous state afterward. The app needs no
-external image hosts, fonts, database, or credentials.
+No Fresh server or island runtime is needed on GitHub Pages. The browser script
+provides copying, printing and conditional installation; native details elements
+expand address and totals. Assets are document-relative. PWA scope, order data
+and interaction behavior remain unchanged during consolidation.
 
-The build workflow validates and uploads `dist/` as an artifact. It does not
-replace the existing duct workflow or change repository-wide Pages settings.
+The [shared workflow](../../.github/workflows/build-static.yml) validates all
+projects, checks committed outputs and uploads the complete export. Pages still
+publishes `main` at repository root. See
+[shared instructions](../../STATIC_PROJECTS.md).
 
 [Usage](../README.md) · [Current state](STATE.md)
 
