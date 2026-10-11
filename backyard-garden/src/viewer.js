@@ -12,6 +12,8 @@ import {
   model as m,
   slidingLeafPositions,
   slidingStart,
+  wallLightPositions,
+  wallLights,
   windows,
 } from "../model.ts";
 
@@ -256,6 +258,60 @@ function createViewer() {
     color: 0xaaa591,
     roughness: .9,
   });
+  const sconceMaterial = new THREE.MeshStandardMaterial({
+    color: 0x17191a,
+    roughness: .65,
+    metalness: .35,
+  });
+  const lampMaterial = new THREE.MeshStandardMaterial({
+    color: 0xffe4ae,
+    emissive: 0xffd18b,
+    emissiveIntensity: 2,
+  });
+  for (const [index, position] of wallLightPositions.entries()) {
+    const fixture = new THREE.Group();
+    fixture.name = `Wall light ${index + 1} from right`;
+    fixture.position.set(position.x, position.y, position.z);
+    boundary.add(fixture);
+    const body = new THREE.Mesh(
+      new THREE.CylinderGeometry(
+        wallLights.radius,
+        wallLights.radius,
+        wallLights.bodyHeight,
+        24,
+      ),
+      sconceMaterial,
+    );
+    body.castShadow = body.receiveShadow = true;
+    fixture.add(body);
+    box(
+      fixture,
+      .045,
+      .07,
+      wallLights.projection,
+      0,
+      0,
+      -wallLights.projection / 2,
+      sconceMaterial,
+    );
+    for (const direction of [-1, 1]) {
+      const aperture = new THREE.Mesh(
+        new THREE.CylinderGeometry(
+          wallLights.radius * .83,
+          wallLights.radius * .83,
+          .003,
+          24,
+        ),
+        lampMaterial,
+      );
+      aperture.position.y = direction * (wallLights.bodyHeight / 2 + .002);
+      fixture.add(aperture);
+      const beam = new THREE.SpotLight(0xffd394, 4, 1.8, Math.PI / 5, .7, 2);
+      beam.position.set(0, direction * wallLights.bodyHeight / 2, .005);
+      beam.target.position.set(0, direction * .8, -wallLights.projection);
+      fixture.add(beam, beam.target);
+    }
+  }
   const pitch = m.width / finishes.wallSections;
   for (let i = 0; i < finishes.wallSections; i++) {
     const left = i * pitch + (i ? finishes.dividerWidth / 2 : 0);

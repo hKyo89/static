@@ -72,3 +72,20 @@ export const lighting = {
   houseDepth: 4,
   sunPosition: [-4, 12, -8],
 } as const;
+
+// Six compact up/down sconces, counting sections from the right.
+export const wallLights = {
+  count: 6,
+  height: 2,
+  bodyHeight: 0.16,
+  radius: 0.035,
+  projection: 0.10,
+} as const;
+export const wallLightPositions = Array.from(
+  { length: wallLights.count },
+  (_, i) => ({
+    x: model.width - (i + .5) * model.width / finishes.wallSections,
+    y: wallLights.height,
+    z: model.wallThickness / 2 + wallLights.projection,
+  }),
+);

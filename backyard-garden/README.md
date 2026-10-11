@@ -96,3 +96,12 @@ restores the full-wall starting view.
 The user confirmed the two centre doors slide outward behind the outer pair,
 leaving a central opening. This supersedes the earlier four-track left stack.
 Only the centre pair moves; handles are placed on their meeting edges.
+
+## Wall lights
+
+Six small black cylindrical up/down sconces match the supplied reference style.
+They are centred in the six rightmost long-wall sections (leftmost unlit), with
+fixture centres 2 m above the floor. Each has a mounting bracket, warm apertures
+and upward/downward light beams. The compact 160 mm body, 70 mm diameter,
+projection and beam output are illustrative; no exact product size was supplied.
+Fixtures belong to the boundary wall and hide with Cutaway walls.

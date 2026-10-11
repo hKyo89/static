@@ -96,6 +96,8 @@ export function BackyardPage() {
             <details class="specifications">
               <summary>Measurements & assumptions</summary>
               <dl>
+                <dt>Wall lights</dt>
+                <dd>Six compact up/down lights · 2 m above floor</dd>
                 <dt>House & sunlight</dt>
                 <dd>Two-storey house · sunlight from the open backyard side</dd>
                 <dt>Finishes</dt>
