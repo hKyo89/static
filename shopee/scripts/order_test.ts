@@ -1,10 +1,12 @@
-import { app } from "../main.tsx";
+import { app } from "../../main.tsx";
 import { subtotal, total } from "../components/OrderPage.tsx";
 Deno.test("invoice arithmetic and static response", async () => {
   if (subtotal !== 3079170 || total !== 3609170) {
     throw new Error("Incorrect ducting totals");
   }
-  const response = await app.handler()(new Request("http://localhost/"));
+  const response = await app.handler()(
+    new Request("http://localhost/static/shopee/"),
+  );
   const html = await response.text();
   if (response.status !== 200 || !html.includes("260906AKVP4BHB")) {
     throw new Error("Missing invoice");

@@ -1,0 +1,29 @@
+name: Build shared Fresh projects
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: denoland/setup-deno@v2
+        with:
+          deno-version: v2.8.3
+      - run: deno install --frozen --allow-scripts=npm:esbuild
+      - run: deno task check
+      - run: deno task test:links
+      - name: Check committed Pages outputs are current
+        run: |
+          deno task publish:files
+          test -z "$(git status --porcelain)"
+      - uses: actions/upload-artifact@v4
+        with:
+          name: static-site
+          path: dist
+          include-hidden-files: true
+          if-no-files-found: error

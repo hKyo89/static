@@ -81,8 +81,6 @@ out
 # Nuxt.js build / generate output
 .nuxt
 dist
-!duct/dist/
-!duct/dist/**
 .output
 
 # Gatsby files
@@ -153,3 +151,11 @@ vite.config.ts.timestamp-*
 dist/
 coverage/
 _fresh/
+
+# Shared Fresh build
+.deno-cache/
+
+# Retain only the old Duct URL redirect, not the retired Vite build.
+!duct/dist/
+duct/dist/*
+!duct/dist/index.html

@@ -1,0 +1,119 @@
+<!doctype html>
+<html lang="id">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="light">
+  <meta name="description" content="Viewer sistem exhaust dapur Opsi D">
+  <title>Viewer sistem exhaust Opsi D</title>
+  <link rel="stylesheet" href="./src/styles.css">
+  <script type="importmap">
+    {
+      "imports": {
+        "three": "https://cdn.jsdelivr.net/npm/three@0.180.0/build/three.module.js",
+        "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.180.0/examples/jsm/"
+      }
+    }
+  </script>
+</head>
+<body>
+  <div id="hood-left-side-plate" aria-label="Viewer sistem exhaust dapur Opsi D">
+    <button type="button" class="mobile-menu-button" data-controls-toggle aria-controls="viewer-controls" aria-expanded="false" aria-label="Buka panel kontrol">
+      <span aria-hidden="true">☰</span>
+    </button>
+    <aside id="viewer-controls" class="control-sidebar left-sidebar" aria-label="Kontrol viewer">
+      <div class="language-switch" role="group" aria-label="Bahasa">
+        <button type="button" data-language="id" aria-pressed="true">ID</button>
+        <button type="button" data-language="en" aria-pressed="false">EN</button>
+        <button type="button" class="guide-button" data-onboarding-open aria-label="Buka panduan penggunaan">? <span data-guide-label>Panduan</span></button>
+      </div>
+      <header>
+        <h1 data-i18n="viewerTitle">Viewer sistem exhaust Opsi D</h1>
+        <p data-i18n="viewerHint">Periksa hood, duct, kipas, shaft, dan outlet</p>
+      </header>
+      <section>
+        <h2 data-i18n="displayTitle">Tampilan</h2>
+        <label class="switch-row">
+          <input type="checkbox" data-colour-mode>
+          <span data-i18n="colourParts">Warna komponen</span>
+        </label>
+        <label class="switch-row">
+          <input type="checkbox" data-dimensions checked>
+          <span data-i18n="dimensionsAngles">Dimensi dan sudut</span>
+        </label>
+        <label class="switch-row">
+          <input type="checkbox" data-points checked>
+          <span data-i18n="points">Titik</span>
+        </label>
+        <div class="control-grid">
+          <button type="button" data-parts-action="show" data-i18n="showAll">Tampilkan semua</button>
+          <button type="button" data-parts-action="hide" data-i18n="hideAll">Sembunyikan semua</button>
+        </div>
+      </section>
+      <section class="parts-section">
+        <h2 data-i18n="partsTitle">Komponen</h2>
+        <div class="parts-list" data-parts></div>
+      </section>
+    </aside>
+
+    <main class="viewer-pane">
+      <div class="plate-stage" role="img" aria-label="Model tiga dimensi sistem exhaust Opsi D lengkap dari hood sampai tudung hujan"></div>
+      <div class="plate-caption" aria-live="polite" data-caption>Sistem exhaust lengkap — Opsi D</div>
+      <footer class="navigation-footer" aria-label="Petunjuk navigasi">
+        <strong data-nav-title>Navigasi</strong>
+        <span data-nav-rotate>Putar: tarik</span>
+        <span data-nav-pan>Geser: klik kanan + tarik</span>
+        <span data-nav-zoom>Zoom: roda gulir / cubit</span>
+        <span data-nav-focus>Fokus: pilih ◎</span>
+      </footer>
+    </main>
+
+    <aside class="info-sidebar" aria-label="Informasi komponen">
+      <header>
+        <p class="eyebrow" data-info-eyebrow>Komponen aktif</p>
+        <h2 data-info-title>Hood</h2>
+      </header>
+      <div class="info-tabs" role="tablist" aria-label="Informasi teknis">
+        <button type="button" role="tab" data-info-tab="description" data-info-heading="description" aria-selected="true">Deskripsi</button>
+        <button type="button" role="tab" data-info-tab="materials" data-info-heading="materials" aria-selected="false">Material</button>
+        <button type="button" role="tab" data-info-tab="measurements" data-info-heading="measurements" aria-selected="false">Ukuran</button>
+        <button type="button" role="tab" data-info-tab="angles" data-info-heading="angles" aria-selected="false">Sudut</button>
+        <button type="button" role="tab" data-info-tab="instructions" data-info-heading="instructions" aria-selected="false">Petunjuk</button>
+      </div>
+      <section class="info-tab-panel" role="tabpanel" data-info-panel="description">
+        <p data-info-description></p>
+      </section>
+      <section class="info-tab-panel" role="tabpanel" data-info-panel="materials" hidden>
+        <ul data-info-materials></ul>
+      </section>
+      <section class="info-tab-panel" role="tabpanel" data-info-panel="measurements" hidden>
+        <ul data-info-measurements></ul>
+      </section>
+      <section class="info-tab-panel" role="tabpanel" data-info-panel="angles" hidden>
+        <ul data-info-angles></ul>
+      </section>
+      <section class="info-tab-panel" role="tabpanel" data-info-panel="instructions" hidden>
+        <ul data-info-instructions></ul>
+      </section>
+    </aside>
+  </div>
+
+  <div class="onboarding" data-onboarding hidden>
+    <div class="onboarding-backdrop"></div>
+    <section class="onboarding-card" role="dialog" aria-modal="true" aria-labelledby="onboarding-title" aria-describedby="onboarding-description">
+      <div class="onboarding-progress" data-onboarding-progress aria-hidden="true"></div>
+      <p class="onboarding-counter" data-onboarding-counter></p>
+      <h2 id="onboarding-title" data-onboarding-title></h2>
+      <p id="onboarding-description" data-onboarding-description></p>
+      <p class="onboarding-tip" data-onboarding-tip></p>
+      <div class="onboarding-actions">
+        <button type="button" class="onboarding-skip" data-onboarding-skip></button>
+        <span class="onboarding-spacer"></span>
+        <button type="button" data-onboarding-back></button>
+        <button type="button" class="onboarding-next" data-onboarding-next></button>
+      </div>
+    </section>
+  </div>
+  <script type="module" src="./src/main.js"></script>
+</body>
+</html>
