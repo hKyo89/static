@@ -89,6 +89,10 @@ export function BackyardPage() {
                 <span>Show dimensions</span>
                 <input type="checkbox" data-dimensions checked />
               </label>
+              <label class="toggle">
+                <span>Show garden</span>
+                <input type="checkbox" data-garden checked />
+              </label>
               <label class="door-control" htmlFor="door-opening">
                 <span>Open sliding doors</span>
                 <output data-door-output aria-live="polite">Closed</output>
@@ -108,6 +112,11 @@ export function BackyardPage() {
             <details class="specifications">
               <summary>Measurements & assumptions</summary>
               <dl>
+                <dt>Zen garden</dt>
+                <dd>
+                  Artificial bonsai · pebble bed · stone lantern · warm pebble
+                  light
+                </dd>
                 <dt>Wall lights</dt>
                 <dd>Six compact up/down lights · 2 m above floor</dd>
                 <dt>House & sunlight</dt>

@@ -159,3 +159,12 @@ direction and Cutaway walls control. Lighting is an illustrative preview.
 Wall-light output is a low-power warm amber glow, with subdued apertures and
 short, soft-edged light pools. The user confirmed warm colour and low wattage;
 the preview brightness is illustrative rather than a photometric watt rating.
+
+## Artificial Zen garden concept
+
+The viewer now includes an artificial bonsai, white/grey pebble bed with black
+edges, three rocks, small artificial moss/grass accents, one stone lantern and
+one subdued warm pebble light opposite the sliding doors. A Show garden toggle
+compares the concept with the original space. See
+[GARDEN_DESIGN.md](GARDEN_DESIGN.md) for layout, quantities, reference links and
+unverified shopping details.

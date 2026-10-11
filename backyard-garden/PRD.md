@@ -126,3 +126,12 @@ the default, with sunlight directly overhead and sconces off. Night turns off
 the sun, reduces sky illumination and enables the six warm up/down sconces.
 Reset restores Day and Show walls. This supersedes the earlier rear-side sun
 direction and Cutaway walls control. Lighting is an illustrative preview.
+
+## Artificial Zen garden concept
+
+The viewer now includes an artificial bonsai, white/grey pebble bed with black
+edges, three rocks, small artificial moss/grass accents, one stone lantern and
+one subdued warm pebble light opposite the sliding doors. A Show garden toggle
+compares the concept with the original space. See
+[GARDEN_DESIGN.md](GARDEN_DESIGN.md) for layout, quantities, reference links and
+unverified shopping details.

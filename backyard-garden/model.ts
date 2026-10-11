@@ -89,3 +89,13 @@ export const wallLightPositions = Array.from(
     z: model.wallThickness / 2 + wallLights.projection,
   }),
 );
+
+// Concept layout: rear-wall bed opposite the sliding doors, clear granite approach.
+export const gardenLayout = {
+  bed: { x: 4.8, z: .36, width: 3.6, depth: .50 },
+  bonsai: { x: 4.22, z: .35, height: 1.35 },
+  lantern: { x: 5.65, z: .33 },
+  pebbleLight: { x: 6.18, z: .40 },
+  rocks: [[3.50, .32, .16], [4.60, .38, .12], [5.14, .28, .18]],
+  grass: [[3.28, .37], [4.78, .42], [6.40, .30]],
+} as const;

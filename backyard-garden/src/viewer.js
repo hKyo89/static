@@ -1,3 +1,4 @@
+import { createGarden } from "./garden.js";
 import * as THREE from "three";
 import { OrbitControls } from "three/addons/controls/OrbitControls.js";
 import {
@@ -570,6 +571,8 @@ function createViewer() {
     [.22, 0, 0],
   );
 
+  const garden = createGarden(world);
+  const gardenInput = document.querySelector("[data-garden]");
   const wallsInput = document.querySelector("[data-walls]");
   const legacyCutawayInput = document.querySelector("[data-cutaway]");
   let lightingMode = "day";
@@ -578,6 +581,7 @@ function createViewer() {
     stage.closest(".viewer").dataset.lighting = mode;
     const night = mode === "night";
     sun.visible = !night;
+    garden.setNight(night);
     sky.intensity = night ? .22 : 2.5;
     scene.background.set(night ? 0x111b28 : 0xeef1e7);
     lampMaterial.emissiveIntensity = night ? .35 : 0;
@@ -627,6 +631,7 @@ function createViewer() {
     );
   }
   function refresh() {
+    garden.group.visible = gardenInput?.checked ?? true;
     boundary.visible = wallsInput
       ? wallsInput.checked
       : !legacyCutawayInput?.checked;
@@ -667,12 +672,14 @@ function createViewer() {
       wallsInput ?? legacyCutawayInput,
       windowsInput,
       dimensionsInput,
+      gardenInput,
     ]
   ) {
     if (input) input.onchange = refresh;
   }
   document.querySelector("[data-reset]").onclick = () => {
     if (wallsInput) wallsInput.checked = true;
+    if (gardenInput) gardenInput.checked = true;
     if (legacyCutawayInput) legacyCutawayInput.checked = false;
     setLighting("day");
     windowsInput.checked = dimensionsInput.checked = true;
