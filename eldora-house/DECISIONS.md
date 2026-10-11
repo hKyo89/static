@@ -366,3 +366,18 @@ field around the existing focal arrangement. White/grey pebbles, small moss
 rocks and the bonsai remain; the stepping route and smoking deck stay clear.
 These are illustrative plant forms and sizes, not verified shop products. Plant
 coordinates live in model.ts; leaf instances limit additional draw calls.
+
+## Grass references and olive accent
+
+Five artificial grass clumps replace five of the earlier broadleaf clusters:
+three plain 30 cm tufts and two 46 cm tufts with cream seed heads. Two low
+broadleaf accents remain. Narrow curved blades follow the supplied shopping
+images; larger 60 cm and coloured pink/yellow options are not used. Dimensions
+are illustrative representations, not verified measurements of purchased items.
+
+A slender artificial olive accent is placed in the short L-shaped smoking nook
+(local X=0.27, Z=1.72), in a small dark pot, separate from bamboo and the
+central bonsai. Its assumed height is 1.50 m, pot diameter 28 cm, pot height 24
+cm. The first supplied image shows the existing bonsai rather than olive; the
+olive is a generic interpretation pending a matching reference. The standing
+area and ashtray remain accessible. Placement and plant sizes live in model.ts.

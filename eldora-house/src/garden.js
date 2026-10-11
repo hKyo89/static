@@ -384,10 +384,126 @@ export function createGarden(world) {
       );
     }
   }
+  // Slender artificial olive accent beside the L-shaped smoking nook.
+  const olive = g.olive;
+  mesh(
+    new THREE.CylinderGeometry(
+      olive.potRadius,
+      olive.potRadius * .8,
+      olive.potHeight,
+      20,
+    ),
+    dark,
+    olive.x,
+    .05 + olive.potHeight / 2,
+    olive.z,
+  );
+  branch([[olive.x, .25, olive.z], [olive.x + .025, .72, olive.z], [
+    olive.x - .02,
+    olive.height - .18,
+    olive.z,
+  ]], .018);
+  for (let j = 0; j < 5; j++) {
+    const angle = j * 2.4;
+    const y = .75 + j * .12;
+    const bx = olive.x + Math.cos(angle) * .12;
+    const bz = olive.z + Math.sin(angle) * .10;
+    branch([[olive.x, y - .13, olive.z], [bx, y, bz]], .007);
+    for (let i = 0; i < 24; i++) {
+      const direction = i * 2.4 + j;
+      const radius = Math.sqrt(random()) * olive.crownRadius * .6;
+      leaf(
+        bx + Math.cos(direction) * radius,
+        y + (random() - .3) * .28,
+        bz + Math.sin(direction) * radius,
+        .038,
+        .012,
+        direction,
+        random() * .5,
+        i % 3 ? 0x657550 : 0x98a582,
+      );
+    }
+  }
   foliage.count = leafIndex;
   foliage.castShadow = foliage.receiveShadow = true;
   foliage.name = "Artificial bamboo and low green planting";
   group.add(foliage);
+  // Narrow curved grass blades match the supplied 30 cm / 46 cm artificial sprigs.
+  const bladePositions = [], bladeColours = [];
+  const grassShades = [
+    new THREE.Color(0x466a32),
+    new THREE.Color(0x709249),
+    new THREE.Color(0x889e55),
+  ];
+  const seedHeads = new THREE.InstancedMesh(
+    new THREE.SphereGeometry(1, 7, 5),
+    new THREE.MeshStandardMaterial({ color: 0xc6bd91, roughness: 1 }),
+    16,
+  );
+  let headCount = 0;
+  for (const clump of g.grassClumps) {
+    for (let i = 0; i < 34; i++) {
+      const angle = i * 2.4, height = clump.height * (.65 + random() * .35);
+      const lean = .035 + random() * .065;
+      const bx = clump.x + (random() - .5) * .055;
+      const bz = clump.z + (random() - .5) * .045;
+      const colour = grassShades[i % 3];
+      const point = (t, side) => [
+        bx + Math.cos(angle) * lean * t * t +
+        Math.sin(angle) * side * .007 * (1 - t),
+        .065 + height * t - height * .12 * t * t * t,
+        bz + Math.sin(angle) * lean * t * t -
+        Math.cos(angle) * side * .007 * (1 - t),
+      ];
+      for (let j = 0; j < 6; j++) {
+        const t = j / 6, next = (j + 1) / 6;
+        for (
+          const vertex of [
+            point(t, -1),
+            point(t, 1),
+            point(next, -1),
+            point(t, 1),
+            point(next, 1),
+            point(next, -1),
+          ]
+        ) {
+          bladePositions.push(...vertex);
+          bladeColours.push(colour.r, colour.g, colour.b);
+        }
+      }
+      if (clump.heads && i < 6) {
+        dummy.position.set(...point(1, 0));
+        dummy.rotation.set(.1, angle, .1);
+        dummy.scale.set(.012, .043, .012);
+        dummy.updateMatrix();
+        seedHeads.setMatrixAt(headCount++, dummy.matrix);
+      }
+    }
+  }
+  const blades = new THREE.BufferGeometry();
+  blades.setAttribute(
+    "position",
+    new THREE.Float32BufferAttribute(bladePositions, 3),
+  );
+  blades.setAttribute(
+    "color",
+    new THREE.Float32BufferAttribute(bladeColours, 3),
+  );
+  blades.computeVertexNormals();
+  mesh(
+    blades,
+    new THREE.MeshStandardMaterial({
+      vertexColors: true,
+      side: THREE.DoubleSide,
+      roughness: 1,
+    }),
+    0,
+    0,
+    0,
+  );
+  seedHeads.count = headCount;
+  seedHeads.castShadow = true;
+  group.add(seedHeads);
   const glow = new THREE.MeshStandardMaterial({
     color: 0xe8dfca,
     emissive: 0xffbd73,
