@@ -336,3 +336,13 @@ DR02, DR07, WIN07 and WIN11 are retired rather than reused. All active opening
 IDs are visible by default, including after Reset; the sidebar gives names and
 focus controls. See OPENING_REFERENCES.md. Stop local preview services and close
 viewer tabs after testing, per the user's resource-use preference.
+
+## Bamboo and softer green planting
+
+A compact artificial bamboo cluster occupies the rear-left garden corner (local
+X=0.48, Z=0.34), approximately 1.85 m tall with seven stems. Seven low
+artificial broadleaf/fern-like clusters (25–38 cm tall) break up the rear pebble
+field around the existing focal arrangement. White/grey pebbles, small moss
+rocks and the bonsai remain; the stepping route and smoking deck stay clear.
+These are illustrative plant forms and sizes, not verified shop products. Plant
+coordinates live in model.ts; leaf instances limit additional draw calls.

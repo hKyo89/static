@@ -308,6 +308,86 @@ export function createGarden(world) {
     g.accentRock.z,
     g.accentRock.scale,
   );
+  // Artificial bamboo at the rear-left corner; compact foliage stays in the bed.
+  // Instanced leaves keep this added planting inexpensive to draw.
+  const plantMaterial = new THREE.MeshStandardMaterial({
+    color: 0x5a853f,
+    roughness: .9,
+  });
+  const bambooMaterial = new THREE.MeshStandardMaterial({
+    color: 0x65804b,
+    roughness: .85,
+  });
+  const foliage = new THREE.InstancedMesh(
+    new THREE.SphereGeometry(1, 6, 4),
+    plantMaterial,
+    400,
+  );
+  let leafIndex = 0;
+  function leaf(x, y, z, length, width, angle, tilt, colour) {
+    dummy.position.set(x, y, z);
+    dummy.rotation.set(tilt, angle, .2);
+    dummy.scale.set(length, .008, width);
+    dummy.updateMatrix();
+    foliage.setMatrixAt(leafIndex, dummy.matrix);
+    foliage.setColorAt(leafIndex++, new THREE.Color(colour));
+  }
+  const bamboo = g.bamboo;
+  for (let i = 0; i < bamboo.stems; i++) {
+    const angle = i * 2.4, spread = i === 0 ? 0 : .11;
+    const bx = bamboo.x + Math.cos(angle) * spread;
+    const bz = bamboo.z + Math.sin(angle) * spread;
+    const height = bamboo.height * (.76 + random() * .24);
+    mesh(
+      new THREE.CylinderGeometry(.009, .013, height, 7),
+      bambooMaterial,
+      bx,
+      .06 + height / 2,
+      bz,
+    );
+    for (let j = 1; j <= 7; j++) {
+      const y = .06 + height * j / 8;
+      mesh(new THREE.CylinderGeometry(.014, .014, .012, 7), green, bx, y, bz);
+      if (j < 3) continue;
+      for (let k = 0; k < 5; k++) {
+        const direction = angle + k * 1.25 + j;
+        const reach = bamboo.spread * (.45 + random() * .45);
+        leaf(
+          bx + Math.cos(direction) * reach,
+          y + .03,
+          bz + Math.sin(direction) * reach,
+          .105,
+          .018,
+          -direction,
+          -.25,
+          k % 2 ? 0x668f43 : 0x3f6d37,
+        );
+      }
+    }
+  }
+  // Low broadleaf / fern-like artificial accents, rather than raised grass.
+  for (const [px, pz, height] of g.minorPlants) {
+    mesh(new THREE.CylinderGeometry(.09, .07, .045, 12), dark, px, .065, pz);
+    for (let j = 0; j < 18; j++) {
+      const angle = j * 2.4;
+      const reach = .045 + random() * .095;
+      const y = .09 + height * (.25 + random() * .6);
+      leaf(
+        px + Math.cos(angle) * reach,
+        y,
+        pz + Math.sin(angle) * reach,
+        .09 + random() * .055,
+        .025 + random() * .016,
+        -angle,
+        -.5 + random(),
+        j % 3 ? 0x4e793a : 0x7b9d4b,
+      );
+    }
+  }
+  foliage.count = leafIndex;
+  foliage.castShadow = foliage.receiveShadow = true;
+  foliage.name = "Artificial bamboo and low green planting";
+  group.add(foliage);
   const glow = new THREE.MeshStandardMaterial({
     color: 0xe8dfca,
     emissive: 0xffbd73,

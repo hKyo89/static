@@ -127,3 +127,13 @@ draincell and geotextile beneath the pebble layer; these cover the channel in
 the concept view. The illustrated 20 mm draincell and 2 mm textile thicknesses
 are assumptions; no outlet, slope or product specification was supplied. This
 supersedes the previous lighter grey 45 cm tile grid.
+
+## Bamboo and softer green planting
+
+A compact artificial bamboo cluster occupies the rear-left garden corner (local
+X=0.48, Z=0.34), approximately 1.85 m tall with seven stems. Seven low
+artificial broadleaf/fern-like clusters (25–38 cm tall) break up the rear pebble
+field around the existing focal arrangement. White/grey pebbles, small moss
+rocks and the bonsai remain; the stepping route and smoking deck stay clear.
+These are illustrative plant forms and sizes, not verified shop products. Plant
+coordinates live in model.ts; leaf instances limit additional draw calls.
