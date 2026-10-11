@@ -70,7 +70,9 @@ export const finishes = {
   wallSections: 7,
   dividerWidth: 0.018,
   dividerDepth: 0.008,
-  tileSize: 0.45,
+  tileSize: 0.60,
+  tileColour: [76, 80, 84],
+  tileGrain: 40,
 } as const;
 
 // Two storeys confirmed; total height/depth and sun angle are illustrative.
@@ -219,4 +221,12 @@ export const windowFilm = {
   outsideOpacity: .96,
   outsideMetalness: .95,
   outsideRoughness: .13,
+} as const;
+
+// Tiled drain channel: rear long wall and garden-side window edge of the L.
+export const gutter = { width: .20, depth: .05 } as const;
+// Layer thicknesses are illustrative; user confirmed draincell + geotextile.
+export const gardenBuildUp = {
+  draincellThickness: .020,
+  geotextileThickness: .002,
 } as const;

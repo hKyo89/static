@@ -153,6 +153,10 @@ export function BackyardPage() {
                 <input type="checkbox" data-dimensions checked />
               </label>
               <label class="toggle">
+                <span>Show canopy roof</span>
+                <input type="checkbox" data-canopy-roof checked />
+              </label>
+              <label class="toggle">
                 <span>Show garden</span>
                 <input type="checkbox" data-garden checked />
               </label>
@@ -179,6 +183,13 @@ export function BackyardPage() {
                   Off-white inside walls · ivory courtyard roughcast · grey
                   garden granite
                 </dd>
+                <dt>Gutter</dt>
+                <dd>
+                  Tiled · about 20 cm wide × 5 cm deep · rear wall and
+                  window-side edge
+                </dd>
+                <dt>Garden layers</dt>
+                <dd>Draincell, geotextile, then pebbles and decoration</dd>
                 <dt>Long wall</dt>
                 <dd>Seven sections with slim recessed U dividers</dd>
                 <dt>Overall width</dt>

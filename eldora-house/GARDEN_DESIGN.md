@@ -116,3 +116,14 @@ attached directly to the wall, without an arm. Each round lens has a dark rim;
 the warm low-output beams originate at the lens centres. The illustrated lens
 diameter is 24 mm; exact product measurements are unconfirmed. This supersedes
 the earlier half-disc apertures.
+
+## Courtyard floor, gutter and garden layers
+
+The user confirmed dark grey 60 × 60 cm granite tiles. A tiled gutter follows
+the long rear wall and the window-side edge of the L (local X=0), approximately
+20 cm wide and 5 cm below the main tiled floor. Its L junction is continuous.
+Turn Show garden off to inspect the tiles and recessed channel. The garden uses
+draincell and geotextile beneath the pebble layer; these cover the channel in
+the concept view. The illustrated 20 mm draincell and 2 mm textile thicknesses
+are assumptions; no outlet, slope or product specification was supplied. This
+supersedes the previous lighter grey 45 cm tile grid.

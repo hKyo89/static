@@ -42,3 +42,15 @@ old drawing have been removed. The front wide area (P01) is an open garage,
 without front or side perimeter walls and without gates. The right house wall
 stops at the front side room (Z=15.625 m). House-facing walls remain. This user
 correction supersedes the old carport enclosure and second stair run.
+
+## Side walls and garage canopy
+
+Both outside side walls (W02 and W12) have no windows. WIN03–WIN06 and
+WIN08–WIN10 are retired; remaining opening IDs are preserved. Garage P01 has a
+walnut-colour PVC soffit, twin-layer Alderon roof depiction and dark WF200 steel
+I-profile main framing. Six downlights GL01–GL06 follow the two rows of three on
+the MEP plan. Night mode enables them. Show canopy roof hides the soffit and
+roof for overhead inspection. The garage remains open on its sides and front.
+Canopy dimensions, steel flange/web sizes, roof profile and light output are
+illustrative; canopy measurements were not supplied. Shared canopy data lives in
+`house-model.ts`, rendering in `src/canopy.js`.

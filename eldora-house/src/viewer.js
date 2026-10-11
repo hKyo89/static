@@ -12,6 +12,7 @@ import {
 import {
   finishes,
   frontage,
+  gutter,
   leafWidth,
   lighting,
   model as m,
@@ -110,7 +111,7 @@ function createViewer() {
     return texture;
   }
   const roughcast = mineralTexture([233, 226, 207], 32, 10);
-  const granite = mineralTexture([133, 137, 139], 85, 12);
+  const granite = mineralTexture(finishes.tileColour, finishes.tileGrain, 12);
   const wallMaterial = new THREE.MeshStandardMaterial({
     map: roughcast,
     bumpMap: roughcast,
@@ -181,27 +182,49 @@ function createViewer() {
     m.stripDepth + lighting.houseDepth / 2,
     houseShadowMaterial,
   );
+  // Separate raised field and lower tiled channel create the actual recess.
+  const gw = gutter.width;
   box(
     world,
-    m.width,
-    0.12,
-    m.stripDepth,
-    m.width / 2,
-    -0.06,
-    m.stripDepth / 2,
+    m.width - gw,
+    .12,
+    m.stripDepth - gw,
+    (m.width + gw) / 2,
+    -.06,
+    (m.stripDepth + gw) / 2,
     floorMaterial,
   );
   box(
     world,
-    m.returnWidth,
-    0.12,
+    m.returnWidth - gw,
+    .12,
     m.returnDepth - m.stripDepth,
-    m.returnWidth / 2,
-    -0.06,
+    (m.returnWidth + gw) / 2,
+    -.06,
     (m.returnDepth + m.stripDepth) / 2,
     floorMaterial,
   );
-  // Granite tile joints; tile size remains illustrative.
+  box(
+    world,
+    m.width,
+    .12 - gutter.depth,
+    gw,
+    m.width / 2,
+    -(.12 + gutter.depth) / 2,
+    gw / 2,
+    floorMaterial,
+  );
+  box(
+    world,
+    gw,
+    .12 - gutter.depth,
+    m.returnDepth - gw,
+    gw / 2,
+    -(.12 + gutter.depth) / 2,
+    (m.returnDepth + gw) / 2,
+    floorMaterial,
+  );
+  // User-confirmed 600 mm tile grid, including the channel floor.
   const jointMaterial = new THREE.LineBasicMaterial({
     color: 0x55595a,
     transparent: true,
@@ -215,18 +238,14 @@ function createViewer() {
     parent.add(new THREE.Line(geometry, material));
   }
   for (let x = finishes.tileSize; x < m.width; x += finishes.tileSize) {
-    line([x, 0.006, 0], [
-      x,
-      0.006,
-      x < m.returnWidth ? m.returnDepth : m.stripDepth,
-    ]);
+    const end = x < m.returnWidth ? m.returnDepth : m.stripDepth;
+    line([x, -gutter.depth + .003, 0], [x, -gutter.depth + .003, gw]);
+    line([x, .003, gw], [x, .003, end]);
   }
   for (let z = finishes.tileSize; z < m.returnDepth; z += finishes.tileSize) {
-    line([0, 0.006, z], [
-      z <= m.stripDepth ? m.width : m.returnWidth,
-      0.006,
-      z,
-    ]);
+    const end = z <= m.stripDepth ? m.width : m.returnWidth;
+    line([0, -gutter.depth + .003, z], [gw, -gutter.depth + .003, z]);
+    line([gw, .003, z], [end, .003, z]);
   }
 
   function panel(
@@ -596,6 +615,7 @@ function createViewer() {
   const openingLabelsInput = document.querySelector("[data-opening-labels]");
   const openingFocusInput = document.querySelector("[data-opening-focus]");
   openingLabelsInput.onchange = () => refresh();
+  document.querySelector("[data-canopy-roof]").onchange = () => refresh();
   openingFocusInput.onchange = () => {
     const o = openingReferences.find((o) => o.id === openingFocusInput.value);
     if (!o) return;
@@ -641,6 +661,7 @@ function createViewer() {
     const night = mode === "night";
     sun.visible = !night;
     garden.setNight(night);
+    firstFloor.canopy.setNight(night);
     sky.intensity = night ? .22 : 2.5;
     scene.background.set(night ? 0x111b28 : 0xeef1e7);
     lampMaterial.emissiveIntensity = night ? .35 : 0;
@@ -722,6 +743,8 @@ function createViewer() {
         : rooms[i].id;
     });
     firstFloor.glazing.visible = windowsInput.checked;
+    firstFloor.canopy.roof.visible =
+      document.querySelector("[data-canopy-roof]").checked;
     house.visible = scope === "garden";
     glazing.visible = windowsInput.checked;
     dimensions.visible = dimensionsInput.checked;
@@ -733,6 +756,9 @@ function createViewer() {
   }
   function setView(name) {
     view = name;
+    controls.maxPolarAngle = name === "inside"
+      ? Math.PI - .015
+      : Math.PI / 2 - .015;
     camera.up.set(0, 1, 0);
     const b = focusedRoom?.bounds;
     const centre = b
@@ -748,8 +774,13 @@ function createViewer() {
       controls.target.set(centre[0], 0, centre[1]);
       camera.position.set(centre[0], 25, centre[1] + .001);
     } else if (name === "inside") {
-      camera.position.set(2.5, 1.6, -.55);
-      controls.target.set(-1.5, 1.4, -.55);
+      if (scope === "house") {
+        camera.position.set(centre[0], 1.6, centre[1] + 1.8);
+        controls.target.set(centre[0], 2.4, centre[1] - 2);
+      } else {
+        camera.position.set(2.5, 1.6, -.55);
+        controls.target.set(-1.5, 1.4, -.55);
+      }
     } else camera.position.set(centre[0] + 12, 16, centre[1] + 18);
     fitCamera();
     document.querySelectorAll("[data-camera]").forEach((button) =>

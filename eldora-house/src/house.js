@@ -1,3 +1,4 @@
+import { createCanopy } from "./canopy.js";
 import { filmMaterials } from "./window-film.js";
 import * as THREE from "three";
 import { CSS2DObject } from "three/addons/renderers/CSS2DRenderer.js";
@@ -151,5 +152,6 @@ export function createHouse(world) {
     label.position.set((x + x2) / 2 - h.gardenOffsetX, .18, (z + z2) / 2);
     names.add(label);
   }
-  return { group, walls, names, glazing };
+  const canopy = createCanopy(group);
+  return { group, walls, names, glazing, canopy };
 }

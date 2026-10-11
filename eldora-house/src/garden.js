@@ -1,5 +1,5 @@
 import * as THREE from "three";
-import { gardenLayout as g, model as m } from "../model.ts";
+import { gardenBuildUp, gardenLayout as g, model as m } from "../model.ts";
 
 export function createGarden(world) {
   const group = new THREE.Group();
@@ -34,10 +34,40 @@ export function createGarden(world) {
     roughness: 1,
   });
   mesh(
-    new THREE.BoxGeometry(m.width, .035, m.stripDepth),
+    new THREE.BoxGeometry(m.width, .013, m.stripDepth),
     gravelBase,
     m.width / 2,
-    .018,
+    .0285,
+    m.stripDepth / 2,
+  );
+  const draincellMaterial = new THREE.MeshStandardMaterial({
+    color: 0x242726,
+    roughness: 1,
+  });
+  const textileMaterial = new THREE.MeshStandardMaterial({
+    color: 0xb2b4af,
+    roughness: 1,
+  });
+  mesh(
+    new THREE.BoxGeometry(
+      m.width,
+      gardenBuildUp.draincellThickness,
+      m.stripDepth,
+    ),
+    draincellMaterial,
+    m.width / 2,
+    gardenBuildUp.draincellThickness / 2,
+    m.stripDepth / 2,
+  );
+  mesh(
+    new THREE.BoxGeometry(
+      m.width,
+      gardenBuildUp.geotextileThickness,
+      m.stripDepth,
+    ),
+    textileMaterial,
+    m.width / 2,
+    gardenBuildUp.draincellThickness + gardenBuildUp.geotextileThickness / 2,
     m.stripDepth / 2,
   );
   // Walnut-look WPC boards cover only the short return smoking nook.

@@ -195,7 +195,7 @@ Deno.test("opening reference IDs are unique and cover every wall opening", async
   );
   const { houseWalls } = await import("../eldora-house/house-model.ts");
   const ids = openingReferences.map((o) => o.id);
-  if (ids.length !== 20 || new Set(ids).size !== ids.length) {
+  if (ids.length !== 13 || new Set(ids).size !== ids.length) {
     throw new Error("Incomplete or duplicate opening references");
   }
   for (const wall of houseWalls) {

@@ -255,3 +255,26 @@ attached directly to the wall, without an arm. Each round lens has a dark rim;
 the warm low-output beams originate at the lens centres. The illustrated lens
 diameter is 24 mm; exact product measurements are unconfirmed. This supersedes
 the earlier half-disc apertures.
+
+## Courtyard floor, gutter and garden layers
+
+The user confirmed dark grey 60 × 60 cm granite tiles. A tiled gutter follows
+the long rear wall and the window-side edge of the L (local X=0), approximately
+20 cm wide and 5 cm below the main tiled floor. Its L junction is continuous.
+Turn Show garden off to inspect the tiles and recessed channel. The garden uses
+draincell and geotextile beneath the pebble layer; these cover the channel in
+the concept view. The illustrated 20 mm draincell and 2 mm textile thicknesses
+are assumptions; no outlet, slope or product specification was supplied. This
+supersedes the previous lighter grey 45 cm tile grid.
+
+## Side walls and garage canopy
+
+Both outside side walls (W02 and W12) have no windows. WIN03–WIN06 and
+WIN08–WIN10 are retired; remaining opening IDs are preserved. Garage P01 has a
+walnut-colour PVC soffit, twin-layer Alderon roof depiction and dark WF200 steel
+I-profile main framing. Six downlights GL01–GL06 follow the two rows of three on
+the MEP plan. Night mode enables them. Show canopy roof hides the soffit and
+roof for overhead inspection. The garage remains open on its sides and front.
+Canopy dimensions, steel flange/web sizes, roof profile and light output are
+illustrative; canopy measurements were not supplied. Shared canopy data lives in
+`house-model.ts`, rendering in `src/canopy.js`.

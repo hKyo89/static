@@ -90,36 +90,7 @@ export const houseWalls = [
     id: "W02",
     a: [0, 0],
     b: [0, 15],
-    openings: [
-      {
-        id: "WIN03",
-        name: "Rear room — left window",
-        at: 1,
-        width: 1.4,
-        kind: "window",
-      },
-      {
-        id: "WIN04",
-        name: "Service room — left window",
-        at: 4.5,
-        width: .6,
-        kind: "window",
-      },
-      {
-        id: "WIN05",
-        name: "Side room — left window",
-        at: 7.3,
-        width: 1,
-        kind: "window",
-      },
-      {
-        id: "WIN06",
-        name: "Kitchen — left window",
-        at: 11,
-        width: 1.5,
-        kind: "window",
-      },
-    ],
+    openings: [],
   },
   {
     id: "W03",
@@ -206,25 +177,7 @@ export const houseWalls = [
     id: "W12",
     a: [10, 1.225],
     b: [10, 15.625],
-    openings: [{
-      id: "WIN08",
-      name: "Living area — rear right window",
-      at: 2.2,
-      width: 2,
-      kind: "window",
-    }, {
-      id: "WIN09",
-      name: "Living area — front right window",
-      at: 6.1,
-      width: 2.5,
-      kind: "window",
-    }, {
-      id: "WIN10",
-      name: "Front side room — right window",
-      at: 11.4,
-      width: 1.1,
-      kind: "window",
-    }],
+    openings: [],
   },
   {
     id: "W13",
@@ -265,3 +218,22 @@ export const houseWalls = [
   },
 ] as const;
 export const lightwells = [{ bounds: [.15, 8.85, 1.2, 9.8] }] as const;
+
+// Photo-confirmed canopy finishes/frame; dimensions below are illustrative.
+export const canopyModel = {
+  bounds: [0, 15, 10, 20],
+  ceilingHeight: 3,
+  steelDepth: .20,
+  steelWidth: .10,
+  flangeThickness: .008,
+  webThickness: .0055,
+  roofGap: .04,
+  roofColour: 0xc6c9c8,
+  columns: [[.12, 19.88], [9.88, 19.88]],
+  beamRows: [15.12, 17.5, 19.88],
+  downlights: [[1.925, 16.775], [5, 16.775], [7.825, 16.775], [1.925, 18.775], [
+    5,
+    18.775,
+  ], [7.825, 18.775]],
+  lightRadius: .065,
+} as const;
