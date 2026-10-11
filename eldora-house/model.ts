@@ -200,3 +200,13 @@ export function wallPanelLength(
 ) {
   return Math.hypot(b[0] - a[0], b[1] - a[1]) + (joined ? thickness : 0);
 }
+
+// User-confirmed film appearance; opacity/roughness are visual approximations.
+export const windowFilm = {
+  insideColour: 0x171c21,
+  insideOpacity: .82,
+  outsideColour: 0xd5d9df,
+  outsideOpacity: .96,
+  outsideMetalness: .95,
+  outsideRoughness: .13,
+} as const;

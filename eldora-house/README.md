@@ -215,3 +215,12 @@ Read [ROOM_MAP.md](ROOM_MAP.md) for stable area IDs, coordinates, provisional
 names, and opening assumptions. House data lives in `house-model.ts`; courtyard
 and garden data remains in `model.ts`. Interior walls are off-white. There is no
 roof in the first-floor overview so the arrangement can be inspected.
+
+## Reflective window film
+
+All glazing, including sliding glass doors, has dark interior-facing film and
+silver reflective exterior-facing film. `model.ts` stores the appearance values;
+`src/window-film.js` provides consistent face materials. Exterior orientation
+follows the lot and garden sides. Reflections use a local illustrative
+sky/ground environment, not a captured reflection of the house. Film opacity is
+illustrative.

@@ -256,3 +256,12 @@ zones and opening assumptions. The original courtyard model remains in
 off-white. Overview, garden-only scope, room names and room focus are available.
 New architectural openings and provisional room uses are interpretations of the
 electrical plan, not confirmed schedules.
+
+## Reflective window film
+
+All glazing, including sliding glass doors, has dark interior-facing film and
+silver reflective exterior-facing film. `model.ts` stores the appearance values;
+`src/window-film.js` provides consistent face materials. Exterior orientation
+follows the lot and garden sides. Reflections use a local illustrative
+sky/ground environment, not a captured reflection of the house. Film opacity is
+illustrative.

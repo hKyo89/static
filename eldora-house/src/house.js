@@ -1,3 +1,4 @@
+import { filmMaterials } from "./window-film.js";
 import * as THREE from "three";
 import { CSS2DObject } from "three/addons/renderers/CSS2DRenderer.js";
 import {
@@ -33,13 +34,6 @@ export function createHouse(world) {
   const frame = new THREE.MeshStandardMaterial({
     color: 0x404b49,
     roughness: .7,
-  });
-  const glass = new THREE.MeshStandardMaterial({
-    color: 0xa6c8cf,
-    transparent: true,
-    opacity: .3,
-    side: THREE.DoubleSide,
-    depthWrite: false,
   });
   function box(parent, w, y, d, x, cy, z, mat) {
     const mesh = new THREE.Mesh(new THREE.BoxGeometry(w, y, d), mat);
@@ -102,7 +96,16 @@ export function createHouse(world) {
       segment(walls, a, b, 0, bottom, wall);
       segment(walls, a, b, top, h.wallHeight, wall);
       if (o.kind === "window" || o.kind === "sliding") {
-        segment(glazing, a, b, bottom + .04, top - .04, glass, .016, false);
+        segment(
+          glazing,
+          a,
+          b,
+          bottom + .04,
+          top - .04,
+          filmMaterials(w.id !== "W12"),
+          .016,
+          false,
+        );
         segment(glazing, a, b, bottom, bottom + .04, frame, .06, false);
         segment(glazing, a, b, top - .04, top, frame, .06, false);
         const n = o.kind === "sliding" ? 4 : 2;

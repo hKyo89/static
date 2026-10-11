@@ -1,3 +1,4 @@
+import { filmMaterials } from "./window-film.js";
 import { createHouse } from "./house.js";
 import { houseModel, rooms } from "../house-model.ts";
 import { createGarden } from "./garden.js";
@@ -125,15 +126,8 @@ function createViewer() {
     color: 0x40584c,
     roughness: 0.7,
   });
-  const glassMaterial = new THREE.MeshPhysicalMaterial({
-    color: 0x99cbd5,
-    transparent: true,
-    opacity: 0.28,
-    roughness: 0.13,
-    metalness: 0.05,
-    side: THREE.DoubleSide,
-    depthWrite: false,
-  });
+  const glassMaterial = filmMaterials(false);
+  const sideGlassMaterial = filmMaterials(false);
 
   function box(parent, width, height, depth, x, y, z, material, shadow = true) {
     const mesh = new THREE.Mesh(
@@ -476,7 +470,7 @@ function createViewer() {
       b,
       m.windowBottom,
       m.windowTop,
-      glassMaterial,
+      a[0] === b[0] ? sideGlassMaterial : glassMaterial,
       0.012,
       false,
     );
