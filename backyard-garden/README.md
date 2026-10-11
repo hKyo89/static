@@ -64,9 +64,10 @@ publication results are recorded in [DECISIONS.md](DECISIONS.md). A 3 m wall
 height is confirmed by the user. Floor dimensions are interpreted from
 screenshot dimensions. The user confirmed the short return wall and fixed-window
 / separator / four-sliding-door arrangement. Window height, framing, wall
-thickness, and paving are illustrative. This is a spatial study; construction
-measurements need confirmation. No plant layout, roof, furniture, engineering,
-irrigation, or drainage design was requested or approved.
+thickness, tile sizes, and divider sizes are illustrative. This is a spatial
+study; construction measurements need confirmation. No plant layout, roof,
+furniture, engineering, irrigation, or drainage design was requested or
+approved.
 
 Latest wall / sliding-door correction source commit:
 `feeb7e69700f62e2cd4c02a0b61610bf65c8e395`

@@ -106,7 +106,7 @@ all tasks from `/Users/hkyo89/Codes/github.com/hkyo89/static`. Build output is
 `backyard-garden/`. Do not edit generated bundles directly.
 
 Unknowns: actual clear site measurements, glazing vertical dimensions, frame
-layout, finished flooring, boundary-wall materials, and any garden design.
+layout, exact tile and divider dimensions, and any garden design.
 
 ## User corrections — 2026-10-11
 

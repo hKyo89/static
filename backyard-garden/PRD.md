@@ -24,9 +24,9 @@ conversation. The chat is named **Backyard Garden**; the project slug is
 
 Included: courtyard floor, two outer boundary walls, the inset return wall, a
 fixed frontage window, wall separator, four sliding doors and the left-side
-window, illustrative frames and paving, dimension labels, original references,
-project docs, shared router, home page, static export, validation and existing
-branch-Pages compatibility.
+window, illustrative frames, rough grey granite tiles and ivory roughcast walls,
+dimension labels, original references, project docs, shared router, home page,
+static export, validation and existing branch-Pages compatibility.
 
 Excluded: the rest of the house, new plant/furniture design,
 structure/engineering, roof, sunlight or drainage analysis, authenticated
@@ -73,9 +73,10 @@ from `projects.ts`. esbuild bundles browser code; Three.js and OrbitControls run
 entirely client-side. GitHub Pages serves tracked generated outputs.
 
 The viewer pairs a compact measurement/control sidebar with a large 3D stage. On
-mobile the controls stack above the stage. Initial cutaway view prioritizes
-visibility of the floor and windows. Full-wall mode restores the outer walls.
-Neutral materials avoid implying an approved garden design.
+mobile the controls stack above the stage. The initial full-wall view shows
+seven sections across the rear wall with six slim U-profile dividers. Cutaway
+mode exposes the floor and windows. Materials follow the user’s confirmed
+finishes; tile and divider dimensions are illustrative.
 
 ## Acceptance and verification
 

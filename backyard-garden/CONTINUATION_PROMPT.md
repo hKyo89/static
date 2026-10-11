@@ -46,7 +46,7 @@ on separate assumed tracks and stack left using the opening slider (0..100%).
 Reset closes them; fixed glass never moves. Track arrangement, 0.040 m overlap,
 0.060 m track spacing and 0.020 m door threshold are illustrative.
 Wall thickness 0.120 m,
-window bottom 0.120 m, top 2.850 m, framing and paving are assumptions.
+window bottom 0.120 m, top 2.850 m, framing, tile sizes and divider sizes are assumptions.
 Do not present screenshot readings as construction-ready measurements.
 No plant, furniture, roof, drainage, lighting or structure design is approved.
 
