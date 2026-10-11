@@ -281,15 +281,17 @@ function createViewer() {
   const openingInput = document.querySelector("[data-door-opening]");
   const openingOutput = document.querySelector("[data-door-output]");
   function setOpening() {
-    const fraction = Number(openingInput.value) / 100;
+    const fraction = Number(openingInput?.value ?? 0) / 100;
     slidingLeafPositions(fraction).forEach((position, i) =>
       doorLeaves[i].position.set(position.x, 0, position.z)
     );
-    openingOutput.textContent = fraction === 0
-      ? "Closed"
-      : `${Math.round(fraction * 100)}% open`;
+    if (openingOutput) {
+      openingOutput.textContent = fraction === 0
+        ? "Closed"
+        : `${Math.round(fraction * 100)}% open`;
+    }
   }
-  openingInput.addEventListener("input", setOpening);
+  openingInput?.addEventListener("input", setOpening);
   setOpening();
   for (const window of windows) {
     const { a, b, bays } = window;
@@ -463,7 +465,7 @@ function createViewer() {
       windowsInput.checked =
       dimensionsInput.checked =
         true;
-    openingInput.value = "0";
+    if (openingInput) openingInput.value = "0";
     setOpening();
     setView("perspective");
   };

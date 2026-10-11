@@ -136,3 +136,8 @@ no console warnings/errors were captured.
 Latest wall / sliding-door correction source commit:
 `feeb7e69700f62e2cd4c02a0b61610bf65c8e395`
 (`fix(backyard-garden): correct walls and add four sliding doors`).
+
+Publication cache handling: exported page links include deterministic content
+hashes for client scripts and styles. The viewer also tolerates an older cached
+page without the opening control, showing the corrected model closed instead of
+failing during initialization.

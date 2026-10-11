@@ -256,3 +256,10 @@ The optional registry field `legacyAliases` retains old single-folder URLs as
 Fresh redirects and static redirect documents. Duct uses `["dist"]` so old
 `/static/duct/dist/` bookmarks reach `/static/duct/`. This does not restore the
 retired per-project build.
+
+### Asset cache versions
+
+The exporter adds a deterministic content-hash query to each project script and
+stylesheet URL. Keep this behavior when adding projects so newly exported pages
+request the matching assets after publication. Client changes should tolerate
+older cached HTML where practical; GitHub Pages and browsers may retain it.

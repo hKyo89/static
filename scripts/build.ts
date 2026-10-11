@@ -23,7 +23,19 @@ export async function buildSite() {
       new Request(`http://localhost${basePath}/${path}`),
     );
     if (!response.ok) throw new Error(`Render ${path}: ${response.status}`);
-    const html = (await response.text()).replace(/ nonce="[^"]*"/g, "");
+    let html = (await response.text()).replace(/ nonce="[^"]*"/g, "");
+    // A fresh document must not reuse an older cached client or stylesheet.
+    for (const asset of ["viewer.js", "interactions.js", "styles.css"]) {
+      if (!html.includes(`"./${asset}"`)) continue;
+      const contents = await Deno.readFile(
+        `${destination.slice(0, destination.lastIndexOf("/"))}/${asset}`,
+      );
+      const digest = await crypto.subtle.digest("SHA-256", contents);
+      const version = [...new Uint8Array(digest)].map((byte) =>
+        byte.toString(16).padStart(2, "0")
+      ).join("").slice(0, 12);
+      html = html.replaceAll(`"./${asset}"`, `"./${asset}?v=${version}"`);
+    }
     await Deno.writeTextFile(
       destination,
       html.startsWith("<!DOCTYPE") || html.startsWith("<!doctype")
