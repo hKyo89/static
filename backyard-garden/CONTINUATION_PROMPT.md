@@ -13,7 +13,8 @@ Repository: git@github.com:hKyo89/static
 Local: /Users/hkyo89/Codes/github.com/hkyo89/static
 Branch: main
 Baseline before this project: 7c163bb5648ee1992a01ad4812da23506c713373
-Implementation source commit: 9df12f94a2bb6fe018fd98d3faba6588d337c4e8
+Initial implementation source commit: 9df12f94a2bb6fe018fd98d3faba6588d337c4e8
+Latest wall / sliding-door correction source commit: feeb7e69700f62e2cd4c02a0b61610bf65c8e395
 Public route: https://hkyo89.github.io/static/backyard-garden/
 Project directory name: backyard-garden
 Chat name: Backyard Garden

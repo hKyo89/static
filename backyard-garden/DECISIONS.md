@@ -71,7 +71,7 @@ instead of treating screenshot readings as surveyed facts.
 
 ## Validation and publication
 
-Implementation source commit: `9df12f94a2bb6fe018fd98d3faba6588d337c4e8`
+Initial implementation source commit: `9df12f94a2bb6fe018fd98d3faba6588d337c4e8`
 (`feat: consolidate static projects and add backyard garden viewer`).
 
 Validated locally on 2026-10-11:
@@ -132,3 +132,7 @@ export and Markdown links passed. Browser review verified the new slider opens
 the four leaves, Reset closes them, the short return is opaque, and the fixed
 window stays in place. The 390 px mobile layout had no horizontal overflow and
 no console warnings/errors were captured.
+
+Latest wall / sliding-door correction source commit:
+`feeb7e69700f62e2cd4c02a0b61610bf65c8e395`
+(`fix(backyard-garden): correct walls and add four sliding doors`).

@@ -21,8 +21,8 @@ rather than the backup template's default `prompts/backyard-garden`.
 
 Repository: `git@github.com:hKyo89/static`, branch `main`, local checkout
 `/Users/hkyo89/Codes/github.com/hkyo89/static`. Baseline before implementation:
-`7c163bb5648ee1992a01ad4812da23506c713373`. Implementation source commit:
-`9df12f94a2bb6fe018fd98d3faba6588d337c4e8`
+`7c163bb5648ee1992a01ad4812da23506c713373`. Initial implementation source
+commit: `9df12f94a2bb6fe018fd98d3faba6588d337c4e8`
 (`feat: consolidate static projects and add backyard garden viewer`).
 
 [model.ts](model.ts) defines geometry. [Page.tsx](Page.tsx) defines the
@@ -67,3 +67,7 @@ screenshot dimensions. The user confirmed the short return wall and fixed-window
 thickness, and paving are illustrative. This is a spatial study; construction
 measurements need confirmation. No plant layout, roof, furniture, engineering,
 irrigation, or drainage design was requested or approved.
+
+Latest wall / sliding-door correction source commit:
+`feeb7e69700f62e2cd4c02a0b61610bf65c8e395`
+(`fix(backyard-garden): correct walls and add four sliding doors`).
