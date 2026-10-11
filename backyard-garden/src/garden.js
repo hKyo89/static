@@ -175,11 +175,13 @@ export function createGarden(world) {
     );
     dummy.updateMatrix();
     pebbles.setMatrixAt(i, dummy.matrix);
-    const edge = z < .10 || x < .10 || x > m.width - .10 ||
-      (x > m.returnWidth ? z > m.stripDepth - .10 : z > m.returnDepth - .10);
+    // Soft mixed gravel throughout; no contrasting perimeter stripe.
+    const shade = random();
     pebbles.setColorAt(
       i,
-      new THREE.Color(edge ? colors[2] : random() < .8 ? colors[0] : colors[1]),
+      new THREE.Color(
+        shade < .025 ? colors[2] : shade < .80 ? colors[0] : colors[1],
+      ),
     );
   }
   pebbles.receiveShadow = true;

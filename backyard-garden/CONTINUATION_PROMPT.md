@@ -177,3 +177,7 @@ dimensions are unconfirmed. Stepping stones and loose pebbles stop at the
 decking edge. The 50 cm ball light moves to the rear-left pebble area, leaving
 the deck clear for standing. This supersedes the fully pebbled return and prior
 ball location.
+
+The black perimeter stripe has been removed. White and grey pebbles continue to
+the edges, with only a sparse scattering of dark pebbles throughout. This
+supersedes the earlier black edging and softens the garden’s outline.
