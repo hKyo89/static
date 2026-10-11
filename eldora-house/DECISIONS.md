@@ -307,3 +307,12 @@ The sliding doors now use an Open sliding doors checkbox instead of a percentage
 slider. Checking it places the two centre leaves fully to the sides immediately;
 unchecking closes them immediately. There is no movement animation or
 intermediate opening state in the UI. Reset closes the doors.
+
+## Circular wall-light lenses
+
+The user's latest close-up confirms full circular top/bottom light lenses, not
+half-disc or U-shaped emitters. The flat-backed, curved-front housing remains
+attached directly to the wall, without an arm. Each round lens has a dark rim;
+the warm low-output beams originate at the lens centres. The illustrated lens
+diameter is 24 mm; exact product measurements are unconfirmed. This supersedes
+the earlier half-disc apertures.

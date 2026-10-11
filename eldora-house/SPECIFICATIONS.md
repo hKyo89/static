@@ -287,3 +287,12 @@ See [OPENING_REFERENCES.md](OPENING_REFERENCES.md) for stable WIN01–WIN11,
 DR01–DR08 and OP01 names and coordinates. Sliding assemblies have A–D leaf
 references. `openings.ts` combines the shared model records. The viewer includes
 an optional ID overlay, focus selector and complete name list.
+
+## Circular wall-light lenses
+
+The user's latest close-up confirms full circular top/bottom light lenses, not
+half-disc or U-shaped emitters. The flat-backed, curved-front housing remains
+attached directly to the wall, without an arm. Each round lens has a dark rim;
+the warm low-output beams originate at the lens centres. The illustrated lens
+diameter is 24 mm; exact product measurements are unconfirmed. This supersedes
+the earlier half-disc apertures.

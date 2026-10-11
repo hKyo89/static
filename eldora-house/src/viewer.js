@@ -295,15 +295,31 @@ function createViewer() {
     fixture.add(body);
     for (const direction of [-1, 1]) {
       const aperture = new THREE.Mesh(
-        new THREE.ShapeGeometry(profile),
+        new THREE.CircleGeometry(wallLights.lensRadius, 32),
         lampMaterial,
       );
-      aperture.scale.set(.80, .80, 1);
       aperture.rotation.x = direction > 0 ? -Math.PI / 2 : Math.PI / 2;
-      // Mirror top aperture so its half-disc also projects into the courtyard.
-      if (direction > 0) aperture.scale.y *= -1;
-      aperture.position.y = direction * (wallLights.bodyHeight / 2 + .002);
+      aperture.position.set(
+        0,
+        direction * (wallLights.bodyHeight / 2 + .001),
+        wallLights.lensOffset,
+      );
       fixture.add(aperture);
+      const rim = new THREE.Mesh(
+        new THREE.RingGeometry(
+          wallLights.lensRadius,
+          wallLights.lensRadius + wallLights.lensRimWidth,
+          32,
+        ),
+        sconceMaterial,
+      );
+      rim.rotation.x = aperture.rotation.x;
+      rim.position.set(
+        0,
+        direction * (wallLights.bodyHeight / 2 + .003),
+        wallLights.lensOffset,
+      );
+      fixture.add(rim);
       const beam = new THREE.SpotLight(
         0xffbd73,
         wallLights.beamIntensity,

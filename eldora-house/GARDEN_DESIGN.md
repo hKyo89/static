@@ -107,3 +107,12 @@ mm from the wall, instead of the old 100 mm bracket offset. Up/down apertures
 and dim warm grazing beams sit close to the roughcast, with smaller light pools.
 Mounting tolerance and beam output remain illustrative. This supersedes the
 earlier cylindrical body and projecting mounting bracket.
+
+## Circular wall-light lenses
+
+The user's latest close-up confirms full circular top/bottom light lenses, not
+half-disc or U-shaped emitters. The flat-backed, curved-front housing remains
+attached directly to the wall, without an arm. Each round lens has a dark rim;
+the warm low-output beams originate at the lens centres. The illustrated lens
+diameter is 24 mm; exact product measurements are unconfirmed. This supersedes
+the earlier half-disc apertures.
