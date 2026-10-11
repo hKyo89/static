@@ -57,9 +57,10 @@ function createViewer() {
   controls.minDistance = 2;
   controls.maxDistance = 40;
   controls.maxPolarAngle = Math.PI / 2 - 0.015;
-  scene.add(new THREE.HemisphereLight(0xffffff, 0x82947e, 2.5));
+  const sky = new THREE.HemisphereLight(0xffffff, 0x82947e, 2.5);
+  scene.add(sky);
   const sun = new THREE.DirectionalLight(0xfff4dd, 3);
-  // Negative Z is the open backyard side; positive Z is the house.
+  // The sun is directly above the courtyard in daylight.
   sun.position.set(...lighting.sunPosition);
   sun.castShadow = true;
   sun.shadow.mapSize.set(2048, 2048);
@@ -263,6 +264,7 @@ function createViewer() {
     roughness: .65,
     metalness: .35,
   });
+  const lampBeams = [];
   const lampMaterial = new THREE.MeshStandardMaterial({
     color: 0xffe4ae,
     emissive: 0xffd18b,
@@ -309,6 +311,7 @@ function createViewer() {
       const beam = new THREE.SpotLight(0xffd394, 4, 1.8, Math.PI / 5, .7, 2);
       beam.position.set(0, direction * wallLights.bodyHeight / 2, .005);
       beam.target.position.set(0, direction * .8, -wallLights.projection);
+      lampBeams.push(beam);
       fixture.add(beam, beam.target);
     }
   }
@@ -567,7 +570,29 @@ function createViewer() {
     [.22, 0, 0],
   );
 
-  const cutawayInput = document.querySelector("[data-cutaway]");
+  const wallsInput = document.querySelector("[data-walls]");
+  const legacyCutawayInput = document.querySelector("[data-cutaway]");
+  let lightingMode = "day";
+  function setLighting(mode) {
+    lightingMode = mode;
+    stage.closest(".viewer").dataset.lighting = mode;
+    const night = mode === "night";
+    sun.visible = !night;
+    sky.intensity = night ? .22 : 2.5;
+    scene.background.set(night ? 0x111b28 : 0xeef1e7);
+    lampMaterial.emissiveIntensity = night ? 2 : 0;
+    for (const beam of lampBeams) beam.visible = night;
+    document.querySelectorAll("[data-lighting]").forEach((button) =>
+      button.setAttribute(
+        "aria-pressed",
+        String(button.dataset.lighting === mode),
+      )
+    );
+    refresh();
+  }
+  document.querySelectorAll("[data-lighting]").forEach((button) =>
+    button.onclick = () => setLighting(button.dataset.lighting)
+  );
   const windowsInput = document.querySelector("[data-windows]");
   const dimensionsInput = document.querySelector("[data-dimensions]");
   let view = "perspective";
@@ -602,12 +627,16 @@ function createViewer() {
     );
   }
   function refresh() {
-    boundary.visible = !cutawayInput.checked;
+    boundary.visible = wallsInput
+      ? wallsInput.checked
+      : !legacyCutawayInput?.checked;
     glazing.visible = windowsInput.checked;
     dimensions.visible = dimensionsInput.checked;
     status.textContent = `${
       view === "plan" ? "Floor plan" : view === "inside" ? "Inside" : "3D view"
-    } · ${boundary.visible ? "full-height walls" : "cutaway walls"}`;
+    } · ${
+      boundary.visible ? "full-height walls" : "cutaway walls"
+    } · ${lightingMode}`;
   }
   function setView(name) {
     view = name;
@@ -633,11 +662,19 @@ function createViewer() {
   document.querySelectorAll("[data-camera]").forEach((button) =>
     button.onclick = () => setView(button.dataset.camera)
   );
-  for (const input of [cutawayInput, windowsInput, dimensionsInput]) {
-    input.onchange = refresh;
+  for (
+    const input of [
+      wallsInput ?? legacyCutawayInput,
+      windowsInput,
+      dimensionsInput,
+    ]
+  ) {
+    if (input) input.onchange = refresh;
   }
   document.querySelector("[data-reset]").onclick = () => {
-    cutawayInput.checked = false;
+    if (wallsInput) wallsInput.checked = true;
+    if (legacyCutawayInput) legacyCutawayInput.checked = false;
+    setLighting("day");
     windowsInput.checked = dimensionsInput.checked = true;
     if (openingInput) openingInput.value = "0";
     setOpening();
@@ -654,6 +691,7 @@ function createViewer() {
   new ResizeObserver(resize).observe(stage);
   resize();
   setView("perspective");
+  setLighting("day");
   renderer.setAnimationLoop(() => {
     controls.update();
     renderer.render(scene, camera);

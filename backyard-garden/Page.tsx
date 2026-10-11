@@ -65,9 +65,21 @@ export function BackyardPage() {
                   Inside
                 </button>
               </div>
+              <div class="view-buttons" role="group" aria-label="Lighting">
+                <button type="button" data-lighting="day" aria-pressed="true">
+                  Day
+                </button>
+                <button
+                  type="button"
+                  data-lighting="night"
+                  aria-pressed="false"
+                >
+                  Night
+                </button>
+              </div>
               <label class="toggle">
-                <span>Cutaway walls</span>
-                <input type="checkbox" data-cutaway />
+                <span>Show walls</span>
+                <input type="checkbox" data-walls checked />
               </label>
               <label class="toggle">
                 <span>Show windows</span>
@@ -99,7 +111,7 @@ export function BackyardPage() {
                 <dt>Wall lights</dt>
                 <dd>Six compact up/down lights · 2 m above floor</dd>
                 <dt>House & sunlight</dt>
-                <dd>Two-storey house · sunlight from the open backyard side</dd>
+                <dd>Two-storey house · daylight directly overhead</dd>
                 <dt>Finishes</dt>
                 <dd>Rough grey granite tiles · ivory roughcast walls</dd>
                 <dt>Long wall</dt>

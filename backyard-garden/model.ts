@@ -70,7 +70,7 @@ export const finishes = {
 export const lighting = {
   houseHeight: 6,
   houseDepth: 4,
-  sunPosition: [-4, 12, -8],
+  sunPosition: [0, 12, 0],
 } as const;
 
 // Six compact up/down sconces, counting sections from the right.

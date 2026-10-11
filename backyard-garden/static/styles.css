@@ -472,3 +472,9 @@ h2 {
     margin-top: 12px;
   }
 }
+
+.viewer[data-lighting="night"] .stage-tag,
+.viewer[data-lighting="night"] .stage-tag span,
+.viewer[data-lighting="night"] .view-status {
+  color: #d9e1e8;
+}

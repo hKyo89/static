@@ -147,3 +147,11 @@ fixture centres 2 m above the floor. Each has a mounting bracket, warm apertures
 and upward/downward light beams. The compact 160 mm body, 70 mm diameter,
 projection and beam output are illustrative; no exact product size was supplied.
 Fixtures belong to the boundary wall and hide with Cutaway walls.
+
+## Day/night and wall controls
+
+Show walls is enabled by default; unchecking it hides the outer boundary. Day is
+the default, with sunlight directly overhead and sconces off. Night turns off
+the sun, reduces sky illumination and enables the six warm up/down sconces.
+Reset restores Day and Show walls. This supersedes the earlier rear-side sun
+direction and Cutaway walls control. Lighting is an illustrative preview.
