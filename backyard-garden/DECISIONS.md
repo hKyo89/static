@@ -159,3 +159,9 @@ storey and house roof envelope blocks light from the house side without adding a
 roof over the courtyard. The 6 m total house height, 4 m modelled house depth
 and sun angle are illustrative. This is not a date/location solar study. Reset
 restores the full-wall starting view.
+
+## Centre-opening correction
+
+The user confirmed the two centre doors slide outward behind the outer pair,
+leaving a central opening. This supersedes the earlier four-track left stack.
+Only the centre pair moves; handles are placed on their meeting edges.

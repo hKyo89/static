@@ -25,6 +25,7 @@ export const frontage = {
   separatorWidth: 0.12,
   slidingWidth: 3.825,
   leafCount: 4,
+  trackCount: 2,
   overlap: 0.04,
   trackSpacing: 0.06,
   doorBottom: 0.02,
@@ -42,17 +43,18 @@ export const windows = [
   },
   { name: "Left-side window", a: [0, 0], b: [0, model.returnDepth], bays: 2 },
 ] as const;
-// Four separate tracks allow leaves to stack without passing through one another.
-// The stacking arrangement is illustrative; the confirmed fact is four sliding doors.
+// Outer leaves stay in place; the centre pair slides outward behind them.
 export function slidingLeafPositions(openFraction: number) {
   const fraction = Math.max(
     0,
     Math.min(1, Number.isFinite(openFraction) ? openFraction : 0),
   );
+  const pitch = leafWidth - frontage.overlap;
   return Array.from({ length: frontage.leafCount }, (_, i) => ({
-    x: slidingStart + i * (leafWidth - frontage.overlap) * (1 - fraction),
+    x: slidingStart + i * pitch +
+      (i === 1 ? -pitch * fraction : i === 2 ? pitch * fraction : 0),
     z: model.stripDepth +
-      (i - (frontage.leafCount - 1) / 2) * frontage.trackSpacing,
+      ((i === 1 || i === 2) ? .5 : -.5) * frontage.trackSpacing,
   }));
 }
 

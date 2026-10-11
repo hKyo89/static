@@ -118,7 +118,7 @@ export function BackyardPage() {
               <p>
                 Plan dimensions are interpreted from the supplied screenshot.
                 Wall thickness (0.12 m), window sill (0.12 m), window top (2.85
-                m), wall separator width, four-track stacking, tile size, and
+                m), wall separator width, track dimensions, tile size, and
                 U-divider dimensions, 6 m house height, and sun angle are
                 illustrative. Confirm before construction.
               </p>

@@ -42,9 +42,9 @@ outputs; edit their source files and rebuild.
 Drag to orbit, right-drag/two fingers to pan, and scroll/pinch to zoom. Use the
 3D, floor-plan, and inside presets. Cutaway walls reveal the narrow courtyard.
 Window and dimension switches control visibility. The sliding-door opening
-slider stacks four leaves on separate tracks. The short return is solid. View
-drawing opens the source plan and close-ups; Reset view restores the initial
-view.
+slider moves the two centre leaves outward behind the stationary outer leaves.
+The short return is solid. View drawing opens the source plan and close-ups;
+Reset view restores the initial view.
 
 Run from the repository root:
 
@@ -90,3 +90,9 @@ storey and house roof envelope blocks light from the house side without adding a
 roof over the courtyard. The 6 m total house height, 4 m modelled house depth
 and sun angle are illustrative. This is not a date/location solar study. Reset
 restores the full-wall starting view.
+
+## Centre-opening correction
+
+The user confirmed the two centre doors slide outward behind the outer pair,
+leaving a central opening. This supersedes the earlier four-track left stack.
+Only the centre pair moves; handles are placed on their meeting edges.

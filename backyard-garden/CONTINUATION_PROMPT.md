@@ -42,7 +42,7 @@ then four continuous sliding glass doors on the right. Blueprint sections are
 1.600 m left bay and 3.825 m sliding opening. The assumed 0.120 m separator
 occupies the right end of the left bay, giving fixed glass width 1.480 m.
 Left-side window is 2.025 m; inset vertical return is solid. Four leaves slide
-on separate assumed tracks and stack left using the opening slider (0..100%).
+with the centre pair sliding outward behind the outer leaves using the opening slider (0..100%).
 Reset closes them; fixed glass never moves. Track arrangement, 0.040 m overlap,
 0.060 m track spacing and 0.020 m door threshold are illustrative.
 Wall thickness 0.120 m,
@@ -102,3 +102,9 @@ storey and house roof envelope blocks light from the house side without adding a
 roof over the courtyard. The 6 m total house height, 4 m modelled house depth
 and sun angle are illustrative. This is not a date/location solar study. Reset
 restores the full-wall starting view.
+
+## Centre-opening correction
+
+The user confirmed the two centre doors slide outward behind the outer pair,
+leaving a central opening. This supersedes the earlier four-track left stack.
+Only the centre pair moves; handles are placed on their meeting edges.

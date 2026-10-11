@@ -113,11 +113,21 @@ Deno.test("fixed window, wall separator and four sliding doors preserve frontage
     closed[0].x !== slidingStart
   ) throw new Error("Closed doors do not cover full opening");
   if (
-    new Set(open.map((p) => p.z)).size !== 4 ||
-    new Set(open.map((p) => p.x)).size !== 1
-  ) throw new Error("Open leaves must stack on separate tracks");
-  if (frontage.slidingWidth - leafWidth < 2.8) {
-    throw new Error("No usable opening");
+    open[0].x !== closed[0].x || open[3].x !== closed[3].x ||
+    open[1].x !== open[0].x || Math.abs(open[2].x - open[3].x) > 1e-8 ||
+    open[1].z === open[0].z || open[2].z === open[3].z
+  ) {
+    throw new Error("Centre leaves must stack behind stationary outer leaves");
+  }
+  const gap = open[2].x - (open[1].x + leafWidth);
+  if (Math.abs(gap - (frontage.slidingWidth - 2 * leafWidth)) > 1e-8) {
+    throw new Error(
+      "Expected central opening equal to span minus two outer leaves",
+    );
+  }
+  const half = slidingLeafPositions(.5);
+  if (!(half[1].x < closed[1].x && half[2].x > closed[2].x)) {
+    throw new Error("Centre doors must move in opposite directions");
   }
   if (
     JSON.stringify(slidingLeafPositions(-1)) !== JSON.stringify(closed) ||

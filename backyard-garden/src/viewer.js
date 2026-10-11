@@ -340,7 +340,7 @@ function createViewer() {
     0,
     frontage.doorBottom,
     frameMaterial,
-    frontage.trackSpacing * (frontage.leafCount - 1) + .06,
+    frontage.trackSpacing * (frontage.trackCount - 1) + .06,
   );
   panel(
     glazing,
@@ -349,7 +349,7 @@ function createViewer() {
     m.windowTop - .025,
     m.windowTop,
     frameMaterial,
-    frontage.trackSpacing * (frontage.leafCount - 1) + .06,
+    frontage.trackSpacing * (frontage.trackCount - 1) + .06,
   );
   const doorLeaves = [];
   const doorHeight = m.windowTop - frontage.doorBottom;
@@ -384,8 +384,19 @@ function createViewer() {
     for (const y of [frontage.doorBottom + .02, m.windowTop - .02]) {
       box(leaf, leafWidth, .04, .04, leafWidth / 2, y, 0, frameMaterial);
     }
-    // Small pull handle distinguishes an operable leaf from the fixed window.
-    box(leaf, .025, .22, .035, leafWidth - .09, 1.1, -.035, frameMaterial);
+    // Pulls sit at the meeting edges of the two operable centre leaves.
+    if (i === 1 || i === 2) {
+      box(
+        leaf,
+        .025,
+        .22,
+        .035,
+        i === 1 ? leafWidth - .09 : .09,
+        1.1,
+        -.035,
+        frameMaterial,
+      );
+    }
   }
   const openingInput = document.querySelector("[data-door-opening]");
   const openingOutput = document.querySelector("[data-door-output]");

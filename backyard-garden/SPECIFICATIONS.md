@@ -56,14 +56,12 @@ spans X=1.350…2.830, separator X=2.830…2.950, and doors X=2.950…6.775. The
 window is not an operable door and never moves. Left-side glazing remains at
 X=0, Z=0…2.025.
 
-Four sliding leaves form one continuous right opening. The illustrative design
-uses four tracks, 0.060 m apart, with 0.040 m leaf overlap. Each leaf is 0.98625
-m wide; closed leaves cover the full 3.825 m span. At 100% open they stack at
-the left of that opening, leaving about 2.839 m clear. The doors have an
-illustrative 0.020 m threshold instead of a wall sill across the opening. Actual
-track system, stacking direction, separator thickness, threshold and vertical
-glazing dimensions still require confirmation. `slidingLeafPositions` clamps
-opening fractions to 0…1 and returns separate track positions.
+Four leaves form one continuous right opening. The outer pair stays stationary;
+the two centre leaves slide in opposite directions behind them on an
+illustrative two-track system, 0.060 m apart. Each leaf is 0.98625 m wide with
+0.040 m overlap. At 100% open, two pairs sit at the sides and leave about 1.853
+m clear in the centre. Track dimensions, threshold and vertical dimensions
+remain illustrative. `slidingLeafPositions` clamps opening fractions to 0…1.
 
 ## Source references
 
@@ -134,3 +132,9 @@ storey and house roof envelope blocks light from the house side without adding a
 roof over the courtyard. The 6 m total house height, 4 m modelled house depth
 and sun angle are illustrative. This is not a date/location solar study. Reset
 restores the full-wall starting view.
+
+## Centre-opening correction
+
+The user confirmed the two centre doors slide outward behind the outer pair,
+leaving a central opening. This supersedes the earlier four-track left stack.
+Only the centre pair moves; handles are placed on their meeting edges.

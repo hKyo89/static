@@ -42,8 +42,8 @@ Duct model.
    the right. The left-side window and solid inset return remain.
 3. Users can orbit, pan, zoom, choose three view presets, reset, and toggle
    boundary-wall cutaway, glazing, and dimension labels. An opening slider moves
-   four separate leaves along parallel tracks to reveal a usable passage. Reset
-   closes the doors. The fixed window never moves.
+   the two centre leaves outward to reveal a central passage. Reset closes the
+   doors. The fixed window never moves.
 4. Source drawing and all three close-ups are available in an accessible dialog.
 5. The page shows which dimensions are interpreted and which are assumptions.
 6. When WebGL cannot initialize, show a readable failure state and source-plan
@@ -103,3 +103,9 @@ storey and house roof envelope blocks light from the house side without adding a
 roof over the courtyard. The 6 m total house height, 4 m modelled house depth
 and sun angle are illustrative. This is not a date/location solar study. Reset
 restores the full-wall starting view.
+
+## Centre-opening correction
+
+The user confirmed the two centre doors slide outward behind the outer pair,
+leaving a central opening. This supersedes the earlier four-track left stack.
+Only the centre pair moves; handles are placed on their meeting edges.
