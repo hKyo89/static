@@ -292,3 +292,11 @@ silver reflective exterior-facing film. `model.ts` stores the appearance values;
 follows the lot and garden sides. Reflections use a local illustrative
 sky/ground environment, not a captured reflection of the house. Film opacity is
 illustrative.
+
+## Removed front features and open garage
+
+The front-left stair and rounded front-corner pedestrian entrance shown on the
+old drawing have been removed. The front wide area (P01) is an open garage,
+without front or side perimeter walls and without gates. The right house wall
+stops at the front side room (Z=15.625 m). House-facing walls remain. This user
+correction supersedes the old carport enclosure and second stair run.

@@ -19,7 +19,7 @@ wall paths, and openings are editable in `house-model.ts`.
 | E01 | Entrance hall         | Provisional approach zone                   |
 | R06 | Front side room       | Use unconfirmed                             |
 | T01 | Front terrace         | Provisional entrance transition             |
-| P01 | Carport / front yard  | Vehicle access indicated                    |
+| P01 | Open garage           | Confirmed open garage                       |
 
 The electrical drawing is not a complete architectural opening schedule. This is
 a full-floor spatial interpretation, not a construction model. Newly added
@@ -34,3 +34,11 @@ The 1F overview omits the roof and upper floor. The garden-only view retains the
 existing two-storey shadow envelope. New interior doors are shown partly open;
 the original garden sliding-door slider still operates the centre pair. Source:
 [full first-floor drawing](static/reference/first-floor.png).
+
+## Removed front features and open garage
+
+The front-left stair and rounded front-corner pedestrian entrance shown on the
+old drawing have been removed. The front wide area (P01) is an open garage,
+without front or side perimeter walls and without gates. The right house wall
+stops at the front side room (Z=15.625 m). House-facing walls remain. This user
+correction supersedes the old carport enclosure and second stair run.

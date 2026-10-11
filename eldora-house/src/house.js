@@ -132,12 +132,9 @@ export function createHouse(world) {
     }
     segment(walls, point(cursor), w.b, 0, h.wallHeight, wall);
   }
-  // Stair diagram follows the plan's two left-side runs; rise is illustrative.
+  // Only the central stair remains; the front-left stair was removed.
   for (let i = 0; i < 12; i++) {
     box(group, 1, .08, .25, 2.625, .08 + i * .16, 4.25 + i * .25, floor);
-  }
-  for (let i = 0; i < 10; i++) {
-    box(group, .85, .08, .23, .65, .08 + i * .16, 11.2 + i * .23, floor);
   }
   for (const well of lightwells) {
     const [x, z, x2, z2] = well.bounds;

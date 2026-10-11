@@ -78,9 +78,9 @@ export const rooms = [
   },
   {
     id: "P01",
-    name: "Carport / front yard",
+    name: "Open garage",
     bounds: [0, 15.625, 10, 20],
-    note: "Vehicle and pedestrian approach.",
+    note: "Confirmed open garage without perimeter walls or gates.",
   },
 ] as const;
 // Openings are offsets along wall centre-lines. New sizes/heights are illustrative.
@@ -143,7 +143,7 @@ export const houseWalls = [
   {
     id: "W12",
     a: [10, 1.225],
-    b: [10, 20],
+    b: [10, 15.625],
     openings: [{ at: 2.2, width: 2, kind: "window" }, {
       at: 6.1,
       width: 2.5,
@@ -168,17 +168,6 @@ export const houseWalls = [
     a: [8.2, 15.625],
     b: [10, 15.625],
     openings: [{ at: .3, width: 1.2, kind: "window" }],
-  },
-  { id: "W17", a: [0, 15], b: [0, 20], openings: [] },
-  {
-    id: "W18",
-    a: [0, 20],
-    b: [10, 20],
-    openings: [{ at: .2, width: 7.8, kind: "gate" }, {
-      at: 8.4,
-      width: 1.1,
-      kind: "gate",
-    }],
   },
 ] as const;
 export const lightwells = [{ bounds: [.15, 8.85, 1.2, 9.8] }] as const;
