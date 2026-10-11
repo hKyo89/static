@@ -116,3 +116,12 @@ return previously modelled incorrectly as glass.
 previous five-bay model, superseded by fixed window + solid separator + four
 sliding doors. These are screenshots of the incorrect viewer, retained to locate
 the correction; their depicted geometry is not authoritative.
+
+## Confirmed finishes
+
+Floor: rough grey granite tiles. Walls: ivory roughcast. The long rear wall is
+divided across its width into seven side-by-side sections with six slim recessed
+U-profile dividers. Equal spacing, 18 mm divider width, 8 mm recess and 450 mm
+tile spacing are illustrative; the user has not supplied sizes. Full walls are
+shown initially so the dividers can be inspected; Cutaway walls remains
+available. Textures are generated locally and require no external images.

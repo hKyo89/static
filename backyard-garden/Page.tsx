@@ -67,7 +67,7 @@ export function BackyardPage() {
               </div>
               <label class="toggle">
                 <span>Cutaway walls</span>
-                <input type="checkbox" data-cutaway checked />
+                <input type="checkbox" data-cutaway />
               </label>
               <label class="toggle">
                 <span>Show windows</span>
@@ -96,6 +96,10 @@ export function BackyardPage() {
             <details class="specifications">
               <summary>Measurements & assumptions</summary>
               <dl>
+                <dt>Finishes</dt>
+                <dd>Rough grey granite tiles · ivory roughcast walls</dd>
+                <dt>Long wall</dt>
+                <dd>Seven sections with slim recessed U dividers</dd>
                 <dt>Overall width</dt>
                 <dd>{model.width.toFixed(3)} m</dd>
                 <dt>Main strip depth</dt>
@@ -112,8 +116,9 @@ export function BackyardPage() {
               <p>
                 Plan dimensions are interpreted from the supplied screenshot.
                 Wall thickness (0.12 m), window sill (0.12 m), window top (2.85
-                m), wall separator width, four-track stacking, and floor finish
-                are illustrative. Confirm before construction.
+                m), wall separator width, four-track stacking, tile size, and
+                U-divider dimensions are illustrative. Confirm before
+                construction.
               </p>
             </details>
             <div class="legend">
@@ -145,7 +150,7 @@ export function BackyardPage() {
               </button>
             </div>
             <p class="view-status" data-status aria-live="polite">
-              3D view · cutaway walls
+              3D view · full-height walls
             </p>
           </section>
         </main>

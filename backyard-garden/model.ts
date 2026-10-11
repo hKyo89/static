@@ -55,3 +55,11 @@ export function slidingLeafPositions(openFraction: number) {
       (i - (frontage.leafCount - 1) / 2) * frontage.trackSpacing,
   }));
 }
+
+// User-confirmed finishes and seven sections across the long rear wall.
+export const finishes = {
+  wallSections: 7,
+  dividerWidth: 0.018,
+  dividerDepth: 0.008,
+  tileSize: 0.45,
+} as const;

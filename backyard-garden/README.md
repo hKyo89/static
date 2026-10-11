@@ -71,3 +71,12 @@ irrigation, or drainage design was requested or approved.
 Latest wall / sliding-door correction source commit:
 `feeb7e69700f62e2cd4c02a0b61610bf65c8e395`
 (`fix(backyard-garden): correct walls and add four sliding doors`).
+
+## Confirmed finishes
+
+Floor: rough grey granite tiles. Walls: ivory roughcast. The long rear wall is
+divided across its width into seven side-by-side sections with six slim recessed
+U-profile dividers. Equal spacing, 18 mm divider width, 8 mm recess and 450 mm
+tile spacing are illustrative; the user has not supplied sizes. Full walls are
+shown initially so the dividers can be inspected; Cutaway walls remains
+available. Textures are generated locally and require no external images.

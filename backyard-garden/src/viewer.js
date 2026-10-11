@@ -5,6 +5,7 @@ import {
   CSS2DRenderer,
 } from "three/addons/renderers/CSS2DRenderer.js";
 import {
+  finishes,
   frontage,
   leafWidth,
   model as m,
@@ -75,13 +76,40 @@ function createViewer() {
     glazing = new THREE.Group(),
     dimensions = new THREE.Group();
   world.add(boundary, glazing, dimensions);
+  // Deterministic mineral grains provide local, offline surface textures.
+  function mineralTexture(base, spread, repeat) {
+    const canvas = document.createElement("canvas");
+    canvas.width = canvas.height = 256;
+    const context = canvas.getContext("2d");
+    const pixels = context.createImageData(256, 256);
+    let seed = 92741;
+    for (let i = 0; i < pixels.data.length; i += 4) {
+      seed = (Math.imul(seed, 1664525) + 1013904223) >>> 0;
+      const grain = ((seed / 4294967296) - .5) * spread;
+      for (let c = 0; c < 3; c++) pixels.data[i + c] = base[c] + grain;
+      pixels.data[i + 3] = 255;
+    }
+    context.putImageData(pixels, 0, 0);
+    const texture = new THREE.CanvasTexture(canvas);
+    texture.wrapS = texture.wrapT = THREE.RepeatWrapping;
+    texture.repeat.set(repeat, repeat);
+    texture.colorSpace = THREE.SRGBColorSpace;
+    texture.anisotropy = renderer.capabilities.getMaxAnisotropy();
+    return texture;
+  }
+  const roughcast = mineralTexture([233, 226, 207], 32, 10);
+  const granite = mineralTexture([133, 137, 139], 85, 12);
   const wallMaterial = new THREE.MeshStandardMaterial({
-    color: 0xe3e3d6,
-    roughness: 0.93,
+    map: roughcast,
+    bumpMap: roughcast,
+    bumpScale: .018,
+    roughness: 1,
   });
   const floorMaterial = new THREE.MeshStandardMaterial({
-    color: 0xd9cbb1,
-    roughness: 0.9,
+    map: granite,
+    bumpMap: granite,
+    bumpScale: .012,
+    roughness: .98,
   });
   const frameMaterial = new THREE.MeshStandardMaterial({
     color: 0x40584c,
@@ -128,11 +156,11 @@ function createViewer() {
     (m.returnDepth + m.stripDepth) / 2,
     floorMaterial,
   );
-  // Neutral paving joints illustrate the floor without prescribing a landscape design.
+  // Granite tile joints; tile size remains illustrative.
   const jointMaterial = new THREE.LineBasicMaterial({
-    color: 0xb7ad98,
+    color: 0x55595a,
     transparent: true,
-    opacity: 0.45,
+    opacity: 0.7,
   });
   function line(a, b, parent = world, material = jointMaterial) {
     const geometry = new THREE.BufferGeometry().setFromPoints([
@@ -141,14 +169,14 @@ function createViewer() {
     ]);
     parent.add(new THREE.Line(geometry, material));
   }
-  for (let x = 0.45; x < m.width; x += 0.45) {
+  for (let x = finishes.tileSize; x < m.width; x += finishes.tileSize) {
     line([x, 0.006, 0], [
       x,
       0.006,
       x < m.returnWidth ? m.returnDepth : m.stripDepth,
     ]);
   }
-  for (let z = 0.45; z < m.returnDepth; z += 0.45) {
+  for (let z = finishes.tileSize; z < m.returnDepth; z += finishes.tileSize) {
     line([0, 0.006, z], [
       z <= m.stripDepth ? m.width : m.returnWidth,
       0.006,
@@ -181,7 +209,46 @@ function createViewer() {
     mesh.rotation.y = -Math.atan2(b[1] - a[1], b[0] - a[0]);
     return mesh;
   }
-  panel(boundary, [0, 0], [m.width, 0], 0, m.wallHeight, wallMaterial);
+  // Seven side-by-side roughcast panels, separated by six recessed U channels.
+  const channelMaterial = new THREE.MeshStandardMaterial({
+    color: 0xaaa591,
+    roughness: .9,
+  });
+  const pitch = m.width / finishes.wallSections;
+  for (let i = 0; i < finishes.wallSections; i++) {
+    const left = i * pitch + (i ? finishes.dividerWidth / 2 : 0);
+    const right = (i + 1) * pitch -
+      (i < finishes.wallSections - 1 ? finishes.dividerWidth / 2 : 0);
+    panel(boundary, [left, 0], [right, 0], 0, m.wallHeight, wallMaterial);
+    if (i > 0) {
+      const x = i * pitch;
+      const w = finishes.dividerWidth;
+      const d = finishes.dividerDepth;
+      // Recessed web and two slender flanges form an actual U section.
+      box(
+        boundary,
+        w,
+        m.wallHeight,
+        .002,
+        x,
+        m.wallHeight / 2,
+        m.wallThickness / 2 - d,
+        channelMaterial,
+      );
+      for (const side of [-1, 1]) {
+        box(
+          boundary,
+          .002,
+          m.wallHeight,
+          d,
+          x + side * (w / 2 - .001),
+          m.wallHeight / 2,
+          m.wallThickness / 2 - d / 2,
+          channelMaterial,
+        );
+      }
+    }
+  }
   panel(
     boundary,
     [m.width, 0],
@@ -443,7 +510,7 @@ function createViewer() {
     } else if (name === "inside") {
       camera.position.set(2.5, 1.6, -.55);
       controls.target.set(-1.5, 1.4, -.55);
-    } else camera.position.set(8.5, 7.2, -8.5);
+    } else camera.position.set(8.5, 7.2, 8.5);
     fitCamera();
     document.querySelectorAll("[data-camera]").forEach((button) =>
       button.setAttribute(
