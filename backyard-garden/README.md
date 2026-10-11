@@ -136,3 +136,7 @@ arrangement opposite the sliding doors. Flush grey stepping stones provide a
 route beside the doors and through the return. Granite remains beneath the
 removable concept. All planting is artificial; pebble depth and installation
 details remain illustrative.
+
+Night mode includes a warm ground spotlight in front of the bonsai, aimed upward
+through the foliage toward the rear wall. Its shadow map projects the branches
+and canopy onto the wall. The beam and fixture placement are illustrative.

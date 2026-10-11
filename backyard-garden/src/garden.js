@@ -205,6 +205,29 @@ export function createGarden(world) {
     group.add(light);
     lights.push(light);
   }
+  // Low warm uplight from the door side, projecting foliage shadows rearward.
+  const uplight = new THREE.SpotLight(0xffc58a, 6, 4, Math.PI / 5, .6, 2);
+  uplight.position.set(g.bonsai.x + .08, .09, g.bonsai.z + .55);
+  uplight.target.position.set(g.bonsai.x, .85, .03);
+  uplight.castShadow = true;
+  uplight.shadow.mapSize.set(1024, 1024);
+  uplight.shadow.camera.near = .03;
+  uplight.shadow.camera.far = 4;
+  uplight.shadow.bias = -.0002;
+  uplight.shadow.normalBias = .005;
+  uplight.visible = false;
+  group.add(uplight, uplight.target);
+  lights.push(uplight);
+  const housing = mesh(
+    new THREE.CylinderGeometry(.035, .045, .07, 16),
+    dark,
+    uplight.position.x,
+    .07,
+    uplight.position.z,
+  );
+  housing.name = "Bonsai ground spotlight";
+  housing.lookAt(uplight.target.position);
+  housing.rotateX(Math.PI / 2);
   return {
     group,
     setNight(night) {
