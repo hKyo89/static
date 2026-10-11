@@ -448,3 +448,27 @@ h2 {
     display: none;
   }
 }
+
+.door-control {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 10px;
+  margin-top: 18px;
+  font-size: 12px;
+}
+.door-control output {
+  color: #607163;
+}
+.door-range {
+  width: 100%;
+  accent-color: var(--green);
+  min-height: 28px;
+  margin: 6px 0 0;
+  cursor: ew-resize;
+}
+@media (max-width: 800px) {
+  .door-control {
+    margin-top: 12px;
+  }
+}

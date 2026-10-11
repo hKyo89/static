@@ -22,10 +22,11 @@ conversation. The chat is named **Backyard Garden**; the project slug is
 
 ## Scope
 
-Included: courtyard floor, two outer boundary walls, the inset return wall,
-three wall-wide window sections, illustrative frames and paving, dimension
-labels, original references, project docs, shared router, home page, static
-export, validation and existing branch-Pages compatibility.
+Included: courtyard floor, two outer boundary walls, the inset return wall, a
+fixed frontage window, wall separator, four sliding doors and the left-side
+window, illustrative frames and paving, dimension labels, original references,
+project docs, shared router, home page, static export, validation and existing
+branch-Pages compatibility.
 
 Excluded: the rest of the house, new plant/furniture design,
 structure/engineering, roof, sunlight or drainage analysis, authenticated
@@ -36,10 +37,13 @@ Duct model.
 
 1. The model uses metres and a confirmed 3 m wall height. The L-shaped footprint
    follows the interpreted drawing dimensions listed in SPECIFICATIONS.md.
-2. Wall-wide openings are modelled in the main house edge, short return edge,
-   and left edge. Inset vertical return wall remains solid.
+2. The short return edge is solid. The long house frontage has a fixed window on
+   the left, a solid wall separator, and four continuous sliding glass doors on
+   the right. The left-side window and solid inset return remain.
 3. Users can orbit, pan, zoom, choose three view presets, reset, and toggle
-   boundary-wall cutaway, glazing, and dimension labels.
+   boundary-wall cutaway, glazing, and dimension labels. An opening slider moves
+   four separate leaves along parallel tracks to reveal a usable passage. Reset
+   closes the doors. The fixed window never moves.
 4. Source drawing and all three close-ups are available in an accessible dialog.
 5. The page shows which dimensions are interpreted and which are assumptions.
 6. When WebGL cannot initialize, show a readable failure state and source-plan

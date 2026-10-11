@@ -1,8 +1,8 @@
 # Backyard Garden
 
 An interactive 3D viewer of the red-highlighted rear courtyard in the supplied
-house plan, with **3 m walls** and wall-wide glazing. Public route:
-<https://hkyo89.github.io/static/backyard-garden/>.
+house plan, with **3 m walls**, a fixed window, and four sliding glass doors.
+Public route: <https://hkyo89.github.io/static/backyard-garden/>.
 
 This directory is both the project source and its self-contained continuation
 package. The user's latest instruction places it in `static/backyard-garden`,
@@ -41,8 +41,10 @@ outputs; edit their source files and rebuild.
 
 Drag to orbit, right-drag/two fingers to pan, and scroll/pinch to zoom. Use the
 3D, floor-plan, and inside presets. Cutaway walls reveal the narrow courtyard.
-Window and dimension switches control visibility. View drawing opens the source
-plan and close-ups; Reset view restores the initial view.
+Window and dimension switches control visibility. The sliding-door opening
+slider stacks four leaves on separate tracks. The short return is solid. View
+drawing opens the source plan and close-ups; Reset view restores the initial
+view.
 
 Run from the repository root:
 
@@ -59,8 +61,9 @@ deno task publish:files
 
 The viewer and shared static exporter are implemented. Validation and
 publication results are recorded in [DECISIONS.md](DECISIONS.md). A 3 m wall
-height is confirmed by the user. Floor dimensions and glazing placement are
-interpreted from screenshot dimensions. Window height, framing, wall thickness,
-and paving are illustrative. This is a spatial study; construction measurements
-need confirmation. No plant layout, roof, furniture, engineering, irrigation, or
-drainage design was requested or approved.
+height is confirmed by the user. Floor dimensions are interpreted from
+screenshot dimensions. The user confirmed the short return wall and fixed-window
+/ separator / four-sliding-door arrangement. Window height, framing, wall
+thickness, and paving are illustrative. This is a spatial study; construction
+measurements need confirmation. No plant layout, roof, furniture, engineering,
+irrigation, or drainage design was requested or approved.

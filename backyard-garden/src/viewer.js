@@ -4,7 +4,14 @@ import {
   CSS2DObject,
   CSS2DRenderer,
 } from "three/addons/renderers/CSS2DRenderer.js";
-import { model as m, windows } from "../model.ts";
+import {
+  frontage,
+  leafWidth,
+  model as m,
+  slidingLeafPositions,
+  slidingStart,
+  windows,
+} from "../model.ts";
 
 const stage = document.querySelector("#garden-stage");
 const status = document.querySelector("[data-status]");
@@ -191,6 +198,99 @@ function createViewer() {
     m.wallHeight,
     wallMaterial,
   );
+  // User-confirmed short return wall; it remains solid in every view.
+  panel(
+    world,
+    [0, m.returnDepth],
+    [m.returnWidth, m.returnDepth],
+    0,
+    m.wallHeight,
+    wallMaterial,
+  );
+  panel(
+    world,
+    [slidingStart - frontage.separatorWidth, m.stripDepth],
+    [slidingStart, m.stripDepth],
+    0,
+    m.wallHeight,
+    wallMaterial,
+  );
+  // Continuous opening with four independent glass leaves, not five fixed bays.
+  panel(
+    world,
+    [slidingStart, m.stripDepth],
+    [m.width, m.stripDepth],
+    m.windowTop,
+    m.wallHeight,
+    wallMaterial,
+  );
+  panel(
+    glazing,
+    [slidingStart, m.stripDepth],
+    [m.width, m.stripDepth],
+    0,
+    frontage.doorBottom,
+    frameMaterial,
+    frontage.trackSpacing * (frontage.leafCount - 1) + .06,
+  );
+  panel(
+    glazing,
+    [slidingStart, m.stripDepth],
+    [m.width, m.stripDepth],
+    m.windowTop - .025,
+    m.windowTop,
+    frameMaterial,
+    frontage.trackSpacing * (frontage.leafCount - 1) + .06,
+  );
+  const doorLeaves = [];
+  const doorHeight = m.windowTop - frontage.doorBottom;
+  for (let i = 0; i < frontage.leafCount; i++) {
+    const leaf = new THREE.Group();
+    leaf.name = `Sliding door ${i + 1}`;
+    glazing.add(leaf);
+    doorLeaves.push(leaf);
+    box(
+      leaf,
+      leafWidth - .08,
+      doorHeight - .08,
+      .012,
+      leafWidth / 2,
+      frontage.doorBottom + doorHeight / 2,
+      0,
+      glassMaterial,
+      false,
+    );
+    for (const x of [.02, leafWidth - .02]) {
+      box(
+        leaf,
+        .04,
+        doorHeight,
+        .04,
+        x,
+        frontage.doorBottom + doorHeight / 2,
+        0,
+        frameMaterial,
+      );
+    }
+    for (const y of [frontage.doorBottom + .02, m.windowTop - .02]) {
+      box(leaf, leafWidth, .04, .04, leafWidth / 2, y, 0, frameMaterial);
+    }
+    // Small pull handle distinguishes an operable leaf from the fixed window.
+    box(leaf, .025, .22, .035, leafWidth - .09, 1.1, -.035, frameMaterial);
+  }
+  const openingInput = document.querySelector("[data-door-opening]");
+  const openingOutput = document.querySelector("[data-door-output]");
+  function setOpening() {
+    const fraction = Number(openingInput.value) / 100;
+    slidingLeafPositions(fraction).forEach((position, i) =>
+      doorLeaves[i].position.set(position.x, 0, position.z)
+    );
+    openingOutput.textContent = fraction === 0
+      ? "Closed"
+      : `${Math.round(fraction * 100)}% open`;
+  }
+  openingInput.addEventListener("input", setOpening);
+  setOpening();
   for (const window of windows) {
     const { a, b, bays } = window;
     panel(world, a, b, 0, m.windowBottom, wallMaterial);
@@ -363,6 +463,8 @@ function createViewer() {
       windowsInput.checked =
       dimensionsInput.checked =
         true;
+    openingInput.value = "0";
+    setOpening();
     setView("perspective");
   };
   function resize() {

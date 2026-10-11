@@ -29,8 +29,8 @@ export function BackyardPage() {
               Backyard<br />Garden<span>.</span>
             </h1>
             <p class="intro">
-              An L-shaped courtyard, wrapped by tall walls and full-width
-              windows.
+              An L-shaped courtyard with tall walls, a fixed window, and four
+              sliding glass doors.
             </p>
             <div class="measurements">
               <div>
@@ -77,6 +77,21 @@ export function BackyardPage() {
                 <span>Show dimensions</span>
                 <input type="checkbox" data-dimensions checked />
               </label>
+              <label class="door-control" htmlFor="door-opening">
+                <span>Open sliding doors</span>
+                <output data-door-output aria-live="polite">Closed</output>
+              </label>
+              <input
+                id="door-opening"
+                class="door-range"
+                data-door-opening
+                type="range"
+                min="0"
+                max="100"
+                step="1"
+                defaultValue="0"
+                aria-label="Sliding doors opening"
+              />
             </section>
             <details class="specifications">
               <summary>Measurements & assumptions</summary>
@@ -87,14 +102,18 @@ export function BackyardPage() {
                 <dd>{model.stripDepth.toFixed(3)} m</dd>
                 <dt>Return width × depth</dt>
                 <dd>1.350 × 2.025 m</dd>
-                <dt>Main window width</dt>
+                <dt>House frontage width</dt>
                 <dd>5.425 m</dd>
+                <dt>Fixed-window bay</dt>
+                <dd>1.600 m</dd>
+                <dt>Four sliding doors</dt>
+                <dd>3.825 m</dd>
               </dl>
               <p>
                 Plan dimensions are interpreted from the supplied screenshot.
                 Wall thickness (0.12 m), window sill (0.12 m), window top (2.85
-                m), frame divisions, and floor finish are illustrative. Confirm
-                before construction.
+                m), wall separator width, four-track stacking, and floor finish
+                are illustrative. Confirm before construction.
               </p>
             </details>
             <div class="legend">
@@ -102,7 +121,7 @@ export function BackyardPage() {
                 <i class="wall-key" />Boundary wall
               </span>
               <span>
-                <i class="glass-key" />Wall-wide window
+                <i class="glass-key" />Fixed glass / sliding doors
               </span>
             </div>
           </aside>
@@ -147,8 +166,9 @@ export function BackyardPage() {
             alt="Supplied house floor plan with the backyard highlighted in red at the rear."
           />
           <p>
-            The red region is the modelled courtyard. The three close-ups
-            identify long, return, and left-side windows.
+            The red region is the modelled courtyard. The close-ups show
+            frontage details. The short return is a solid wall; the long
+            frontage has a fixed window, wall separator, and four sliding doors.
           </p>
           <div class="reference-crops">
             <img
@@ -157,7 +177,7 @@ export function BackyardPage() {
             />
             <img
               src="./reference/return-window.png"
-              alt="Short return window detail"
+              alt="Original return detail; user confirmed this edge is a solid wall"
             />
             <img
               src="./reference/side-window.png"

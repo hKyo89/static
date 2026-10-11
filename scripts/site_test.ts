@@ -2,8 +2,12 @@ import { app } from "../main.tsx";
 import { basePath, projects } from "../projects.ts";
 import {
   floorArea,
+  frontage,
+  leafWidth,
   model,
   outline,
+  slidingLeafPositions,
+  slidingStart,
   windows,
 } from "../backyard-garden/model.ts";
 
@@ -59,8 +63,7 @@ Deno.test("L-shaped floor area and window lengths match interpreted plan", () =>
     Math.hypot(w.b[0] - w.a[0], w.b[1] - w.a[1])
   );
   if (
-    Math.abs(lengths[0] - 5.425) > 1e-8 || lengths[1] !== 1.35 ||
-    lengths[2] !== 2.025
+    Math.abs(lengths[0] - 1.48) > 1e-8 || lengths[1] !== 2.025
   ) throw new Error("Incorrect wall-wide openings");
   if (
     model.wallHeight !== 3 || model.windowTop >= model.wallHeight ||
@@ -92,4 +95,32 @@ Deno.test("legacy Duct build URL redirects to the shared route", async () => {
     response.headers.get("location") !== "https://example.test/static/duct/"
   ) throw new Error("Legacy Duct URL broken");
   await response.body?.cancel();
+});
+
+Deno.test("fixed window, wall separator and four sliding doors preserve frontage", () => {
+  if (
+    Math.abs(
+      frontage.fixedBayWidth + frontage.slidingWidth -
+        (model.width - model.returnWidth),
+    ) > 1e-8
+  ) throw new Error("Frontage spans do not match plan");
+  const closed = slidingLeafPositions(0), open = slidingLeafPositions(1);
+  if (closed.length !== 4 || open.length !== 4) {
+    throw new Error("Expected four sliding leaves");
+  }
+  if (
+    Math.abs(closed[3].x + leafWidth - model.width) > 1e-8 ||
+    closed[0].x !== slidingStart
+  ) throw new Error("Closed doors do not cover full opening");
+  if (
+    new Set(open.map((p) => p.z)).size !== 4 ||
+    new Set(open.map((p) => p.x)).size !== 1
+  ) throw new Error("Open leaves must stack on separate tracks");
+  if (frontage.slidingWidth - leafWidth < 2.8) {
+    throw new Error("No usable opening");
+  }
+  if (
+    JSON.stringify(slidingLeafPositions(-1)) !== JSON.stringify(closed) ||
+    JSON.stringify(slidingLeafPositions(2)) !== JSON.stringify(open)
+  ) throw new Error("Invalid opening limits");
 });

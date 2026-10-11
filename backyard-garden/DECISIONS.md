@@ -29,8 +29,9 @@
   was a spatial sketch, not a standalone Fresh project or WebGL website. The
   website now uses a true Three.js 3D scene and locally bundled controls.
 - That sketch treated the inset vertical return as another glazed edge. The
-  website interprets that inset as solid and retains the three close-up-backed
-  glazing sections; final construction details remain unconfirmed.
+  website initially interpreted that inset as solid and used three glazing
+  sections. This was subsequently corrected by the user: the short return is
+  also solid, and the main frontage is fixed glass + wall + four sliding doors.
 - Duct previously had a Vite/npm app and committed `duct/dist` output. Shopee
   had its own Fresh setup and copied assets to its project root. The shared root
   app/exporter replaces the independent toolchains. Historical source is
@@ -57,7 +58,7 @@ instead of treating screenshot readings as surveyed facts.
 
 - Confirm whether the plan dimensions are clear, face-to-face, or centreline
   measurements. The model currently uses reference-line geometry.
-- Confirm glazing height, framing, the short/left openings, wall thickness and
+- Confirm glazing height, framing, the left-side opening, wall thickness and
   material. Only wall height was explicitly stated by the user.
 - No plant layout, roof, furniture, drainage, lighting or structural decisions
   have been made.
@@ -110,3 +111,24 @@ PDF or site survey. If a garden layout is wanted, obtain the user's preferences
 before adding planting, furniture, finishes or lighting. Continue through
 [CONTINUATION_PROMPT.md](CONTINUATION_PROMPT.md), preserving the single-app
 design.
+
+## Corrections confirmed by the user — 2026-10-11
+
+- The short return is a solid 3 m wall, not a window.
+- The main frontage has a fixed window on the left, a wall separator, and four
+  continuous sliding glass doors on the right. The old five fixed bays are
+  superseded. The blueprint supplies a 1.600 m left section and 3.825 m right
+  section. The exact separator width is not supplied.
+- The viewer now uses an opening slider and four separate moving leaves. The
+  assumed four-track left-stacking mechanism illustrates operability; it is not
+  a confirmed fabrication specification. Fixed glass never moves.
+- Original correction screenshots are retained under `corrections/`.
+- Geometry regression testing verifies continuous closed coverage, four leaves,
+  separate tracks, stacked opening and limits. Documentation has been updated to
+  remove the old short-return glazing requirement.
+
+Correction validation: all **eight Deno tests**, format/lint/type checks, static
+export and Markdown links passed. Browser review verified the new slider opens
+the four leaves, Reset closes them, the short return is opaque, and the fixed
+window stays in place. The 390 px mobile layout had no horizontal overflow and
+no console warnings/errors were captured.

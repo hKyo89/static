@@ -35,14 +35,23 @@ prompts repository. Do not move it back or create an unnecessary duplicate.
 Model units are metres. Origin is rear-left, X to drawing-right, Z toward house,
 Y up. Wall height 3 m is confirmed. Interpreted footprint: width 6.775 m,
 main strip depth 1.225 m, return width 1.350 m and total return depth 2.025 m.
-Area = 9.379375 m². Three window sections: main 5.425 m, short return 1.350 m,
-left 2.025 m. Inset vertical return is solid. Wall thickness 0.120 m,
+Area = 9.379375 m². Latest user corrections: the short 1.350 m return is solid,
+not glass. The 5.425 m main frontage has a fixed left window, solid separator,
+then four continuous sliding glass doors on the right. Blueprint sections are
+1.600 m left bay and 3.825 m sliding opening. The assumed 0.120 m separator
+occupies the right end of the left bay, giving fixed glass width 1.480 m.
+Left-side window is 2.025 m; inset vertical return is solid. Four leaves slide
+on separate assumed tracks and stack left using the opening slider (0..100%).
+Reset closes them; fixed glass never moves. Track arrangement, 0.040 m overlap,
+0.060 m track spacing and 0.020 m door threshold are illustrative.
+Wall thickness 0.120 m,
 window bottom 0.120 m, top 2.850 m, framing and paving are assumptions.
 Do not present screenshot readings as construction-ready measurements.
 No plant, furniture, roof, drainage, lighting or structure design is approved.
 
 The true Three.js viewer supports orbit/pan/zoom, 3D/plan/inside presets,
-cutaway outer walls, glazing and dimension visibility, reset and source dialog.
+cutaway outer walls, glazing and dimension visibility, sliding-door opening,
+reset and source dialog.
 Preserve desktop/touch controls, fallback drawing links and responsive layout.
 Preserve the existing Duct viewer model/control behavior, Shopee JSON/order
 values, images, interactions, and /static/shopee/ PWA scope.

@@ -9,25 +9,25 @@ rightward across the drawing, Z increases toward the house, and Y points up. The
 Three.js scene translates this model to centre it; authoritative geometry
 remains in [model.ts](model.ts).
 
-| Parameter                    | Value                         | Authority                                  |
-| ---------------------------- | ----------------------------- | ------------------------------------------ |
-| Wall height                  | 3.000                         | Explicitly confirmed by user               |
-| Overall highlighted width    | 6.775                         | Interpreted as 1.350 + 5.425 from plan     |
-| Main strip depth             | 1.225                         | Interpreted from right-side plan dimension |
-| Return width                 | 1.350                         | Interpreted from top dimension             |
-| Overall depth at left return | 2.025                         | Interpreted from plan's left dimension     |
-| Extra return depth           | 0.800                         | Derived: 2.025 − 1.225                     |
-| Floor area                   | 9.379375 m²                   | Derived from model; UI rounds to 9.38      |
-| Main house window width      | 5.425                         | Derived: 6.775 − 1.350                     |
-| Short return window width    | 1.350                         | Model interpretation of close-up           |
-| Left-side window width       | 2.025                         | Model interpretation of close-up           |
-| Wall thickness               | 0.120                         | Illustrative assumption                    |
-| Window bottom above floor    | 0.120                         | Illustrative assumption                    |
-| Window top above floor       | 2.850                         | Illustrative assumption                    |
-| Glazed opening height        | 2.730                         | Derived from illustrative vertical limits  |
-| Frame widths                 | 0.045 / 0.055                 | Illustrative assumption                    |
-| Window divisions             | Main 5 bays; return 1; left 2 | Illustrative assumption                    |
-| Floor slab / joint spacing   | 0.120 / 0.450                 | Illustrative material depiction            |
+| Parameter                    | Value                                                                               | Authority                                  |
+| ---------------------------- | ----------------------------------------------------------------------------------- | ------------------------------------------ |
+| Wall height                  | 3.000                                                                               | Explicitly confirmed by user               |
+| Overall highlighted width    | 6.775                                                                               | Interpreted as 1.350 + 5.425 from plan     |
+| Main strip depth             | 1.225                                                                               | Interpreted from right-side plan dimension |
+| Return width                 | 1.350                                                                               | Interpreted from top dimension             |
+| Overall depth at left return | 2.025                                                                               | Interpreted from plan's left dimension     |
+| Extra return depth           | 0.800                                                                               | Derived: 2.025 − 1.225                     |
+| Floor area                   | 9.379375 m²                                                                         | Derived from model; UI rounds to 9.38      |
+| House frontage width         | 5.425                                                                               | Derived: 6.775 − 1.350                     |
+| Short return solid wall      | 1.350                                                                               | User correction: solid wall, no window     |
+| Left-side window width       | 2.025                                                                               | Model interpretation of close-up           |
+| Wall thickness               | 0.120                                                                               | Illustrative assumption                    |
+| Window bottom above floor    | 0.120                                                                               | Illustrative assumption                    |
+| Window top above floor       | 2.850                                                                               | Illustrative assumption                    |
+| Glazed opening height        | 2.730                                                                               | Derived from illustrative vertical limits  |
+| Frame widths                 | 0.045 / 0.055                                                                       | Illustrative assumption                    |
+| Window / door arrangement    | Fixed left window, wall separator, 4 sliding right doors; left-side window retained | User-confirmed arrangement                 |
+| Floor slab / joint spacing   | 0.120 / 0.450                                                                       | Illustrative material depiction            |
 
 The screenshots do not establish whether dimensions refer to clear widths, wall
 faces or centrelines. The model uses perimeter reference lines and centres wall
@@ -46,11 +46,24 @@ is claimed as measurement precision.
 (0, 2.025)
 ```
 
-The two solid outer walls run along Z=0 and X=6.775. A solid 0.800 m inset
-return wall runs along X=1.350, from Z=1.225 to Z=2.025. Glazing runs along the
-main house-facing edge (Z=1.225, X=1.350…6.775), the short return edge (Z=2.025,
-X=0…1.350), and the left edge (X=0, Z=0…2.025). The reference images inform
-these placements but glazing details still require confirmation.
+The two solid outer walls run along Z=0 and X=6.775. The inset return wall is
+solid, as is the **1.350 m short return at Z=2.025** (user correction #1). The
+main frontage at Z=1.225 is divided into the blueprint's 1.600 m left bay and
+3.825 m sliding opening on the right (user correction #2). The left bay contains
+a fixed window and a 0.120 m separator wall; the exact separator width is
+assumed and occupies the right end of the 1.600 m bay. Fixed glass therefore
+spans X=1.350…2.830, separator X=2.830…2.950, and doors X=2.950…6.775. The fixed
+window is not an operable door and never moves. Left-side glazing remains at
+X=0, Z=0…2.025.
+
+Four sliding leaves form one continuous right opening. The illustrative design
+uses four tracks, 0.060 m apart, with 0.040 m leaf overlap. Each leaf is 0.98625
+m wide; closed leaves cover the full 3.825 m span. At 100% open they stack at
+the left of that opening, leaving about 2.839 m clear. The doors have an
+illustrative 0.020 m threshold instead of a wall sill across the opening. Actual
+track system, stacking direction, separator thickness, threshold and vertical
+glazing dimensions still require confirmation. `slidingLeafPositions` clamps
+opening fractions to 0…1 and returns separate track positions.
 
 ## Source references
 
@@ -72,6 +85,7 @@ copies are authoritative continuation references and remove that dependency.
 - View buttons: `data-camera="perspective|plan|inside"`.
 - Switches: `data-cutaway`, `data-windows`, `data-dimensions`.
 - Actions: `data-reset`, `data-reference-open`, `data-reference-close`.
+- Sliding-door control: `data-door-opening` (0…100) and `data-door-output`.
 - OrbitControls: damped navigation, distances 2…40 m, polar angle limited above
   the ground, normal desktop and multi-touch gestures.
 - Perspective camera: 40° field of view, near/far 0.1 / 100 m.
@@ -93,3 +107,12 @@ all tasks from `/Users/hkyo89/Codes/github.com/hkyo89/static`. Build output is
 
 Unknowns: actual clear site measurements, glazing vertical dimensions, frame
 layout, finished flooring, boundary-wall materials, and any garden design.
+
+## User corrections — 2026-10-11
+
+[Solid-return screenshot](corrections/solid-return.png) identifies the short
+return previously modelled incorrectly as glass.
+[Sliding-frontage screenshot](corrections/sliding-frontage.png) identifies the
+previous five-bay model, superseded by fixed window + solid separator + four
+sliding doors. These are screenshots of the incorrect viewer, retained to locate
+the correction; their depicted geometry is not authoritative.
