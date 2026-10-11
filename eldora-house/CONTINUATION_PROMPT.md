@@ -1,12 +1,12 @@
-# Continue Backyard Garden
+# Continue Eldora House
 
 Copy this prompt into a new session:
 
 ```text
-Continue my Backyard Garden project. Read these first:
+Continue my Eldora House project. Read these first:
 - /Users/hkyo89/Codes/github.com/hkyo89/static/AGENTS.md
 - /Users/hkyo89/Codes/github.com/hkyo89/static/STATIC_PROJECTS.md
-- /Users/hkyo89/Codes/github.com/hkyo89/static/backyard-garden/README.md
+- /Users/hkyo89/Codes/github.com/hkyo89/static/eldora-house/README.md
 - The PRD.md, SPECIFICATIONS.md and DECISIONS.md in that project directory.
 
 Repository: git@github.com:hKyo89/static
@@ -15,22 +15,22 @@ Branch: main
 Baseline before this project: 7c163bb5648ee1992a01ad4812da23506c713373
 Initial implementation source commit: 9df12f94a2bb6fe018fd98d3faba6588d337c4e8
 Latest wall / sliding-door correction source commit: feeb7e69700f62e2cd4c02a0b61610bf65c8e395
-Public route: https://hkyo89.github.io/static/backyard-garden/
-Project directory name: backyard-garden
-Chat name: Backyard Garden
+Public route: https://hkyo89.github.io/static/eldora-house/
+Project directory name: eldora-house
+Chat name: Eldora House
 
 This is one shared root Deno Fresh 2.3.0 app, not an independent app per site.
-Root main.tsx and projects.ts serve /static/, /static/backyard-garden/,
+Root main.tsx and projects.ts serve /static/, /static/eldora-house/,
 /static/duct/ and /static/shopee/. Root deno.json and deno.lock own dependencies.
 The explicit shared static exporter renders Fresh handlers at build time and
 bundles browser code; GitHub Pages runs no Fresh server. It currently publishes
 main at repository root. Preserve that setup unless I ask to change it.
 
-Backyard source: backyard-garden/Page.tsx, model.ts, src/viewer.js,
+Backyard source: eldora-house/Page.tsx, model.ts, src/viewer.js,
 static/styles.css, static/reference/floor-plan.png and three window close-ups.
 Generated project index.html/viewer.js/styles.css/reference are outputs; edit
 sources and rebuild. The project package follows my session backup template,
-but my latest instruction placed it in static/backyard-garden rather than the
+but my latest instruction placed it in static/eldora-house rather than the
 prompts repository. Do not move it back or create an unnecessary duplicate.
 
 Model units are metres. Origin is rear-left, X to drawing-right, Z toward house,
@@ -60,11 +60,11 @@ values, images, interactions, and /static/shopee/ PWA scope.
 From repository root:
 deno install --frozen --allow-scripts=npm:esbuild
 deno task dev
-# Fresh local: http://localhost:8000/static/backyard-garden/
+# Fresh local: http://localhost:8000/static/eldora-house/
 deno task check
 deno task test:links
 deno task preview
-# Pure static: http://localhost:8001/static/backyard-garden/
+# Pure static: http://localhost:8001/static/eldora-house/
 deno task publish:files
 
 Use a repo-local DENO_DIR=$PWD/.deno-cache only if sandbox cache writes require
@@ -215,3 +215,14 @@ mm from the wall, instead of the old 100 mm bracket offset. Up/down apertures
 and dim warm grazing beams sit close to the roughcast, with smaller light pools.
 Mounting tolerance and beam output remain illustrative. This supersedes the
 earlier cylindrical body and projecting mounting bracket.
+
+## Eldora House first-floor expansion
+
+The current scope is the whole first floor. The directory and public route are
+`eldora-house`; the old garden route redirects here. Read
+[ROOM_MAP.md](ROOM_MAP.md) and `house-model.ts` for global coordinates, named
+zones and opening assumptions. The original courtyard model remains in
+`model.ts`, offset 3.225 m from the lot's left edge. Interior walls are
+off-white. Overview, garden-only scope, room names and room focus are available.
+New architectural openings and provisional room uses are interpretations of the
+electrical plan, not confirmed schedules.

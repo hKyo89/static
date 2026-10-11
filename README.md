@@ -3,11 +3,11 @@
 One Deno Fresh application, one dependency configuration, and one static export
 for [hkyo89.github.io/static](https://hkyo89.github.io/static/).
 
-| Project         | Public route                                                                 | Source / documentation                                 |
-| --------------- | ---------------------------------------------------------------------------- | ------------------------------------------------------ |
-| Backyard Garden | [/static/backyard-garden/](https://hkyo89.github.io/static/backyard-garden/) | [backyard-garden/README.md](backyard-garden/README.md) |
-| Duct viewer     | [/static/duct/](https://hkyo89.github.io/static/duct/)                       | [duct/README.md](duct/README.md)                       |
-| Order details   | [/static/shopee/](https://hkyo89.github.io/static/shopee/)                   | [shopee/README.md](shopee/README.md)                   |
+| Project       | Public route                                                           | Source / documentation                           |
+| ------------- | ---------------------------------------------------------------------- | ------------------------------------------------ |
+| Eldora House  | [/static/eldora-house/](https://hkyo89.github.io/static/eldora-house/) | [eldora-house/README.md](eldora-house/README.md) |
+| Duct viewer   | [/static/duct/](https://hkyo89.github.io/static/duct/)                 | [duct/README.md](duct/README.md)                 |
+| Order details | [/static/shopee/](https://hkyo89.github.io/static/shopee/)             | [shopee/README.md](shopee/README.md)             |
 
 ## Start here
 
@@ -36,7 +36,7 @@ consolidated on 2026-10-11. Existing project URLs and invoice PWA scope remain.
 
 ## Project backup
 
-The complete Backyard Garden continuation package is kept in this repository
-under [backyard-garden/](backyard-garden/README.md), following the user's chosen
-working repository. It adapts the reusable session-backup template from the
-`prompts` repository; it does not create a second package in `prompts`.
+The complete Eldora House continuation package is kept in this repository under
+[eldora-house/](eldora-house/README.md), following the user's chosen working
+repository. It adapts the reusable session-backup template from the `prompts`
+repository; it does not create a second package in `prompts`.

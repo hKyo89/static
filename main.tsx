@@ -4,6 +4,12 @@ import { basePath, projects } from "./projects.ts";
 import { HomePage } from "./routes/HomePage.tsx";
 
 export const app = new App();
+for (const path of ["/static/backyard-garden", "/static/backyard-garden/"]) {
+  app.get(
+    path,
+    (ctx) => Response.redirect(new URL("/static/eldora-house/", ctx.url), 308),
+  );
+}
 app.get("/", (ctx) => Response.redirect(new URL(`${basePath}/`, ctx.url), 307));
 app.get(
   basePath,

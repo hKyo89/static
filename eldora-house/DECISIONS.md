@@ -5,8 +5,8 @@
 
 ## Confirmed decisions
 
-1. Chat name: **Backyard Garden**. Project directory and URL slug:
-   **backyard-garden**.
+1. Chat name: **Eldora House**. Project directory and URL slug:
+   **eldora-house**.
 2. The target is only the red-highlighted L-shaped rear area of the supplied
    plan. Wall height is **3 m**. The close-ups indicate wall-wide windows.
 3. The working repository is `hkyo89/static`, with the project directory inside
@@ -135,7 +135,7 @@ no console warnings/errors were captured.
 
 Latest wall / sliding-door correction source commit:
 `feeb7e69700f62e2cd4c02a0b61610bf65c8e395`
-(`fix(backyard-garden): correct walls and add four sliding doors`).
+(`fix(eldora-house): correct walls and add four sliding doors`).
 
 Publication cache handling: exported page links include deterministic content
 hashes for client scripts and styles. The viewer also tolerates an older cached
@@ -272,3 +272,14 @@ mm from the wall, instead of the old 100 mm bracket offset. Up/down apertures
 and dim warm grazing beams sit close to the roughcast, with smaller light pools.
 Mounting tolerance and beam output remain illustrative. This supersedes the
 earlier cylindrical body and projecting mounting bracket.
+
+## Eldora House first-floor expansion
+
+The current scope is the whole first floor. The directory and public route are
+`eldora-house`; the old garden route redirects here. Read
+[ROOM_MAP.md](ROOM_MAP.md) and `house-model.ts` for global coordinates, named
+zones and opening assumptions. The original courtyard model remains in
+`model.ts`, offset 3.225 m from the lot's left edge. Interior walls are
+off-white. Overview, garden-only scope, room names and room focus are available.
+New architectural openings and provisional room uses are interpretations of the
+electrical plan, not confirmed schedules.

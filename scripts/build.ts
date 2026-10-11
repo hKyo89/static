@@ -84,6 +84,11 @@ export async function buildSite() {
   } finally {
     esbuild.stop();
   }
+  await Deno.mkdir(`${out}/backyard-garden`, { recursive: true });
+  await Deno.writeTextFile(
+    `${out}/backyard-garden/index.html`,
+    '<!doctype html><html><head><meta http-equiv="refresh" content="0;url=../eldora-house/"><title>Eldora House</title></head><body><a href="../eldora-house/">Open Eldora House</a></body></html>',
+  );
   await Deno.writeTextFile(`${out}/.nojekyll`, "");
   console.log(
     `Built ${projects.length} projects + home into dist/ (mount at ${basePath}/)`,

@@ -77,7 +77,7 @@ copies are authoritative continuation references and remove that dependency.
 
 ## Viewer and browser interfaces
 
-- `Page.tsx` exports `BackyardPage`, registered under slug `backyard-garden`.
+- `Page.tsx` exports `BackyardPage`, registered under slug `eldora-house`.
 - `src/viewer.js` imports the shared model and Three.js 0.180.0.
 - Stage selector: `#garden-stage`.
 - View buttons: `data-camera="perspective|plan|inside"`.
@@ -100,8 +100,8 @@ The site base is `/static/`, never `/` on the production GitHub Pages domain.
 See [../STATIC_PROJECTS.md](../STATIC_PROJECTS.md) for pinned dependencies,
 shared file responsibilities, SSH key paths, Git workflow and instructions. Run
 all tasks from `/Users/hkyo89/Codes/github.com/hkyo89/static`. Build output is
-`dist/backyard-garden/`. Branch-published files are refreshed into
-`backyard-garden/`. Do not edit generated bundles directly.
+`dist/eldora-house/`. Branch-published files are refreshed into `eldora-house/`.
+Do not edit generated bundles directly.
 
 Unknowns: actual clear site measurements, glazing vertical dimensions, frame
 layout, exact tile and divider dimensions, and any garden design.
@@ -245,3 +245,14 @@ mm from the wall, instead of the old 100 mm bracket offset. Up/down apertures
 and dim warm grazing beams sit close to the roughcast, with smaller light pools.
 Mounting tolerance and beam output remain illustrative. This supersedes the
 earlier cylindrical body and projecting mounting bracket.
+
+## Eldora House first-floor expansion
+
+The current scope is the whole first floor. The directory and public route are
+`eldora-house`; the old garden route redirects here. Read
+[ROOM_MAP.md](ROOM_MAP.md) and `house-model.ts` for global coordinates, named
+zones and opening assumptions. The original courtyard model remains in
+`model.ts`, offset 3.225 m from the lot's left edge. Interior walls are
+off-white. Overview, garden-only scope, room names and room focus are available.
+New architectural openings and provisional room uses are interpretations of the
+electrical plan, not confirmed schedules.

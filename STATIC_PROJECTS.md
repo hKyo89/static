@@ -67,9 +67,9 @@ not one cross-page browser bundle. This keeps projects independently loadable.
   PWA are retained. Its nested Deno app, lockfile and exporter were removed.
   Tests import the shared root app and request `/static/shopee/`. The PWA's
   relative scope still resolves only to `/static/shopee/`.
-- **Backyard Garden:** a Fresh page and Three.js browser viewer, with shared
-  geometry definitions in `backyard-garden/model.ts` and source drawings in
-  `backyard-garden/static/reference/`.
+- **Eldora House:** a Fresh page and Three.js browser viewer, with shared
+  geometry definitions in `eldora-house/model.ts` and source drawings in
+  `eldora-house/static/reference/`.
 
 ## Local development and validation
 
@@ -93,7 +93,7 @@ To validate the production-style static result:
 deno task check
 deno task test:links
 deno task preview
-# http://localhost:8001/static/backyard-garden/
+# http://localhost:8001/static/eldora-house/
 ```
 
 `check` includes formatting, linting, TypeScript checks, Deno tests, a complete
@@ -159,7 +159,7 @@ permissions.
    console/runtime failures and missing requests. Avoid tests that only mirror
    implementation details.
 9. Add `<slug>/README.md` and update the root project index. For a project
-   backup, use the five-document pattern demonstrated by Backyard Garden.
+   backup, use the five-document pattern demonstrated by Eldora House.
 10. Run validation and regenerate Pages output:
 
     ```sh
@@ -263,3 +263,11 @@ The exporter adds a deterministic content-hash query to each project script and
 stylesheet URL. Keep this behavior when adding projects so newly exported pages
 request the matching assets after publication. Client changes should tolerate
 older cached HTML where practical; GitHub Pages and browsers may retain it.
+
+## Eldora House expansion
+
+Eldora House replaces the Backyard Garden project at `/static/eldora-house/`.
+The `backyard-garden` folder contains only a compatibility redirect. Read
+`eldora-house/ROOM_MAP.md` for stable room IDs and `house-model.ts` for
+first-floor walls and openings. `model.ts` retains the courtyard model. The
+exporter and publisher also regenerate the compatibility redirect.

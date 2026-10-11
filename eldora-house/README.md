@@ -1,12 +1,12 @@
-# Backyard Garden
+# Eldora House
 
 An interactive 3D viewer of the red-highlighted rear courtyard in the supplied
 house plan, with **3 m walls**, a fixed window, and four sliding glass doors.
-Public route: <https://hkyo89.github.io/static/backyard-garden/>.
+Public route: <https://hkyo89.github.io/static/eldora-house/>.
 
 This directory is both the project source and its self-contained continuation
-package. The user's latest instruction places it in `static/backyard-garden`,
-rather than the backup template's default `prompts/backyard-garden`.
+package. The user's latest instruction places it in `static/eldora-house`,
+rather than the backup template's default `prompts/eldora-house`.
 
 ## Navigation
 
@@ -51,7 +51,7 @@ Run from the repository root:
 ```sh
 deno install --frozen --allow-scripts=npm:esbuild
 deno task dev
-# http://localhost:8000/static/backyard-garden/
+# http://localhost:8000/static/eldora-house/
 deno task check
 deno task test:links
 deno task publish:files
@@ -71,7 +71,7 @@ approved.
 
 Latest wall / sliding-door correction source commit:
 `feeb7e69700f62e2cd4c02a0b61610bf65c8e395`
-(`fix(backyard-garden): correct walls and add four sliding doors`).
+(`fix(eldora-house): correct walls and add four sliding doors`).
 
 ## Confirmed finishes
 
@@ -203,3 +203,15 @@ mm from the wall, instead of the old 100 mm bracket offset. Up/down apertures
 and dim warm grazing beams sit close to the roughcast, with smaller light pools.
 Mounting tolerance and beam output remain illustrative. This supersedes the
 earlier cylindrical body and projecting mounting bracket.
+
+## Whole first floor — Eldora House
+
+The project is now `eldora-house`, with the old Backyard Garden URL redirecting
+here. Choose Whole first floor or Backyard garden. Room names can be toggled;
+Focus room gives a close overhead view. The existing garden and its sliding
+centre doors are preserved.
+
+Read [ROOM_MAP.md](ROOM_MAP.md) for stable area IDs, coordinates, provisional
+names, and opening assumptions. House data lives in `house-model.ts`; courtyard
+and garden data remains in `model.ts`. Interior walls are off-white. There is no
+roof in the first-floor overview so the arrangement can be inspected.

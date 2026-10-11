@@ -478,3 +478,39 @@ h2 {
 .viewer[data-lighting="night"] .view-status {
   color: #d9e1e8;
 }
+
+.room-label {
+  font: 600 10px/1.2 system-ui;
+  background: #faf8f0dd;
+  color: #354037;
+  padding: 4px 6px;
+  border-radius: 4px;
+  max-width: 100px;
+  text-align: center;
+}
+select {
+  max-width: 155px;
+  padding: 5px;
+  border: 1px solid #d8dfd3;
+  border-radius: 5px;
+  background: #fff;
+  color: #354037;
+}
+.sidebar ol {
+  padding-left: 20px;
+  font-size: 12px;
+  line-height: 1.5;
+}
+
+@media (min-width: 801px) {
+  .workspace {
+    height: calc(100vh - 74px);
+    min-height: 640px;
+  }
+  .sidebar {
+    overflow-y: auto;
+  }
+  .viewer {
+    height: 100%;
+  }
+}

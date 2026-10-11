@@ -30,4 +30,4 @@ deployment workflow for each project.
 
 For a new project, use the continuation prompt at the end of STATIC_PROJECTS.md.
 For this courtyard, also read
-[backyard-garden/CONTINUATION_PROMPT.md](backyard-garden/CONTINUATION_PROMPT.md).
+[eldora-house/CONTINUATION_PROMPT.md](eldora-house/CONTINUATION_PROMPT.md).

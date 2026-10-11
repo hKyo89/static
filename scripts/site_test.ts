@@ -11,7 +11,7 @@ import {
   wallPanelLength,
   wallSegments,
   windows,
-} from "../backyard-garden/model.ts";
+} from "../eldora-house/model.ts";
 
 Deno.test("all registered projects render beneath the Pages prefix", async () => {
   const handler = app.handler();
@@ -35,7 +35,7 @@ Deno.test("slash redirects retain the request origin and route", async () => {
   for (
     const path of [
       "/static",
-      "/static/backyard-garden",
+      "/static/eldora-house",
       "/static/duct",
       "/static/shopee",
     ]
@@ -77,7 +77,7 @@ Deno.test("unknown pages and source files are not served", async () => {
     const path of [
       "/static/no-such-project/",
       "/static/.git/config",
-      "/static/backyard-garden/model.ts",
+      "/static/eldora-house/model.ts",
     ]
   ) {
     const response = await app.handler()(
@@ -152,4 +152,39 @@ Deno.test("wall ends cover perpendicular corner extents without closing divider 
   if (wallPanelLength([0, 0], [1, 0], model.wallThickness, false) !== 1) {
     throw new Error("Deliberate divider gaps must not be extended");
   }
+});
+
+Deno.test("first-floor openings stay ordered within walls and room IDs are unique", async () => {
+  const { houseWalls, rooms, houseModel } = await import(
+    "../eldora-house/house-model.ts"
+  );
+  if (new Set(rooms.map((r) => r.id)).size !== rooms.length) {
+    throw new Error("Duplicate room ID");
+  }
+  for (const r of rooms) {
+    const [x, z, x2, z2] = r.bounds;
+    if (
+      x < 0 || z < 0 || x2 > houseModel.width || z2 > houseModel.depth ||
+      x2 <= x || z2 <= z
+    ) throw new Error(`Invalid ${r.id}`);
+  }
+  for (const w of houseWalls) {
+    const length = Math.hypot(w.b[0] - w.a[0], w.b[1] - w.a[1]);
+    let end = 0;
+    for (const o of w.openings) {
+      if (o.at < end || o.width <= 0 || o.at + o.width > length + 1e-9) {
+        throw new Error(`Invalid opening ${w.id}`);
+      }
+      end = o.at + o.width;
+    }
+  }
+  const response = await app.handler()(
+    new Request("https://example.test/static/backyard-garden/"),
+  );
+  if (
+    response.status !== 308 ||
+    response.headers.get("location") !==
+      "https://example.test/static/eldora-house/"
+  ) throw new Error("Lost old garden bookmark");
+  await response.body?.cancel();
 });

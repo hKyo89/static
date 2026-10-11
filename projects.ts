@@ -1,5 +1,5 @@
 import type { ComponentType } from "preact";
-import { BackyardPage } from "./backyard-garden/Page.tsx";
+import { BackyardPage } from "./eldora-house/Page.tsx";
 import { DuctPage } from "./duct/Page.tsx";
 import { OrderPage } from "./shopee/components/OrderPage.tsx";
 
@@ -17,12 +17,12 @@ export interface Project {
 // Add a project here once: both Fresh routing and static export use this list.
 export const projects: Project[] = [
   {
-    slug: "backyard-garden",
-    title: "Backyard Garden",
-    description: "Explore the L-shaped backyard in 3D.",
+    slug: "eldora-house",
+    title: "Eldora House",
+    description: "Explore the first floor and Japanese courtyard garden in 3D.",
     Page: BackyardPage,
-    assets: "backyard-garden/static",
-    client: "backyard-garden/src/viewer.js",
+    assets: "eldora-house/static",
+    client: "eldora-house/src/viewer.js",
   },
   {
     slug: "duct",

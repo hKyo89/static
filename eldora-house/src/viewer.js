@@ -1,3 +1,5 @@
+import { createHouse } from "./house.js";
+import { houseModel, rooms } from "../house-model.ts";
 import { createGarden } from "./garden.js";
 import * as THREE from "three";
 import { OrbitControls } from "three/addons/controls/OrbitControls.js";
@@ -58,7 +60,7 @@ function createViewer() {
   const controls = new OrbitControls(camera, renderer.domElement);
   controls.enableDamping = true;
   controls.minDistance = 2;
-  controls.maxDistance = 40;
+  controls.maxDistance = 100;
   controls.maxPolarAngle = Math.PI / 2 - 0.015;
   const sky = new THREE.HemisphereLight(0xffffff, 0x82947e, 2.5);
   scene.add(sky);
@@ -563,6 +565,25 @@ function createViewer() {
   );
 
   const garden = createGarden(world);
+  const firstFloor = createHouse(world);
+  const scopeInput = document.querySelector("[data-scope]");
+  const roomInput = document.querySelector("[data-room-focus]");
+  const roomLabelsInput = document.querySelector("[data-room-labels]");
+  let scope = "house";
+  let focusedRoom = null;
+  scopeInput.onchange = () => {
+    scope = scopeInput.value;
+    focusedRoom = null;
+    roomInput.value = "";
+    setView(view);
+  };
+  roomInput.onchange = () => {
+    focusedRoom = rooms.find((r) => r.id === roomInput.value) ?? null;
+    scope = "house";
+    scopeInput.value = "house";
+    setView("plan");
+  };
+  roomLabelsInput.onchange = () => refresh();
   const gardenInput = document.querySelector("[data-garden]");
   const wallsInput = document.querySelector("[data-walls]");
   const legacyCutawayInput = document.querySelector("[data-cutaway]");
@@ -604,9 +625,24 @@ function createViewer() {
     const availableVertical = vertical *
       Math.max(.5, (stage.clientHeight - 150) / stage.clientHeight);
     let distance = 0;
-    for (const x of [-m.width / 2 - .8, m.width / 2 + .9]) {
+    const bounds = focusedRoom
+      ? focusedRoom.bounds
+      : scope === "house"
+      ? [0, 0, houseModel.width, houseModel.depth]
+      : [houseModel.gardenOffsetX, 0, 10, m.returnDepth];
+    for (
+      const x of [
+        bounds[0] - houseModel.gardenOffsetX - m.width / 2 - .5,
+        bounds[2] - houseModel.gardenOffsetX - m.width / 2 + .5,
+      ]
+    ) {
       for (const y of [-.12, m.wallHeight + .2]) {
-        for (const z of [-m.returnDepth / 2 - .5, m.returnDepth / 2 + .6]) {
+        for (
+          const z of [
+            bounds[1] - m.returnDepth / 2 - .5,
+            bounds[3] - m.returnDepth / 2 + .5,
+          ]
+        ) {
           const point = new THREE.Vector3(x, y, z).sub(controls.target);
           distance = Math.max(
             distance,
@@ -626,6 +662,16 @@ function createViewer() {
     boundary.visible = wallsInput
       ? wallsInput.checked
       : !legacyCutawayInput?.checked;
+    firstFloor.group.visible = scope === "house";
+    firstFloor.walls.visible = boundary.visible;
+    firstFloor.names.visible = roomLabelsInput.checked;
+    firstFloor.names.children.forEach((label, i) => {
+      label.element.textContent = view === "plan"
+        ? `${rooms[i].id} · ${rooms[i].name}`
+        : rooms[i].id;
+    });
+    firstFloor.glazing.visible = windowsInput.checked;
+    house.visible = scope === "garden";
     glazing.visible = windowsInput.checked;
     dimensions.visible = dimensionsInput.checked;
     status.textContent = `${
@@ -637,14 +683,23 @@ function createViewer() {
   function setView(name) {
     view = name;
     camera.up.set(0, 1, 0);
-    controls.target.set(0, .75, 0);
+    const b = focusedRoom?.bounds;
+    const centre = b
+      ? [
+        (b[0] + b[2]) / 2 - houseModel.gardenOffsetX - m.width / 2,
+        (b[1] + b[3]) / 2 - m.returnDepth / 2,
+      ]
+      : scope === "house"
+      ? [5 - houseModel.gardenOffsetX - m.width / 2, 10 - m.returnDepth / 2]
+      : [0, 0];
+    controls.target.set(centre[0], .75, centre[1]);
     if (name === "plan") {
-      controls.target.set(0, 0, 0);
-      camera.position.set(0, 13, .001);
+      controls.target.set(centre[0], 0, centre[1]);
+      camera.position.set(centre[0], 25, centre[1] + .001);
     } else if (name === "inside") {
       camera.position.set(2.5, 1.6, -.55);
       controls.target.set(-1.5, 1.4, -.55);
-    } else camera.position.set(8.5, 7.2, 8.5);
+    } else camera.position.set(centre[0] + 12, 16, centre[1] + 18);
     fitCamera();
     document.querySelectorAll("[data-camera]").forEach((button) =>
       button.setAttribute(
@@ -672,6 +727,10 @@ function createViewer() {
     if (wallsInput) wallsInput.checked = true;
     if (gardenInput) gardenInput.checked = true;
     if (legacyCutawayInput) legacyCutawayInput.checked = false;
+    focusedRoom = null;
+    roomInput.value = "";
+    scope = "house";
+    scopeInput.value = "house";
     setLighting("day");
     windowsInput.checked = dimensionsInput.checked = true;
     if (openingInput) openingInput.value = "0";

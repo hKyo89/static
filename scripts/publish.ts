@@ -10,3 +10,9 @@ for (const project of projects) {
   );
 }
 console.log("Updated tracked Pages files. Review git diff before committing.");
+
+await Deno.mkdir(`${repoRoot}backyard-garden`, { recursive: true });
+await Deno.copyFile(
+  `${repoRoot}dist/backyard-garden/index.html`,
+  `${repoRoot}backyard-garden/index.html`,
+);

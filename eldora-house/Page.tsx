@@ -1,3 +1,4 @@
+import { rooms } from "./house-model.ts";
 import { floorArea, model } from "./model.ts";
 export function BackyardPage() {
   return (
@@ -7,17 +8,17 @@ export function BackyardPage() {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <meta
           name="description"
-          content="An interactive 3D study of an L-shaped backyard with 3 metre walls and wall-wide windows."
+          content="Explore Eldora House first-floor walls, doors, windows and its Japanese courtyard garden."
         />
         <meta name="theme-color" content="#234e3c" />
-        <title>Backyard Garden · 3D viewer</title>
+        <title>Eldora House · 3D viewer</title>
         <link rel="stylesheet" href="./styles.css" />
         <script type="module" src="./viewer.js" />
       </head>
       <body>
         <header class="topbar">
           <a class="collection-link" href="../">← Projects</a>
-          <span class="brand">BACKYARD / GARDEN</span>
+          <span class="brand">ELDORA / HOUSE</span>
           <button type="button" class="quiet-button" data-reference-open>
             View drawing ↗
           </button>
@@ -26,11 +27,11 @@ export function BackyardPage() {
           <aside class="sidebar">
             <p class="eyebrow">A space to explore</p>
             <h1>
-              Backyard<br />Garden<span>.</span>
+              Eldora<br />House<span>.</span>
             </h1>
             <p class="intro">
-              An L-shaped courtyard with tall walls, a fixed window, and four
-              sliding glass doors.
+              First-floor walls, doors and windows, with the Japanese garden
+              preserved at the rear.
             </p>
             <div class="measurements">
               <div>
@@ -41,7 +42,7 @@ export function BackyardPage() {
                 <em>Confirmed</em>
               </div>
               <div>
-                <span>Floor area</span>
+                <span>Garden area</span>
                 <strong>
                   {floorArea.toFixed(2)} <small>m²</small>
                 </strong>
@@ -50,6 +51,38 @@ export function BackyardPage() {
             </div>
             <section class="controls">
               <h2>View the space</h2>
+              <label class="toggle">
+                <span>Area</span>
+                <select data-scope aria-label="Area view">
+                  <option value="house">Whole first floor</option>
+                  <option value="garden">Backyard garden</option>
+                </select>
+              </label>
+              <label class="toggle">
+                <span>Room names</span>
+                <input type="checkbox" data-room-labels checked />
+              </label>
+              <label class="toggle">
+                <span>Focus room</span>
+                <select data-room-focus aria-label="Focus room">
+                  <option value="">Overview</option>
+                  {rooms.map((room) => (
+                    <option value={room.id}>{room.id} · {room.name}</option>
+                  ))}
+                </select>
+              </label>
+              <details>
+                <summary>Room / area map</summary>
+                <ol>
+                  {rooms.map((room) => (
+                    <li>
+                      <strong>{room.id} · {room.name}</strong>
+                      <br />
+                      <small>{room.note}</small>
+                    </li>
+                  ))}
+                </ol>
+              </details>
               <div class="view-buttons" role="group" aria-label="Camera view">
                 <button
                   type="button"
@@ -122,7 +155,10 @@ export function BackyardPage() {
                 <dt>House & sunlight</dt>
                 <dd>Two-storey house · daylight directly overhead</dd>
                 <dt>Finishes</dt>
-                <dd>Rough grey granite tiles · ivory roughcast walls</dd>
+                <dd>
+                  Off-white inside walls · ivory courtyard roughcast · grey
+                  garden granite
+                </dd>
                 <dt>Long wall</dt>
                 <dd>Seven sections with slim recessed U dividers</dd>
                 <dt>Overall width</dt>
@@ -159,12 +195,12 @@ export function BackyardPage() {
             <div
               id="garden-stage"
               role="img"
-              aria-label="Three-dimensional L-shaped backyard; drag to orbit, scroll or pinch to zoom"
+              aria-label="First floor of Eldora House; drag to orbit, scroll or pinch to zoom"
             >
-              <p class="loading" data-loading>Opening your courtyard…</p>
+              <p class="loading" data-loading>Opening Eldora House…</p>
             </div>
             <div class="stage-tag">
-              L-shaped courtyard <span>Open to the sky</span>
+              Eldora House · 1F <span>Open roof study</span>
             </div>
             <div class="navigation">
               <span>Drag to orbit</span>
@@ -192,11 +228,12 @@ export function BackyardPage() {
             </button>
           </header>
           <img
-            src="./reference/floor-plan.png"
-            alt="Supplied house floor plan with the backyard highlighted in red at the rear."
+            src="./reference/first-floor.png"
+            alt="Supplied full first-floor electrical plan of Eldora House."
           />
           <p>
-            The red region is the modelled courtyard. The close-ups show
+            The full first floor is interpreted from the electrical drawing.
+            Room uses and new opening sizes are provisional. The close-ups show
             frontage details. The short return is a solid wall; the long
             frontage has a fixed window, wall separator, and four sliding doors.
           </p>

@@ -8,8 +8,8 @@
 Help the homeowner inspect the red-highlighted rear backyard spatially, using 3
 m walls and the large windows visible in the supplied plan close-ups. A future
 assistant or collaborator must be able to continue from the files without this
-conversation. The chat is named **Backyard Garden**; the project slug is
-`backyard-garden`.
+conversation. The chat is named **Eldora House**; the project slug is
+`eldora-house`.
 
 ## Goals
 
@@ -48,7 +48,7 @@ Duct model.
 5. The page shows which dimensions are interpreted and which are assumptions.
 6. When WebGL cannot initialize, show a readable failure state and source-plan
    link. Without JavaScript, keep the explanatory document and plan link usable.
-7. The route is `/static/backyard-garden/`. `/static/` indexes all projects;
+7. The route is `/static/eldora-house/`. `/static/` indexes all projects;
    `/static/duct/` and `/static/shopee/` retain their behavior and assets.
 8. One root registry, dependency configuration, app and exporter serve all
    projects. No nested Fresh or Vite setup is needed for a new project.
@@ -188,3 +188,14 @@ mm from the wall, instead of the old 100 mm bracket offset. Up/down apertures
 and dim warm grazing beams sit close to the roughcast, with smaller light pools.
 Mounting tolerance and beam output remain illustrative. This supersedes the
 earlier cylindrical body and projecting mounting bracket.
+
+## Eldora House first-floor expansion
+
+The current scope is the whole first floor. The directory and public route are
+`eldora-house`; the old garden route redirects here. Read
+[ROOM_MAP.md](ROOM_MAP.md) and `house-model.ts` for global coordinates, named
+zones and opening assumptions. The original courtyard model remains in
+`model.ts`, offset 3.225 m from the lot's left edge. Interior walls are
+off-white. Overview, garden-only scope, room names and room focus are available.
+New architectural openings and provisional room uses are interpretations of the
+electrical plan, not confirmed schedules.
