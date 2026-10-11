@@ -46,3 +46,13 @@ larger than the proposed tree. Ask the seller for a narrow-canopy version.
 Choose one lantern style. Request warm low-output lamps and outdoor-rated
 artificial foliage; the screenshot alone does not establish these
 specifications. No purchase or seller contact has been made.
+
+## Full-courtyard revision
+
+The garden now covers the entire L-shaped floor with predominantly white and
+grey pebbles and a restrained black perimeter. The former narrow rear-wall bed
+is superseded. The bonsai, rocks and lights stay in their original focal
+arrangement opposite the sliding doors. Flush grey stepping stones provide a
+route beside the doors and through the return. Granite remains beneath the
+removable concept. All planting is artificial; pebble depth and installation
+details remain illustrative.

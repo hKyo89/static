@@ -92,6 +92,21 @@ export const wallLightPositions = Array.from(
 
 // Concept layout: rear-wall bed opposite the sliding doors, clear granite approach.
 export const gardenLayout = {
+  steppingStones: [
+    [.7, 1.75],
+    [.7, 1.25],
+    [.7, .90],
+    [1.25, .90],
+    [1.8, .90],
+    [2.35, .90],
+    [2.9, .90],
+    [3.45, .90],
+    [4, .90],
+    [4.55, .90],
+    [5.1, .90],
+    [5.65, .90],
+    [6.2, .90],
+  ],
   bed: { x: 4.8, z: .36, width: 3.6, depth: .50 },
   bonsai: { x: 4.22, z: .35, height: 1.35 },
   lantern: { x: 5.65, z: .33 },

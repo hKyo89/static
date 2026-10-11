@@ -1,5 +1,5 @@
 import * as THREE from "three";
-import { gardenLayout as g } from "../model.ts";
+import { gardenLayout as g, model as m } from "../model.ts";
 
 export function createGarden(world) {
   const group = new THREE.Group();
@@ -29,8 +29,32 @@ export function createGarden(world) {
     group.add(object);
     return object;
   }
-  const bed = new THREE.BoxGeometry(g.bed.width, .035, g.bed.depth);
-  mesh(bed, stone, g.bed.x, .018, g.bed.z);
+  const gravelBase = new THREE.MeshStandardMaterial({
+    color: 0xd0d1c9,
+    roughness: 1,
+  });
+  mesh(
+    new THREE.BoxGeometry(m.width, .035, m.stripDepth),
+    gravelBase,
+    m.width / 2,
+    .018,
+    m.stripDepth / 2,
+  );
+  mesh(
+    new THREE.BoxGeometry(m.returnWidth, .035, m.returnDepth - m.stripDepth),
+    gravelBase,
+    m.returnWidth / 2,
+    .018,
+    (m.returnDepth + m.stripDepth) / 2,
+  );
+  // Flush stepping stones along the doors, plus a pair through the return.
+  for (const [x, z] of g.steppingStones) {
+    mesh(new THREE.CylinderGeometry(.23, .23, .025, 8), stone, x, .052, z, [
+      1,
+      1,
+      .72,
+    ]);
+  }
   // Instanced smooth pebbles, deterministic variation and a black edge.
   let seed = 1947;
   function random() {
@@ -40,13 +64,21 @@ export function createGarden(world) {
   const pebbles = new THREE.InstancedMesh(
     new THREE.IcosahedronGeometry(1, 1),
     new THREE.MeshStandardMaterial({ roughness: 1 }),
-    1600,
+    8500,
   );
   const dummy = new THREE.Object3D();
   const colors = [0xe7e6df, 0xaaaead, 0x323735];
-  for (let i = 0; i < 1600; i++) {
-    const x = g.bed.x + (random() - .5) * g.bed.width;
-    const z = g.bed.z + (random() - .5) * g.bed.depth;
+  for (let i = 0; i < 8500; i++) {
+    let x, z;
+    do {
+      x = .04 + random() * (m.width - .08);
+      z = .04 + random() * (m.returnDepth - .08);
+    } while (
+      (x > m.returnWidth - .04 && z > m.stripDepth - .04) ||
+      g.steppingStones.some(([sx, sz]) =>
+        ((x - sx) / .25) ** 2 + ((z - sz) / .18) ** 2 < 1
+      )
+    );
     dummy.position.set(x, .043, z);
     dummy.rotation.set(random(), random() * Math.PI, random());
     dummy.scale.set(
@@ -56,7 +88,8 @@ export function createGarden(world) {
     );
     dummy.updateMatrix();
     pebbles.setMatrixAt(i, dummy.matrix);
-    const edge = Math.abs(z - g.bed.z) > g.bed.depth / 2 - .045;
+    const edge = z < .10 || x < .10 || x > m.width - .10 ||
+      (x > m.returnWidth ? z > m.stripDepth - .10 : z > m.returnDepth - .10);
     pebbles.setColorAt(
       i,
       new THREE.Color(edge ? colors[2] : random() < .8 ? colors[0] : colors[1]),
