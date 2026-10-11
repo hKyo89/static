@@ -40,15 +40,97 @@ export function createGarden(world) {
     .018,
     m.stripDepth / 2,
   );
+  // Walnut-look WPC boards cover only the short return smoking nook.
+  const canvas = document.createElement("canvas");
+  canvas.width = 64;
+  canvas.height = 512;
+  const context = canvas.getContext("2d");
+  context.fillStyle = "#694831";
+  context.fillRect(0, 0, 64, 512);
+  for (let i = 0; i < 90; i++) {
+    context.strokeStyle = i % 3 ? "rgba(35,19,10,.18)" : "rgba(177,133,85,.22)";
+    context.beginPath();
+    context.moveTo(i * 7 % 64, 0);
+    context.bezierCurveTo(
+      (i * 7 % 64) + 5,
+      180,
+      (i * 7 % 64) - 4,
+      330,
+      i * 7 % 64,
+      512,
+    );
+    context.stroke();
+  }
+  const woodTexture = new THREE.CanvasTexture(canvas);
+  woodTexture.colorSpace = THREE.SRGBColorSpace;
+  const wood = new THREE.MeshStandardMaterial({
+    map: woodTexture,
+    roughness: .88,
+  });
+  const nookDepth = m.returnDepth - m.stripDepth;
+  for (let i = 0; i < 9; i++) {
+    mesh(
+      new THREE.BoxGeometry(m.returnWidth / 9 - .006, .045, nookDepth - .025),
+      wood,
+      (i + .5) * m.returnWidth / 9,
+      .027,
+      (m.returnDepth + m.stripDepth) / 2,
+    );
+  }
+  // Black standing ashtray/bin is tucked behind the short opaque return wall.
+  const binX = 1.08, binZ = 1.76, binHeight = .62;
+  const metal = new THREE.MeshStandardMaterial({
+    color: 0x9ea4a5,
+    metalness: .85,
+    roughness: .35,
+  });
+  const binBody = new THREE.MeshStandardMaterial({
+    color: 0x151718,
+    metalness: .5,
+    roughness: .45,
+  });
   mesh(
-    new THREE.BoxGeometry(m.returnWidth, .035, m.returnDepth - m.stripDepth),
-    gravelBase,
-    m.returnWidth / 2,
-    .018,
-    (m.returnDepth + m.stripDepth) / 2,
+    new THREE.CylinderGeometry(.12, .12, binHeight, 32),
+    binBody,
+    binX,
+    .05 + binHeight / 2,
+    binZ,
   );
+  mesh(
+    new THREE.CylinderGeometry(.126, .126, .025, 32),
+    metal,
+    binX,
+    .05 + binHeight,
+    binZ,
+  );
+  mesh(
+    new THREE.CylinderGeometry(.107, .107, .008, 32),
+    dark,
+    binX,
+    .067 + binHeight,
+    binZ,
+  );
+  // Thin grate bars and a dark front waste opening reproduce the reference.
+  for (let j = -3; j <= 3; j++) {
+    mesh(
+      new THREE.BoxGeometry(.17, .003, .005),
+      metal,
+      binX,
+      .075 + binHeight,
+      binZ + j * .022,
+    );
+    mesh(
+      new THREE.BoxGeometry(.005, .003, .17),
+      metal,
+      binX + j * .022,
+      .076 + binHeight,
+      binZ,
+    );
+  }
+  mesh(new THREE.BoxGeometry(.15, .14, .005), dark, binX, .47, binZ - .121);
   // Subtle size and angle changes make the staggered route feel less formal.
   g.steppingStones.forEach(([x, z], i) => {
+    if (z > m.stripDepth) return;
     const scale = [.94, 1.05, .98, 1.08, .92][i % 5];
     const slab = mesh(
       new THREE.CylinderGeometry(.23, .23, .025, 7),
@@ -79,7 +161,7 @@ export function createGarden(world) {
       x = .04 + random() * (m.width - .08);
       z = .04 + random() * (m.returnDepth - .08);
     } while (
-      (x > m.returnWidth - .04 && z > m.stripDepth - .04) ||
+      z > m.stripDepth - .04 ||
       g.steppingStones.some(([sx, sz]) =>
         ((x - sx) / .25) ** 2 + ((z - sz) / .18) ** 2 < 1
       )
@@ -152,7 +234,7 @@ export function createGarden(world) {
     rock.rotation.y = random() * 3;
   }
   // Three asymmetrical green islands; many tiny moss rocks form texture.
-  const islands = [[.42, .48, .29, .22], [3.84, .34, .44, .22], [
+  const islands = [[1.68, .30, .29, .20], [3.84, .34, .44, .22], [
     5.94,
     .35,
     .42,
@@ -235,12 +317,12 @@ export function createGarden(world) {
     rock.name = "Warm glowing stone";
   }
   // One 50 cm Mars-style ball in the deeper return, away from the path.
-  mesh(new THREE.SphereGeometry(.25, 28, 20), glow, .35, .29, 1.40);
+  mesh(new THREE.SphereGeometry(.25, 28, 20), glow, .35, .29, .38);
   for (
     const [px, py, pz] of [[lx, .30, lz], [3.02, .15, .34], [6.40, .15, .39], [
       .35,
       .30,
-      1.40,
+      .38,
     ]]
   ) {
     const light = new THREE.PointLight(0xffbd73, .22, 1, 2);

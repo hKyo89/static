@@ -155,3 +155,13 @@ One 50 cm Mars-style ball sits in the deeper left return, off the path. The
 bonsai, stone lantern, uplight and staggered stepping route remain. This
 supersedes earlier decorative counts. Product geometry and output are
 illustrative; the concept deliberately keeps broad white-pebble gaps.
+
+## Concealed smoking nook
+
+The short return now has walnut-look WPC decking (1.35 × 0.80 m concept area)
+and a compact black cylindrical ashtray/trash bin tucked behind the opaque wall.
+The bin is illustrated at 62 cm tall and 24 cm diameter; actual product
+dimensions are unconfirmed. Stepping stones and loose pebbles stop at the
+decking edge. The 50 cm ball light moves to the rear-left pebble area, leaving
+the deck clear for standing. This supersedes the fully pebbled return and prior
+ball location.
