@@ -152,3 +152,7 @@ details remain illustrative.
 Night mode includes a warm ground spotlight in front of the bonsai, aimed upward
 through the foliage toward the rear wall. Its shadow map projects the branches
 and canopy onto the wall. The beam and fixture placement are illustrative.
+
+The stepping stones now follow a gently staggered route with varied angles and
+sizes, superseding the straight row. Placement is deliberate and stable between
+visits, with the central doorway approach kept free of tall objects.

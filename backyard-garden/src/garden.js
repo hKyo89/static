@@ -47,14 +47,19 @@ export function createGarden(world) {
     .018,
     (m.returnDepth + m.stripDepth) / 2,
   );
-  // Flush stepping stones along the doors, plus a pair through the return.
-  for (const [x, z] of g.steppingStones) {
-    mesh(new THREE.CylinderGeometry(.23, .23, .025, 8), stone, x, .052, z, [
-      1,
-      1,
-      .72,
-    ]);
-  }
+  // Subtle size and angle changes make the staggered route feel less formal.
+  g.steppingStones.forEach(([x, z], i) => {
+    const scale = [.94, 1.05, .98, 1.08, .92][i % 5];
+    const slab = mesh(
+      new THREE.CylinderGeometry(.23, .23, .025, 7),
+      stone,
+      x,
+      .052,
+      z,
+      [scale, 1, .76 * scale],
+    );
+    slab.rotation.y = [-.28, .42, -.55, .18, .65][i % 5];
+  });
   // Instanced smooth pebbles, deterministic variation and a black edge.
   let seed = 1947;
   function random() {
