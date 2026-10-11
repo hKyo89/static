@@ -247,3 +247,19 @@ moss-covered stones sit around their edges, above the gravel, with brighter
 green contrast. The 50 cm Mars-style ball moves beside the bonsai at X=5.14,
 Z=0.33 opposite the sliding doors. Its previous rear-left placement is
 superseded.
+
+## Model data and wall junctions
+
+`model.ts` is the shared typed source for courtyard measurements, wall paths,
+window/door geometry, garden placements, canopy pads, turf patches, moss-rock
+sizes, lights, decking and bin placement. Coordinates use metres: origin at the
+rear-left plan corner, X right, Y up, Z toward the house. Edit layout data here
+instead of changing mesh placement constants in the renderer. Rendering
+subdivision, texture generation and small fixture construction details remain in
+the browser source files. Stale earlier garden-bed/grass coordinates were
+removed.
+
+Solid wall ends extend by half their thickness to seal perpendicular corners.
+Rear-wall end sections include matching corner coverage; the six intentional
+U-divider recesses keep their exact end positions. Junction regression testing
+checks the half-thickness coverage and divider behavior.

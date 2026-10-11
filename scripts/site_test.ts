@@ -8,6 +8,8 @@ import {
   outline,
   slidingLeafPositions,
   slidingStart,
+  wallPanelLength,
+  wallSegments,
   windows,
 } from "../backyard-garden/model.ts";
 
@@ -133,4 +135,21 @@ Deno.test("fixed window, wall separator and four sliding doors preserve frontage
     JSON.stringify(slidingLeafPositions(-1)) !== JSON.stringify(closed) ||
     JSON.stringify(slidingLeafPositions(2)) !== JSON.stringify(open)
   ) throw new Error("Invalid opening limits");
+});
+
+Deno.test("wall ends cover perpendicular corner extents without closing divider gaps", () => {
+  for (const segment of wallSegments) {
+    const axisLength = Math.hypot(
+      segment.b[0] - segment.a[0],
+      segment.b[1] - segment.a[1],
+    );
+    const length = wallPanelLength(segment.a, segment.b, model.wallThickness);
+    const halfExtension = (length - axisLength) / 2;
+    if (Math.abs(halfExtension - model.wallThickness / 2) > 1e-8) {
+      throw new Error(`${segment.name} leaves a corner gap`);
+    }
+  }
+  if (wallPanelLength([0, 0], [1, 0], model.wallThickness, false) !== 1) {
+    throw new Error("Deliberate divider gaps must not be extended");
+  }
 });

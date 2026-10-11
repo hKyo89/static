@@ -15,6 +15,8 @@ import {
   slidingStart,
   wallLightPositions,
   wallLights,
+  wallPanelLength,
+  wallSegments,
   windows,
 } from "../model.ts";
 
@@ -239,8 +241,9 @@ function createViewer() {
     material,
     thickness = m.wallThickness,
     shadow = true,
+    joined = material === wallMaterial,
   ) {
-    const length = Math.hypot(b[0] - a[0], b[1] - a[1]);
+    const length = wallPanelLength(a, b, thickness, joined);
     const mesh = box(
       parent,
       length,
@@ -318,10 +321,23 @@ function createViewer() {
   }
   const pitch = m.width / finishes.wallSections;
   for (let i = 0; i < finishes.wallSections; i++) {
-    const left = i * pitch + (i ? finishes.dividerWidth / 2 : 0);
-    const right = (i + 1) * pitch -
+    const left = (i === 0 ? -m.wallThickness / 2 : i * pitch) +
+      (i ? finishes.dividerWidth / 2 : 0);
+    const right = ((i === finishes.wallSections - 1)
+      ? m.width + m.wallThickness / 2
+      : (i + 1) * pitch) -
       (i < finishes.wallSections - 1 ? finishes.dividerWidth / 2 : 0);
-    panel(boundary, [left, 0], [right, 0], 0, m.wallHeight, wallMaterial);
+    panel(
+      boundary,
+      [left, 0],
+      [right, 0],
+      0,
+      m.wallHeight,
+      wallMaterial,
+      m.wallThickness,
+      true,
+      false,
+    );
     if (i > 0) {
       const x = i * pitch;
       const w = finishes.dividerWidth;
@@ -351,48 +367,17 @@ function createViewer() {
       }
     }
   }
-  panel(
-    boundary,
-    [m.width, 0],
-    [m.width, m.stripDepth],
-    0,
-    m.wallHeight,
-    wallMaterial,
-  );
-  panel(
-    world,
-    [m.returnWidth, m.stripDepth],
-    [m.returnWidth, m.returnDepth],
-    0,
-    m.wallHeight,
-    wallMaterial,
-  );
-  // User-confirmed short return wall; it remains solid in every view.
-  panel(
-    world,
-    [0, m.returnDepth],
-    [m.returnWidth, m.returnDepth],
-    0,
-    m.wallHeight,
-    wallMaterial,
-  );
-  panel(
-    world,
-    [slidingStart - frontage.separatorWidth, m.stripDepth],
-    [slidingStart, m.stripDepth],
-    0,
-    m.wallHeight,
-    wallMaterial,
-  );
-  // Continuous opening with four independent glass leaves, not five fixed bays.
-  panel(
-    world,
-    [slidingStart, m.stripDepth],
-    [m.width, m.stripDepth],
-    m.windowTop,
-    m.wallHeight,
-    wallMaterial,
-  );
+  for (const segment of wallSegments) {
+    const wall = panel(
+      segment.boundary ? boundary : world,
+      segment.a,
+      segment.b,
+      segment.bottom,
+      segment.top,
+      wallMaterial,
+    );
+    wall.name = segment.name;
+  }
   panel(
     glazing,
     [slidingStart, m.stripDepth],

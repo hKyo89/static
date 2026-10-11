@@ -68,17 +68,21 @@ export function createGarden(world) {
     roughness: .88,
   });
   const nookDepth = m.returnDepth - m.stripDepth;
-  for (let i = 0; i < 9; i++) {
+  for (let i = 0; i < g.deck.boards; i++) {
     mesh(
-      new THREE.BoxGeometry(m.returnWidth / 9 - .006, .045, nookDepth - .025),
+      new THREE.BoxGeometry(
+        m.returnWidth / g.deck.boards - g.deck.gap,
+        g.deck.thickness,
+        nookDepth - g.deck.endInset,
+      ),
       wood,
-      (i + .5) * m.returnWidth / 9,
-      .027,
+      (i + .5) * m.returnWidth / g.deck.boards,
+      g.deck.centreY,
       (m.returnDepth + m.stripDepth) / 2,
     );
   }
   // Black standing ashtray/bin is tucked behind the short opaque return wall.
-  const binX = 1.08, binZ = 1.76, binHeight = .62;
+  const { x: binX, z: binZ, height: binHeight } = g.bin;
   const metal = new THREE.MeshStandardMaterial({
     color: 0x9ea4a5,
     metalness: .85,
@@ -205,15 +209,10 @@ export function createGarden(world) {
     height - .13,
     z,
   ]], .035);
-  const pads = [[-.24, .55, .03, .23], [.24, .78, -.03, .23], [
-    -.19,
-    .98,
-    .01,
-    .22,
-  ], [.01, 1.2, 0, .28]];
+  const pads = g.canopyPads;
   for (const [dx, y, dz, r] of pads) {
     branch([[x, y - .17, z], [x + dx, y - .03, z + dz]], .015);
-    for (let i = 0; i < 9; i++) {
+    for (let i = 0; i < g.deck.boards; i++) {
       mesh(
         new THREE.SphereGeometry(1, 9, 7),
         green,
@@ -236,12 +235,7 @@ export function createGarden(world) {
     rock.rotation.y = random() * 3;
   }
   // Three asymmetrical green islands; many tiny moss rocks form texture.
-  const islands = [[1.68, .30, .29, .20], [3.84, .34, .44, .22], [
-    5.94,
-    .35,
-    .42,
-    .24,
-  ]];
+  const islands = g.turfPatches;
   const moss = new THREE.MeshStandardMaterial({
     color: 0x83a647,
     roughness: 1,
@@ -261,9 +255,10 @@ export function createGarden(world) {
     patch.rotation.x = -Math.PI / 2;
     patch.material.side = THREE.DoubleSide;
     // Small separate moss stones surround the patch, clearly above the pebbles.
-    for (let j = 0; j < 12; j++) {
-      const radius = .025 + random() * .015;
-      const angle = j / 12 * Math.PI * 2;
+    for (let j = 0; j < g.mossRocks.perPatch; j++) {
+      const radius = g.mossRocks.minRadius +
+        random() * (g.mossRocks.maxRadius - g.mossRocks.minRadius);
+      const angle = j / g.mossRocks.perPatch * Math.PI * 2;
       const rock = mesh(
         new THREE.IcosahedronGeometry(1, 2),
         moss,
@@ -275,11 +270,14 @@ export function createGarden(world) {
       rock.name = `Moss-covered rock ${j + 1}: 5–8 cm`;
     }
   }
-  mesh(new THREE.IcosahedronGeometry(1, 1), stone, 3.35, .17, .32, [
-    .23,
-    .20,
-    .16,
-  ]);
+  mesh(
+    new THREE.IcosahedronGeometry(1, 1),
+    stone,
+    g.accentRock.x,
+    g.accentRock.y,
+    g.accentRock.z,
+    g.accentRock.scale,
+  );
   const glow = new THREE.MeshStandardMaterial({
     color: 0xe8dfca,
     emissive: 0xffbd73,
@@ -300,7 +298,7 @@ export function createGarden(world) {
   mesh(new THREE.SphereGeometry(.028, 10, 8), stone, lx, .47, lz);
   const lights = [];
   // Two 30–35 cm glowing stones, staggered amongst the green islands.
-  const groundLamps = [[3.02, .34, .33], [6.40, .39, .31]];
+  const groundLamps = g.glowingStones;
   for (const [px, pz, diameter] of groundLamps) {
     const rock = mesh(
       new THREE.IcosahedronGeometry(1, 2),
@@ -314,13 +312,19 @@ export function createGarden(world) {
     rock.name = "Warm glowing stone";
   }
   // The 50 cm ball sits beside the bonsai opposite the sliding doors.
-  mesh(new THREE.SphereGeometry(.25, 28, 20), glow, 5.14, .29, .33);
+  mesh(
+    new THREE.SphereGeometry(g.ball.diameter / 2, 28, 20),
+    glow,
+    g.ball.x,
+    g.ball.y,
+    g.ball.z,
+  );
   for (
-    const [px, py, pz] of [[lx, .30, lz], [3.02, .15, .34], [6.40, .15, .39], [
-      5.14,
-      .30,
-      .33,
-    ]]
+    const [px, py, pz] of [
+      [lx, .30, lz],
+      ...g.glowingStones.map(([x, z]) => [x, .15, z]),
+      [g.ball.x, g.ball.y, g.ball.z],
+    ]
   ) {
     const light = new THREE.PointLight(0xffbd73, .22, 1, 2);
     light.position.set(px, py, pz);
@@ -330,8 +334,16 @@ export function createGarden(world) {
   }
   // Low warm uplight from the door side, projecting foliage shadows rearward.
   const uplight = new THREE.SpotLight(0xffc58a, 6, 4, Math.PI / 5, .6, 2);
-  uplight.position.set(g.bonsai.x + .08, .09, g.bonsai.z + .55);
-  uplight.target.position.set(g.bonsai.x, .85, .03);
+  uplight.position.set(
+    g.bonsai.x + g.spotlight.offset[0],
+    g.spotlight.offset[1],
+    g.bonsai.z + g.spotlight.offset[2],
+  );
+  uplight.target.position.set(
+    g.bonsai.x,
+    g.spotlight.targetY,
+    g.spotlight.targetZ,
+  );
   uplight.castShadow = true;
   uplight.shadow.mapSize.set(1024, 1024);
   uplight.shadow.camera.near = .03;

@@ -108,10 +108,91 @@ export const gardenLayout = {
     [5.48, .95],
     [6.06, .79],
   ],
-  bed: { x: 4.8, z: .36, width: 3.6, depth: .50 },
   bonsai: { x: 4.22, z: .35, height: 1.35 },
   lantern: { x: 5.65, z: .33 },
-  pebbleLight: { x: 6.18, z: .40 },
   rocks: [[3.50, .32, .16], [4.60, .38, .12], [2.40, .28, .18]],
-  grass: [[3.28, .37], [4.78, .42], [6.40, .30]],
+  turfPatches: [[1.68, .30, .29, .20], [3.84, .34, .44, .22], [
+    5.94,
+    .35,
+    .42,
+    .24,
+  ]],
+  mossRocks: { perPatch: 12, minRadius: .025, maxRadius: .04 },
+  glowingStones: [[3.02, .34, .33], [6.40, .39, .31]],
+  ball: { x: 5.14, y: .29, z: .33, diameter: .50 },
+  accentRock: { x: 3.35, y: .17, z: .32, scale: [.23, .20, .16] },
+  bin: { x: 1.08, z: 1.76, height: .62, radius: .12, base: .05 },
+  deck: {
+    boards: 9,
+    gap: .006,
+    thickness: .045,
+    centreY: .027,
+    endInset: .025,
+  },
+  canopyPads: [[-.24, .55, .03, .23], [.24, .78, -.03, .23], [
+    -.19,
+    .98,
+    .01,
+    .22,
+  ], [.01, 1.2, 0, .28]],
+  spotlight: {
+    offset: [.08, .09, .55],
+    targetY: .85,
+    targetZ: .03,
+    intensity: 6,
+    range: 4,
+  },
 } as const;
+
+// Wall paths are centre-lines in metres. Solid-wall ends overlap by half their
+// thickness to seal perpendicular junctions. Divider gaps use exact ends.
+export const wallSegments = [
+  {
+    name: "Right boundary",
+    a: [model.width, 0],
+    b: [model.width, model.stripDepth],
+    bottom: 0,
+    top: model.wallHeight,
+    boundary: true,
+  },
+  {
+    name: "Inset return",
+    a: [model.returnWidth, model.stripDepth],
+    b: [model.returnWidth, model.returnDepth],
+    bottom: 0,
+    top: model.wallHeight,
+    boundary: false,
+  },
+  {
+    name: "Solid short return",
+    a: [0, model.returnDepth],
+    b: [model.returnWidth, model.returnDepth],
+    bottom: 0,
+    top: model.wallHeight,
+    boundary: false,
+  },
+  {
+    name: "Fixed-window separator",
+    a: [slidingStart - frontage.separatorWidth, model.stripDepth],
+    b: [slidingStart, model.stripDepth],
+    bottom: 0,
+    top: model.wallHeight,
+    boundary: false,
+  },
+  {
+    name: "Sliding-door header",
+    a: [slidingStart, model.stripDepth],
+    b: [model.width, model.stripDepth],
+    bottom: model.windowTop,
+    top: model.wallHeight,
+    boundary: false,
+  },
+] as const;
+export function wallPanelLength(
+  a: readonly number[],
+  b: readonly number[],
+  thickness: number,
+  joined = true,
+) {
+  return Math.hypot(b[0] - a[0], b[1] - a[1]) + (joined ? thickness : 0);
+}
