@@ -150,3 +150,12 @@ U-profile dividers. Equal spacing, 18 mm divider width, 8 mm recess and 450 mm
 tile spacing are illustrative; the user has not supplied sizes. Full walls are
 shown initially so the dividers can be inspected; Cutaway walls remains
 available. Textures are generated locally and require no external images.
+
+## Courtyard lighting correction
+
+The backyard is open to the sky; the house is two storeys. Sunlight now comes
+from the open rear side, not through the house windows. A shadow-only upper
+storey and house roof envelope blocks light from the house side without adding a
+roof over the courtyard. The 6 m total house height, 4 m modelled house depth
+and sun angle are illustrative. This is not a date/location solar study. Reset
+restores the full-wall starting view.

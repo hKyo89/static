@@ -96,6 +96,8 @@ export function BackyardPage() {
             <details class="specifications">
               <summary>Measurements & assumptions</summary>
               <dl>
+                <dt>House & sunlight</dt>
+                <dd>Two-storey house · sunlight from the open backyard side</dd>
                 <dt>Finishes</dt>
                 <dd>Rough grey granite tiles · ivory roughcast walls</dd>
                 <dt>Long wall</dt>
@@ -117,8 +119,8 @@ export function BackyardPage() {
                 Plan dimensions are interpreted from the supplied screenshot.
                 Wall thickness (0.12 m), window sill (0.12 m), window top (2.85
                 m), wall separator width, four-track stacking, tile size, and
-                U-divider dimensions are illustrative. Confirm before
-                construction.
+                U-divider dimensions, 6 m house height, and sun angle are
+                illustrative. Confirm before construction.
               </p>
             </details>
             <div class="legend">

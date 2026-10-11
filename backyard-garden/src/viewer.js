@@ -8,6 +8,7 @@ import {
   finishes,
   frontage,
   leafWidth,
+  lighting,
   model as m,
   slidingLeafPositions,
   slidingStart,
@@ -56,7 +57,8 @@ function createViewer() {
   controls.maxPolarAngle = Math.PI / 2 - 0.015;
   scene.add(new THREE.HemisphereLight(0xffffff, 0x82947e, 2.5));
   const sun = new THREE.DirectionalLight(0xfff4dd, 3);
-  sun.position.set(-4, 10, 6);
+  // Negative Z is the open backyard side; positive Z is the house.
+  sun.position.set(...lighting.sunPosition);
   sun.castShadow = true;
   sun.shadow.mapSize.set(2048, 2048);
   Object.assign(sun.shadow.camera, {
@@ -65,7 +67,7 @@ function createViewer() {
     top: 8,
     bottom: -8,
     near: 0.1,
-    far: 25,
+    far: 35,
   });
   sun.shadow.normalBias = 0.03;
   scene.add(sun);
@@ -136,6 +138,46 @@ function createViewer() {
     parent.add(mesh);
     return mesh;
   }
+  // Shadow-only house envelope: upper storey and house roof block sunlight,
+  // while the courtyard stays open to the sky and visible in this focused view.
+  const houseShadowMaterial = new THREE.MeshBasicMaterial({
+    colorWrite: false,
+    depthWrite: false,
+  });
+  const house = new THREE.Group();
+  house.name = "Two-storey house shadow envelope";
+  world.add(house);
+  box(
+    house,
+    m.width - m.returnWidth,
+    lighting.houseHeight - m.wallHeight,
+    lighting.houseDepth,
+    (m.width + m.returnWidth) / 2,
+    (lighting.houseHeight + m.wallHeight) / 2,
+    m.stripDepth + lighting.houseDepth / 2,
+    houseShadowMaterial,
+  );
+  box(
+    house,
+    m.returnWidth,
+    lighting.houseHeight - m.wallHeight,
+    lighting.houseDepth,
+    m.returnWidth / 2,
+    (lighting.houseHeight + m.wallHeight) / 2,
+    m.returnDepth + lighting.houseDepth / 2,
+    houseShadowMaterial,
+  );
+  // Opaque floor/roof over the house prevents a sun path through its interior.
+  box(
+    house,
+    m.width - m.returnWidth,
+    .15,
+    lighting.houseDepth,
+    (m.width + m.returnWidth) / 2,
+    m.wallHeight,
+    m.stripDepth + lighting.houseDepth / 2,
+    houseShadowMaterial,
+  );
   box(
     world,
     m.width,
@@ -528,10 +570,8 @@ function createViewer() {
     input.onchange = refresh;
   }
   document.querySelector("[data-reset]").onclick = () => {
-    cutawayInput.checked =
-      windowsInput.checked =
-      dimensionsInput.checked =
-        true;
+    cutawayInput.checked = false;
+    windowsInput.checked = dimensionsInput.checked = true;
     if (openingInput) openingInput.value = "0";
     setOpening();
     setView("perspective");

@@ -94,3 +94,12 @@ finishes; tile and divider dimensions are illustrative.
   is insufficient evidence of deployment.
 - Before construction, the homeowner confirms the original drawing dimensions,
   window sizes/divisions, wall thickness, materials, and actual surveyed site.
+
+## Courtyard lighting correction
+
+The backyard is open to the sky; the house is two storeys. Sunlight now comes
+from the open rear side, not through the house windows. A shadow-only upper
+storey and house roof envelope blocks light from the house side without adding a
+roof over the courtyard. The 6 m total house height, 4 m modelled house depth
+and sun angle are illustrative. This is not a date/location solar study. Reset
+restores the full-wall starting view.

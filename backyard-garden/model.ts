@@ -63,3 +63,10 @@ export const finishes = {
   dividerDepth: 0.008,
   tileSize: 0.45,
 } as const;
+
+// Two storeys confirmed; total height/depth and sun angle are illustrative.
+export const lighting = {
+  houseHeight: 6,
+  houseDepth: 4,
+  sunPosition: [-4, 12, -8],
+} as const;
