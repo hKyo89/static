@@ -86,9 +86,10 @@ function createViewer() {
   world.position.set(-m.width / 2, 0, -m.returnDepth / 2);
   scene.add(world);
   const boundary = new THREE.Group(),
+    otherWalls = new THREE.Group(),
     glazing = new THREE.Group(),
     dimensions = new THREE.Group();
-  world.add(boundary, glazing, dimensions);
+  world.add(boundary, otherWalls, glazing, dimensions);
   // Deterministic mineral grains provide local, offline surface textures.
   function mineralTexture(base, spread, repeat) {
     const canvas = document.createElement("canvas");
@@ -407,7 +408,7 @@ function createViewer() {
   }
   for (const segment of wallSegments) {
     const wall = panel(
-      segment.boundary ? boundary : world,
+      segment.boundary ? boundary : otherWalls,
       segment.a,
       segment.b,
       segment.bottom,
@@ -496,8 +497,8 @@ function createViewer() {
   setOpening();
   for (const window of windows) {
     const { a, b, bays } = window;
-    panel(world, a, b, 0, m.windowBottom, wallMaterial);
-    panel(world, a, b, m.windowTop, m.wallHeight, wallMaterial);
+    panel(otherWalls, a, b, 0, m.windowBottom, wallMaterial);
+    panel(otherWalls, a, b, m.windowTop, m.wallHeight, wallMaterial);
     panel(
       glazing,
       a,
@@ -654,6 +655,7 @@ function createViewer() {
   roomLabelsInput.onchange = () => refresh();
   const gardenInput = document.querySelector("[data-garden]");
   const wallsInput = document.querySelector("[data-walls]");
+  const boundaryInput = document.querySelector("[data-garden-boundary]");
   const legacyCutawayInput = document.querySelector("[data-cutaway]");
   let lightingMode = "day";
   function setLighting(mode) {
@@ -728,11 +730,14 @@ function createViewer() {
   }
   function refresh() {
     garden.group.visible = gardenInput?.checked ?? true;
-    boundary.visible = wallsInput
+    otherWalls.visible = wallsInput
       ? wallsInput.checked
       : !legacyCutawayInput?.checked;
+    boundary.visible = boundaryInput
+      ? boundaryInput.checked
+      : otherWalls.visible;
     firstFloor.group.visible = scope === "house";
-    firstFloor.walls.visible = boundary.visible;
+    firstFloor.walls.visible = otherWalls.visible;
     openingLabels.visible = openingLabelsInput.checked;
     openingLabels.children.forEach((label) =>
       label.visible = scope === "house" || label.userData.garden
@@ -752,7 +757,13 @@ function createViewer() {
     status.textContent = `${
       view === "plan" ? "Floor plan" : view === "inside" ? "Inside" : "3D view"
     } · ${
-      boundary.visible ? "full-height walls" : "cutaway walls"
+      otherWalls.visible && boundary.visible
+        ? "full-height walls"
+        : boundary.visible
+        ? "garden back/right walls only"
+        : otherWalls.visible
+        ? "garden boundary hidden"
+        : "walls hidden"
     } · ${lightingMode}`;
   }
   function setView(name) {
@@ -800,13 +811,21 @@ function createViewer() {
     const input of [
       wallsInput ?? legacyCutawayInput,
       windowsInput,
+      boundaryInput,
       dimensionsInput,
       gardenInput,
     ]
   ) {
     if (input) input.onchange = refresh;
   }
+  document.querySelector("[data-hide-enclosure]").onclick = () => {
+    wallsInput.checked = false;
+    windowsInput.checked = false;
+    boundaryInput.checked = false;
+    refresh();
+  };
   document.querySelector("[data-reset]").onclick = () => {
+    if (boundaryInput) boundaryInput.checked = true;
     if (wallsInput) wallsInput.checked = true;
     if (gardenInput) gardenInput.checked = true;
     if (legacyCutawayInput) legacyCutawayInput.checked = false;

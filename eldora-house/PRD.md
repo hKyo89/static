@@ -241,3 +241,13 @@ central bonsai. Its assumed height is 1.50 m, pot diameter 28 cm, pot height 24
 cm. The first supplied image shows the existing bonsai rather than olive; the
 olive is a generic interpretation pending a matching reference. The standing
 area and ashtray remain accessible. Placement and plant sizes live in model.ts.
+
+## Independent enclosure visibility
+
+Hide all walls and windows switches off every house/garden wall, door and
+glazing group. Garden back + right walls independently restores only the
+seven-section rear wall and its right return, including attached sconces. Show
+other walls controls all remaining house partitions, metal/hinged doors, garden
+solid returns, separators and headers. Show windows controls glazing and frames.
+Reset restores all three visibility switches. Floors, plants and canopy have
+their existing separate controls.

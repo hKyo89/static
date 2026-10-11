@@ -140,8 +140,15 @@ export function BackyardPage() {
                   Night
                 </button>
               </div>
+              <button type="button" class="quiet-button" data-hide-enclosure>
+                Hide all walls and windows
+              </button>
               <label class="toggle">
-                <span>Show walls</span>
+                <span>Garden back + right walls</span>
+                <input type="checkbox" data-garden-boundary checked />
+              </label>
+              <label class="toggle">
+                <span>Show other walls</span>
                 <input type="checkbox" data-walls checked />
               </label>
               <label class="toggle">
