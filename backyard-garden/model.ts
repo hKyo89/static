@@ -79,14 +79,18 @@ export const wallLights = {
   height: 2,
   bodyHeight: 0.16,
   radius: 0.035,
-  projection: 0.10,
+  projection: 0.035,
+  mountingGap: 0.001,
+  beamOffset: 0.018,
+  beamIntensity: 0.45,
+  beamRange: 0.9,
 } as const;
 export const wallLightPositions = Array.from(
   { length: wallLights.count },
   (_, i) => ({
     x: model.width - (i + .5) * model.width / finishes.wallSections,
     y: wallLights.height,
-    z: model.wallThickness / 2 + wallLights.projection,
+    z: model.wallThickness / 2 + wallLights.mountingGap,
   }),
 );
 

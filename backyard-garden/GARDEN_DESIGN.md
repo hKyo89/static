@@ -98,3 +98,12 @@ moss-covered stones sit around their edges, above the gravel, with brighter
 green contrast. The 50 cm Mars-style ball moves beside the bonsai at X=5.14,
 Z=0.33 opposite the sliding doors. Its previous rear-left placement is
 superseded.
+
+## Flush wall-light correction
+
+The six wall lights have no arm. Each uses a curved U front with a flat back
+attached directly to the wall (D-shaped cross-section). The fixture projects 35
+mm from the wall, instead of the old 100 mm bracket offset. Up/down apertures
+and dim warm grazing beams sit close to the roughcast, with smaller light pools.
+Mounting tolerance and beam output remain illustrative. This supersedes the
+earlier cylindrical body and projecting mounting bracket.

@@ -279,42 +279,48 @@ function createViewer() {
     fixture.name = `Wall light ${index + 1} from right`;
     fixture.position.set(position.x, position.y, position.z);
     boundary.add(fixture);
+    // D-shaped cross section: curved U front, flat back flush to the wall.
+    const profile = new THREE.Shape();
+    profile.moveTo(-wallLights.radius, 0);
+    profile.absarc(0, 0, wallLights.radius, Math.PI, 0, true);
+    profile.lineTo(-wallLights.radius, 0);
     const body = new THREE.Mesh(
-      new THREE.CylinderGeometry(
-        wallLights.radius,
-        wallLights.radius,
-        wallLights.bodyHeight,
-        24,
-      ),
+      new THREE.ExtrudeGeometry(profile, {
+        depth: wallLights.bodyHeight,
+        bevelEnabled: false,
+        curveSegments: 20,
+      }),
       sconceMaterial,
     );
+    body.rotation.x = Math.PI / 2;
+    body.position.y = wallLights.bodyHeight / 2;
     body.castShadow = body.receiveShadow = true;
     fixture.add(body);
-    box(
-      fixture,
-      .045,
-      .07,
-      wallLights.projection,
-      0,
-      0,
-      -wallLights.projection / 2,
-      sconceMaterial,
-    );
     for (const direction of [-1, 1]) {
       const aperture = new THREE.Mesh(
-        new THREE.CylinderGeometry(
-          wallLights.radius * .83,
-          wallLights.radius * .83,
-          .003,
-          24,
-        ),
+        new THREE.ShapeGeometry(profile),
         lampMaterial,
       );
+      aperture.scale.set(.80, .80, 1);
+      aperture.rotation.x = direction > 0 ? -Math.PI / 2 : Math.PI / 2;
+      // Mirror top aperture so its half-disc also projects into the courtyard.
+      if (direction > 0) aperture.scale.y *= -1;
       aperture.position.y = direction * (wallLights.bodyHeight / 2 + .002);
       fixture.add(aperture);
-      const beam = new THREE.SpotLight(0xffbd73, .65, 1.2, Math.PI / 6, .85, 2);
-      beam.position.set(0, direction * wallLights.bodyHeight / 2, .005);
-      beam.target.position.set(0, direction * .8, -wallLights.projection);
+      const beam = new THREE.SpotLight(
+        0xffbd73,
+        wallLights.beamIntensity,
+        wallLights.beamRange,
+        Math.PI / 7,
+        .9,
+        2,
+      );
+      beam.position.set(
+        0,
+        direction * (wallLights.bodyHeight / 2 + .003),
+        wallLights.beamOffset,
+      );
+      beam.target.position.set(0, direction * .45, -wallLights.mountingGap);
       lampBeams.push(beam);
       fixture.add(beam, beam.target);
     }

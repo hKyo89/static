@@ -206,3 +206,12 @@ Solid wall ends extend by half their thickness to seal perpendicular corners.
 Rear-wall end sections include matching corner coverage; the six intentional
 U-divider recesses keep their exact end positions. Junction regression testing
 checks the half-thickness coverage and divider behavior.
+
+## Flush wall-light correction
+
+The six wall lights have no arm. Each uses a curved U front with a flat back
+attached directly to the wall (D-shaped cross-section). The fixture projects 35
+mm from the wall, instead of the old 100 mm bracket offset. Up/down apertures
+and dim warm grazing beams sit close to the roughcast, with smaller light pools.
+Mounting tolerance and beam output remain illustrative. This supersedes the
+earlier cylindrical body and projecting mounting bracket.
