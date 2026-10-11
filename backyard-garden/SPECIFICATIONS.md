@@ -211,3 +211,12 @@ ball location.
 The black perimeter stripe has been removed. White and grey pebbles continue to
 the edges, with only a sparse scattering of dark pebbles throughout. This
 supersedes the earlier black edging and softens the garden’s outline.
+
+## Flat grass and focal-point corrections
+
+Raised stylized grass mounds and tall tufts are removed. The three green areas
+are now flat cut-to-shape artificial turf patches. Thirty-six separate 5–8 cm
+moss-covered stones sit around their edges, above the gravel, with brighter
+green contrast. The 50 cm Mars-style ball moves beside the bonsai at X=5.14,
+Z=0.33 opposite the sliding doors. Its previous rear-left placement is
+superseded.

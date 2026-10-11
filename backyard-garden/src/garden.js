@@ -243,41 +243,36 @@ export function createGarden(world) {
     .24,
   ]];
   const moss = new THREE.MeshStandardMaterial({
-    color: 0x607b39,
+    color: 0x83a647,
     roughness: 1,
   });
   for (const [gx, gz, rx, rz] of islands) {
-    for (let j = 0; j < 7; j++) {
-      const angle = j * 2.4;
-      mesh(
-        new THREE.SphereGeometry(1, 14, 8),
-        j % 2 ? green : moss,
-        gx + Math.cos(angle) * rx * .35,
-        .06,
-        gz + Math.sin(angle) * rz * .35,
-        [rx * (.6 + random() * .2), .055, rz * (.55 + random() * .2)],
-      );
+    // Flat cut-to-shape artificial turf, not raised grass mounds.
+    const shape = new THREE.Shape();
+    for (let j = 0; j <= 14; j++) {
+      const angle = j / 14 * Math.PI * 2;
+      const variation = 1 + .12 * Math.sin(j * 2.1);
+      const px = Math.cos(angle) * rx * variation,
+        pz = Math.sin(angle) * rz * variation;
+      if (j === 0) shape.moveTo(px, pz);
+      else shape.lineTo(px, pz);
     }
+    const patch = mesh(new THREE.ShapeGeometry(shape), green, gx, .078, gz);
+    patch.rotation.x = -Math.PI / 2;
+    patch.material.side = THREE.DoubleSide;
+    // Small separate moss stones surround the patch, clearly above the pebbles.
     for (let j = 0; j < 12; j++) {
-      const radius = .025 + random() * .015; // 5–8 cm diameter, confirmed by user.
-      mesh(
+      const radius = .025 + random() * .015;
+      const angle = j / 12 * Math.PI * 2;
+      const rock = mesh(
         new THREE.IcosahedronGeometry(1, 2),
         moss,
-        gx + (random() - .5) * rx * 1.4,
-        .09,
-        gz + (random() - .5) * rz * 1.4,
+        gx + Math.cos(angle) * rx * (.8 + random() * .15),
+        .055 + radius * .8,
+        gz + Math.sin(angle) * rz * (.8 + random() * .15),
         [radius, radius * .8, radius],
       );
-    }
-    for (let j = 0; j < 22; j++) {
-      const tuft = mesh(
-        new THREE.ConeGeometry(.013, .15, 4),
-        green,
-        gx + (random() - .5) * rx * 1.5,
-        .13,
-        gz + (random() - .5) * rz * 1.4,
-      );
-      tuft.rotation.z = (random() - .5) * .6;
+      rock.name = `Moss-covered rock ${j + 1}: 5–8 cm`;
     }
   }
   mesh(new THREE.IcosahedronGeometry(1, 1), stone, 3.35, .17, .32, [
@@ -318,13 +313,13 @@ export function createGarden(world) {
     rock.rotation.y = random() * 2;
     rock.name = "Warm glowing stone";
   }
-  // One 50 cm Mars-style ball in the deeper return, away from the path.
-  mesh(new THREE.SphereGeometry(.25, 28, 20), glow, .35, .29, .38);
+  // The 50 cm ball sits beside the bonsai opposite the sliding doors.
+  mesh(new THREE.SphereGeometry(.25, 28, 20), glow, 5.14, .29, .33);
   for (
     const [px, py, pz] of [[lx, .30, lz], [3.02, .15, .34], [6.40, .15, .39], [
-      .35,
+      5.14,
       .30,
-      .38,
+      .33,
     ]]
   ) {
     const light = new THREE.PointLight(0xffbd73, .22, 1, 2);
