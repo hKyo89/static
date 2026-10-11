@@ -151,24 +151,56 @@ export function createGarden(world) {
     );
     rock.rotation.y = random() * 3;
   }
-  // Small artificial moss/grass accents, confined to the pebble bed.
-  for (const [gx, gz] of g.grass) {
-    mesh(new THREE.SphereGeometry(1, 12, 8), green, gx, .045, gz, [
-      .13,
-      .035,
-      .10,
-    ]);
-    for (let i = 0; i < 15; i++) {
-      const blade = mesh(
-        new THREE.ConeGeometry(.009, .11, 3),
-        green,
-        gx + (random() - .5) * .17,
-        .08,
-        gz + (random() - .5) * .12,
+  // Three asymmetrical green islands; many tiny moss rocks form texture.
+  const islands = [[.42, .48, .29, .22], [3.84, .34, .44, .22], [
+    5.94,
+    .35,
+    .42,
+    .24,
+  ]];
+  const moss = new THREE.MeshStandardMaterial({
+    color: 0x607b39,
+    roughness: 1,
+  });
+  for (const [gx, gz, rx, rz] of islands) {
+    for (let j = 0; j < 7; j++) {
+      const angle = j * 2.4;
+      mesh(
+        new THREE.SphereGeometry(1, 14, 8),
+        j % 2 ? green : moss,
+        gx + Math.cos(angle) * rx * .35,
+        .06,
+        gz + Math.sin(angle) * rz * .35,
+        [rx * (.6 + random() * .2), .055, rz * (.55 + random() * .2)],
       );
-      blade.rotation.z = (random() - .5) * .5;
+    }
+    for (let j = 0; j < 12; j++) {
+      const radius = .025 + random() * .015; // 5–8 cm diameter, confirmed by user.
+      mesh(
+        new THREE.IcosahedronGeometry(1, 2),
+        moss,
+        gx + (random() - .5) * rx * 1.4,
+        .09,
+        gz + (random() - .5) * rz * 1.4,
+        [radius, radius * .8, radius],
+      );
+    }
+    for (let j = 0; j < 22; j++) {
+      const tuft = mesh(
+        new THREE.ConeGeometry(.013, .15, 4),
+        green,
+        gx + (random() - .5) * rx * 1.5,
+        .13,
+        gz + (random() - .5) * rz * 1.4,
+      );
+      tuft.rotation.z = (random() - .5) * .6;
     }
   }
+  mesh(new THREE.IcosahedronGeometry(1, 1), stone, 3.35, .17, .32, [
+    .23,
+    .20,
+    .16,
+  ]);
   const glow = new THREE.MeshStandardMaterial({
     color: 0xe8dfca,
     emissive: 0xffbd73,
@@ -187,24 +219,31 @@ export function createGarden(world) {
   }
   mesh(new THREE.ConeGeometry(.19, .10, 8), stone, lx, .40, lz);
   mesh(new THREE.SphereGeometry(.028, 10, 8), stone, lx, .47, lz);
-  const orb = mesh(
-    new THREE.SphereGeometry(1, 20, 14),
-    glow,
-    g.pebbleLight.x,
-    .10,
-    g.pebbleLight.z,
-    [.12, .08, .10],
-  );
-  orb.name = "Small warm pebble light";
   const lights = [];
+  // Two 30–35 cm glowing stones, staggered amongst the green islands.
+  const groundLamps = [[3.02, .34, .33], [6.40, .39, .31]];
+  for (const [px, pz, diameter] of groundLamps) {
+    const rock = mesh(
+      new THREE.IcosahedronGeometry(1, 2),
+      glow,
+      px,
+      diameter * .24,
+      pz,
+      [diameter / 2, diameter * .26, diameter * .40],
+    );
+    rock.rotation.y = random() * 2;
+    rock.name = "Warm glowing stone";
+  }
+  // One 50 cm Mars-style ball in the deeper return, away from the path.
+  mesh(new THREE.SphereGeometry(.25, 28, 20), glow, .35, .29, 1.40);
   for (
-    const [px, py, pz] of [[lx, .30, lz], [
-      g.pebbleLight.x,
-      .14,
-      g.pebbleLight.z,
+    const [px, py, pz] of [[lx, .30, lz], [3.02, .15, .34], [6.40, .15, .39], [
+      .35,
+      .30,
+      1.40,
     ]]
   ) {
-    const light = new THREE.PointLight(0xffbd73, .15, .7, 2);
+    const light = new THREE.PointLight(0xffbd73, .22, 1, 2);
     light.position.set(px, py, pz);
     light.visible = false;
     group.add(light);

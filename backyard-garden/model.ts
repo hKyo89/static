@@ -94,7 +94,7 @@ export const wallLightPositions = Array.from(
 export const gardenLayout = {
   // Deliberately staggered, not random on each load; X/Z positions in metres.
   steppingStones: [
-    [.57, 1.72],
+    [.94, 1.76],
     [.84, 1.26],
     [.54, .80],
     [1.08, .95],

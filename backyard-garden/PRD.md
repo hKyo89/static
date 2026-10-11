@@ -145,3 +145,14 @@ arrangement opposite the sliding doors. Flush grey stepping stones provide a
 route beside the doors and through the return. Granite remains beneath the
 removable concept. All planting is artificial; pebble depth and installation
 details remain illustrative.
+
+## Layered garden redesign
+
+Three uneven artificial moss/grass islands replace the small repeated tufts.
+Each island has twelve small moss-covered rocks, 5–8 cm diameter (36 total),
+with irregular green mounds and grass texture. A larger grey feature stone adds
+contrast. Two glowing stones, 31 and 33 cm wide, replace the small pebble light.
+One 50 cm Mars-style ball sits in the deeper left return, off the path. The
+bonsai, stone lantern, uplight and staggered stepping route remain. This
+supersedes earlier decorative counts. Product geometry and output are
+illustrative; the concept deliberately keeps broad white-pebble gaps.
