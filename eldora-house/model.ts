@@ -36,12 +36,19 @@ export const leafWidth =
   frontage.leafCount;
 export const windows = [
   {
-    name: "Fixed frontage window",
+    id: "WIN01",
+    name: "Living area — garden fixed window",
     a: [model.returnWidth, model.stripDepth],
     b: [slidingStart - frontage.separatorWidth, model.stripDepth],
     bays: 1,
   },
-  { name: "Left-side window", a: [0, 0], b: [0, model.returnDepth], bays: 2 },
+  {
+    id: "WIN02",
+    name: "Rear room — garden-side window",
+    a: [0, 0],
+    b: [0, model.returnDepth],
+    bays: 2,
+  },
 ] as const;
 // Outer leaves stay in place; the centre pair slides outward behind them.
 export function slidingLeafPositions(openFraction: number) {

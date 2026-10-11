@@ -1,3 +1,4 @@
+import { openingReferences } from "../openings.ts";
 import { filmMaterials } from "./window-film.js";
 import { createHouse } from "./house.js";
 import { houseModel, rooms } from "../house-model.ts";
@@ -402,7 +403,7 @@ function createViewer() {
   const doorHeight = m.windowTop - frontage.doorBottom;
   for (let i = 0; i < frontage.leafCount; i++) {
     const leaf = new THREE.Group();
-    leaf.name = `Sliding door ${i + 1}`;
+    leaf.name = `DR01-${"ABCD"[i]} · Garden sliding leaf ${i + 1}`;
     glazing.add(leaf);
     doorLeaves.push(leaf);
     box(
@@ -560,12 +561,50 @@ function createViewer() {
   const firstFloor = createHouse(world);
   const scopeInput = document.querySelector("[data-scope]");
   const roomInput = document.querySelector("[data-room-focus]");
+  const openingLabels = new THREE.Group();
+  world.add(openingLabels);
+  openingReferences.forEach((o) => {
+    const el = document.createElement("span");
+    el.className = "room-label";
+    el.textContent = o.id;
+    el.title = o.name;
+    const label = new CSS2DObject(el);
+    label.position.set(
+      (o.a[0] + o.b[0]) / 2 - houseModel.gardenOffsetX,
+      2.35,
+      (o.a[1] + o.b[1]) / 2,
+    );
+    label.userData.garden = o.garden;
+    openingLabels.add(label);
+  });
+  const openingLabelsInput = document.querySelector("[data-opening-labels]");
+  const openingFocusInput = document.querySelector("[data-opening-focus]");
+  openingLabelsInput.onchange = () => refresh();
+  openingFocusInput.onchange = () => {
+    const o = openingReferences.find((o) => o.id === openingFocusInput.value);
+    if (!o) return;
+    scope = o.garden ? "garden" : "house";
+    scopeInput.value = scope;
+    focusedRoom = {
+      bounds: [
+        Math.min(...[o.a[0], o.b[0]]) - 1,
+        Math.min(o.a[1], o.b[1]) - 1,
+        Math.max(o.a[0], o.b[0]) + 1,
+        Math.max(o.a[1], o.b[1]) + 1,
+      ],
+    };
+    roomInput.value = "";
+    openingLabelsInput.checked = true;
+    setView("plan");
+  };
   const roomLabelsInput = document.querySelector("[data-room-labels]");
   let scope = "house";
   let focusedRoom = null;
   scopeInput.onchange = () => {
     scope = scopeInput.value;
     focusedRoom = null;
+    openingFocusInput.value = "";
+    openingLabelsInput.checked = false;
     roomInput.value = "";
     setView(view);
   };
@@ -656,6 +695,10 @@ function createViewer() {
       : !legacyCutawayInput?.checked;
     firstFloor.group.visible = scope === "house";
     firstFloor.walls.visible = boundary.visible;
+    openingLabels.visible = openingLabelsInput.checked;
+    openingLabels.children.forEach((label) =>
+      label.visible = scope === "house" || label.userData.garden
+    );
     firstFloor.names.visible = roomLabelsInput.checked;
     firstFloor.names.children.forEach((label, i) => {
       label.element.textContent = view === "plan"
@@ -720,6 +763,8 @@ function createViewer() {
     if (gardenInput) gardenInput.checked = true;
     if (legacyCutawayInput) legacyCutawayInput.checked = false;
     focusedRoom = null;
+    openingFocusInput.value = "";
+    openingLabelsInput.checked = false;
     roomInput.value = "";
     scope = "house";
     scopeInput.value = "house";

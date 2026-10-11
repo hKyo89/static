@@ -188,3 +188,24 @@ Deno.test("first-floor openings stay ordered within walls and room IDs are uniqu
   ) throw new Error("Lost old garden bookmark");
   await response.body?.cancel();
 });
+
+Deno.test("opening reference IDs are unique and cover every wall opening", async () => {
+  const { openingReferences, slidingDoorReferences } = await import(
+    "../eldora-house/openings.ts"
+  );
+  const { houseWalls } = await import("../eldora-house/house-model.ts");
+  const ids = openingReferences.map((o) => o.id);
+  if (ids.length !== 20 || new Set(ids).size !== ids.length) {
+    throw new Error("Incomplete or duplicate opening references");
+  }
+  for (const wall of houseWalls) {
+    for (const o of wall.openings) {
+      if (!ids.includes(o.id)) throw new Error("Unreferenced opening");
+    }
+  }
+  for (const assembly of slidingDoorReferences) {
+    if (
+      !ids.includes(assembly.id) || assembly.leaves.length !== assembly.count
+    ) throw new Error("Invalid sliding leaf references");
+  }
+});

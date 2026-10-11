@@ -96,7 +96,7 @@ export function createHouse(world) {
       segment(walls, a, b, 0, bottom, wall);
       segment(walls, a, b, top, h.wallHeight, wall);
       if (o.kind === "window" || o.kind === "sliding") {
-        segment(
+        const pane = segment(
           glazing,
           a,
           b,
@@ -106,6 +106,7 @@ export function createHouse(world) {
           .016,
           false,
         );
+        pane.name = `${o.id} · ${o.name}`;
         segment(glazing, a, b, bottom, bottom + .04, frame, .06, false);
         segment(glazing, a, b, top - .04, top, frame, .06, false);
         const n = o.kind === "sliding" ? 4 : 2;
@@ -124,6 +125,7 @@ export function createHouse(world) {
         }
       } else if (o.kind === "door") {
         const leaf = segment(walls, a, b, .02, 2.17, wood, .035, false);
+        leaf.name = `${o.id} · ${o.name}`;
         leaf.rotation.y += Math.PI / 5;
       } else if (o.kind === "gate") {
         segment(walls, a, b, .1, 1.8, frame, .035, false);

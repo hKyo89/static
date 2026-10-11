@@ -239,3 +239,10 @@ The sliding doors now use an Open sliding doors checkbox instead of a percentage
 slider. Checking it places the two centre leaves fully to the sides immediately;
 unchecking closes them immediately. There is no movement animation or
 intermediate opening state in the UI. Reset closes the doors.
+
+## Opening references
+
+See [OPENING_REFERENCES.md](OPENING_REFERENCES.md) for stable WIN01–WIN11,
+DR01–DR08 and OP01 names and coordinates. Sliding assemblies have A–D leaf
+references. `openings.ts` combines the shared model records. The viewer includes
+an optional ID overlay, focus selector and complete name list.

@@ -1,3 +1,4 @@
+import { openingReferences } from "./openings.ts";
 import { rooms } from "./house-model.ts";
 import { floorArea, model } from "./model.ts";
 export function BackyardPage() {
@@ -82,6 +83,35 @@ export function BackyardPage() {
                     </li>
                   ))}
                 </ol>
+              </details>
+              <label class="toggle">
+                <span>Door / window IDs</span>
+                <input type="checkbox" data-opening-labels />
+              </label>
+              <label class="toggle">
+                <span>Focus opening</span>
+                <select data-opening-focus aria-label="Focus door or window">
+                  <option value="">Choose reference</option>
+                  {openingReferences.map((o) => (
+                    <option value={o.id}>{o.id} · {o.name}</option>
+                  ))}
+                </select>
+              </label>
+              <details>
+                <summary>Door / window references</summary>
+                <ul>
+                  {openingReferences.map((o) => (
+                    <li>
+                      <strong>{o.id}</strong> · {o.name}
+                      <br />
+                      <small>
+                        {o.kind === "sliding"
+                          ? "Leaves A–D from drawing-left to right"
+                          : o.kind}
+                      </small>
+                    </li>
+                  ))}
+                </ul>
               </details>
               <div class="view-buttons" role="group" aria-label="Camera view">
                 <button
