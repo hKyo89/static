@@ -7,6 +7,7 @@ import {
   houseWalls,
   lightwells,
   rooms,
+  storageDoor,
 } from "../house-model.ts";
 export function createHouse(world) {
   const group = new THREE.Group(),
@@ -79,7 +80,11 @@ export function createHouse(world) {
       (x + x2) / 2,
       -.05,
       (z + z2) / 2,
-      room.id === "P01" || room.id === "T01" ? outside : floor,
+      room.id === "R06"
+        ? wood
+        : room.id === "P01" || room.id === "T01"
+        ? outside
+        : floor,
     );
   }
   for (const w of houseWalls) {
@@ -92,8 +97,8 @@ export function createHouse(world) {
     for (const o of w.openings) {
       segment(walls, point(cursor), point(o.at), 0, h.wallHeight, wall);
       const a = point(o.at), b = point(o.at + o.width);
-      const bottom = o.kind === "window" ? .9 : 0;
-      const top = o.kind === "gate" ? 2 : 2.2;
+      const bottom = o.bottom ?? (o.kind === "window" ? .9 : 0);
+      const top = o.top ?? (o.kind === "gate" ? 2 : 2.2);
       segment(walls, a, b, 0, bottom, wall);
       segment(walls, a, b, top, h.wallHeight, wall);
       if (o.kind === "window" || o.kind === "sliding") {
@@ -134,6 +139,43 @@ export function createHouse(world) {
       cursor = o.at + o.width;
     }
     segment(walls, point(cursor), w.b, 0, h.wallHeight, wall);
+  }
+  // Slatted metal leaves follow one continuous straight / quarter-circle track.
+  const metal = new THREE.MeshStandardMaterial({
+    color: 0x353333,
+    metalness: .7,
+    roughness: .45,
+  });
+  const d = storageDoor, [cx, cz] = d.cornerCentre;
+  const path = [d.start, [cx, cz + d.radius]];
+  for (let i = 1; i <= 32; i++) {
+    const angle = Math.PI / 2 * (1 - i / 32);
+    path.push([
+      cx + d.radius * Math.cos(angle),
+      cz + d.radius * Math.sin(angle),
+    ]);
+  }
+  path.push(d.end);
+  for (let i = 1; i < path.length; i++) {
+    const a = path[i - 1], b = path[i];
+    const length = Math.hypot(b[0] - a[0], b[1] - a[1]);
+    const count = Math.ceil(length / d.slatPitch);
+    for (let j = 0; j < count; j++) {
+      const point = (t) => [a[0] + (b[0] - a[0]) * t, a[1] + (b[1] - a[1]) * t];
+      const leaf = segment(
+        walls,
+        point(j / count),
+        point((j + .92) / count),
+        .03,
+        d.height,
+        metal,
+        .045,
+        false,
+      );
+      leaf.name = `${d.id} · ${d.name}`;
+    }
+    segment(walls, a, b, .01, .035, frame, .07, false);
+    segment(walls, a, b, d.height, d.height + .035, frame, .07, false);
   }
   // Only the central stair remains; the front-left stair was removed.
   for (let i = 0; i < 12; i++) {

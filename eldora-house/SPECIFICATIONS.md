@@ -319,3 +319,20 @@ roof for overhead inspection. The garage remains open on its sides and front.
 Canopy dimensions, steel flange/web sizes, roof profile and light output are
 illustrative; canopy measurements were not supplied. Shared canopy data lives in
 `house-model.ts`, rendering in `src/canopy.js`.
+
+## Foyer and storage architectural correction
+
+The architectural crops supersede the electrical-plan interpretation at the
+front. E01 is Foyer, R04 is Storage, and R06 is the long Side terrace. The foyer
+has front fixed glazing WIN12, a hinged terrace entrance DR08 and narrow side
+window WIN14. The dining/terrace divider W14 extends left to X=6.175; WIN13
+occupies its right end. The terrace front is open. The storage enclosure is
+DR09, a continuous slatted metal sliding door following the side, a rounded
+corner and the garage-facing front. Its closed depiction includes a curved
+track; no opening motion is assumed. Radius 0.65 m and all new opening widths
+are estimates from unscaled crops, stored in house-model.ts.
+
+DR02, DR07, WIN07 and WIN11 are retired rather than reused. All active opening
+IDs are visible by default, including after Reset; the sidebar gives names and
+focus controls. See OPENING_REFERENCES.md. Stop local preview services and close
+viewer tabs after testing, per the user's resource-use preference.

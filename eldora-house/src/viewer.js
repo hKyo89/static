@@ -605,9 +605,10 @@ function createViewer() {
     el.title = o.name;
     const label = new CSS2DObject(el);
     label.position.set(
-      (o.a[0] + o.b[0]) / 2 - houseModel.gardenOffsetX,
+      (o.labelPosition?.[0] ?? (o.a[0] + o.b[0]) / 2) -
+        houseModel.gardenOffsetX,
       2.35,
-      (o.a[1] + o.b[1]) / 2,
+      o.labelPosition?.[1] ?? (o.a[1] + o.b[1]) / 2,
     );
     label.userData.garden = o.garden;
     openingLabels.add(label);
@@ -640,7 +641,7 @@ function createViewer() {
     scope = scopeInput.value;
     focusedRoom = null;
     openingFocusInput.value = "";
-    openingLabelsInput.checked = false;
+    openingLabelsInput.checked = true;
     roomInput.value = "";
     setView(view);
   };
@@ -811,7 +812,7 @@ function createViewer() {
     if (legacyCutawayInput) legacyCutawayInput.checked = false;
     focusedRoom = null;
     openingFocusInput.value = "";
-    openingLabelsInput.checked = false;
+    openingLabelsInput.checked = true;
     roomInput.value = "";
     scope = "house";
     scopeInput.value = "house";

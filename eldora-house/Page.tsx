@@ -86,7 +86,7 @@ export function BackyardPage() {
               </details>
               <label class="toggle">
                 <span>Door / window IDs</span>
-                <input type="checkbox" data-opening-labels />
+                <input type="checkbox" checked data-opening-labels />
               </label>
               <label class="toggle">
                 <span>Focus opening</span>

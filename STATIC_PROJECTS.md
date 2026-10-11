@@ -271,3 +271,6 @@ The `backyard-garden` folder contains only a compatibility redirect. Read
 `eldora-house/ROOM_MAP.md` for stable room IDs and `house-model.ts` for
 first-floor walls and openings. `model.ts` retains the courtyard model. The
 exporter and publisher also regenerate the compatibility redirect.
+
+Eldora House testing: stop preview services and close viewer tabs after each
+verification. Use terminal service PIDs, not Activity Monitor, for cleanup.

@@ -1,4 +1,4 @@
-import { houseModel, houseWalls } from "./house-model.ts";
+import { houseModel, houseWalls, storageDoor } from "./house-model.ts";
 import { frontage, model, slidingStart, windows } from "./model.ts";
 // Stable references to complete opening assemblies, using global plan X/Z metres.
 export const openingReferences = [
@@ -17,6 +17,15 @@ export const openingReferences = [
     a: [slidingStart + houseModel.gardenOffsetX, model.stripDepth],
     b: [10, model.stripDepth],
     garden: true,
+  },
+  {
+    id: storageDoor.id,
+    name: storageDoor.name,
+    kind: "curved sliding metal",
+    labelPosition: storageDoor.labelPosition,
+    a: storageDoor.start,
+    b: storageDoor.end,
+    garden: false,
   },
   ...houseWalls.flatMap((w) => {
     const length = Math.hypot(w.b[0] - w.a[0], w.b[1] - w.a[1]);
@@ -44,5 +53,4 @@ export const slidingDoorReferences = [
     leaves: ["DR01-A", "DR01-B", "DR01-C", "DR01-D"],
     count: frontage.leafCount,
   },
-  { id: "DR02", leaves: ["DR02-A", "DR02-B", "DR02-C", "DR02-D"], count: 4 },
 ] as const;

@@ -48,9 +48,9 @@ export const rooms = [
   },
   {
     id: "R04",
-    name: "Kitchen / pantry",
+    name: "Storage",
     bounds: [0, 9.95, 4.575, 15],
-    note: "Counter-like outlines shown; use provisional.",
+    note: "Confirmed storage; rounded sliding metal enclosure toward garage.",
   },
   {
     id: "R05",
@@ -60,19 +60,19 @@ export const rooms = [
   },
   {
     id: "E01",
-    name: "Entrance hall",
+    name: "Foyer",
     bounds: [4.575, 12.2, 8.2, 14.35],
     note: "Main approach from front terrace.",
   },
   {
     id: "R06",
-    name: "Front side room",
+    name: "Side terrace",
     bounds: [8.2, 12.2, 10, 15.625],
-    note: "Room use unconfirmed.",
+    note: "Terrace beside foyer, confirmed by architectural crop.",
   },
   {
     id: "T01",
-    name: "Front terrace",
+    name: "Foyer front approach",
     bounds: [4.575, 14.35, 8.2, 15.625],
     note: "Covered entrance transition; roof omitted for viewing.",
   },
@@ -130,7 +130,7 @@ export const houseWalls = [
     b: [4.575, 9.95],
     openings: [{
       id: "DR06",
-      name: "Kitchen — rear passage door",
+      name: "Storage — rear passage door",
       at: 2.3,
       width: .9,
       kind: "door",
@@ -150,30 +150,6 @@ export const houseWalls = [
   },
   { id: "W09", a: [3.225, 8.9], b: [4.575, 8.9], openings: [] },
   {
-    id: "W10",
-    a: [4.575, 9.95],
-    b: [4.575, 14.35],
-    openings: [{
-      id: "DR07",
-      name: "Kitchen to living area",
-      at: .5,
-      width: .9,
-      kind: "door",
-    }],
-  },
-  {
-    id: "W11",
-    a: [0, 15],
-    b: [4.575, 15],
-    openings: [{
-      id: "WIN07",
-      name: "Kitchen — garage-facing window",
-      at: 1.25,
-      width: 2.1,
-      kind: "window",
-    }],
-  },
-  {
     id: "W12",
     a: [10, 1.225],
     b: [10, 15.625],
@@ -184,39 +160,59 @@ export const houseWalls = [
     a: [4.575, 14.35],
     b: [8.2, 14.35],
     openings: [{
-      id: "DR02",
-      name: "Entrance hall — terrace sliding doors",
-      at: .25,
-      width: 3.1,
-      kind: "sliding",
+      id: "WIN12",
+      name: "Foyer — front fixed glazing",
+      at: .06,
+      width: 3.505,
+      kind: "window",
+      bottom: .12,
+      top: 2.85,
     }],
   },
   {
     id: "W14",
-    a: [8.2, 12.2],
+    a: [6.175, 12.2],
     b: [10, 12.2],
     openings: [{
-      id: "DR08",
-      name: "Entrance hall to front side room",
-      at: .15,
-      width: .8,
-      kind: "door",
-    }],
-  },
-  { id: "W15", a: [8.2, 12.2], b: [8.2, 15.625], openings: [] },
-  {
-    id: "W16",
-    a: [8.2, 15.625],
-    b: [10, 15.625],
-    openings: [{
-      id: "WIN11",
-      name: "Front side room — garage-facing window",
-      at: .3,
-      width: 1.2,
+      id: "WIN13",
+      name: "Dining divider — terrace-side window",
+      at: 3.325,
+      width: .44,
       kind: "window",
     }],
   },
+  {
+    id: "W15",
+    a: [8.2, 12.2],
+    b: [8.2, 15.625],
+    openings: [{
+      id: "WIN14",
+      name: "Foyer — narrow terrace-side window",
+      at: .12,
+      width: .48,
+      kind: "window",
+    }, {
+      id: "DR08",
+      name: "Foyer — hinged terrace entrance",
+      at: .72,
+      width: 1,
+      kind: "door",
+    }],
+  },
 ] as const;
+// Continuous rounded metal sliding enclosure, closed depiction. Dimensions estimated.
+export const storageDoor = {
+  id: "DR09",
+  name: "Storage — curved sliding metal door",
+  start: [0, 15],
+  cornerCentre: [3.925, 14.35],
+  radius: .65,
+  end: [4.575, 9.95],
+  height: 2.85,
+  slatPitch: .08,
+  labelPosition: [4.385, 14.81],
+} as const;
+
 export const lightwells = [{ bounds: [.15, 8.85, 1.2, 9.8] }] as const;
 
 // Photo-confirmed canopy finishes/frame; dimensions below are illustrative.
