@@ -267,8 +267,8 @@ function createViewer() {
   const lampBeams = [];
   const lampMaterial = new THREE.MeshStandardMaterial({
     color: 0xffe4ae,
-    emissive: 0xffd18b,
-    emissiveIntensity: 2,
+    emissive: 0xffbd73,
+    emissiveIntensity: .35,
   });
   for (const [index, position] of wallLightPositions.entries()) {
     const fixture = new THREE.Group();
@@ -308,7 +308,7 @@ function createViewer() {
       );
       aperture.position.y = direction * (wallLights.bodyHeight / 2 + .002);
       fixture.add(aperture);
-      const beam = new THREE.SpotLight(0xffd394, 4, 1.8, Math.PI / 5, .7, 2);
+      const beam = new THREE.SpotLight(0xffbd73, .65, 1.2, Math.PI / 6, .85, 2);
       beam.position.set(0, direction * wallLights.bodyHeight / 2, .005);
       beam.target.position.set(0, direction * .8, -wallLights.projection);
       lampBeams.push(beam);
@@ -580,7 +580,7 @@ function createViewer() {
     sun.visible = !night;
     sky.intensity = night ? .22 : 2.5;
     scene.background.set(night ? 0x111b28 : 0xeef1e7);
-    lampMaterial.emissiveIntensity = night ? 2 : 0;
+    lampMaterial.emissiveIntensity = night ? .35 : 0;
     for (const beam of lampBeams) beam.visible = night;
     document.querySelectorAll("[data-lighting]").forEach((button) =>
       button.setAttribute(

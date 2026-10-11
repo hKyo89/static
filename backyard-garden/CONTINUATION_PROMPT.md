@@ -125,3 +125,7 @@ the default, with sunlight directly overhead and sconces off. Night turns off
 the sun, reduces sky illumination and enables the six warm up/down sconces.
 Reset restores Day and Show walls. This supersedes the earlier rear-side sun
 direction and Cutaway walls control. Lighting is an illustrative preview.
+
+Wall-light output is a low-power warm amber glow, with subdued apertures and
+short, soft-edged light pools. The user confirmed warm colour and low wattage;
+the preview brightness is illustrative rather than a photometric watt rating.
