@@ -126,21 +126,11 @@ export function BackyardPage() {
                 <span>Show garden</span>
                 <input type="checkbox" data-garden checked />
               </label>
-              <label class="door-control" htmlFor="door-opening">
+              <label class="toggle">
                 <span>Open sliding doors</span>
-                <output data-door-output aria-live="polite">Closed</output>
+                <input type="checkbox" data-door-opening />
               </label>
-              <input
-                id="door-opening"
-                class="door-range"
-                data-door-opening
-                type="range"
-                min="0"
-                max="100"
-                step="1"
-                defaultValue="0"
-                aria-label="Sliding doors opening"
-              />
+              <output data-door-output aria-live="polite">Closed</output>
             </section>
             <details class="specifications">
               <summary>Measurements & assumptions</summary>

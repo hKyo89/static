@@ -300,3 +300,10 @@ old drawing have been removed. The front wide area (P01) is an open garage,
 without front or side perimeter walls and without gates. The right house wall
 stops at the front side room (Z=15.625 m). House-facing walls remain. This user
 correction supersedes the old carport enclosure and second stair run.
+
+## Door toggle
+
+The sliding doors now use an Open sliding doors checkbox instead of a percentage
+slider. Checking it places the two centre leaves fully to the sides immediately;
+unchecking closes them immediately. There is no movement animation or
+intermediate opening state in the UI. Reset closes the doors.
