@@ -111,57 +111,6 @@ export function createGarden(world) {
       (m.returnDepth + m.stripDepth) / 2,
     );
   }
-  // Black standing ashtray/bin is tucked behind the short opaque return wall.
-  const { x: binX, z: binZ, height: binHeight } = g.bin;
-  const metal = new THREE.MeshStandardMaterial({
-    color: 0x9ea4a5,
-    metalness: .85,
-    roughness: .35,
-  });
-  const binBody = new THREE.MeshStandardMaterial({
-    color: 0x151718,
-    metalness: .5,
-    roughness: .45,
-  });
-  mesh(
-    new THREE.CylinderGeometry(.12, .12, binHeight, 32),
-    binBody,
-    binX,
-    .05 + binHeight / 2,
-    binZ,
-  );
-  mesh(
-    new THREE.CylinderGeometry(.126, .126, .025, 32),
-    metal,
-    binX,
-    .05 + binHeight,
-    binZ,
-  );
-  mesh(
-    new THREE.CylinderGeometry(.107, .107, .008, 32),
-    dark,
-    binX,
-    .067 + binHeight,
-    binZ,
-  );
-  // Thin grate bars and a dark front waste opening reproduce the reference.
-  for (let j = -3; j <= 3; j++) {
-    mesh(
-      new THREE.BoxGeometry(.17, .003, .005),
-      metal,
-      binX,
-      .075 + binHeight,
-      binZ + j * .022,
-    );
-    mesh(
-      new THREE.BoxGeometry(.005, .003, .17),
-      metal,
-      binX + j * .022,
-      .076 + binHeight,
-      binZ,
-    );
-  }
-  mesh(new THREE.BoxGeometry(.15, .14, .005), dark, binX, .47, binZ - .121);
   // Subtle size and angle changes make the staggered route feel less formal.
   g.steppingStones.forEach(([x, z], i) => {
     if (z > m.stripDepth) return;

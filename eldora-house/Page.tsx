@@ -31,8 +31,8 @@ export function BackyardPage() {
               Eldora<br />House<span>.</span>
             </h1>
             <p class="intro">
-              First-floor walls, doors and windows, with the Japanese garden
-              preserved at the rear.
+              House geometry and interiors from your SketchUp model, with our
+              garden and walnut canopy preserved.
             </p>
             <div class="measurements">
               <div>
@@ -55,7 +55,7 @@ export function BackyardPage() {
               <label class="toggle">
                 <span>Area</span>
                 <select data-scope aria-label="Area view">
-                  <option value="house">Whole first floor</option>
+                  <option value="house">Whole house</option>
                   <option value="garden">Backyard garden</option>
                 </select>
               </label>
@@ -148,7 +148,7 @@ export function BackyardPage() {
                 <input type="checkbox" data-garden-boundary checked />
               </label>
               <label class="toggle">
-                <span>Show other walls</span>
+                <span>Show house model</span>
                 <input type="checkbox" data-walls checked />
               </label>
               <label class="toggle">
@@ -158,6 +158,10 @@ export function BackyardPage() {
               <label class="toggle">
                 <span>Show dimensions</span>
                 <input type="checkbox" data-dimensions checked />
+              </label>
+              <label class="toggle">
+                <span>Upper floors and roof</span>
+                <input type="checkbox" data-upper-floors />
               </label>
               <label class="toggle">
                 <span>Show canopy roof</span>
@@ -238,7 +242,7 @@ export function BackyardPage() {
               <p class="loading" data-loading>Opening Eldora House…</p>
             </div>
             <div class="stage-tag">
-              Eldora House · 1F <span>Open roof study</span>
+              Eldora House <span>House and courtyard study</span>
             </div>
             <div class="navigation">
               <span>Drag to orbit</span>

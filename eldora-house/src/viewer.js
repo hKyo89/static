@@ -1,6 +1,8 @@
 import { openingReferences } from "../openings.ts";
 import { filmMaterials } from "./window-film.js";
 import { createHouse } from "./house.js";
+import { createImportedHouse } from "./imported-house.js";
+import { importedModel } from "../imported-model.ts";
 import { houseModel, rooms } from "../house-model.ts";
 import { createGarden } from "./garden.js";
 import * as THREE from "three";
@@ -51,6 +53,7 @@ function createViewer() {
   const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: false });
   renderer.setPixelRatio(Math.min(devicePixelRatio, 2));
   renderer.shadowMap.enabled = true;
+  renderer.localClippingEnabled = true;
   renderer.shadowMap.type = THREE.PCFSoftShadowMap;
   renderer.outputColorSpace = THREE.SRGBColorSpace;
   renderer.domElement.setAttribute("aria-label", "Interactive backyard model");
@@ -61,7 +64,7 @@ function createViewer() {
     "position:absolute;inset:0;pointer-events:none";
   stage.append(labels.domElement);
   const controls = new OrbitControls(camera, renderer.domElement);
-  controls.enableDamping = true;
+  controls.enableDamping = false;
   controls.minDistance = 2;
   controls.maxDistance = 100;
   controls.maxPolarAngle = Math.PI / 2 - 0.015;
@@ -595,6 +598,18 @@ function createViewer() {
 
   const garden = createGarden(world);
   const firstFloor = createHouse(world);
+  // Keep only the established canopy from the earlier interpreted house.
+  for (const child of firstFloor.group.children) {
+    if (child !== firstFloor.canopy.group) child.visible = false;
+  }
+  firstFloor.canopy.group.position.z += importedModel.canopyOffsetZ;
+  const importedHouse = createImportedHouse(world, (error) => {
+    if (error) {
+      console.error("SketchUp house failed to load", error);
+      status.textContent =
+        "House model could not load. Garden and canopy remain available.";
+    } else refresh();
+  });
   const scopeInput = document.querySelector("[data-scope]");
   const roomInput = document.querySelector("[data-room-focus]");
   const openingLabels = new THREE.Group();
@@ -618,6 +633,10 @@ function createViewer() {
   const openingFocusInput = document.querySelector("[data-opening-focus]");
   openingLabelsInput.onchange = () => refresh();
   document.querySelector("[data-canopy-roof]").onchange = () => refresh();
+  document.querySelector("[data-upper-floors]").onchange = () => {
+    fitCamera();
+    refresh();
+  };
   openingFocusInput.onchange = () => {
     const o = openingReferences.find((o) => o.id === openingFocusInput.value);
     if (!o) return;
@@ -707,7 +726,15 @@ function createViewer() {
         bounds[2] - houseModel.gardenOffsetX - m.width / 2 + .5,
       ]
     ) {
-      for (const y of [-.12, m.wallHeight + .2]) {
+      for (
+        const y of [
+          -.12,
+          scope === "house" &&
+            document.querySelector("[data-upper-floors]").checked
+            ? 11
+            : m.wallHeight + .2,
+        ]
+      ) {
         for (
           const z of [
             bounds[1] - m.returnDepth / 2 - .5,
@@ -737,27 +764,37 @@ function createViewer() {
       ? boundaryInput.checked
       : otherWalls.visible;
     firstFloor.group.visible = scope === "house";
-    firstFloor.walls.visible = otherWalls.visible;
+    firstFloor.walls.visible = false;
+    importedHouse.setState({
+      visible: true,
+      enclosure: otherWalls.visible,
+      windows: windowsInput.checked && otherWalls.visible,
+      upper: document.querySelector("[data-upper-floors]").checked,
+    });
+    // Source-model openings replace the approximate garden frontage.
+    otherWalls.visible = false;
     openingLabels.visible = openingLabelsInput.checked;
     openingLabels.children.forEach((label) =>
-      label.visible = scope === "house" || label.userData.garden
+      label.visible = scope === "garden" && label.userData.garden
     );
-    firstFloor.names.visible = roomLabelsInput.checked;
+    firstFloor.names.visible = false;
     firstFloor.names.children.forEach((label, i) => {
       label.element.textContent = view === "plan"
         ? `${rooms[i].id} · ${rooms[i].name}`
         : rooms[i].id;
     });
-    firstFloor.glazing.visible = windowsInput.checked;
+    firstFloor.glazing.visible = false;
     firstFloor.canopy.roof.visible =
       document.querySelector("[data-canopy-roof]").checked;
-    house.visible = scope === "garden";
-    glazing.visible = windowsInput.checked;
+    house.visible = false;
+    glazing.visible = false;
     dimensions.visible = dimensionsInput.checked;
     status.textContent = `${
       view === "plan" ? "Floor plan" : view === "inside" ? "Inside" : "3D view"
     } · ${
-      otherWalls.visible && boundary.visible
+      scope === "house" && wallsInput.checked
+        ? "SketchUp house"
+        : otherWalls.visible && boundary.visible
         ? "full-height walls"
         : boundary.visible
         ? "garden back/right walls only"
@@ -765,6 +802,7 @@ function createViewer() {
         ? "garden boundary hidden"
         : "walls hidden"
     } · ${lightingMode}`;
+    render();
   }
   function setView(name) {
     view = name;
@@ -825,6 +863,7 @@ function createViewer() {
     refresh();
   };
   document.querySelector("[data-reset]").onclick = () => {
+    document.querySelector("[data-upper-floors]").checked = false;
     if (boundaryInput) boundaryInput.checked = true;
     if (wallsInput) wallsInput.checked = true;
     if (gardenInput) gardenInput.checked = true;
@@ -848,13 +887,13 @@ function createViewer() {
     renderer.setSize(width, height);
     labels.setSize(width, height);
     fitCamera();
+    render();
   }
   new ResizeObserver(resize).observe(stage);
   resize();
   setView("perspective");
   setLighting("day");
-  renderer.setAnimationLoop(() => {
-    controls.update();
+  function render() {
     renderer.render(scene, camera);
     labels.render(scene, camera);
     if (dimensions.visible) {
@@ -883,5 +922,7 @@ function createViewer() {
         });
       }
     }
-  });
+  }
+  controls.addEventListener("change", render);
+  render();
 }

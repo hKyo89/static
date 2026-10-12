@@ -1,5 +1,14 @@
 # Eldora House
 
+## Supplied SketchUp house
+
+The 12 October 2026 SketchUp import supersedes the earlier interpreted house
+geometry described below. The viewer uses the supplied house's walls, windows,
+doors and interiors, while retaining the existing garden and canopy. See
+[SKETCHUP_IMPORT.md](SKETCHUP_IMPORT.md) for source registration, browser asset,
+cutaway controls and the earlier reference-overlay limitations. The original
+SketchUp file is unchanged. The standing ashtray is removed.
+
 An interactive 3D viewer of the red-highlighted rear courtyard in the supplied
 house plan, with **3 m walls**, a fixed window, and four sliding glass doors.
 Public route: <https://hkyo89.github.io/static/eldora-house/>.
