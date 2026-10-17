@@ -63,6 +63,12 @@ export async function buildSite() {
           entryPoints: [project.client],
           outfile: `${destination}/viewer.js`,
           bundle: true,
+          // Resolve shared Three.js once even when an old ignored project-local
+          // node_modules directory exists on a developer machine.
+          alias: {
+            "three": `${repoRoot}node_modules/three/build/three.module.js`,
+            "three/addons": `${repoRoot}node_modules/three/examples/jsm`,
+          },
           format: "esm",
           platform: "browser",
           target: "es2022",

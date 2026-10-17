@@ -53,6 +53,9 @@ Dependencies: Deno 2.8.3, Fresh 2.3.0, Preact 10.29.8, Three.js 0.180.0, esbuild
 Dependencies are installed once at root. Three.js is included in each viewer's
 bundle, so viewers need no runtime CDN; it is one shared package installation,
 not one cross-page browser bundle. This keeps projects independently loadable.
+The exporter aliases Three.js and its addons to the root installation,
+preventing ignored legacy project-local dependencies from creating duplicate
+engines or machine-dependent generated output.
 
 ### Existing project adapters
 
