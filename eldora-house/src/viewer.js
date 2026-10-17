@@ -904,8 +904,10 @@ function createViewer() {
         : rooms[i].id;
     });
     firstFloor.glazing.visible = false;
-    firstFloor.canopy.roof.visible =
-      document.querySelector("[data-canopy-roof]").checked;
+    firstFloor.canopy.setVisibility(
+      document.querySelector('[data-layer="floor1"]').checked,
+      document.querySelector("[data-canopy-roof]").checked,
+    );
     house.visible = false;
     glazing.visible = false;
     dimensions.visible = dimensionsInput.checked;

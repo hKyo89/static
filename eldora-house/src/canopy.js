@@ -289,6 +289,7 @@ export function createCanopy(parent) {
     emissiveIntensity: 0,
   });
   const lights = [];
+  let roofVisible = true;
   c.downlights.forEach(([x, z], i) => {
     const trim = new THREE.Mesh(
       new THREE.RingGeometry(c.lightRadius, c.lightRadius + .012, 24),
@@ -314,9 +315,20 @@ export function createCanopy(parent) {
   return {
     group,
     roof,
+    setVisibility(firstFloorVisible, showRoof) {
+      roofVisible = showRoof;
+      for (const child of group.children) {
+        if (child === roof) child.visible = showRoof;
+        else if (lights.includes(child)) {
+          child.visible = showRoof && lens.emissiveIntensity > 0;
+        } else if (!lights.some((light) => light.target === child)) {
+          child.visible = firstFloorVisible;
+        }
+      }
+    },
     setNight(night) {
       lens.emissiveIntensity = night ? .4 : 0;
-      for (const l of lights) l.visible = night;
+      for (const l of lights) l.visible = night && roofVisible;
     },
   };
 }

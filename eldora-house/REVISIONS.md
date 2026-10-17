@@ -76,3 +76,8 @@ second-floor ceiling, and roof/service deck independently. Reset shows the first
 floor with its ceiling open. Source triangles are assigned by storey height and
 ceiling material; geometry spanning a storey boundary is split at triangle
 level. The retained garden and garage canopy keep their separate controls.
+
+Garage floor, frame, drains and rain chains follow the 1st floor checkbox. Show
+canopy roof independently controls the roof, ceiling and its downlights. Garden
+controls do not change either garage layer. Garden-only area hides the entire
+garage.
