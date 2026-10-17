@@ -1,5 +1,9 @@
 # SketchUp house import
 
+The garden registration and finish/visibility adjustments below are superseded
+where applicable by the [13 October revisions](REVISIONS.md). The source house
+origin remains unchanged; the garden is registered to the ground-floor bounds.
+
 The user supplied `MODELING INTERIOR.skp` on 12 October 2026. The original file
 is unchanged. Its native geometry, group/component transforms and material UVs
 were read with the installed SketchUp 2026 C API. The browser asset is

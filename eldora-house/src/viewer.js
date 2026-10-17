@@ -3,6 +3,8 @@ import { filmMaterials } from "./window-film.js";
 import { createHouse } from "./house.js";
 import { createImportedHouse } from "./imported-house.js";
 import { importedModel } from "../imported-model.ts";
+import { revisions } from "../revisions-model.ts";
+import { createFurnishings, sourcePosition } from "./furnishings.js";
 import { houseModel, rooms } from "../house-model.ts";
 import { createGarden } from "./garden.js";
 import * as THREE from "three";
@@ -49,7 +51,9 @@ try {
 function createViewer() {
   const scene = new THREE.Scene();
   scene.background = new THREE.Color(0xeef1e7);
-  const camera = new THREE.PerspectiveCamera(40, 1, 0.1, 100);
+  const perspectiveCamera = new THREE.PerspectiveCamera(40, 1, 0.1, 100);
+  const planCamera = new THREE.OrthographicCamera(-10, 10, 10, -10, .01, 100);
+  let camera = perspectiveCamera;
   const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: false });
   renderer.setPixelRatio(Math.min(devicePixelRatio, 2));
   renderer.shadowMap.enabled = true;
@@ -571,11 +575,15 @@ function createViewer() {
     label.position.set(...a.map((v, i) => (v + b[i]) / 2 + offset[i]));
     dimensions.add(label);
   }
-  dimension([0, .04, -.33], [m.width, .04, -.33], "6.775 m", [0, .12, 0]);
+  dimension([0, .04, -.33], [m.width, .04, -.33], `${m.width.toFixed(3)} m`, [
+    0,
+    .12,
+    0,
+  ]);
   dimension(
     [m.width + .32, .04, 0],
     [m.width + .32, .04, m.stripDepth],
-    "1.225 m",
+    `${m.stripDepth.toFixed(3)} m`,
     [.23, .10, 0],
   );
   dimension(
@@ -584,11 +592,16 @@ function createViewer() {
     "1.350 m",
     [0, .12, 0],
   );
-  dimension([-.4, .04, 0], [-.4, .04, m.returnDepth], "2.025 m", [
-    -.18,
-    .12,
-    0,
-  ]);
+  dimension(
+    [-.4, .04, 0],
+    [-.4, .04, m.returnDepth],
+    `${m.returnDepth.toFixed(3)} m`,
+    [
+      -.18,
+      .12,
+      0,
+    ],
+  );
   dimension(
     [m.width + .24, 0, -.12],
     [m.width + .24, m.wallHeight, -.12],
@@ -597,6 +610,12 @@ function createViewer() {
   );
 
   const garden = createGarden(world);
+  const courtyard = new THREE.Group();
+  courtyard.name = "Garden registered inside source courtyard";
+  for (const child of [...world.children]) courtyard.add(child);
+  courtyard.position.set(...revisions.courtyard.offset);
+  world.add(courtyard);
+  const furnishings = createFurnishings(world);
   const firstFloor = createHouse(world);
   // Keep only the established canopy from the earlier interpreted house.
   for (const child of firstFloor.group.children) {
@@ -608,8 +627,35 @@ function createViewer() {
       console.error("SketchUp house failed to load", error);
       status.textContent =
         "House model could not load. Garden and canopy remain available.";
-    } else refresh();
+    } else {
+      updateReflections();
+      refresh();
+    }
   });
+  let reflecting = false;
+  let reflectionsReady = false;
+  const reflectionTarget = new THREE.WebGLCubeRenderTarget(128, {
+    generateMipmaps: true,
+    minFilter: THREE.LinearMipmapLinearFilter,
+  });
+  const reflectionCamera = new THREE.CubeCamera(.05, 5, reflectionTarget);
+  reflectionCamera.position.copy(sourcePosition([9.4, 11, 1.8]));
+  world.add(reflectionCamera);
+  function updateReflections() {
+    if (reflecting || reflectionsReady) return;
+    reflecting = true;
+    scene.environment = null;
+    const autoUpdate = renderer.shadowMap.autoUpdate;
+    renderer.shadowMap.autoUpdate = false;
+    try {
+      reflectionCamera.update(renderer, scene);
+    } finally {
+      renderer.shadowMap.autoUpdate = autoUpdate;
+    }
+    scene.environment = reflectionTarget.texture;
+    reflectionsReady = true;
+    reflecting = false;
+  }
   const scopeInput = document.querySelector("[data-scope]");
   const roomInput = document.querySelector("[data-room-focus]");
   const openingLabels = new THREE.Group();
@@ -627,16 +673,21 @@ function createViewer() {
       o.labelPosition?.[1] ?? (o.a[1] + o.b[1]) / 2,
     );
     label.userData.garden = o.garden;
+    if (o.garden) {
+      label.position.add(new THREE.Vector3(...revisions.courtyard.offset));
+    }
     openingLabels.add(label);
   });
   const openingLabelsInput = document.querySelector("[data-opening-labels]");
   const openingFocusInput = document.querySelector("[data-opening-focus]");
   openingLabelsInput.onchange = () => refresh();
   document.querySelector("[data-canopy-roof]").onchange = () => refresh();
-  document.querySelector("[data-upper-floors]").onchange = () => {
-    fitCamera();
-    refresh();
-  };
+  document.querySelectorAll("[data-layer]").forEach((input) =>
+    input.onchange = () => {
+      fitCamera();
+      refresh();
+    }
+  );
   openingFocusInput.onchange = () => {
     const o = openingReferences.find((o) => o.id === openingFocusInput.value);
     if (!o) return;
@@ -666,9 +717,44 @@ function createViewer() {
     setView(view);
   };
   roomInput.onchange = () => {
+    const area = revisions.focusAreas.find((area) =>
+      area.id === roomInput.value
+    );
+    if (area) {
+      const [x, y, x2, y2] = area.bounds;
+      focusedRoom = {
+        bounds: [
+          x - importedModel.sourceOrigin[0] + houseModel.gardenOffsetX,
+          importedModel.sourceOrigin[1] - y2,
+          x2 - importedModel.sourceOrigin[0] + houseModel.gardenOffsetX,
+          importedModel.sourceOrigin[1] - y,
+        ],
+      };
+      scope = "house";
+      scopeInput.value = scope;
+      setView("perspective");
+      return;
+    }
     focusedRoom = rooms.find((r) => r.id === roomInput.value) ?? null;
-    scope = "house";
-    scopeInput.value = "house";
+    scope = ["G01", "G02"].includes(roomInput.value) ? "garden" : "house";
+    if (scope === "garden") {
+      focusedRoom = {
+        bounds: roomInput.value === "G02"
+          ? [
+            houseModel.gardenOffsetX,
+            m.stripDepth,
+            houseModel.gardenOffsetX + m.returnWidth,
+            m.returnDepth,
+          ]
+          : [
+            houseModel.gardenOffsetX,
+            0,
+            houseModel.gardenOffsetX + m.width,
+            m.returnDepth,
+          ],
+      };
+    }
+    scopeInput.value = scope;
     setView("plan");
   };
   roomLabelsInput.onchange = () => refresh();
@@ -684,6 +770,7 @@ function createViewer() {
     sun.visible = !night;
     garden.setNight(night);
     firstFloor.canopy.setNight(night);
+    scene.environmentIntensity = night ? .12 : 1;
     sky.intensity = night ? .22 : 2.5;
     scene.background.set(night ? 0x111b28 : 0xeef1e7);
     lampMaterial.emissiveIntensity = night ? .35 : 0;
@@ -708,13 +795,15 @@ function createViewer() {
     const right = new THREE.Vector3().crossVectors(camera.up, direction)
       .normalize();
     const up = new THREE.Vector3().crossVectors(direction, right).normalize();
-    const vertical = Math.tan(THREE.MathUtils.degToRad(camera.fov / 2));
+    const vertical = Math.tan(
+      THREE.MathUtils.degToRad(perspectiveCamera.fov / 2),
+    );
     // Leave room for the labels and the stage's top/bottom navigation overlays.
     const horizontal = vertical * camera.aspect *
       Math.max(.4, (stage.clientWidth - 90) / stage.clientWidth);
     const availableVertical = vertical *
       Math.max(.5, (stage.clientHeight - 150) / stage.clientHeight);
-    let distance = 0;
+    let distance = 0, extentX = 0, extentY = 0;
     const bounds = focusedRoom
       ? focusedRoom.bounds
       : scope === "house"
@@ -730,7 +819,9 @@ function createViewer() {
         const y of [
           -.12,
           scope === "house" &&
-            document.querySelector("[data-upper-floors]").checked
+            [...document.querySelectorAll("[data-layer]")].some((input) =>
+              input.dataset.layer !== "floor1" && input.checked
+            )
             ? 11
             : m.wallHeight + .2,
         ]
@@ -741,7 +832,13 @@ function createViewer() {
             bounds[3] - m.returnDepth / 2 + .5,
           ]
         ) {
-          const point = new THREE.Vector3(x, y, z).sub(controls.target);
+          const point = new THREE.Vector3(x, y, z);
+          if (scope === "garden") {
+            point.add(new THREE.Vector3(...revisions.courtyard.offset));
+          }
+          point.sub(controls.target);
+          extentX = Math.max(extentX, Math.abs(point.dot(right)));
+          extentY = Math.max(extentY, Math.abs(point.dot(up)));
           distance = Math.max(
             distance,
             point.dot(direction) + Math.abs(point.dot(right)) / horizontal,
@@ -749,6 +846,23 @@ function createViewer() {
           );
         }
       }
+    }
+    if (camera.isOrthographicCamera) {
+      const halfHeight = Math.max(
+        extentY /
+          Math.max(.5, (stage.clientHeight - 150) / stage.clientHeight),
+        extentX /
+          (camera.aspect *
+            Math.max(.4, (stage.clientWidth - 90) / stage.clientWidth)),
+      ) * 1.04;
+      camera.left = -halfHeight * camera.aspect;
+      camera.right = halfHeight * camera.aspect;
+      camera.top = halfHeight;
+      camera.bottom = -halfHeight;
+      camera.zoom = 1;
+      camera.updateProjectionMatrix();
+      camera.position.copy(controls.target).addScaledVector(direction, 25);
+      return;
     }
     camera.position.copy(controls.target).addScaledVector(
       direction,
@@ -765,11 +879,17 @@ function createViewer() {
       : otherWalls.visible;
     firstFloor.group.visible = scope === "house";
     firstFloor.walls.visible = false;
+    furnishings.group.visible = wallsInput.checked &&
+      document.querySelector('[data-layer="floor1"]').checked;
     importedHouse.setState({
       visible: true,
       enclosure: otherWalls.visible,
       windows: windowsInput.checked && otherWalls.visible,
-      upper: document.querySelector("[data-upper-floors]").checked,
+      layers: Object.fromEntries(
+        [...document.querySelectorAll("[data-layer]")].map((
+          input,
+        ) => [input.dataset.layer, input.checked]),
+      ),
     });
     // Source-model openings replace the approximate garden frontage.
     otherWalls.visible = false;
@@ -802,9 +922,18 @@ function createViewer() {
         ? "garden boundary hidden"
         : "walls hidden"
     } · ${lightingMode}`;
+    if (importedHouse.group.children.length) updateReflections();
     render();
   }
   function setView(name) {
+    const nextCamera = name === "plan" ? planCamera : perspectiveCamera;
+    if (camera !== nextCamera) {
+      nextCamera.position.copy(camera.position);
+      nextCamera.quaternion.copy(camera.quaternion);
+      camera = nextCamera;
+      controls.object = camera;
+    }
+    camera.aspect = stage.clientWidth / stage.clientHeight;
     view = name;
     controls.maxPolarAngle = name === "inside"
       ? Math.PI - .015
@@ -818,7 +947,11 @@ function createViewer() {
       ]
       : scope === "house"
       ? [5 - houseModel.gardenOffsetX - m.width / 2, 10 - m.returnDepth / 2]
-      : [0, 0];
+      : [revisions.courtyard.offset[0], revisions.courtyard.offset[2]];
+    if (b && scope === "garden") {
+      centre[0] += revisions.courtyard.offset[0];
+      centre[1] += revisions.courtyard.offset[2];
+    }
     controls.target.set(centre[0], .75, centre[1]);
     if (name === "plan") {
       controls.target.set(centre[0], 0, centre[1]);
@@ -863,7 +996,9 @@ function createViewer() {
     refresh();
   };
   document.querySelector("[data-reset]").onclick = () => {
-    document.querySelector("[data-upper-floors]").checked = false;
+    document.querySelectorAll("[data-layer]").forEach((input) =>
+      input.checked = input.dataset.layer === "floor1"
+    );
     if (boundaryInput) boundaryInput.checked = true;
     if (wallsInput) wallsInput.checked = true;
     if (gardenInput) gardenInput.checked = true;

@@ -1,7 +1,11 @@
 import * as THREE from "three";
 import { canopyModel as c, houseModel as h } from "../house-model.ts";
+import { revisions } from "../revisions-model.ts";
 export function createCanopy(parent) {
   const group = new THREE.Group(), roof = new THREE.Group();
+  const [left, back, right, front] = revisions.canopy.roofBounds;
+  const coverWidth = right - left, coverDepth = front - back;
+  const centreX = (left + right) / 2, centreZ = (back + front) / 2;
   parent.add(group);
   group.add(roof);
   const steel = new THREE.MeshStandardMaterial({
@@ -88,12 +92,12 @@ export function createCanopy(parent) {
   // Walnut PVC soffit with board seams, supported by visible WF200 I profiles.
   box(
     roof,
-    10,
+    coverWidth,
     .025,
-    5,
-    5 - h.gardenOffsetX,
+    coverDepth,
+    centreX - h.gardenOffsetX,
     c.ceilingHeight + .015,
-    17.5,
+    centreZ,
     walnut,
   );
   for (let x = .2; x < 10; x += .2) {
@@ -101,28 +105,183 @@ export function createCanopy(parent) {
       roof,
       .002,
       .001,
-      5,
+      coverDepth,
       x - h.gardenOffsetX,
       c.ceilingHeight + .001,
-      17.5,
+      centreZ,
       steel,
     );
   }
   // Twin-wall roof with two skins and longitudinal profile ribs (illustrative).
   for (const y of [c.ceilingHeight + .07, c.ceilingHeight + .07 + c.roofGap]) {
-    box(roof, 10, .008, 5, 5 - h.gardenOffsetX, y, 17.5, alderon);
+    box(
+      roof,
+      coverWidth,
+      .008,
+      coverDepth,
+      centreX - h.gardenOffsetX,
+      y,
+      centreZ,
+      alderon,
+    );
   }
   for (let x = .08; x < 10; x += .16) {
     box(
       roof,
       .016,
       c.roofGap,
-      5,
+      coverDepth,
       x - h.gardenOffsetX,
       c.ceilingHeight + .07 + c.roofGap / 2,
-      17.5,
+      centreZ,
       alderon,
     );
+  }
+  // Dry rough granite, 600 mm square modules across the whole floor footprint.
+  const tileCanvas = document.createElement("canvas");
+  tileCanvas.width = tileCanvas.height = 256;
+  const tc = tileCanvas.getContext("2d");
+  const pixels = tc.createImageData(256, 256);
+  let seed = 9361;
+  for (let i = 0; i < pixels.data.length; i += 4) {
+    seed = (Math.imul(seed, 1664525) + 1013904223) >>> 0;
+    const grain = (seed / 4294967296 - .5) * 22;
+    pixels.data[i] = 57 + grain;
+    pixels.data[i + 1] = 60 + grain;
+    pixels.data[i + 2] = 62 + grain;
+    pixels.data[i + 3] = 255;
+  }
+  tc.putImageData(pixels, 0, 0);
+  tc.fillStyle = "#343739";
+  tc.fillRect(0, 0, 2, 256);
+  tc.fillRect(0, 0, 256, 2);
+  const graniteTexture = new THREE.CanvasTexture(tileCanvas);
+  graniteTexture.colorSpace = THREE.SRGBColorSpace;
+  graniteTexture.wrapS = graniteTexture.wrapT = THREE.RepeatWrapping;
+  graniteTexture.repeat.set(
+    coverWidth / revisions.canopy.tileSize,
+    coverDepth / revisions.canopy.tileSize,
+  );
+  const granite = new THREE.MeshStandardMaterial({
+    map: graniteTexture,
+    bumpMap: graniteTexture,
+    bumpScale: .003,
+    roughness: 1,
+  });
+  const garageFloor = box(
+    group,
+    coverWidth,
+    .10,
+    coverDepth,
+    centreX - h.gardenOffsetX,
+    -.05,
+    centreZ,
+    granite,
+  );
+  garageFloor.name = "Dark grey rough granite garage floor / 60 x 60 cm";
+  garageFloor.castShadow = false;
+  const joints = [];
+  for (
+    let x = left + revisions.canopy.tileSize;
+    x < right;
+    x += revisions.canopy.tileSize
+  ) {
+    joints.push(
+      new THREE.Vector3(x - h.gardenOffsetX, .003, back),
+      new THREE.Vector3(x - h.gardenOffsetX, .003, front),
+    );
+  }
+  for (
+    let z = back + revisions.canopy.tileSize;
+    z < front;
+    z += revisions.canopy.tileSize
+  ) {
+    joints.push(
+      new THREE.Vector3(left - h.gardenOffsetX, .003, z),
+      new THREE.Vector3(right - h.gardenOffsetX, .003, z),
+    );
+  }
+  group.add(
+    new THREE.LineSegments(
+      new THREE.BufferGeometry().setFromPoints(joints),
+      new THREE.LineBasicMaterial({
+        color: 0x34383a,
+        transparent: true,
+        opacity: .65,
+      }),
+    ),
+  );
+  // Continuous front gutter with two outlet collars and Japanese cup rain chains.
+  const gd = revisions.canopy.gutterDepth, gw = revisions.canopy.gutterWidth;
+  const gutterTop = c.ceilingHeight + .11, gutterBottom = gutterTop - gd;
+  box(
+    roof,
+    coverWidth,
+    .008,
+    gw,
+    centreX - h.gardenOffsetX,
+    gutterBottom,
+    front - gw / 2,
+    steel,
+  );
+  for (const z of [front - gw, front]) {
+    box(
+      roof,
+      coverWidth,
+      gd,
+      .008,
+      centreX - h.gardenOffsetX,
+      gutterBottom + gd / 2,
+      z,
+      steel,
+    );
+  }
+  const bronze = new THREE.MeshStandardMaterial({
+    color: 0x8b6a40,
+    metalness: .85,
+    roughness: .35,
+    side: THREE.DoubleSide,
+  });
+  for (const [i, x] of revisions.canopy.outlets.entries()) {
+    const chain = new THREE.Group();
+    chain.name = `Japanese rain chain / front outlet ${i + 1}`;
+    chain.position.set(x - h.gardenOffsetX, 0, front - gw / 2);
+    roof.add(chain);
+    const collar = new THREE.Mesh(
+      new THREE.CylinderGeometry(.031, .031, .045, 18, true),
+      steel,
+    );
+    collar.position.y = gutterBottom - .01;
+    chain.add(collar);
+    for (let j = 0; j < 23; j++) {
+      const y = gutterBottom - .10 - j * .12;
+      const cup = new THREE.Mesh(
+        new THREE.CylinderGeometry(.047, .016, .055, 18, 1, true),
+        bronze,
+      );
+      cup.position.y = y;
+      chain.add(cup);
+      const rim = new THREE.Mesh(
+        new THREE.TorusGeometry(.047, .0025, 6, 18),
+        bronze,
+      );
+      rim.rotation.x = Math.PI / 2;
+      rim.position.y = y + .0275;
+      chain.add(rim);
+      const link = new THREE.Mesh(
+        new THREE.TorusGeometry(.024, .0025, 6, 12),
+        bronze,
+      );
+      link.position.y = y - .047;
+      link.rotation.y = j % 2 ? Math.PI / 2 : 0;
+      chain.add(link);
+    }
+    const drain = new THREE.Mesh(
+      new THREE.CylinderGeometry(.055, .055, .012, 24),
+      steel,
+    );
+    drain.position.set(x - h.gardenOffsetX, .003, front - gw / 2);
+    group.add(drain);
   }
   const lens = new THREE.MeshStandardMaterial({
     color: 0xffead0,

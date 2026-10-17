@@ -1,3 +1,4 @@
+import { revisions } from "./revisions-model.ts";
 import { openingReferences } from "./openings.ts";
 import { rooms } from "./house-model.ts";
 import { floorArea, model } from "./model.ts";
@@ -64,9 +65,12 @@ export function BackyardPage() {
                 <input type="checkbox" data-room-labels checked />
               </label>
               <label class="toggle">
-                <span>Focus room</span>
+                <span>Focus area</span>
                 <select data-room-focus aria-label="Focus room">
                   <option value="">Overview</option>
+                  {revisions.focusAreas.map((area) => (
+                    <option value={area.id}>{area.name}</option>
+                  ))}
                   {rooms.map((room) => (
                     <option value={room.id}>{room.id} · {room.name}</option>
                   ))}
@@ -160,8 +164,24 @@ export function BackyardPage() {
                 <input type="checkbox" data-dimensions checked />
               </label>
               <label class="toggle">
-                <span>Upper floors and roof</span>
-                <input type="checkbox" data-upper-floors />
+                <span>1st floor</span>
+                <input type="checkbox" data-layer="floor1" checked />
+              </label>
+              <label class="toggle">
+                <span>1st floor ceiling</span>
+                <input type="checkbox" data-layer="ceiling1" />
+              </label>
+              <label class="toggle">
+                <span>2nd floor</span>
+                <input type="checkbox" data-layer="floor2" />
+              </label>
+              <label class="toggle">
+                <span>2nd floor ceiling</span>
+                <input type="checkbox" data-layer="ceiling2" />
+              </label>
+              <label class="toggle">
+                <span>Roof and service deck</span>
+                <input type="checkbox" data-layer="roof" />
               </label>
               <label class="toggle">
                 <span>Show canopy roof</span>

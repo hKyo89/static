@@ -1,5 +1,10 @@
 # Eldora House
 
+The [13 October revisions](REVISIONS.md) correct the courtyard registration and
+apply the user's as-built finishes, furniture and extended canopy/drainage.
+Publishing means commit and push. Current placement values are in
+[revisions-model.ts](revisions-model.ts).
+
 ## Supplied SketchUp house
 
 The 12 October 2026 SketchUp import supersedes the earlier interpreted house

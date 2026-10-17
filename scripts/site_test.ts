@@ -58,14 +58,14 @@ Deno.test("L-shaped floor area and window lengths match interpreted plan", () =>
     }, 0) / 2,
   );
   if (
-    Math.abs(polygonArea - 9.379375) > 1e-8 ||
+    Math.abs(polygonArea - 7.63) > 1e-8 ||
     Math.abs(floorArea - polygonArea) > 1e-8
   ) throw new Error("Bad L-shaped footprint");
   const lengths = windows.map((w) =>
     Math.hypot(w.b[0] - w.a[0], w.b[1] - w.a[1])
   );
   if (
-    Math.abs(lengths[0] - 1.48) > 1e-8 || lengths[1] !== 2.025
+    Math.abs(lengths[0] - 1.48) > 1e-8 || lengths[1] !== 1.8
   ) throw new Error("Incorrect wall-wide openings");
   if (
     model.wallHeight !== 3 || model.windowTop >= model.wallHeight ||

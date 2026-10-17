@@ -1,9 +1,9 @@
 // Metres. Origin: rear-left corner in the plan; +X right, +Z toward house, +Y up.
 export const model = {
-  width: 6.775,
-  stripDepth: 1.225,
+  width: 6.55,
+  stripDepth: 1,
   returnWidth: 1.35,
-  returnDepth: 2.025,
+  returnDepth: 1.8,
   wallHeight: 3,
   wallThickness: 0.12,
   windowBottom: 0.12,
@@ -23,7 +23,7 @@ export const outline = [
 export const frontage = {
   fixedBayWidth: 1.6,
   separatorWidth: 0.12,
-  slidingWidth: 3.825,
+  slidingWidth: 3.6,
   leafCount: 4,
   trackCount: 2,
   overlap: 0.04,
@@ -107,7 +107,7 @@ export const wallLightPositions = Array.from(
 );
 
 // Concept layout: rear-wall bed opposite the sliding doors, clear granite approach.
-export const gardenLayout = {
+const referenceGardenLayout = {
   // Deliberately staggered, not random on each load; X/Z positions in metres.
   steppingStones: [
     [.94, 1.76],
@@ -243,6 +243,58 @@ export const windowFilm = {
 // Tiled drain channel: rear long wall and garden-side window edge of the L.
 export const gutter = { width: .20, depth: .05 } as const;
 // Layer thicknesses are illustrative; user confirmed draincell + geotextile.
+// Preserve product sizes while registering planting positions to the SKP courtyard.
+const sx = model.width / 6.775;
+const sz = model.stripDepth / 1.225;
+const position = (p: { x: number; z: number }) => ({
+  ...p,
+  x: p.x * sx,
+  z: p.z <= 1.225 ? p.z * sz : p.z - .225,
+});
+export const gardenLayout = {
+  ...referenceGardenLayout,
+  steppingStones: referenceGardenLayout.steppingStones.map(([x, z]) =>
+    [x * sx, z <= 1.225 ? z * sz : z - .225] as const
+  ),
+  olive: {
+    ...referenceGardenLayout.olive,
+    ...position(referenceGardenLayout.olive),
+  },
+  bamboo: {
+    ...referenceGardenLayout.bamboo,
+    ...position(referenceGardenLayout.bamboo),
+  },
+  bonsai: {
+    ...referenceGardenLayout.bonsai,
+    ...position(referenceGardenLayout.bonsai),
+  },
+  lantern: position(referenceGardenLayout.lantern),
+  ball: {
+    ...referenceGardenLayout.ball,
+    ...position(referenceGardenLayout.ball),
+  },
+  accentRock: {
+    ...referenceGardenLayout.accentRock,
+    ...position(referenceGardenLayout.accentRock),
+  },
+  grassClumps: referenceGardenLayout.grassClumps.map((p) => ({
+    ...p,
+    ...position(p),
+  })),
+  minorPlants: referenceGardenLayout.minorPlants.map(([x, z, h]) =>
+    [x * sx, z * sz, h] as const
+  ),
+  rocks: referenceGardenLayout.rocks.map(([x, z, r]) =>
+    [x * sx, z * sz, r] as const
+  ),
+  turfPatches: referenceGardenLayout.turfPatches.map(([x, z, rx, rz]) =>
+    [x * sx, z * sz, rx, rz * sz] as const
+  ),
+  glowingStones: referenceGardenLayout.glowingStones.map(([x, z, d]) =>
+    [Math.min(x * sx, model.width - d / 2 - .04), z * sz, d] as const
+  ),
+};
+
 export const gardenBuildUp = {
   draincellThickness: .020,
   geotextileThickness: .002,
