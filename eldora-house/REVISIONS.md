@@ -97,3 +97,61 @@ openings at night. A static two-stage bamboo water fountain in a stone tray sits
 near the right wall. Two ground spots aim at the pine and fountain. Fountain and
 lantern sizes are illustrative because their product dimensions were not given;
 the water depiction is static to preserve idle rendering.
+
+The island fixture positions use the actual sink opening width (source Y
+13.0063–13.6063 m). Soap and drinking-water fixture bases sit 5 cm inward from
+opposite ends, with the main tap centered. The drinking-water tap has a 10 mm
+diameter swan neck and a slimmer body, flange and lever.
+
+## Wet-kitchen exhaust
+
+The supplied SketchUp HOOD instance 71 is replaced by the existing Duct Option D
+assembly: unchanged 1,500 mm hood fabrication geometry, removable filters,
+connected ductwork, transitions, fan, shaft riser and rain outlet. The hood
+geometry is copied from `duct/src/main.js` at baseline 6faa270; connected system
+geometry is imported from `duct/src/system.js`. The Duct viewer is unchanged.
+Its separate demonstration room and shaft enclosure are omitted in the house.
+
+The assembly uses millimetre-to-metre scaling and is aligned to the old hood
+centre and rear wall, with its floor datum matching the kitchen floor at source
+Z=0.60 m. This preserves fabrication dimensions; it is a model registration, not
+a surveyed verification of shaft clearances. Exhaust parts follow their
+respective floor/roof visibility controls, and Show house model hides them.
+
+### House walls supersede the standalone exhaust room
+
+Wet-kitchen clear side walls are source X=1.8732–3.6732 m; the rear wall face is
+Y=14.8813 m. The 1.50 m hood is centered in that 1.80 m width, leaving 15 cm on
+each side, with a 1 cm rear mounting gap. The native shaft clear bounds are
+X=1.8732–2.7732, Y=12.1313–12.5313 m. Its 35 × 15 cm riser is centered at
+X=2.1732, Y=12.3313 m, fully inside these wall faces.
+
+The lateral straight is shortened from 235 mm to 50 mm. Complete downstream
+elbows, transitions and fan shift sideways together; the sloped straight grows
+from 475 mm to 550 mm in plan, retaining its 365 mm drop. The shaft assembly
+moves 75 mm forward relative to the corrected hood registration. Elbows, flange
+sections and fan dimensions are retained. House walls remain authoritative; the
+standalone Duct project's demonstration room has not been changed. The previous
+old-hood-center registration is superseded.
+
+## Cabinet glass, glazing, LEDs and seating follow-up
+
+The canceled upper wooden slat fence is permanently detached from the loaded
+scene, along with other replaced source objects, so visibility filters cannot
+restore it. The two display cabinets have clear glass fronts, retained frames
+and shelves, and eighteen illustrative premium wine/spirit bottles with readable
+brand labels. Cabinet glass is separate from exterior glazing. Exterior-facing
+window and sliding-door panes show dark film from the room and silver reflective
+film from outside, including the garden-facing panes.
+
+Marked strips use warm white emissive materials and restrained night spill. The
+first-floor bathroom strip sources are omitted. Day mode switches their emission
+off. The regular 3D camera now allows viewing from underneath.
+
+The main seating follows the latest showroom reference: three rear armless
+seats, a perpendicular left-arm module and connected ottoman, with no end table.
+The coffee table has two reversible wood/fabric panels; its selector offers both
+wood, both fabric, and either mixed orientation. Default is half wood/half
+fabric. The separate panel sofa has taupe fabric, broad rounded arms, divided
+back cushions, tufted seats and six beige/blush pillows based on the supplied
+photo.

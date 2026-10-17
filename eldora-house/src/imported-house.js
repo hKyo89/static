@@ -1,6 +1,7 @@
 import * as THREE from "three";
 import { GLTFLoader } from "three/addons/loaders/GLTFLoader.js";
 import { importedModel as data } from "../imported-model.ts";
+import { filmMaterials } from "./window-film.js";
 import { revisions } from "../revisions-model.ts";
 
 export function createImportedHouse(parent, onLoad) {
@@ -14,6 +15,7 @@ export function createImportedHouse(parent, onLoad) {
     layers: { floor1: true },
   };
   let ready = false;
+  let night = false;
   function apply() {
     group.visible = state.visible;
     if (!ready) return;
@@ -31,18 +33,24 @@ export function createImportedHouse(parent, onLoad) {
         node.visible = false;
         return;
       }
+      if (node.userData.ledStripLight) {
+        node.visible = night && state.enclosure && !!state.layers.floor1;
+      }
       if (node.isMesh) {
         const materials = Array.isArray(node.material)
           ? node.material
           : [node.material];
         const glass = materials.some((mat) =>
-          /KACA|GLASS|RYBEN|SILENT CLEAR/i.test(mat.name)
+          /KACA|GLASS|RYBEN|SILENT CLEAR|Exterior window film/i.test(mat.name)
         );
         node.visible = !node.userData.canceledSurface &&
           (glass ? state.windows : state.enclosure);
         for (const material of materials) {
           material.visible = !!state.layers[material.userData.houseLayer];
           material.clipShadows = true;
+          if (material.userData.ledStrip) {
+            material.emissiveIntensity = night ? 2.4 : 0;
+          }
         }
       }
     });
@@ -58,12 +66,49 @@ export function createImportedHouse(parent, onLoad) {
         -data.sourceOrigin[2],
         data.sourceOrigin[1],
       );
-      function tag(node, inherited) {
+      function tag(node, inherited, root = null) {
         node.userData.sourceNode = gltf.parser.associations.get(node)?.nodes ??
           inherited;
-        for (const child of node.children) tag(child, node.userData.sourceNode);
+        if (node.userData.sourceKind) {
+          root = {
+            kind: node.userData.sourceKind,
+            index: node.userData.sourceIndex,
+          };
+        }
+        node.userData.sourceRoot = root;
+        for (const child of node.children) {
+          tag(child, node.userData.sourceNode, root);
+        }
       }
       tag(source, undefined);
+      // Remove canceled objects from the scene graph permanently, so filters
+      // and resets cannot restore nested fence pieces.
+      const canceled = [];
+      source.traverse((node) => {
+        const kind = node.userData.sourceKind,
+          index = node.userData.sourceIndex;
+        if (
+          kind === "Groups" &&
+            [...data.excludedGroups, ...revisions.hiddenGroups].includes(
+              index,
+            ) ||
+          kind === "Instances" && revisions.hiddenInstances.includes(index)
+        ) canceled.push(node);
+      });
+      canceled.forEach((node) => node.removeFromParent());
+      const cabinetGlass = new THREE.MeshPhysicalMaterial({
+        name: "Clear cabinet glass",
+        color: 0xffffff,
+        transparent: true,
+        opacity: .12,
+        roughness: .04,
+        metalness: 0,
+        depthWrite: false,
+        side: THREE.DoubleSide,
+      });
+      const filmEnvironment = filmMaterials(true)[4].envMap;
+      const stripIds = new Set([24, 25, 26, 27, 28, 29, 32, 48, 55, 56, 57]);
+
       const stainless = new THREE.MeshStandardMaterial({
         name: "Confirmed stainless steel",
         color: 0xbac1c3,
@@ -99,6 +144,42 @@ export function createImportedHouse(parent, onLoad) {
           ? node.material
           : [node.material];
         node.material = materials.map((material) => {
+          if (
+            [2962, 3023, 3026].includes(node.userData.sourceNode) &&
+            material.name === "RYBEN"
+          ) return cabinetGlass;
+          const root = node.userData.sourceRoot;
+          if (
+            material.name === "EMISIVE CABINET" ||
+            root?.kind === "Instances" && stripIds.has(root.index)
+          ) {
+            const led = new THREE.MeshStandardMaterial({
+              name: "Warm white LED strip",
+              color: 0xf2e6c9,
+              emissive: 0xffd3a0,
+              emissiveIntensity: 0,
+              side: THREE.DoubleSide,
+            });
+            led.userData.ledStrip = true;
+            return led;
+          }
+          if (material.name === "KACA JENDELA") {
+            node.userData.exteriorFilm = true;
+            const pane = new THREE.MeshPhysicalMaterial({
+              name: "Exterior window film",
+              color: 0x303a3f,
+              transparent: true,
+              opacity: .45,
+              metalness: .15,
+              roughness: .25,
+              side: THREE.DoubleSide,
+              envMap: filmEnvironment,
+              envMapIntensity: 1.1,
+              depthWrite: false,
+            });
+            return pane;
+          }
+
           if (
             material.name === "[0003_DeepPink]" ||
             /Referigator stainless|YI0112|YI0114|YI0102/.test(material.name)
@@ -223,6 +304,55 @@ export function createImportedHouse(parent, onLoad) {
         node.geometry = geometry;
         node.material = materials;
       });
+      source.traverse((node) => {
+        if (!node.isMesh || !node.userData.exteriorFilm) return;
+        const root = node.userData.sourceRoot;
+        const bounds = new THREE.Box3().setFromObject(node),
+          centre = bounds.getCenter(new THREE.Vector3());
+        let outward;
+        if (root?.kind === "Groups" && root.index === 26) {
+          outward = new THREE.Vector3(-1, 0, 0);
+        } else if (root?.kind === "Instances" && [7, 8].includes(root.index)) {
+          outward = new THREE.Vector3(1, 0, 0);
+        } else if (
+          root?.kind === "Groups" && root.index === 25 ||
+          root?.kind === "Instances" && [10, 11, 12].includes(root.index)
+        ) outward = new THREE.Vector3(0, 0, 1);
+        else outward = new THREE.Vector3(0, 0, -1);
+        node.onBeforeRender = (
+          _renderer,
+          _scene,
+          camera,
+          _geometry,
+          material,
+        ) => {
+          const exterior =
+            camera.getWorldPosition(new THREE.Vector3()).sub(centre).dot(
+              outward,
+            ) > 0;
+          material.color.setHex(exterior ? 0xc5cbd0 : 0x273238);
+          material.opacity = exterior ? .82 : .46;
+          material.metalness = exterior ? .98 : .10;
+          material.roughness = exterior ? .07 : .28;
+        };
+      });
+      // Low-output strip spill at the three marked first-floor wall runs.
+      for (
+        const p of [[8.97, 19.97, 3.25], [6.25, 14.5, 3.42], [
+          4.64,
+          20.35,
+          3.23,
+        ]]
+      ) {
+        const spill = new THREE.PointLight(0xffd3a0, 1.1, 2.2, 2);
+        spill.position.set(
+          p[0] - data.sourceOrigin[0],
+          p[2] - data.sourceOrigin[2],
+          data.sourceOrigin[1] - p[1],
+        );
+        spill.userData.ledStripLight = true;
+        group.add(spill);
+      }
       ready = true;
       apply();
       onLoad(null);
@@ -232,6 +362,10 @@ export function createImportedHouse(parent, onLoad) {
   );
   return {
     group,
+    setNight(value) {
+      night = value;
+      apply();
+    },
     setState(next) {
       state = next;
       apply();

@@ -144,6 +144,15 @@ export function BackyardPage() {
                   Night
                 </button>
               </div>
+              <label class="toggle">
+                <span>Coffee table tops</span>
+                <select data-coffee-tops aria-label="Coffee table tops">
+                  <option value="mixed">Wood / fabric</option>
+                  <option value="mixed-reverse">Fabric / wood</option>
+                  <option value="wood">Both wood</option>
+                  <option value="fabric">Both fabric</option>
+                </select>
+              </label>
               <button type="button" class="quiet-button" data-hide-enclosure>
                 Hide all walls and windows
               </button>

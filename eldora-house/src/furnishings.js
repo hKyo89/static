@@ -54,10 +54,6 @@ export function createFurnishings(parent) {
     color: 0xf3f0e8,
     roughness: .3,
   });
-  const tabletop = new THREE.MeshStandardMaterial({
-    color: 0xc6bda8,
-    roughness: .4,
-  });
   function box(p, size, pos, mat, radius = .025) {
     const mesh = new THREE.Mesh(
       new RoundedBoxGeometry(
@@ -119,42 +115,116 @@ export function createFurnishings(parent) {
     r.sofa.centre,
     Math.PI / 2,
   );
-  module(sofa, r.sofa.leftArm, -.43, true);
-  module(sofa, r.sofa.armless, .54);
+  // Three rear seats and the perpendicular left return from the showroom photo.
+  for (let i = 0; i < r.sofa.armlessCount; i++) {
+    module(sofa, r.sofa.armless, (i - 1) * .86);
+  }
+  const returnSeat = new THREE.Group();
+  returnSeat.position.set(-1.81, 0, .02);
+  returnSeat.rotation.y = Math.PI / 2;
+  sofa.add(returnSeat);
+  module(returnSeat, r.sofa.leftArm, 0, true);
   const [ow, od, oh] = r.sofa.ottoman;
-  box(sofa, [ow, oh - .08, od], [-.43, oh / 2 + .04, 1.035], beige, .06);
+  box(sofa, [ow, oh - .08, od], [-1.81, oh / 2 + .04, 1.065], beige, .06);
+  const oakCanvas = document.createElement("canvas");
+  oakCanvas.width = 128;
+  oakCanvas.height = 256;
+  const oakCtx = oakCanvas.getContext("2d");
+  oakCtx.fillStyle = "#b28b60";
+  oakCtx.fillRect(0, 0, 128, 256);
+  for (let i = 0; i < 100; i++) {
+    oakCtx.strokeStyle = i % 3 ? "#aa8258" : "#c49e74";
+    oakCtx.beginPath();
+    oakCtx.moveTo(i * 13 % 128, 0);
+    oakCtx.bezierCurveTo(
+      i * 13 % 128 + 6,
+      80,
+      i * 13 % 128 - 4,
+      170,
+      i * 13 % 128,
+      256,
+    );
+    oakCtx.stroke();
+  }
+  const oakMap = new THREE.CanvasTexture(oakCanvas);
+  oakMap.colorSpace = THREE.SRGBColorSpace;
+  const oak = new THREE.MeshStandardMaterial({ map: oakMap, roughness: .65 });
   const coffee = placed(
-    "Madelline natural beige coffee table 105 x 90 x 43.5 cm",
+    "Madelline reversible two-top coffee table",
     r.sofa.coffeeCentre,
     Math.PI / 2,
   );
-  box(coffee, [1.05, .385, .90], [0, .1925, 0], tabletop, .035);
-  box(coffee, [1.05, .05, .90], [0, .410, 0], tabletop, .04);
+  box(coffee, [1.05, .385, .90], [0, .1925, 0], beige, .035);
+  const tops = [];
+  for (const x of [-.263, .263]) {
+    const top = new THREE.Group();
+    top.position.set(x, .410, 0);
+    coffee.add(top);
+    box(top, [.522, .025, .895], [0, .0125, 0], beige, .025);
+    box(top, [.522, .025, .895], [0, -.0125, 0], oak, .012);
+    tops.push(top);
+  }
+  function setCoffeeTops(mode) {
+    tops.forEach((top, i) =>
+      top.rotation.x = (mode === "wood" || mode === "mixed" && i === 0 ||
+          mode === "mixed-reverse" && i === 1)
+        ? Math.PI
+        : 0
+    );
+  }
+  setCoffeeTops("mixed");
   const panel = placed(
-    "Beige sofa in front of blue marble / wood panel",
+    "Taupe tufted sofa beside blue marble panel",
     r.panelSofa.centre,
   );
   const [pw, pd, ph] = r.panelSofa.size;
-  box(panel, [pw, .27, pd], [0, .19, 0], beige, .08);
-  for (const x of [-pw / 2 + .13, pw / 2 - .13]) {
-    box(panel, [.26, .59, pd], [x, .38, 0], beige, .08);
+  const taupe = beige.clone();
+  taupe.color.setHex(0xa79c88);
+  const blush = beige.clone();
+  blush.color.setHex(0xbaaaa4);
+  box(panel, [pw, .28, pd], [0, .19, 0], taupe, .09);
+  for (const x of [-pw / 2 + .14, pw / 2 - .14]) {
+    box(panel, [.28, .58, pd], [x, .39, 0], taupe, .12);
   }
-  box(panel, [pw - .35, .53, .22], [0, ph - .265, -pd / 2 + .11], beige, .07);
-  for (const x of [-.60, .60]) {
-    box(panel, [1.18, .19, pd - .22], [x, .435, .09], beige, .06);
-  }
-  for (let i = 0; i < 4; i++) {
-    const pillow = box(
+  for (let i = 0; i < 5; i++) {
+    box(
       panel,
-      [.43, .43, .12],
-      [-.92 + i * .61, .67, -.18],
-      i % 2
-        ? beige
-        : new THREE.MeshStandardMaterial({ color: 0xc4b5af, roughness: 1 }),
+      [(pw - .50) / 5 - .008, .48, .21],
+      [-(pw - .50) / 2 + (i + .5) * (pw - .50) / 5, ph - .24, -pd / 2 + .13],
+      taupe,
+      .05,
+    );
+  }
+  for (const x of [-(pw - .56) / 4, (pw - .56) / 4]) {
+    box(
+      panel,
+      [(pw - .56) / 2 - .006, .14, pd - .27],
+      [x, .43, .05],
+      taupe,
       .055,
     );
-    pillow.rotation.z = i % 2 ? .12 : -.12;
-    pillow.rotation.x = -.2;
+  }
+  for (let i = 0; i < 4; i++) {
+    for (let row = 0; row < 2; row++) {
+      const w = (pw - .56) / 4;
+      box(
+        panel,
+        [w - .004, .018, (pd - .27) / 2 - .004],
+        [-(pw - .56) / 2 + (i + .5) * w, .505, -.12 + row * (pd - .27) / 2],
+        taupe,
+        .012,
+      );
+    }
+  }
+  for (let i = 0; i < 6; i++) {
+    const pillow = box(
+      panel,
+      [.39, .39, .12],
+      [-.94 + i * .37, i === 2 ? .53 : .65, i === 2 ? .14 : -.12],
+      i % 2 ? taupe : blush,
+      .06,
+    );
+    pillow.rotation.set(-.2, i === 2 ? .12 : 0, i % 2 ? .20 : -.25);
   }
   const piano = placed(
     "Digital piano beside stair panel",
@@ -231,9 +301,9 @@ export function createFurnishings(parent) {
       )
     )
   );
-  function tap(position, height, radius, name) {
+  function tap(position, height, radius, name, slim = false) {
     const p = placed(name, position);
-    cylinder(p, .024, .075, [0, .0375, 0], chrome);
+    cylinder(p, slim ? .014 : .024, .075, [0, .0375, 0], chrome);
     const curve = new THREE.CatmullRomCurve3([
       new THREE.Vector3(0, .04, 0),
       new THREE.Vector3(0, height - .10, 0),
@@ -247,15 +317,88 @@ export function createFurnishings(parent) {
     );
     p.add(tube);
     tube.castShadow = true;
-    cylinder(p, .028, .010, [0, .005, 0], chrome);
-    cylinder(p, .016, .085, [0, .05, .034], chrome).rotation.x = Math.PI / 2;
-    cylinder(p, .004, .067, [0, .10, .075], chrome);
+    cylinder(p, slim ? .019 : .028, .010, [0, .005, 0], chrome);
+    cylinder(p, slim ? .010 : .016, slim ? .055 : .085, [
+      0,
+      .05,
+      slim ? .026 : .034,
+    ], chrome).rotation.x = Math.PI / 2;
+    cylinder(p, slim ? .0025 : .004, .067, [0, .10, slim ? .05 : .075], chrome);
   }
   tap(r.taps.main, .31, .014, "Modena KT 1915 SPCR main kitchen tap");
-  tap(r.taps.drinking, .255, .009, "Separate drinking-water tap on right");
+  tap(
+    r.taps.drinking,
+    .255,
+    .005,
+    "Separate drinking-water tap on right",
+    true,
+  );
   const soap = placed("Built-in stainless soap dispenser", r.taps.soap);
   cylinder(soap, .021, .070, [0, .035, 0], chrome);
   cylinder(soap, .028, .008, [0, .004, 0], chrome);
   box(soap, [.125, .016, .025], [.05, .076, 0], chrome, .006);
-  return { group };
+  // Cabinet fronts face into the room (-source X); three bottle shelves each.
+  const brands = [
+    "MACALLAN 18",
+    "HENNESSY XO",
+    "BLUE LABEL",
+    "DOM PERIGNON",
+    "PENFOLDS",
+    "MOET & CHANDON",
+  ];
+  for (
+    const [bank, ys] of [[0, [12.34, 12.53, 12.72]], [1, [15.30, 15.61, 15.94]]]
+  ) {
+    for (let shelf = 0; shelf < 3; shelf++) {
+      for (let i = 0; i < 3; i++) {
+        const name = brands[(bank * 3 + shelf + i) % brands.length];
+        const bottle = placed(name + " display bottle", [
+          11.16,
+          ys[i],
+          2.45 + shelf * .39,
+        ], -Math.PI / 2);
+        const glass = new THREE.MeshPhysicalMaterial({
+          color: i % 2 ? 0x574323 : 0x263b27,
+          roughness: .16,
+          metalness: .12,
+          transparent: true,
+          opacity: .92,
+        });
+        cylinder(bottle, .035, .18, [0, .09, 0], glass);
+        const shoulder = new THREE.Mesh(
+          new THREE.SphereGeometry(.035, 12, 8),
+          glass,
+        );
+        shoulder.scale.set(1, .6, 1);
+        shoulder.position.y = .18;
+        bottle.add(shoulder);
+        cylinder(bottle, .012, .085, [0, .225, 0], glass);
+        cylinder(bottle, .013, .025, [0, .27, 0], black);
+        const labelCanvas = document.createElement("canvas");
+        labelCanvas.width = 256;
+        labelCanvas.height = 128;
+        const c = labelCanvas.getContext("2d");
+        c.fillStyle = i % 2 ? "#24211b" : "#eee4ca";
+        c.fillRect(0, 0, 256, 128);
+        c.strokeStyle = "#b29958";
+        c.lineWidth = 7;
+        c.strokeRect(6, 6, 244, 116);
+        c.fillStyle = i % 2 ? "#d9c280" : "#29241b";
+        c.font = "bold 22px serif";
+        c.textAlign = "center";
+        name.split(" ").forEach((word, j) =>
+          c.fillText(word, 128, 35 + j * 27)
+        );
+        const texture = new THREE.CanvasTexture(labelCanvas);
+        texture.colorSpace = THREE.SRGBColorSpace;
+        const label = new THREE.Mesh(
+          new THREE.PlaneGeometry(.061, .09),
+          new THREE.MeshStandardMaterial({ map: texture, roughness: .8 }),
+        );
+        label.position.set(0, .10, .0355);
+        bottle.add(label);
+      }
+    }
+  }
+  return { group, setCoffeeTops };
 }

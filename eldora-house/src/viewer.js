@@ -1,3 +1,4 @@
+import { createWetKitchenExhaust } from "./wet-kitchen-exhaust.js";
 import { openingReferences } from "../openings.ts";
 import { filmMaterials } from "./window-film.js";
 import { createHouse } from "./house.js";
@@ -71,7 +72,7 @@ function createViewer() {
   controls.enableDamping = false;
   controls.minDistance = 2;
   controls.maxDistance = 100;
-  controls.maxPolarAngle = Math.PI / 2 - 0.015;
+  controls.maxPolarAngle = Math.PI - 0.015;
   const sky = new THREE.HemisphereLight(0xffffff, 0x82947e, 2.5);
   scene.add(sky);
   const sun = new THREE.DirectionalLight(0xfff4dd, 3);
@@ -616,7 +617,12 @@ function createViewer() {
   courtyard.position.set(...revisions.courtyard.offset);
   world.add(courtyard);
   const furnishings = createFurnishings(world);
+  document.querySelector("[data-coffee-tops]").onchange = (event) => {
+    furnishings.setCoffeeTops(event.target.value);
+    refresh();
+  };
   const firstFloor = createHouse(world);
+  const wetKitchenExhaust = createWetKitchenExhaust(world);
   // Keep only the established canopy from the earlier interpreted house.
   for (const child of firstFloor.group.children) {
     if (child !== firstFloor.canopy.group) child.visible = false;
@@ -723,6 +729,8 @@ function createViewer() {
     if (area) {
       const [x, y, x2, y2] = area.bounds;
       focusedRoom = {
+        insideCamera: area.insideCamera,
+        insideTarget: area.insideTarget,
         bounds: [
           x - importedModel.sourceOrigin[0] + houseModel.gardenOffsetX,
           importedModel.sourceOrigin[1] - y2,
@@ -769,6 +777,7 @@ function createViewer() {
     const night = mode === "night";
     sun.visible = !night;
     garden.setNight(night);
+    importedHouse.setNight(night);
     firstFloor.canopy.setNight(night);
     scene.environmentIntensity = night ? .12 : 1;
     sky.intensity = night ? .22 : 2.5;
@@ -891,6 +900,14 @@ function createViewer() {
         ) => [input.dataset.layer, input.checked]),
       ),
     });
+    wetKitchenExhaust.setState({
+      visible: scope === "house" && wallsInput.checked,
+      layers: Object.fromEntries(
+        [...document.querySelectorAll("[data-layer]")].map(
+          (input) => [input.dataset.layer, input.checked],
+        ),
+      ),
+    });
     // Source-model openings replace the approximate garden frontage.
     otherWalls.visible = false;
     openingLabels.visible = openingLabelsInput.checked;
@@ -937,9 +954,7 @@ function createViewer() {
     }
     camera.aspect = stage.clientWidth / stage.clientHeight;
     view = name;
-    controls.maxPolarAngle = name === "inside"
-      ? Math.PI - .015
-      : Math.PI / 2 - .015;
+    controls.maxPolarAngle = Math.PI - .015;
     camera.up.set(0, 1, 0);
     const b = focusedRoom?.bounds;
     const centre = b
@@ -959,7 +974,14 @@ function createViewer() {
       controls.target.set(centre[0], 0, centre[1]);
       camera.position.set(centre[0], 25, centre[1] + .001);
     } else if (name === "inside") {
-      if (scope === "house") {
+      if (focusedRoom?.insideCamera) {
+        camera.position.copy(
+          sourcePosition(focusedRoom.insideCamera).add(world.position),
+        );
+        controls.target.copy(
+          sourcePosition(focusedRoom.insideTarget).add(world.position),
+        );
+      } else if (scope === "house") {
         camera.position.set(centre[0], 1.6, centre[1] + 1.8);
         controls.target.set(centre[0], 2.4, centre[1] - 2);
       } else {
