@@ -81,3 +81,19 @@ Garage floor, frame, drains and rain chains follow the 1st floor checkbox. Show
 canopy roof independently controls the roof, ceiling and its downlights. Garden
 controls do not change either garage layer. Garden-only area hides the entire
 garage.
+
+## Garden planting and feature revision
+
+The olive and WPC deck are removed; white pebbles now continue around the entire
+L return. Bamboo planting is replaced by moss, moss rocks, natural grey rocks,
+seven fern clusters and nine ilalang clumps. Broader irregular moss islands
+include a continuous low right-hand composition. All glowing stones and the
+glowing ball are removed. The 1.70 m pine remains the tallest focal point, with
+layered asymmetrical needle foliage.
+
+The supplied pagoda reference replaces the round lantern with a charcoal square
+stone plinth, pierced chamber and swept roof. Warm light shines through chamber
+openings at night. A static two-stage bamboo water fountain in a stone tray sits
+near the right wall. Two ground spots aim at the pine and fountain. Fountain and
+lantern sizes are illustrative because their product dimensions were not given;
+the water depiction is static to preserve idle rendering.

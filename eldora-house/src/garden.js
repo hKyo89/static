@@ -70,47 +70,14 @@ export function createGarden(world) {
     gardenBuildUp.draincellThickness + gardenBuildUp.geotextileThickness / 2,
     m.stripDepth / 2,
   );
-  // Walnut-look WPC boards cover only the short return smoking nook.
-  const canvas = document.createElement("canvas");
-  canvas.width = 64;
-  canvas.height = 512;
-  const context = canvas.getContext("2d");
-  context.fillStyle = "#694831";
-  context.fillRect(0, 0, 64, 512);
-  for (let i = 0; i < 90; i++) {
-    context.strokeStyle = i % 3 ? "rgba(35,19,10,.18)" : "rgba(177,133,85,.22)";
-    context.beginPath();
-    context.moveTo(i * 7 % 64, 0);
-    context.bezierCurveTo(
-      (i * 7 % 64) + 5,
-      180,
-      (i * 7 % 64) - 4,
-      330,
-      i * 7 % 64,
-      512,
-    );
-    context.stroke();
-  }
-  const woodTexture = new THREE.CanvasTexture(canvas);
-  woodTexture.colorSpace = THREE.SRGBColorSpace;
-  const wood = new THREE.MeshStandardMaterial({
-    map: woodTexture,
-    roughness: .88,
-  });
-  const nookDepth = m.returnDepth - m.stripDepth;
-  for (let i = 0; i < g.deck.boards; i++) {
-    mesh(
-      new THREE.BoxGeometry(
-        m.returnWidth / g.deck.boards - g.deck.gap,
-        g.deck.thickness,
-        nookDepth - g.deck.endInset,
-      ),
-      wood,
-      (i + .5) * m.returnWidth / g.deck.boards,
-      g.deck.centreY,
-      (m.returnDepth + m.stripDepth) / 2,
-    );
-  }
+  // The former deck is now the same white pebble bed as the long strip.
+  mesh(
+    new THREE.BoxGeometry(m.returnWidth, .013, m.returnDepth - m.stripDepth),
+    gravelBase,
+    m.returnWidth / 2,
+    .0285,
+    (m.stripDepth + m.returnDepth) / 2,
+  );
   // Subtle size and angle changes make the staggered route feel less formal.
   g.steppingStones.forEach(([x, z], i) => {
     if (z > m.stripDepth) return;
@@ -134,17 +101,17 @@ export function createGarden(world) {
   const pebbles = new THREE.InstancedMesh(
     new THREE.IcosahedronGeometry(1, 1),
     new THREE.MeshStandardMaterial({ roughness: 1 }),
-    8500,
+    10500,
   );
   const dummy = new THREE.Object3D();
   const colors = [0xe7e6df, 0xaaaead, 0x323735];
-  for (let i = 0; i < 8500; i++) {
+  for (let i = 0; i < 10500; i++) {
     let x, z;
     do {
       x = .04 + random() * (m.width - .08);
       z = .04 + random() * (m.returnDepth - .08);
     } while (
-      z > m.stripDepth - .04 ||
+      (z > m.stripDepth - .04 && x > m.returnWidth - .04) ||
       g.steppingStones.some(([sx, sz]) =>
         ((x - sx) / .25) ** 2 + ((z - sz) / .18) ** 2 < 1
       )
@@ -188,10 +155,18 @@ export function createGarden(world) {
     height - .13,
     z,
   ]], .035);
-  const pads = g.canopyPads;
+  const needles = new THREE.InstancedMesh(
+    new THREE.ConeGeometry(.009, .065, 3),
+    new THREE.MeshStandardMaterial({ color: 0x4f7438, roughness: 1 }),
+    2400,
+  );
+  let needleCount = 0;
+  const pads = g.canopyPads.map((
+    [dx, py, dz, r],
+  ) => [dx, py * (height - .12) / 1.2, dz, r]);
   for (const [dx, y, dz, r] of pads) {
     branch([[x, y - .17, z], [x + dx, y - .03, z + dz]], .015);
-    for (let i = 0; i < g.deck.boards; i++) {
+    for (let i = 0; i < 12; i++) {
       mesh(
         new THREE.SphereGeometry(1, 9, 7),
         green,
@@ -200,8 +175,27 @@ export function createGarden(world) {
         z + dz + (random() - .5) * .12,
         [r * .6, .075 + random() * .035, .12],
       );
+      for (let n = 0; n < 24; n++) {
+        const a = random() * Math.PI * 2, reach = Math.sqrt(random()) * r * .58;
+        dummy.position.set(
+          x + dx + (random() - .5) * r * .8 + Math.cos(a) * reach,
+          y + (random() - .5) * .12,
+          z + dz + Math.sin(a) * reach * .55,
+        );
+        dummy.rotation.set(random() * 2, random() * 6, random() * 2);
+        dummy.scale.setScalar(.65 + random() * .6);
+        dummy.updateMatrix();
+        needles.setMatrixAt(needleCount, dummy.matrix);
+        needles.setColorAt(
+          needleCount++,
+          new THREE.Color(n % 3 ? 0x456b32 : 0x86a04a),
+        );
+      }
     }
   }
+  needles.count = needleCount;
+  needles.castShadow = needles.receiveShadow = true;
+  group.add(needles);
   for (const [rx, rz, s] of g.rocks) {
     const rock = mesh(
       new THREE.IcosahedronGeometry(1, 1),
@@ -263,14 +257,10 @@ export function createGarden(world) {
     color: 0x5a853f,
     roughness: .9,
   });
-  const bambooMaterial = new THREE.MeshStandardMaterial({
-    color: 0x65804b,
-    roughness: .85,
-  });
   const foliage = new THREE.InstancedMesh(
     new THREE.SphereGeometry(1, 6, 4),
     plantMaterial,
-    400,
+    5000,
   );
   let leafIndex = 0;
   function leaf(x, y, z, length, width, angle, tilt, colour) {
@@ -281,101 +271,34 @@ export function createGarden(world) {
     foliage.setMatrixAt(leafIndex, dummy.matrix);
     foliage.setColorAt(leafIndex++, new THREE.Color(colour));
   }
-  const bamboo = g.bamboo;
-  for (let i = 0; i < bamboo.stems; i++) {
-    const angle = i * 2.4, spread = i === 0 ? 0 : .11;
-    const bx = bamboo.x + Math.cos(angle) * spread;
-    const bz = bamboo.z + Math.sin(angle) * spread;
-    const height = bamboo.height * (.76 + random() * .24);
-    mesh(
-      new THREE.CylinderGeometry(.009, .013, height, 7),
-      bambooMaterial,
-      bx,
-      .06 + height / 2,
-      bz,
-    );
-    for (let j = 1; j <= 7; j++) {
-      const y = .06 + height * j / 8;
-      mesh(new THREE.CylinderGeometry(.014, .014, .012, 7), green, bx, y, bz);
-      if (j < 3) continue;
-      for (let k = 0; k < 5; k++) {
-        const direction = angle + k * 1.25 + j;
-        const reach = bamboo.spread * (.45 + random() * .45);
-        leaf(
-          bx + Math.cos(direction) * reach,
-          y + .03,
-          bz + Math.sin(direction) * reach,
-          .105,
-          .018,
-          -direction,
-          -.25,
-          k % 2 ? 0x668f43 : 0x3f6d37,
-        );
-      }
-    }
-  }
-  // Low broadleaf / fern-like artificial accents, rather than raised grass.
+  // Arching fern fronds with paired narrow leaflets, planted directly in moss.
   for (const [px, pz, height] of g.minorPlants) {
-    mesh(new THREE.CylinderGeometry(.09, .07, .045, 12), dark, px, .065, pz);
-    for (let j = 0; j < 18; j++) {
-      const angle = j * 2.4;
-      const reach = .045 + random() * .095;
-      const y = .09 + height * (.25 + random() * .6);
-      leaf(
-        px + Math.cos(angle) * reach,
-        y,
-        pz + Math.sin(angle) * reach,
-        .09 + random() * .055,
-        .025 + random() * .016,
-        -angle,
-        -.5 + random(),
-        j % 3 ? 0x4e793a : 0x7b9d4b,
-      );
-    }
-  }
-  // Slender artificial olive accent beside the L-shaped smoking nook.
-  const olive = g.olive;
-  mesh(
-    new THREE.CylinderGeometry(
-      olive.potRadius,
-      olive.potRadius * .8,
-      olive.potHeight,
-      20,
-    ),
-    dark,
-    olive.x,
-    .05 + olive.potHeight / 2,
-    olive.z,
-  );
-  branch([[olive.x, .25, olive.z], [olive.x + .025, .72, olive.z], [
-    olive.x - .02,
-    olive.height - .18,
-    olive.z,
-  ]], .018);
-  for (let j = 0; j < 5; j++) {
-    const angle = j * 2.4;
-    const y = .75 + j * .12;
-    const bx = olive.x + Math.cos(angle) * .12;
-    const bz = olive.z + Math.sin(angle) * .10;
-    branch([[olive.x, y - .13, olive.z], [bx, y, bz]], .007);
-    for (let i = 0; i < 24; i++) {
-      const direction = i * 2.4 + j;
-      const radius = Math.sqrt(random()) * olive.crownRadius * .6;
-      leaf(
-        bx + Math.cos(direction) * radius,
-        y + (random() - .3) * .28,
-        bz + Math.sin(direction) * radius,
-        .038,
-        .012,
-        direction,
-        random() * .5,
-        i % 3 ? 0x657550 : 0x98a582,
-      );
+    for (let frond = 0; frond < 9; frond++) {
+      const angle = frond * 2.4, reach = height * .85;
+      for (let j = 1; j <= 9; j++) {
+        const t = j / 10,
+          cx = px + Math.cos(angle) * reach * t,
+          cz = pz + Math.sin(angle) * reach * t;
+        const cy = .08 + Math.sin(t * Math.PI * .8) * height;
+        for (const side of [-1, 1]) {
+          const length = height * .21 * Math.sin(t * Math.PI);
+          leaf(
+            cx + Math.sin(angle) * side * length * .6,
+            cy,
+            cz - Math.cos(angle) * side * length * .6,
+            length,
+            .012,
+            -angle + side * .85,
+            -.25,
+            j % 3 ? 0x426d32 : 0x729348,
+          );
+        }
+      }
     }
   }
   foliage.count = leafIndex;
   foliage.castShadow = foliage.receiveShadow = true;
-  foliage.name = "Artificial bamboo and low green planting";
+  foliage.name = "Artificial fern planting";
   group.add(foliage);
   // Narrow curved grass blades match the supplied 30 cm / 46 cm artificial sprigs.
   const bladePositions = [], bladeColours = [];
@@ -387,7 +310,7 @@ export function createGarden(world) {
   const seedHeads = new THREE.InstancedMesh(
     new THREE.SphereGeometry(1, 7, 5),
     new THREE.MeshStandardMaterial({ color: 0xc6bd91, roughness: 1 }),
-    16,
+    64,
   );
   let headCount = 0;
   for (const clump of g.grassClumps) {
@@ -454,90 +377,170 @@ export function createGarden(world) {
   seedHeads.castShadow = true;
   group.add(seedHeads);
   const glow = new THREE.MeshStandardMaterial({
-    color: 0xe8dfca,
+    color: 0xffdca0,
     emissive: 0xffbd73,
     emissiveIntensity: 0,
   });
+  const lanternStone = new THREE.MeshStandardMaterial({
+    color: 0x343936,
+    roughness: 1,
+  });
   const { x: lx, z: lz } = g.lantern;
-  // Compact yukimi-style stone lantern, one restrained accent.
-  mesh(new THREE.CylinderGeometry(.13, .15, .055, 20), stone, lx, .07, lz);
-  for (const dx of [-.075, .075]) {
-    mesh(new THREE.BoxGeometry(.04, .14, .05), stone, lx + dx, .16, lz);
+  // Square stone pagoda: stepped plinth, pierced chamber and swept roof.
+  mesh(new THREE.BoxGeometry(.40, .055, .40), lanternStone, lx, .07, lz);
+  mesh(new THREE.BoxGeometry(.33, .045, .33), lanternStone, lx, .12, lz);
+  mesh(new THREE.BoxGeometry(.29, .025, .29), lanternStone, lx, .155, lz);
+  for (const dx of [-.125, 0, .125]) {
+    for (const dz of [-.125, .125]) {
+      mesh(
+        new THREE.BoxGeometry(.035, .23, .035),
+        lanternStone,
+        lx + dx,
+        .28,
+        lz + dz,
+      );
+    }
   }
-  mesh(new THREE.CylinderGeometry(.10, .10, .035, 20), stone, lx, .24, lz);
-  mesh(new THREE.CylinderGeometry(.06, .06, .10, 16), glow, lx, .30, lz);
-  for (const dx of [-.06, .06]) {
-    mesh(new THREE.BoxGeometry(.018, .11, .018), stone, lx + dx, .30, lz);
-  }
-  mesh(new THREE.ConeGeometry(.19, .10, 8), stone, lx, .40, lz);
-  mesh(new THREE.SphereGeometry(.028, 10, 8), stone, lx, .47, lz);
-  const lights = [];
-  // Two 30–35 cm glowing stones, staggered amongst the green islands.
-  const groundLamps = g.glowingStones;
-  for (const [px, pz, diameter] of groundLamps) {
-    const rock = mesh(
-      new THREE.IcosahedronGeometry(1, 2),
-      glow,
-      px,
-      diameter * .24,
-      pz,
-      [diameter / 2, diameter * .26, diameter * .40],
+  for (const dx of [-.125, .125]) {
+    mesh(
+      new THREE.BoxGeometry(.035, .23, .035),
+      lanternStone,
+      lx + dx,
+      .28,
+      lz,
     );
-    rock.rotation.y = random() * 2;
-    rock.name = "Warm glowing stone";
   }
-  // The 50 cm ball sits beside the bonsai opposite the sliding doors.
+  for (const y of [.175, .285, .395]) {
+    mesh(new THREE.BoxGeometry(.28, .025, .28), lanternStone, lx, y, lz);
+  }
+  mesh(new THREE.BoxGeometry(.17, .18, .17), glow, lx, .285, lz);
+  const roofVertices = [], roofIndices = [];
+  for (let ring = 0; ring < 4; ring++) {
+    const r = [.255, .19, .095, .025][ring], y = [.43, .435, .51, .54][ring];
+    for (const [dx, dz] of [[-1, -1], [1, -1], [1, 1], [-1, 1]]) {
+      roofVertices.push(lx + dx * r, y, lz + dz * r);
+    }
+  }
+  for (let ring = 0; ring < 3; ring++) {
+    for (let side = 0; side < 4; side++) {
+      const a = ring * 4 + side,
+        b = ring * 4 + (side + 1) % 4,
+        c = a + 4,
+        d = b + 4;
+      roofIndices.push(a, c, b, b, c, d);
+    }
+  }
+  const pagodaRoof = new THREE.BufferGeometry();
+  pagodaRoof.setAttribute(
+    "position",
+    new THREE.Float32BufferAttribute(roofVertices, 3),
+  );
+  pagodaRoof.setIndex(roofIndices);
+  pagodaRoof.computeVertexNormals();
+  const roofMaterial = lanternStone.clone();
+  roofMaterial.side = THREE.DoubleSide;
+  mesh(pagodaRoof, roofMaterial, 0, 0, 0);
+  mesh(new THREE.ConeGeometry(.04, .07, 4), lanternStone, lx, .565, lz);
+  const lights = [];
+  const lanternLight = new THREE.PointLight(0xffbd73, .7, 1.4, 2);
+  lanternLight.position.set(lx, .29, lz);
+  group.add(lanternLight);
+  lights.push(lanternLight);
+  // Static bamboo fountain, with both water falls and a stone basin.
+  const f = g.fountain,
+    fx = f.x * m.width / 6.775,
+    fz = f.z * m.stripDepth / 1.225;
+  const bamboo = new THREE.MeshStandardMaterial({
+    color: 0xc9a15f,
+    roughness: .72,
+  });
+  const water = new THREE.MeshStandardMaterial({
+    color: 0x95b9be,
+    transparent: true,
+    opacity: .65,
+    metalness: .25,
+    roughness: .12,
+  });
+  mesh(new THREE.BoxGeometry(f.width, .13, f.depth), dark, fx, .105, fz);
   mesh(
-    new THREE.SphereGeometry(g.ball.diameter / 2, 28, 20),
-    glow,
-    g.ball.x,
-    g.ball.y,
-    g.ball.z,
+    new THREE.BoxGeometry(f.width - .04, .02, f.depth - .04),
+    stone,
+    fx,
+    .18,
+    fz,
+  );
+  function rod(a, b, r, material) {
+    const start = new THREE.Vector3(...a),
+      end = new THREE.Vector3(...b),
+      delta = end.clone().sub(start);
+    const object = mesh(
+      new THREE.CylinderGeometry(r, r, delta.length(), 10),
+      material,
+      ...start.clone().add(end).multiplyScalar(.5).toArray(),
+    );
+    object.quaternion.setFromUnitVectors(
+      new THREE.Vector3(0, 1, 0),
+      delta.normalize(),
+    );
+    return object;
+  }
+  rod([fx - .18, .18, fz], [fx - .18, f.height, fz], .025, bamboo);
+  rod([fx - .18, .61, fz], [fx + .01, .57, fz], .021, bamboo);
+  rod([fx + .10, .19, fz], [fx + .10, .40, fz], .022, bamboo);
+  rod([fx - .03, .31, fz], [fx + .23, .45, fz], .029, bamboo);
+  for (const y of [.28, .52, .72]) {
+    mesh(new THREE.TorusGeometry(.026, .004, 5, 12), bamboo, fx - .18, y, fz)
+      .rotation.x = Math.PI / 2;
+  }
+  mesh(new THREE.SphereGeometry(1, 18, 12), stone, fx + .08, .245, fz, [
+    .145,
+    .10,
+    .15,
+  ]);
+  mesh(
+    new THREE.CylinderGeometry(.10, .10, .008, 20),
+    water,
+    fx + .08,
+    .33,
+    fz,
   );
   for (
-    const [px, py, pz] of [
-      [lx, .30, lz],
-      ...g.glowingStones.map(([x, z]) => [x, .15, z]),
-      [g.ball.x, g.ball.y, g.ball.z],
-    ]
+    const points of [[[fx + .01, .57, fz], [fx + .02, .46, fz], [
+      fx + .06,
+      .36,
+      fz,
+    ]], [[fx - .03, .31, fz], [fx - .08, .25, fz], [fx - .10, .185, fz]]]
   ) {
-    const light = new THREE.PointLight(0xffbd73, .22, 1, 2);
-    light.position.set(px, py, pz);
-    light.visible = false;
-    group.add(light);
-    lights.push(light);
+    const curve = new THREE.CatmullRomCurve3(
+      points.map((p) => new THREE.Vector3(...p)),
+    );
+    mesh(new THREE.TubeGeometry(curve, 12, .006, 5, false), water, 0, 0, 0);
   }
-  // Low warm uplight from the door side, projecting foliage shadows rearward.
-  const uplight = new THREE.SpotLight(0xffc58a, 6, 4, Math.PI / 5, .6, 2);
-  uplight.position.set(
-    g.bonsai.x + g.spotlight.offset[0],
-    g.spotlight.offset[1],
-    g.bonsai.z + g.spotlight.offset[2],
-  );
-  uplight.target.position.set(
-    g.bonsai.x,
-    g.spotlight.targetY,
-    g.spotlight.targetZ,
-  );
-  uplight.castShadow = true;
-  uplight.shadow.mapSize.set(1024, 1024);
-  uplight.shadow.camera.near = .03;
-  uplight.shadow.camera.far = 4;
-  uplight.shadow.bias = -.0002;
-  uplight.shadow.normalBias = .005;
-  uplight.visible = false;
-  group.add(uplight, uplight.target);
-  lights.push(uplight);
-  const housing = mesh(
-    new THREE.CylinderGeometry(.035, .045, .07, 16),
-    dark,
-    uplight.position.x,
-    .07,
-    uplight.position.z,
-  );
-  housing.name = "Bonsai ground spotlight";
-  housing.lookAt(uplight.target.position);
-  housing.rotateX(Math.PI / 2);
+  for (let i = 0; i < 24; i++) {
+    const a = i * 2.4, r = .17 + random() * .05;
+    mesh(
+      new THREE.IcosahedronGeometry(.025 + random() * .012, 1),
+      stone,
+      fx + Math.cos(a) * r,
+      .19,
+      fz + Math.sin(a) * r * .85,
+    );
+  }
+  // Exactly two restrained warm ground spots; no glowing rocks or sphere.
+  for (const target of [[x, 1.05, z], [fx, .43, fz]]) {
+    const spot = new THREE.SpotLight(0xffcf99, 6, 3, Math.PI / 7, .7, 2);
+    spot.position.set(target[0] - .15, .10, Math.min(.9, target[2] + .43));
+    spot.target.position.set(...target);
+    group.add(spot, spot.target);
+    lights.push(spot);
+    const housing = mesh(
+      new THREE.CylinderGeometry(.033, .04, .07, 10),
+      dark,
+      ...spot.position.toArray(),
+    );
+    housing.lookAt(spot.target.position);
+    housing.rotateX(Math.PI / 2);
+  }
   return {
     group,
     setNight(night) {
