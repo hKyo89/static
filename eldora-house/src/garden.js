@@ -446,85 +446,89 @@ export function createGarden(world) {
   lanternLight.position.set(lx, .29, lz);
   group.add(lanternLight);
   lights.push(lanternLight);
-  // Static bamboo fountain, with both water falls and a stone basin.
+  // Reference #2: dark stone bowl with a rounded bubbling centre.
   const f = g.fountain,
     fx = f.x * m.width / 6.775,
     fz = f.z * m.stripDepth / 1.225;
-  const bamboo = new THREE.MeshStandardMaterial({
-    color: 0xc9a15f,
-    roughness: .72,
+  const fountainStone = new THREE.MeshStandardMaterial({
+    color: 0x303434,
+    roughness: .88,
   });
   const water = new THREE.MeshStandardMaterial({
-    color: 0x95b9be,
+    color: 0x94b8bc,
     transparent: true,
     opacity: .65,
     metalness: .25,
     roughness: .12,
   });
-  mesh(new THREE.BoxGeometry(f.width, .13, f.depth), dark, fx, .105, fz);
-  mesh(
-    new THREE.BoxGeometry(f.width - .04, .02, f.depth - .04),
+  const base = mesh(
+    new THREE.CylinderGeometry(.34, .32, .035, 7),
     stone,
     fx,
-    .18,
+    .065,
     fz,
   );
-  function rod(a, b, r, material) {
-    const start = new THREE.Vector3(...a),
-      end = new THREE.Vector3(...b),
-      delta = end.clone().sub(start);
-    const object = mesh(
-      new THREE.CylinderGeometry(r, r, delta.length(), 10),
-      material,
-      ...start.clone().add(end).multiplyScalar(.5).toArray(),
-    );
-    object.quaternion.setFromUnitVectors(
-      new THREE.Vector3(0, 1, 0),
-      delta.normalize(),
-    );
-    return object;
-  }
-  rod([fx - .18, .18, fz], [fx - .18, f.height, fz], .025, bamboo);
-  rod([fx - .18, .61, fz], [fx + .01, .57, fz], .021, bamboo);
-  rod([fx + .10, .19, fz], [fx + .10, .40, fz], .022, bamboo);
-  rod([fx - .03, .31, fz], [fx + .23, .45, fz], .029, bamboo);
-  for (const y of [.28, .52, .72]) {
-    mesh(new THREE.TorusGeometry(.026, .004, 5, 12), bamboo, fx - .18, y, fz)
+  base.rotation.y = .3;
+  const bowlProfile = [
+    [0, .085],
+    [.17, .085],
+    [.25, .12],
+    [.30, .20],
+    [.32, .31],
+    [.32, .36],
+    [.295, .36],
+    [.29, .30],
+    [.26, .22],
+    [.19, .16],
+    [0, .16],
+  ].map(([r, y]) => new THREE.Vector2(r, y));
+  mesh(new THREE.LatheGeometry(bowlProfile, 64), fountainStone, fx, 0, fz);
+  mesh(new THREE.CylinderGeometry(.292, .292, .006, 64), water, fx, .326, fz);
+  mesh(
+    new THREE.CylinderGeometry(.12, .13, .07, 40),
+    fountainStone,
+    fx,
+    .35,
+    fz,
+  );
+  const orbProfile = [
+    [0, .375],
+    [.105, .375],
+    [.15, .40],
+    [.17, .46],
+    [.165, .53],
+    [.14, .59],
+    [.10, .64],
+    [.055, .68],
+    [.018, .70],
+    [0, .70],
+  ].map(([r, y]) => new THREE.Vector2(r, y));
+  mesh(new THREE.LatheGeometry(orbProfile, 64), fountainStone, fx, 0, fz);
+  // Fine horizontal stone grooves and a small static water crown.
+  for (let i = 0; i < 12; i++) {
+    const y = .41 + i * .022;
+    const ringRadius = y < .46
+      ? .15 + (y - .41) * .4
+      : y < .53
+      ? .17 - (y - .46) * .07
+      : .165 - (y - .53) * .72;
+    mesh(new THREE.TorusGeometry(ringRadius, .0015, 4, 64), dark, fx, y, fz)
       .rotation.x = Math.PI / 2;
   }
-  mesh(new THREE.SphereGeometry(1, 18, 12), stone, fx + .08, .245, fz, [
-    .145,
-    .10,
-    .15,
+  mesh(new THREE.SphereGeometry(.025, 16, 10), water, fx, .713, fz, [
+    1,
+    1.4,
+    1,
   ]);
-  mesh(
-    new THREE.CylinderGeometry(.10, .10, .008, 20),
-    water,
-    fx + .08,
-    .33,
-    fz,
-  );
-  for (
-    const points of [[[fx + .01, .57, fz], [fx + .02, .46, fz], [
-      fx + .06,
-      .36,
-      fz,
-    ]], [[fx - .03, .31, fz], [fx - .08, .25, fz], [fx - .10, .185, fz]]]
-  ) {
-    const curve = new THREE.CatmullRomCurve3(
-      points.map((p) => new THREE.Vector3(...p)),
-    );
-    mesh(new THREE.TubeGeometry(curve, 12, .006, 5, false), water, 0, 0, 0);
-  }
-  for (let i = 0; i < 24; i++) {
-    const a = i * 2.4, r = .17 + random() * .05;
+  for (let i = 0; i < 3; i++) {
     mesh(
-      new THREE.IcosahedronGeometry(.025 + random() * .012, 1),
-      stone,
-      fx + Math.cos(a) * r,
-      .19,
-      fz + Math.sin(a) * r * .85,
-    );
+      new THREE.TorusGeometry(.055 + i * .035, .002, 4, 48),
+      water,
+      fx,
+      .331,
+      fz,
+    )
+      .rotation.x = Math.PI / 2;
   }
   // Exactly two restrained warm ground spots; no glowing rocks or sphere.
   for (const target of [[x, 1.05, z], [fx, .43, fz]]) {

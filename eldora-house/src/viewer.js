@@ -1,3 +1,4 @@
+import { roomNavigation } from "../room-navigation.ts";
 import { createWetKitchenExhaust } from "./wet-kitchen-exhaust.js";
 import { openingReferences } from "../openings.ts";
 import { filmMaterials } from "./window-film.js";
@@ -70,7 +71,9 @@ function createViewer() {
   stage.append(labels.domElement);
   const controls = new OrbitControls(camera, renderer.domElement);
   controls.enableDamping = false;
-  controls.minDistance = 2;
+  controls.minDistance = .08;
+  controls.zoomSpeed = .8;
+  controls.screenSpacePanning = true;
   controls.maxDistance = 100;
   controls.maxPolarAngle = Math.PI - 0.015;
   const sky = new THREE.HemisphereLight(0xffffff, 0x82947e, 2.5);
@@ -304,21 +307,17 @@ function createViewer() {
     fixture.name = `Wall light ${index + 1} from right`;
     fixture.position.set(position.x, position.y, position.z);
     boundary.add(fixture);
-    // D-shaped cross section: curved U front, flat back flush to the wall.
-    const profile = new THREE.Shape();
-    profile.moveTo(-wallLights.radius, 0);
-    profile.absarc(0, 0, wallLights.radius, Math.PI, 0, true);
-    profile.lineTo(-wallLights.radius, 0);
+    // Full round body, tangent to the wall at its rear edge.
     const body = new THREE.Mesh(
-      new THREE.ExtrudeGeometry(profile, {
-        depth: wallLights.bodyHeight,
-        bevelEnabled: false,
-        curveSegments: 20,
-      }),
+      new THREE.CylinderGeometry(
+        wallLights.radius,
+        wallLights.radius,
+        wallLights.bodyHeight,
+        48,
+      ),
       sconceMaterial,
     );
-    body.rotation.x = Math.PI / 2;
-    body.position.y = wallLights.bodyHeight / 2;
+    body.position.z = wallLights.radius;
     body.castShadow = body.receiveShadow = true;
     fixture.add(body);
     for (const direction of [-1, 1]) {
@@ -712,6 +711,26 @@ function createViewer() {
     setView("plan");
   };
   const roomLabelsInput = document.querySelector("[data-room-labels]");
+  const namedRoomLabels = new THREE.Group();
+  world.add(namedRoomLabels);
+  for (const room of roomNavigation) {
+    const el = document.createElement("button");
+    el.type = "button";
+    el.className = "room-label";
+    el.textContent = `${room.floor}F · ${room.name}`;
+    el.style.pointerEvents = "auto";
+    el.onclick = () => navigateRoom(room.id);
+    const label = new CSS2DObject(el);
+    label.userData.room = room;
+    label.position.copy(
+      sourcePosition([
+        (room.bounds[0] + room.bounds[2]) / 2,
+        (room.bounds[1] + room.bounds[3]) / 2,
+        room.z + .15,
+      ]),
+    );
+    namedRoomLabels.add(label);
+  }
   let scope = "house";
   let focusedRoom = null;
   scopeInput.onchange = () => {
@@ -723,6 +742,16 @@ function createViewer() {
     setView(view);
   };
   roomInput.onchange = () => {
+    activeRoom = null;
+    navigationFloor = 1;
+    document.querySelectorAll("[data-layer]").forEach((input) =>
+      input.checked = input.dataset.layer === "floor1"
+    );
+    history.replaceState(null, "", "#1f");
+    document.querySelector("[data-room-status]").textContent =
+      "1F · Detail preset";
+    roomNav.value = "house";
+
     const area = revisions.focusAreas.find((area) =>
       area.id === roomInput.value
     );
@@ -798,6 +827,113 @@ function createViewer() {
   const windowsInput = document.querySelector("[data-windows]");
   const dimensionsInput = document.querySelector("[data-dimensions]");
   let view = "perspective";
+  let activeRoom = null;
+  let navigationFloor = null;
+  const roomNav = document.querySelector("[data-room-nav]");
+  const roomContext = document.querySelector("[data-room-context]");
+  function inspectionPlanes() {
+    if (!activeRoom || roomContext.checked) return [];
+    const [x, y, x2, y2] = activeRoom.bounds;
+    const low = sourcePosition([x - .08, y2 + .08, activeRoom.z - .15]).add(
+      world.position,
+    );
+    const high = sourcePosition([x2 + .08, y - .08, activeRoom.z + 3.1]).add(
+      world.position,
+    );
+    return [
+      new THREE.Plane(new THREE.Vector3(1, 0, 0), -low.x),
+      new THREE.Plane(new THREE.Vector3(-1, 0, 0), high.x),
+      new THREE.Plane(new THREE.Vector3(0, 0, 1), -low.z),
+      new THREE.Plane(new THREE.Vector3(0, 0, -1), high.z),
+      new THREE.Plane(new THREE.Vector3(0, 1, 0), -low.y),
+      new THREE.Plane(new THREE.Vector3(0, -1, 0), high.y),
+    ];
+  }
+  function navigateRoom(id, updateUrl = true) {
+    activeRoom = roomNavigation.find((room) => room.id === id) ?? null;
+    navigationFloor = activeRoom?.floor ??
+      (id === "2f" ? 2 : id === "1f" ? 1 : null);
+    const floor = navigationFloor ?? 1;
+    document.querySelectorAll("[data-layer]").forEach((input) =>
+      input.checked = input.dataset.layer === `floor${floor}` ||
+        id === "house" && input.dataset.layer === "floor2"
+    );
+    document.querySelector("[data-canopy-roof]").checked = !activeRoom &&
+      floor === 1;
+    scope = "house";
+    scopeInput.value = "house";
+    wallsInput.checked = windowsInput.checked = true;
+    roomNav.value = activeRoom?.id ?? "house";
+    roomInput.value = "";
+    openingFocusInput.value = "";
+    const title = activeRoom
+      ? `${floor}F · ${activeRoom.name}`
+      : navigationFloor
+      ? `${floor}F overview`
+      : "Whole house";
+    document.querySelector("[data-room-status]").textContent = title;
+    document.querySelectorAll("[data-nav]").forEach((button) =>
+      button.setAttribute("aria-pressed", String(button.dataset.nav === id))
+    );
+    if (activeRoom) {
+      const [x, y, x2, y2] = activeRoom.bounds;
+      const centre = [(x + x2) / 2, (y + y2) / 2, activeRoom.z + 1.45];
+      const preset = revisions.focusAreas.find((area) =>
+        area.id ===
+          ({
+            "1f-living": "living-seating",
+            "1f-karaoke": "rear-sofa",
+            "1f-dry-kitchen": "display-cabinets",
+          })[id]
+      );
+      focusedRoom = {
+        bounds: [
+          x - importedModel.sourceOrigin[0] + houseModel.gardenOffsetX,
+          importedModel.sourceOrigin[1] - y2,
+          x2 - importedModel.sourceOrigin[0] + houseModel.gardenOffsetX,
+          importedModel.sourceOrigin[1] - y,
+        ],
+        insideCamera: preset?.insideCamera ?? [centre[0], y + .18, centre[2]],
+        insideTarget: preset?.insideTarget ?? [centre[0], y2 - .18, centre[2]],
+      };
+    } else focusedRoom = null;
+    if (updateUrl) history.replaceState(null, "", `#${activeRoom?.id ?? id}`);
+    setView(activeRoom ? "inside" : "perspective");
+  }
+  roomNav.onchange = () => navigateRoom(roomNav.value);
+  roomContext.onchange = () => refresh();
+  document.querySelectorAll("[data-nav]").forEach((button) =>
+    button.onclick = () => navigateRoom(button.dataset.nav)
+  );
+  document.querySelectorAll("[data-room-link]").forEach((link) =>
+    link.onclick = (event) => {
+      event.preventDefault();
+      navigateRoom(link.dataset.roomLink);
+    }
+  );
+  for (
+    const [selector, step] of [["[data-room-prev]", -1], [
+      "[data-room-next]",
+      1,
+    ]]
+  ) {
+    document.querySelector(selector).onclick = () => {
+      const floor = navigationFloor ?? 1,
+        list = roomNavigation.filter((room) => room.floor === floor),
+        index = list.findIndex((room) => room.id === activeRoom?.id);
+      navigateRoom(
+        list[
+          ((index < 0 && step < 0 ? 0 : index) + step + list.length) %
+          list.length
+        ].id,
+      );
+    };
+  }
+  globalThis.addEventListener(
+    "hashchange",
+    () => navigateRoom(location.hash.slice(1), false),
+  );
+
   function fitCamera() {
     if (view === "inside") return;
     const direction = camera.position.clone().sub(controls.target).normalize();
@@ -812,6 +948,7 @@ function createViewer() {
       Math.max(.4, (stage.clientWidth - 90) / stage.clientWidth);
     const availableVertical = vertical *
       Math.max(.5, (stage.clientHeight - 150) / stage.clientHeight);
+    const padding = activeRoom ? .12 : .5;
     let distance = 0, extentX = 0, extentY = 0;
     const bounds = focusedRoom
       ? focusedRoom.bounds
@@ -820,25 +957,33 @@ function createViewer() {
       : [houseModel.gardenOffsetX, 0, 10, m.returnDepth];
     for (
       const x of [
-        bounds[0] - houseModel.gardenOffsetX - m.width / 2 - .5,
-        bounds[2] - houseModel.gardenOffsetX - m.width / 2 + .5,
+        bounds[0] - houseModel.gardenOffsetX - m.width / 2 - padding,
+        bounds[2] - houseModel.gardenOffsetX - m.width / 2 + padding,
       ]
     ) {
       for (
         const y of [
-          -.12,
-          scope === "house" &&
-            [...document.querySelectorAll("[data-layer]")].some((input) =>
-              input.dataset.layer !== "floor1" && input.checked
-            )
+          activeRoom
+            ? activeRoom.z - importedModel.sourceOrigin[2] - .15
+            : navigationFloor === 2
+            ? 3.1
+            : -.12,
+          activeRoom
+            ? activeRoom.z - importedModel.sourceOrigin[2] + 3.1
+            : navigationFloor === 2
+            ? 7.1
+            : scope === "house" &&
+                [...document.querySelectorAll("[data-layer]")].some((input) =>
+                  input.dataset.layer !== "floor1" && input.checked
+                )
             ? 11
             : m.wallHeight + .2,
         ]
       ) {
         for (
           const z of [
-            bounds[1] - m.returnDepth / 2 - .5,
-            bounds[3] - m.returnDepth / 2 + .5,
+            bounds[1] - m.returnDepth / 2 - padding,
+            bounds[3] - m.returnDepth / 2 + padding,
           ]
         ) {
           const point = new THREE.Vector3(x, y, z);
@@ -879,7 +1024,22 @@ function createViewer() {
     );
   }
   function refresh() {
+    const roomPlanes = inspectionPlanes();
+    const roomSurroundings = !activeRoom || roomContext.checked;
+    const firstFloorShown =
+      document.querySelector('[data-layer="floor1"]').checked;
+    courtyard.visible = firstFloorShown &&
+      (roomSurroundings || activeRoom.id === "1f-garden");
     garden.group.visible = gardenInput?.checked ?? true;
+    furnishings.group.traverse((node) => {
+      if (node.isMesh) {
+        for (
+          const material
+            of (Array.isArray(node.material) ? node.material : [node.material])
+        ) material.clippingPlanes = roomPlanes;
+      }
+    });
+
     otherWalls.visible = wallsInput
       ? wallsInput.checked
       : !legacyCutawayInput?.checked;
@@ -888,10 +1048,12 @@ function createViewer() {
       : otherWalls.visible;
     firstFloor.group.visible = scope === "house";
     firstFloor.walls.visible = false;
-    furnishings.group.visible = wallsInput.checked &&
+    furnishings.group.visible =
+      (!activeRoom || activeRoom.id !== "1f-garden") && wallsInput.checked &&
       document.querySelector('[data-layer="floor1"]').checked;
     importedHouse.setState({
-      visible: true,
+      visible: !(activeRoom?.id === "1f-garden" && !roomContext.checked),
+      roomPlanes,
       enclosure: otherWalls.visible,
       windows: windowsInput.checked && otherWalls.visible,
       layers: Object.fromEntries(
@@ -900,8 +1062,13 @@ function createViewer() {
         ) => [input.dataset.layer, input.checked]),
       ),
     });
+    wetKitchenExhaust.group.traverse((node) => {
+      if (node.isMesh) node.material.clippingPlanes = roomPlanes;
+    });
     wetKitchenExhaust.setState({
-      visible: scope === "house" && wallsInput.checked,
+      visible: scope === "house" && wallsInput.checked &&
+        (roomSurroundings ||
+          ["1f-wet-kitchen", "2f-service-area"].includes(activeRoom.id)),
       layers: Object.fromEntries(
         [...document.querySelectorAll("[data-layer]")].map(
           (input) => [input.dataset.layer, input.checked],
@@ -914,6 +1081,15 @@ function createViewer() {
     openingLabels.children.forEach((label) =>
       label.visible = scope === "garden" && label.userData.garden
     );
+    namedRoomLabels.visible = roomLabelsInput.checked;
+    for (const label of namedRoomLabels.children) {
+      const room = label.userData.room;
+      label.visible =
+        document.querySelector(`[data-layer="floor${room.floor}"]`).checked &&
+        (!activeRoom || room.id === activeRoom.id);
+      label.position.y = room.z - importedModel.sourceOrigin[2] +
+        (view === "plan" ? .15 : .85);
+    }
     firstFloor.names.visible = false;
     firstFloor.names.children.forEach((label, i) => {
       label.element.textContent = view === "plan"
@@ -921,6 +1097,8 @@ function createViewer() {
         : rooms[i].id;
     });
     firstFloor.glazing.visible = false;
+    firstFloor.canopy.group.visible = roomSurroundings ||
+      activeRoom.id === "1f-garage";
     firstFloor.canopy.setVisibility(
       document.querySelector('[data-layer="floor1"]').checked,
       document.querySelector("[data-canopy-roof]").checked,
@@ -969,9 +1147,25 @@ function createViewer() {
       centre[0] += revisions.courtyard.offset[0];
       centre[1] += revisions.courtyard.offset[2];
     }
-    controls.target.set(centre[0], .75, centre[1]);
+    controls.target.set(
+      centre[0],
+      activeRoom
+        ? activeRoom.z - importedModel.sourceOrigin[2] + .75
+        : navigationFloor === 2
+        ? 4.4
+        : .75,
+      centre[1],
+    );
     if (name === "plan") {
-      controls.target.set(centre[0], 0, centre[1]);
+      controls.target.set(
+        centre[0],
+        activeRoom
+          ? activeRoom.z - importedModel.sourceOrigin[2]
+          : navigationFloor === 2
+          ? 3.95
+          : 0,
+        centre[1],
+      );
       camera.position.set(centre[0], 25, centre[1] + .001);
     } else if (name === "inside") {
       if (focusedRoom?.insideCamera) {
@@ -1019,7 +1213,70 @@ function createViewer() {
     boundaryInput.checked = false;
     refresh();
   };
+  function moveCamera(direction) {
+    const forward = camera.getWorldDirection(new THREE.Vector3());
+    const right = new THREE.Vector3().crossVectors(forward, camera.up)
+      .normalize();
+    const vector = direction === "up"
+      ? new THREE.Vector3(0, 1, 0)
+      : direction === "down"
+      ? new THREE.Vector3(0, -1, 0)
+      : direction === "left"
+      ? right.negate()
+      : direction === "right"
+      ? right
+      : direction === "back"
+      ? forward.negate()
+      : forward;
+    vector.multiplyScalar(.25);
+    camera.position.add(vector);
+    controls.target.add(vector);
+    controls.update();
+    render();
+  }
+  document.querySelectorAll("[data-move]").forEach((button) =>
+    button.onclick = () => moveCamera(button.dataset.move)
+  );
+  globalThis.addEventListener("keydown", (event) => {
+    if (
+      event.ctrlKey || event.metaKey || event.altKey ||
+      event.target.closest?.("input,select,textarea,[contenteditable]")
+    ) return;
+    const direction =
+      ({ w: "forward", s: "back", a: "left", d: "right", q: "down", e: "up" })[
+        event.key.toLowerCase()
+      ];
+    if (direction) {
+      event.preventDefault();
+      moveCamera(direction);
+    }
+  });
+  document.querySelectorAll("[data-zoom]").forEach((button) =>
+    button.onclick = () => {
+      const factor = button.dataset.zoom === "in" ? .75 : 1 / .75;
+      if (camera.isOrthographicCamera) {
+        camera.zoom = THREE.MathUtils.clamp(camera.zoom / factor, .1, 100);
+        camera.updateProjectionMatrix();
+      } else {
+        const offset = camera.position.clone().sub(controls.target);
+        offset.setLength(
+          THREE.MathUtils.clamp(offset.length() * factor, .08, 100),
+        );
+        camera.position.copy(controls.target).add(offset);
+      }
+      controls.update();
+      render();
+    }
+  );
   document.querySelector("[data-reset]").onclick = () => {
+    if (activeRoom) {
+      navigateRoom(activeRoom.id);
+      return;
+    }
+    navigationFloor = null;
+    roomNav.value = "house";
+    history.replaceState(null, "", "#house");
+
     document.querySelectorAll("[data-layer]").forEach((input) =>
       input.checked = input.dataset.layer === "floor1"
     );
@@ -1084,4 +1341,5 @@ function createViewer() {
   }
   controls.addEventListener("change", render);
   render();
+  if (location.hash) navigateRoom(location.hash.slice(1), false);
 }

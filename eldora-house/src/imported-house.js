@@ -47,6 +47,7 @@ export function createImportedHouse(parent, onLoad) {
           (glass ? state.windows : state.enclosure);
         for (const material of materials) {
           material.visible = !!state.layers[material.userData.houseLayer];
+          material.clippingPlanes = state.roomPlanes ?? [];
           material.clipShadows = true;
           if (material.userData.ledStrip) {
             material.emissiveIntensity = night ? 2.4 : 0;

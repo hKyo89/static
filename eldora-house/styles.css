@@ -514,3 +514,22 @@ select {
     height: 100%;
   }
 }
+
+.sidebar .compact-title {
+  font-size: 32px;
+  line-height: 1.1;
+  margin-bottom: 18px;
+}
+.camera-moves {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 6px;
+  margin: 10px 0;
+}
+.camera-moves button {
+  padding: 8px;
+  font-size: 12px;
+}
+.toggle[hidden] {
+  display: none;
+}

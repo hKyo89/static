@@ -220,11 +220,21 @@ export function createFurnishings(parent) {
     const pillow = box(
       panel,
       [.39, .39, .12],
-      [-.94 + i * .37, i === 2 ? .53 : .65, i === 2 ? .14 : -.12],
+      [-.94 + i * .37, 0, i === 2 ? .14 : -.12],
       i % 2 ? taupe : blush,
       .06,
     );
     pillow.rotation.set(-.2, i === 2 ? .12 : 0, i % 2 ? .20 : -.25);
+    // Support the tilted pillow at its lowest vertex on the tufted seat.
+    const rotation = new THREE.Matrix4().makeRotationFromEuler(pillow.rotation);
+    const vertices = pillow.geometry.attributes.position;
+    const vertex = new THREE.Vector3();
+    let bottom = Infinity;
+    for (let j = 0; j < vertices.count; j++) {
+      vertex.fromBufferAttribute(vertices, j).applyMatrix4(rotation);
+      bottom = Math.min(bottom, vertex.y);
+    }
+    pillow.position.y = .514 - bottom;
   }
   const piano = placed(
     "Digital piano beside stair panel",

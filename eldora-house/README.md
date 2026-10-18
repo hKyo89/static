@@ -344,3 +344,21 @@ other walls controls all remaining house partitions, metal/hinged doors, garden
 solid returns, separators and headers. Show windows controls glazing and frames.
 Reset restores all three visibility switches. Floors, plants and canopy have
 their existing separate controls.
+
+Use [floor and room navigation](ROOM_NAVIGATION.md) for the confirmed 1F/2F
+names, direct room links, isolation, close zoom and camera movement.
+
+## Stone fountain and left planting
+
+The fountain follows the supplied dark stone bowl and rounded bubbler reference,
+replacing the bamboo spouts and square tray. Its illustrated bowl is 64 cm wide
+and overall height approximately 75 cm; product dimensions remain unconfirmed.
+Extra layered ferns, grass and a low green patch fill the left return and rear
+border while keeping the stepping route clear. Water is a static depiction.
+
+## Round garden wall lights
+
+All six up/down lights use full cylindrical black housings, matching the latest
+product photos. Each 7 cm diameter body touches the wall at its rear edge; full
+circular lenses are centred on its top and bottom. Warm light remains enabled by
+Night mode. The illustrated dimensions remain assumptions.

@@ -1,6 +1,6 @@
+import { roomNavigation } from "./room-navigation.ts";
 import { revisions } from "./revisions-model.ts";
 import { openingReferences } from "./openings.ts";
-import { rooms } from "./house-model.ts";
 import { floorArea, model } from "./model.ts";
 export function BackyardPage() {
   return (
@@ -27,33 +27,42 @@ export function BackyardPage() {
         </header>
         <main class="workspace">
           <aside class="sidebar">
-            <p class="eyebrow">A space to explore</p>
-            <h1>
-              Eldora<br />House<span>.</span>
+            <h1 class="compact-title">
+              Eldora House<span>.</span>
             </h1>
-            <p class="intro">
-              House geometry and interiors from your SketchUp model, with our
-              garden and walnut canopy preserved.
-            </p>
-            <div class="measurements">
-              <div>
-                <span>Wall height</span>
-                <strong>
-                  3.00 <small>m</small>
-                </strong>
-                <em>Confirmed</em>
-              </div>
-              <div>
-                <span>Garden area</span>
-                <strong>
-                  {floorArea.toFixed(2)} <small>m²</small>
-                </strong>
-                <em>Approximate</em>
-              </div>
-            </div>
             <section class="controls">
-              <h2>View the space</h2>
+              <h2>Explore the house</h2>
+              <nav class="view-buttons" aria-label="House navigation">
+                <button type="button" data-nav="house">Whole house</button>
+                <button type="button" data-nav="1f">1F</button>
+                <button type="button" data-nav="2f">2F</button>
+              </nav>
               <label class="toggle">
+                <span>Room</span>
+                <select data-room-nav aria-label="Choose room">
+                  <option value="house">Whole house</option>
+                  {[1, 2].map((floor) => (
+                    <optgroup label={`${floor}F`}>
+                      {roomNavigation.filter((room) => room.floor === floor)
+                        .map((room) => (
+                          <option value={room.id}>
+                            {floor}F · {room.name}
+                          </option>
+                        ))}
+                    </optgroup>
+                  ))}
+                </select>
+              </label>
+              <label class="toggle">
+                <span>Show surrounding rooms</span>
+                <input type="checkbox" data-room-context />
+              </label>
+              <div class="view-buttons">
+                <button type="button" data-room-prev>Previous room</button>
+                <button type="button" data-room-next>Next room</button>
+              </div>
+              <p data-room-status aria-live="polite">Whole house</p>
+              <label class="toggle" hidden style={{ display: "none" }}>
                 <span>Area</span>
                 <select data-scope aria-label="Area view">
                   <option value="house">Whole house</option>
@@ -65,25 +74,38 @@ export function BackyardPage() {
                 <input type="checkbox" data-room-labels checked />
               </label>
               <label class="toggle">
-                <span>Focus area</span>
+                <span>Detail preset</span>
                 <select data-room-focus aria-label="Focus room">
                   <option value="">Overview</option>
                   {revisions.focusAreas.map((area) => (
                     <option value={area.id}>{area.name}</option>
                   ))}
-                  {rooms.map((room) => (
-                    <option value={room.id}>{room.id} · {room.name}</option>
-                  ))}
                 </select>
               </label>
               <details>
+                <summary>Move camera</summary>
+                <div class="camera-moves">
+                  {[
+                    ["forward", "Forward"],
+                    ["back", "Back"],
+                    ["left", "Left"],
+                    ["right", "Right"],
+                    ["up", "Up"],
+                    ["down", "Down"],
+                  ].map(([direction, label]) => (
+                    <button type="button" data-move={direction}>{label}</button>
+                  ))}
+                </div>
+                <small>W / A / S / D to move · Q / E for down / up</small>
+              </details>
+              <details>
                 <summary>Room / area map</summary>
                 <ol>
-                  {rooms.map((room) => (
+                  {roomNavigation.map((room) => (
                     <li>
-                      <strong>{room.id} · {room.name}</strong>
-                      <br />
-                      <small>{room.note}</small>
+                      <a href={`#${room.id}`} data-room-link={room.id}>
+                        {room.floor}F · {room.name}
+                      </a>
                     </li>
                   ))}
                 </ol>
@@ -209,10 +231,12 @@ export function BackyardPage() {
             <details class="specifications">
               <summary>Measurements & assumptions</summary>
               <dl>
+                <dt>Garden area</dt>
+                <dd>{floorArea.toFixed(2)} m²</dd>
                 <dt>Zen garden</dt>
                 <dd>
-                  Artificial bonsai · pebble bed · stone lantern · warm pebble
-                  light
+                  170 cm pine · moss · ferns · ilalang · pagoda lantern · bamboo
+                  fountain
                 </dd>
                 <dt>Wall lights</dt>
                 <dd>Six compact up/down lights · 2 m above floor</dd>
@@ -275,7 +299,12 @@ export function BackyardPage() {
             </div>
             <div class="navigation">
               <span>Drag to orbit</span>
-              <span>Scroll / pinch to zoom</span>
+              <button type="button" class="quiet-button" data-zoom="in">
+                Zoom +
+              </button>
+              <button type="button" class="quiet-button" data-zoom="out">
+                Zoom −
+              </button>
               <span>Right-drag / two fingers to pan</span>
               <button type="button" class="quiet-button" data-reset>
                 Reset view

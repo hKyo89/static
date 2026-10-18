@@ -88,12 +88,12 @@ export const wallLights = {
   height: 2,
   bodyHeight: 0.16,
   radius: 0.035,
-  projection: 0.035,
+  projection: 0.070,
   mountingGap: 0.001,
   lensRadius: 0.012,
-  lensOffset: 0.018,
+  lensOffset: 0.035,
   lensRimWidth: 0.003,
-  beamOffset: 0.018,
+  beamOffset: 0.035,
   beamIntensity: 0.45,
   beamRange: 0.9,
 } as const;
@@ -134,7 +134,11 @@ const referenceGardenLayout = {
   },
   bamboo: { x: .48, z: .34, height: 1.85, spread: .29, stems: 7 },
   minorPlants: [
-    [.45, .32, .28],
+    [.45, .32, .40],
+    [.32, 1.38, .34],
+    [.78, 1.42, .28],
+    [1.55, .30, .38],
+    [2.05, .33, .32],
     [1.05, .35, .24],
     [2.65, .27, .30],
     [3.45, .3, .25],
@@ -144,7 +148,8 @@ const referenceGardenLayout = {
   ],
   grassClumps: [
     { x: .22, z: .25, height: .46, heads: true },
-    { x: .85, z: .22, height: .30, heads: false },
+    { x: .85, z: .22, height: .46, heads: false },
+    { x: .24, z: 1.12, height: .46, heads: true },
     { x: 1.45, z: .28, height: .38, heads: false },
     { x: 2.05, z: .23, height: .46, heads: true },
     { x: 2.3, z: .48, height: .30, heads: false },
@@ -155,7 +160,7 @@ const referenceGardenLayout = {
   ],
   bonsai: { x: 4.22, z: .35, height: 1.70 },
   lantern: { x: 5.65, z: .33 },
-  fountain: { x: 6.13, z: .53, width: .52, depth: .48, height: .75 },
+  fountain: { x: 6.13, z: .43, width: .64, depth: .64, height: .75 },
   rocks: [
     [.4, .38, .18],
     [.95, .25, .13],
@@ -170,6 +175,7 @@ const referenceGardenLayout = {
   ],
   turfPatches: [
     [.62, .31, .53, .28],
+    [.50, 1.38, .44, .26],
     [1.85, .32, .60, .26],
     [3.56, .3, .52, .24],
     [4.25, .34, .40, .26],
@@ -310,13 +316,13 @@ export const gardenLayout = {
     ...position(p),
   })),
   minorPlants: referenceGardenLayout.minorPlants.map(([x, z, h]) =>
-    [x * sx, z * sz, h] as const
+    [x * sx, z <= 1.225 ? z * sz : z - .225, h] as const
   ),
   rocks: referenceGardenLayout.rocks.map(([x, z, r]) =>
     [x * sx, z * sz, r] as const
   ),
   turfPatches: referenceGardenLayout.turfPatches.map(([x, z, rx, rz]) =>
-    [x * sx, z * sz, rx, rz * sz] as const
+    [x * sx, z <= 1.225 ? z * sz : z - .225, rx, rz * sz] as const
   ),
   glowingStones: referenceGardenLayout.glowingStones.map(([x, z, d]) =>
     [Math.min(x * sx, model.width - d / 2 - .04), z * sz, d] as const
