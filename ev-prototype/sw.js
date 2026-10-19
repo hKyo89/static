@@ -1,4 +1,4 @@
-const CACHE = "ev-prototype-v2";
+const CACHE = "ev-prototype-v3";
 const ASSETS = [
   "./",
   "./index.html",
@@ -16,7 +16,7 @@ const ASSETS = [
   "./images/promo-privacy.png",
   "./images/account-3.png",
   "./images/account-2.png",
-  "./images/assistant.png",
+  "./images/assistant-trimmed.png",
   "./images/account-1.png",
   "./images/event-syariah.png",
   "./images/promo-allo.png",

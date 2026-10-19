@@ -93,7 +93,9 @@ export function EvPage() {
                 "Rekomendasi Kegiatan: Bali EV-cosystem, Civil Expo ITS, NTT Electric Run, PLN Mobile Padel, PLN Electric Night, Jawara Run.",
               )}
             </section>
-            <aside class="helper">{image("assistant", "Butuh bantuan?")}</aside>
+            <aside class="helper">
+              {image("assistant-trimmed", "Butuh bantuan?")}
+            </aside>
             <nav
               class="bottom-nav"
               aria-label="Navigasi utama (tampilan prototipe)"

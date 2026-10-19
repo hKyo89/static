@@ -227,39 +227,3 @@ a:focus-visible, button:focus-visible {
 .banner:first-child img {
   object-fit: fill;
 }
-
-/* Follow the original sticker silhouette; discard the screenshot behind it. */
-.helper img {
-  clip-path: polygon(
-    48% 0%,
-    64% 2%,
-    76% 8%,
-    84% 18%,
-    89% 30%,
-    89% 43%,
-    84% 51%,
-    77% 56%,
-    88% 60%,
-    95% 69%,
-    98% 79%,
-    96% 89%,
-    89% 97%,
-    75% 100%,
-    21% 100%,
-    9% 96%,
-    3% 89%,
-    1% 80%,
-    4% 70%,
-    11% 63%,
-    18% 61%,
-    24% 55%,
-    20% 51%,
-    15% 44%,
-    12% 34%,
-    17% 23%,
-    24% 18%,
-    27% 10%,
-    35% 8%,
-    39% 3%
-  );
-}

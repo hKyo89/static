@@ -7,13 +7,13 @@ Route: <https://hkyo89.github.io/static/ev-prototype/>.
 
 The supplied screenshots are the visual source. Artwork, service icons, account
 cards, navigation and recommendation cards are cropped directly from those
-images; no artwork is redrawn. The floating help sticker uses a silhouette mask
-to remove the screenshot background and neighboring price fragments. The first
-promotion uses the approved recreated banner. The phone status bar and gesture
-bar are excluded. Other banners and account cards can be swiped. Only the first
-promotion opens a detail page; its back control and browser back restore the
-home scroll position. Other navigation is decorative. Detail copy is selectable
-HTML. Shared content lives in `model.ts`.
+images. The floating help sticker uses `images/assistant-trimmed.png`, a
+transparent cutout asset, directly in the HTML. No CSS mask is required. The
+first promotion uses the approved recreated banner. The phone status bar and
+gesture bar are excluded. Other banners and account cards can be swiped. Only
+the first promotion opens a detail page; its back control and browser back
+restore the home scroll position. Other navigation is decorative. Detail copy is
+selectable HTML. Shared content lives in `model.ts`.
 
 The home is a mobile layout capped at 500 CSS pixels on desktop. Screenshot
 panels retain their baked-in fonts and sample account data. No live account
