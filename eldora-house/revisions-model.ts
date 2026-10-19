@@ -68,7 +68,7 @@ export const revisions = {
     returnWidth: 1.35,
     returnDepth: 1.8,
   },
-  hiddenGroups: [78, 79, 88, 89],
+  hiddenGroups: [78, 79, 87, 88, 89],
   hiddenInstances: [35, 36, 53, 63, 66, 67, 68, 71], // canceled large painting and replaced wet-kitchen hood
   hiddenNodes: [3082], // replace the island's original rectangular tap
   marble: {

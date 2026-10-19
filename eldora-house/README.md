@@ -370,3 +370,8 @@ girl’s bedroom, makeup area and WIC; the boy’s bedroom and WIC; and the fron
 facade details. These use the existing house coordinates and floor/room
 controls. See [SketchUp import](SKETCHUP_IMPORT.md) for export selections and
 [room navigation](ROOM_NAVIGATION.md) for the added Boy’s WIC view.
+
+The stone fountain now sits to the left of the pine, separating it from the
+Japanese lantern on the right. Nearby rocks and planting move into the former
+fountain corner, and the adjacent stepping stone shifts forward and right to
+clear the bowl. The fountain’s ground spotlight follows its new position.

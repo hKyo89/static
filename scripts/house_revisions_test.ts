@@ -50,3 +50,11 @@ Deno.test("approved seating counts and Madelline dimensions are preserved", () =
     throw new Error("Incorrect seating or supplied furniture measurements");
   }
 });
+
+Deno.test("canceled garden frames include the separate upper-storey screen", () => {
+  for (const group of [78, 79, 87]) {
+    if (!(r.hiddenGroups as readonly number[]).includes(group)) {
+      throw new Error(`Canceled garden frame group ${group} can reappear`);
+    }
+  }
+});

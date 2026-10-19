@@ -155,3 +155,11 @@ wood, both fabric, and either mixed orientation. Default is half wood/half
 fabric. The separate panel sofa has taupe fabric, broad rounded arms, divided
 back cushions, tufted seats and six beige/blush pillows based on the supplied
 photo.
+
+## Upper garden frame removal
+
+The canceled rear garden screen also has a separate upper-storey slatted frame
+in original source group 87 (Z=3.9–7.35 m). It is removed alongside groups 78
+and 79 when loading the house, so second-floor, whole-house and reset views
+cannot restore it. The selected additional suite/facade exports contain none of
+these frame groups.
