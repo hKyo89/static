@@ -1,5 +1,9 @@
 # Eldora House
 
+For the current planting, dimensions, materials, fountain and lighting schedule,
+see [Garden details](GARDEN_DESIGN.md). It supersedes historical garden concepts
+recorded further below.
+
 The [13 October revisions](REVISIONS.md) correct the courtyard registration and
 apply the user's as-built finishes, furniture and extended canopy/drainage.
 Publishing means commit and push. Current placement values are in
@@ -351,10 +355,12 @@ names, direct room links, isolation, close zoom and camera movement.
 ## Stone fountain and left planting
 
 The fountain follows the supplied dark stone bowl and rounded bubbler reference,
-replacing the bamboo spouts and square tray. Its illustrated bowl is 64 cm wide
-and overall height approximately 75 cm; product dimensions remain unconfirmed.
-Extra layered ferns, grass and a low green patch fill the left return and rear
-border while keeping the stepping route clear. Water is a static depiction.
+replacing the bamboo spouts and square tray. The user confirmed a 40 cm bowl
+diameter. The remaining fountain geometry is scaled proportionally, with an
+illustrative overall height of about 47 cm; the product height remains
+unconfirmed. Extra layered ferns, grass and a low green patch fill the left
+return and rear border while keeping the stepping route clear. Water is a static
+depiction.
 
 ## Round garden wall lights
 
@@ -375,3 +381,11 @@ The stone fountain now sits to the left of the pine, separating it from the
 Japanese lantern on the right. Nearby rocks and planting move into the former
 fountain corner, and the adjacent stepping stone shifts forward and right to
 clear the bowl. The fountain’s ground spotlight follows its new position.
+
+## Restored 30 cm ball light
+
+The user-confirmed 30 cm sphere is restored beside the pine, between the pine
+and Japanese lantern, resting on the pebbles. It is cream white by day and emits
+a restrained warm glow in Night mode. The nearby rock is repositioned to avoid
+intersecting the sphere. This supersedes the earlier ball removal and obsolete
+50 cm dimensions.

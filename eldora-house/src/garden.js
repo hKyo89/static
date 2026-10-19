@@ -461,7 +461,18 @@ export function createGarden(world) {
     metalness: .25,
     roughness: .12,
   });
-  const base = mesh(
+  const fountainGroup = new THREE.Group();
+  fountainGroup.name = "Stone bubbler fountain — 40 cm bowl";
+  fountainGroup.position.set(fx, .04, fz);
+  fountainGroup.scale.setScalar(f.width / .64);
+  group.add(fountainGroup);
+  function fountainMesh(...args) {
+    const object = mesh(...args);
+    object.position.sub(new THREE.Vector3(fx, .04, fz));
+    fountainGroup.add(object);
+    return object;
+  }
+  const base = fountainMesh(
     new THREE.CylinderGeometry(.34, .32, .035, 7),
     stone,
     fx,
@@ -482,9 +493,21 @@ export function createGarden(world) {
     [.19, .16],
     [0, .16],
   ].map(([r, y]) => new THREE.Vector2(r, y));
-  mesh(new THREE.LatheGeometry(bowlProfile, 64), fountainStone, fx, 0, fz);
-  mesh(new THREE.CylinderGeometry(.292, .292, .006, 64), water, fx, .326, fz);
-  mesh(
+  fountainMesh(
+    new THREE.LatheGeometry(bowlProfile, 64),
+    fountainStone,
+    fx,
+    0,
+    fz,
+  );
+  fountainMesh(
+    new THREE.CylinderGeometry(.292, .292, .006, 64),
+    water,
+    fx,
+    .326,
+    fz,
+  );
+  fountainMesh(
     new THREE.CylinderGeometry(.12, .13, .07, 40),
     fountainStone,
     fx,
@@ -503,7 +526,13 @@ export function createGarden(world) {
     [.018, .70],
     [0, .70],
   ].map(([r, y]) => new THREE.Vector2(r, y));
-  mesh(new THREE.LatheGeometry(orbProfile, 64), fountainStone, fx, 0, fz);
+  fountainMesh(
+    new THREE.LatheGeometry(orbProfile, 64),
+    fountainStone,
+    fx,
+    0,
+    fz,
+  );
   // Fine horizontal stone grooves and a small static water crown.
   for (let i = 0; i < 12; i++) {
     const y = .41 + i * .022;
@@ -512,16 +541,22 @@ export function createGarden(world) {
       : y < .53
       ? .17 - (y - .46) * .07
       : .165 - (y - .53) * .72;
-    mesh(new THREE.TorusGeometry(ringRadius, .0015, 4, 64), dark, fx, y, fz)
+    fountainMesh(
+      new THREE.TorusGeometry(ringRadius, .0015, 4, 64),
+      dark,
+      fx,
+      y,
+      fz,
+    )
       .rotation.x = Math.PI / 2;
   }
-  mesh(new THREE.SphereGeometry(.025, 16, 10), water, fx, .713, fz, [
+  fountainMesh(new THREE.SphereGeometry(.025, 16, 10), water, fx, .713, fz, [
     1,
     1.4,
     1,
   ]);
   for (let i = 0; i < 3; i++) {
-    mesh(
+    fountainMesh(
       new THREE.TorusGeometry(.055 + i * .035, .002, 4, 48),
       water,
       fx,
@@ -530,8 +565,26 @@ export function createGarden(world) {
     )
       .rotation.x = Math.PI / 2;
   }
-  // Exactly two restrained warm ground spots; no glowing rocks or sphere.
-  for (const target of [[x, 1.05, z], [fx, .43, fz]]) {
+  // User-confirmed 30 cm garden sphere; its bottom rests on the pebble bed.
+  const ballMaterial = new THREE.MeshStandardMaterial({
+    color: 0xf2ead8,
+    roughness: .7,
+    emissive: 0xffcc83,
+    emissiveIntensity: 0,
+  });
+  mesh(
+    new THREE.SphereGeometry(g.ball.diameter / 2, 40, 28),
+    ballMaterial,
+    g.ball.x,
+    g.ball.y,
+    g.ball.z,
+  ).name = "Warm ball light — 30 cm diameter";
+  const ballLight = new THREE.PointLight(0xffcf99, .35, 1.2, 2);
+  ballLight.position.set(g.ball.x, g.ball.y, g.ball.z);
+  group.add(ballLight);
+  lights.push(ballLight);
+  // Retain the two restrained warm ground spots for pine and fountain.
+  for (const target of [[x, 1.05, z], [fx, .04 + .39 * f.width / .64, fz]]) {
     const spot = new THREE.SpotLight(0xffcf99, 6, 3, Math.PI / 7, .7, 2);
     spot.position.set(target[0] - .15, .10, Math.min(.9, target[2] + .43));
     spot.target.position.set(...target);
@@ -549,6 +602,7 @@ export function createGarden(world) {
     group,
     setNight(night) {
       glow.emissiveIntensity = night ? .45 : 0;
+      ballMaterial.emissiveIntensity = night ? .65 : 0;
       for (const light of lights) light.visible = night;
     },
   };

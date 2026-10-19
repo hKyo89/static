@@ -160,7 +160,7 @@ const referenceGardenLayout = {
   ],
   bonsai: { x: 4.22, z: .35, height: 1.70 },
   lantern: { x: 5.65, z: .33 },
-  fountain: { x: 3.05, z: .43, width: .64, depth: .64, height: .75 },
+  fountain: { x: 3.05, z: .43, width: .40, depth: .40, height: .47 },
   rocks: [
     [.4, .38, .18],
     [.95, .25, .13],
@@ -168,7 +168,7 @@ const referenceGardenLayout = {
     [2.4, .28, .18],
     [3.5, .32, .16],
     [4.6, .38, .12],
-    [5.1, .35, .23],
+    [4.80, .18, .12],
     [5.85, .24, .12],
     [6.48, .65, .12],
     [6.13, .34, .17],
@@ -183,7 +183,7 @@ const referenceGardenLayout = {
   ],
   mossRocks: { perPatch: 12, minRadius: .025, maxRadius: .04 },
   glowingStones: [[3.02, .34, .33], [6.40, .39, .31]],
-  ball: { x: 5.14, y: .29, z: .33, diameter: .50 },
+  ball: { x: 5.14, y: .20, z: .33, diameter: .30 },
   accentRock: { x: 6.48, y: .17, z: .32, scale: [.23, .20, .16] },
   bin: { x: 1.08, z: 1.76, height: .62, radius: .12, base: .05 },
   deck: {

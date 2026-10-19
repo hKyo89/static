@@ -163,3 +163,12 @@ in original source group 87 (Z=3.9–7.35 m). It is removed alongside groups 78
 and 79 when loading the house, so second-floor, whole-house and reset views
 cannot restore it. The selected additional suite/facade exports contain none of
 these frame groups.
+
+## Current garden specification — 19 October 2026
+
+[Garden details](GARDEN_DESIGN.md) now consolidates the active plant schedule,
+footprint, surfaces, drainage, decorative objects and lights. The fountain has a
+user-confirmed 40 cm bowl, positioned left of the pine. The user-confirmed 30 cm
+ball light is restored between the pine and Japanese lantern, replacing the
+obsolete 50 cm setting and superseding its earlier removal. Product heights and
+other unsupplied construction dimensions remain illustrative.

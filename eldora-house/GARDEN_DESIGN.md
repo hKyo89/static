@@ -1,154 +1,150 @@
-# Artificial Zen garden concept
+# Garden details — current design
 
-The composition faces the centre-opening sliding doors. One artificial
-cloud-pruned bonsai anchors the left half; a low stone lantern balances it on
-the right. Three stones and small artificial moss/grass islands break up a
-predominantly white pebble bed, with grey variation and narrow black pebble
-edges. One small warm pebble light finishes the right end. Avoid adding every
-lighting style together.
+Updated 19 October 2026. This is the current garden specification and supersedes
+older garden descriptions in the README, specifications and revision history. It
+describes the saved 3D design, not a surveyed installation or a purchase list.
+All planting is artificial. Exact botanical species and product brands are not
+specified by the supplied references.
 
-The bed is 3.60 × 0.50 m, from X=3.00 to 6.60 and Z=0.11 to 0.61. It sits along
-the rear wall, opposite the sliding-door frontage X=2.95 to 6.775. The remaining
-0.615 m granite strip leads along the doors; this is a narrow maintenance/access
-strip, not an accessibility-compliant path. The centre door opening stays free
-of objects. The left return and fixed-window area stay uncluttered.
+## Layout and dimensions
 
-| Item                          | Quantity | Illustrative size                   |
-| ----------------------------- | -------- | ----------------------------------- |
-| Artificial bonsai             | 1        | 1.35 m tall, narrow canopy          |
-| Grey feature stones           | 3        | 12–18 cm                            |
-| Compact stone lantern         | 1        | about 47 cm high                    |
-| Warm pebble light             | 1        | about 24 cm wide                    |
-| Artificial moss/grass islands | 3        | about 20–26 cm                      |
-| White / grey / black pebbles  | One bed  | Final depth and quantity to measure |
-
-All vegetation is artificial. The granite floor remains under the decorative
-bed. The design is a concept, with illustrative sizes rather than exact product
-models. Confirm actual canopy depth, drainage and door clearance before
-installation. Night mode uses subdued warm garden lights alongside the six
-existing wall lights. Show garden allows comparison with the empty courtyard.
-
-## Shopping references
-
-The supplied screenshots inspired the bonsai, low stone lantern and warm pebble
-light. The shop page could not be retrieved during research; prices, stock,
-sizes and outdoor suitability have not been independently verified. The 40–70 cm
-ball lights shown in the screenshots would consume much of this narrow bed; the
-concept uses a smaller pebble light instead. The pictured 2 m bonsai is also
-larger than the proposed tree. Ask the seller for a narrow-canopy version.
-
-- [Dekorasi Online shop](https://shopee.co.id/dekorasionline?originalCategoryId=11043838&page=0)
-- [Artificial bonsai reference](https://shopee.co.id/product/1066365545/53302200447)
-- [150 cm bonsai reference](https://shopee.co.id/product/1066365545/29014303923)
-- [Japanese stone lantern reference](https://shopee.co.id/product/206814986/24261127556)
-- [Stone spiral lamp reference](https://shopee.co.id/product/1409299461/27769154464)
-
-Choose one lantern style. Request warm low-output lamps and outdoor-rated
-artificial foliage; the screenshot alone does not establish these
-specifications. No purchase or seller contact has been made.
-
-## Full-courtyard revision
-
-The garden now covers the entire L-shaped floor with predominantly white and
-grey pebbles and a restrained black perimeter. The former narrow rear-wall bed
-is superseded. The bonsai, rocks and lights stay in their original focal
-arrangement opposite the sliding doors. Flush grey stepping stones provide a
-route beside the doors and through the return. Granite remains beneath the
-removable concept. All planting is artificial; pebble depth and installation
-details remain illustrative.
-
-Night mode includes a warm ground spotlight in front of the bonsai, aimed upward
-through the foliage toward the rear wall. Its shadow map projects the branches
-and canopy onto the wall. The beam and fixture placement are illustrative.
-
-The stepping stones now follow a gently staggered route with varied angles and
-sizes, superseding the straight row. Placement is deliberate and stable between
-visits, with the central doorway approach kept free of tall objects.
-
-## Layered garden redesign
-
-Three uneven artificial moss/grass islands replace the small repeated tufts.
-Each island has twelve small moss-covered rocks, 5–8 cm diameter (36 total),
-with irregular green mounds and grass texture. A larger grey feature stone adds
-contrast. Two glowing stones, 31 and 33 cm wide, replace the small pebble light.
-One 50 cm Mars-style ball sits in the deeper left return, off the path. The
-bonsai, stone lantern, uplight and staggered stepping route remain. This
-supersedes earlier decorative counts. Product geometry and output are
-illustrative; the concept deliberately keeps broad white-pebble gaps.
-
-## Concealed smoking nook
-
-The short return now has walnut-look WPC decking (1.35 × 0.80 m concept area)
-and a compact black cylindrical ashtray/trash bin tucked behind the opaque wall.
-The bin is illustrated at 62 cm tall and 24 cm diameter; actual product
-dimensions are unconfirmed. Stepping stones and loose pebbles stop at the
-decking edge. The 50 cm ball light moves to the rear-left pebble area, leaving
-the deck clear for standing. This supersedes the fully pebbled return and prior
-ball location.
-
-The black perimeter stripe has been removed. White and grey pebbles continue to
-the edges, with only a sparse scattering of dark pebbles throughout. This
-supersedes the earlier black edging and softens the garden’s outline.
-
-## Flat grass and focal-point corrections
-
-Raised stylized grass mounds and tall tufts are removed. The three green areas
-are now flat cut-to-shape artificial turf patches. Thirty-six separate 5–8 cm
-moss-covered stones sit around their edges, above the gravel, with brighter
-green contrast. The 50 cm Mars-style ball moves beside the bonsai at X=5.14,
-Z=0.33 opposite the sliding doors. Its previous rear-left placement is
+The garden is an L-shaped white-pebble courtyard beside the living room. The
+long strip is **6.55 m × 1.00 m**. The left return is **1.35 m wide** and
+extends to **1.80 m total depth**, adding 0.80 m beyond the strip. The modeled
+footprint is **7.63 m²**. Boundary walls are **3.00 m high**. These dimensions
+follow the registered house model; earlier 6.775 m / 1.225 m dimensions are
 superseded.
 
-## Flush wall-light correction
+From left to right, the composition is layered fern/grass planting, the stone
+fountain, the pine bonsai, the 30 cm ball light, and the Japanese stone lantern.
+The fountain sits **left of the pine**, separating it from the lantern. The left
+return has low planting and white pebbles. The stepping route follows the
+house-facing side, with the stone near the fountain offset forward/right to
+clear the bowl. Stone positions are deliberate and repeatable.
 
-The six wall lights have no arm. Each uses a curved U front with a flat back
-attached directly to the wall (D-shaped cross-section). The fixture projects 35
-mm from the wall, instead of the old 100 mm bracket offset. Up/down apertures
-and dim warm grazing beams sit close to the roughcast, with smaller light pools.
-Mounting tolerance and beam output remain illustrative. This supersedes the
-earlier cylindrical body and projecting mounting bracket.
+## Planting schedule
 
-## Circular wall-light lenses
+| Plant / planting layer                             | Quantity  | Current form and size                                                                                 | Placement                                                     |
+| -------------------------------------------------- | --------- | ----------------------------------------------------------------------------------------------------- | ------------------------------------------------------------- |
+| Artificial pine bonsai                             | 1         | 1.70 m overall height; brown branching trunk, layered cloud-pruned green pads and short needle detail | Main focal point toward the right half                        |
+| Artificial ferns / pakis                           | 11 clumps | Arching fronds with paired narrow leaflets; modeled heights 22–40 cm                                  | Rear border, left return and accents beside the focal objects |
+| Artificial ornamental grass / ilalang-style sprigs | 10 clumps | Narrow curved green blades; modeled heights 30, 38 and 46 cm; 5 clumps have cream seed heads          | Interspersed with ferns, including the left return            |
+| Flat artificial turf / moss-look patches           | 6 patches | Irregular, low cut-to-shape green islands; not raised grass mounds                                    | Beneath and around planting / focal features                  |
+| Moss-covered decorative stones                     | 72        | 12 per patch, approximately 5–8 cm diameter                                                           | Around the six green patches                                  |
 
-The user's latest close-up confirms full circular top/bottom light lenses, not
-half-disc or U-shaped emitters. The flat-backed, curved-front housing remains
-attached directly to the wall, without an arm. Each round lens has a dark rim;
-the warm low-output beams originate at the lens centres. The illustrated lens
-diameter is 24 mm; exact product measurements are unconfirmed. This supersedes
-the earlier half-disc apertures.
+The fern and grass sizes are illustrative representations of the supplied
+references, not verified purchased-product dimensions. The 38 cm grass is an
+intermediate modeled size. The pine is the tallest plant. There is **no bamboo
+cluster or olive tree** in the current garden. No exact pine, fern or grass
+species is asserted.
 
-## Courtyard floor, gutter and garden layers
+## Pebbles, rocks, stepping stones and drainage
 
-The user confirmed dark grey 60 × 60 cm granite tiles. A tiled gutter follows
-the long rear wall and the window-side edge of the L (local X=0), approximately
-20 cm wide and 5 cm below the main tiled floor. Its L junction is continuous.
-Turn Show garden off to inspect the tiles and recessed channel. The garden uses
-draincell and geotextile beneath the pebble layer; these cover the channel in
-the concept view. The illustrated 20 mm draincell and 2 mm textile thicknesses
-are assumptions; no outlet, slope or product specification was supplied. This
-supersedes the previous lighter grey 45 cm tile grid.
+- Predominantly white pebbles, with grey variation and sparse dark pebbles.
+  There is no continuous black pebble border.
+- Pebbles cover the long strip and the left return. The former WPC deck and
+  smoking-nook ashtray/bin are removed.
+- Ten irregular grey rocks plus one larger accent rock provide contrast. Modeled
+  dimensions vary; these are decorative shapes, not sourced products. Rocks near
+  the ball light and fountain are moved aside to avoid intersections.
+- Eleven grey, low-profile polygonal stepping slabs are currently visible in the
+  viewer. They have varied angles and sizes, about 43–50 cm across and 2.5 cm
+  thick. Placement and sizes remain illustrative.
+- Dark grey **60 × 60 cm granite tiles** remain below the garden build-up.
+- An L-shaped tiled drain channel follows the rear-wall and window-side edges,
+  approximately **20 cm wide and 5 cm recessed** in the model.
+- Draincell and geotextile sit below the pebbles. The illustrated layer
+  thicknesses are **20 mm draincell and 2 mm geotextile**. These thicknesses,
+  final pebble depth, outlet, slope and installation quantities are unconfirmed.
 
-## Bamboo and softer green planting
+The 7.63 m² footprint is not a calculated pebble purchasing quantity. It
+includes the occupied areas of stones, planting and focal objects. Turning Show
+garden off exposes the underlying tiled-floor concept for inspection.
 
-A compact artificial bamboo cluster occupies the rear-left garden corner (local
-X=0.48, Z=0.34), approximately 1.85 m tall with seven stems. Seven low
-artificial broadleaf/fern-like clusters (25–38 cm tall) break up the rear pebble
-field around the existing focal arrangement. White/grey pebbles, small moss
-rocks and the bonsai remain; the stepping route and smoking deck stay clear.
-These are illustrative plant forms and sizes, not verified shop products. Plant
-coordinates live in model.ts; leaf instances limit additional draw calls.
+## Stone fountain
 
-## Grass references and olive accent
+The fountain follows the user's reference: a dark charcoal stone bowl, a rounded
+central bubbler, shallow visible water, and a small stone support underneath. It
+replaces the earlier bamboo-spout fountain and square tray.
 
-Five artificial grass clumps replace five of the earlier broadleaf clusters:
-three plain 30 cm tufts and two 46 cm tufts with cream seed heads. Two low
-broadleaf accents remain. Narrow curved blades follow the supplied shopping
-images; larger 60 cm and coloured pink/yellow options are not used. Dimensions
-are illustrative representations, not verified measurements of purchased items.
+- **Bowl outside diameter: 40 cm, confirmed by the user.**
+- The central bubbler, bowl, water and support are scaled together from the
+  reference proportions. Illustrated overall height is about **47–48 cm**;
+  product height has not been supplied.
+- The support stone is slightly wider than the bowl, about 42.5 cm across in the
+  model. It is not part of the confirmed bowl diameter.
+- Position: left of the pine, approximately 1.13 m between their centres.
+- Water is a static depiction; pump, pipework, power connection and flow rate
+  are not specified.
+- A dedicated warm ground spotlight follows the relocated fountain.
 
-A slender artificial olive accent is placed in the short L-shaped smoking nook
-(local X=0.27, Z=1.72), in a small dark pot, separate from bamboo and the
-central bonsai. Its assumed height is 1.50 m, pot diameter 28 cm, pot height 24
-cm. The first supplied image shows the existing bonsai rather than olive; the
-olive is a generic interpretation pending a matching reference. The standing
-area and ashtray remain accessible. Placement and plant sizes live in model.ts.
+The earlier 64 cm bowl and approximately 75 cm height are superseded.
+
+## Japanese stone lantern
+
+One dark grey **square pagoda-style Japanese lantern** remains to the right of
+the pine. It has a stepped plinth, pierced square chamber, broad roof and small
+finial. The model is approximately **60 cm high**, with a **51 cm roof width**
+and **40 cm base width**. These are illustrative dimensions, not a verified
+product size. Its chamber has a subdued warm light in Night mode.
+
+The lantern is separate from the fountain and the round ball light. The lantern
+has not moved into the fountain's new position.
+
+## Lighting schedule
+
+| Light                        | Quantity | Current specification / behavior                                                             |
+| ---------------------------- | -------- | -------------------------------------------------------------------------------------------- |
+| Rear-wall up/down lights     | 6        | Full round black cylinders, circular top and bottom lenses; warm up/down beams in Night mode |
+| Ground spotlight on pine     | 1        | Low dark housing aimed upward into the pine                                                  |
+| Ground spotlight on fountain | 1        | Low dark housing aimed at the smaller, relocated fountain                                    |
+| Japanese lantern chamber     | 1        | Restrained warm internal glow                                                                |
+| Ball light                   | 1        | **30 cm diameter**, cream white by day and softly warm/emissive in Night mode                |
+
+The six wall housings are **full cylinders, not half-round / D-shaped bodies**.
+Their illustrated dimensions are 7 cm diameter × 16 cm high, about 7 cm
+projection from the wall, with centres 2 m above the garden datum. Circular
+lenses are about 24 mm diameter. They occupy six positions across the seven
+rear-wall sections. These fixture dimensions are assumptions. The product
+reference shows warm white 3000 K; the viewer approximates that appearance
+without making a photometric claim.
+
+The **30 cm ball light is restored**, positioned on the pebbles between the pine
+and Japanese lantern. Its centre is about 20 cm above the model's floor datum,
+so the sphere rests at the pebble surface. A nearby rock has been moved away.
+The earlier 50 cm ball setting and later removal are superseded. Glowing stones
+remain removed; the ball is the only luminous decorative sphere.
+
+Light output, beam spread, wiring, switching, weather protection and electrical
+installation details are not construction specifications. Night mode switches
+the garden lighting on; Day mode switches its emission and local lights off.
+
+## Current object centres
+
+These are approximate garden-local model coordinates in metres, viewed facing
+the rear wall: X increases left to right and Z increases from that wall toward
+the house. They describe object centres, not installation set-out points.
+
+| Object           | X    | Z    |
+| ---------------- | ---- | ---- |
+| Fountain         | 2.95 | 0.35 |
+| Pine bonsai      | 4.08 | 0.29 |
+| 30 cm ball light | 4.97 | 0.27 |
+| Japanese lantern | 5.46 | 0.27 |
+
+These values are registered from the reference layout by [model.ts](model.ts).
+They must not be confused with the source SketchUp house coordinates. Rendering
+and night-light behavior are in [src/garden.js](src/garden.js); the six wall
+fixtures are in [src/viewer.js](src/viewer.js).
+
+## Removed and superseded elements
+
+The current design excludes the olive, bamboo cluster, bamboo-spout fountain,
+WPC deck, smoking ashtray/bin, continuous black pebble edge, glowing rocks and
+oversized ball. The canceled garden frames/slatted screen are removed from the
+house scene, including the separate upper-storey group, so whole-house and
+second-floor views do not restore them.
+
+Older shopping links and revision narratives document past concepts only. Plant
+varieties, actual product heights, pebble coverage, drainage construction and
+electrical details remain to be confirmed against the final products/site.

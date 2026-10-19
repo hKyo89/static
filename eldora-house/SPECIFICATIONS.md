@@ -1,5 +1,9 @@
 # Specifications
 
+Current garden dimensions, plants and feature sizes are maintained in
+[Garden details](GARDEN_DESIGN.md). The earlier interpreted courtyard values
+below are historical and are superseded where that document differs.
+
 [Overview](README.md) · [Requirements](PRD.md) · [Decisions](DECISIONS.md)
 
 ## Geometry
