@@ -100,10 +100,10 @@ export function EvPage() {
               class="bottom-nav"
               aria-label="Navigasi utama (tampilan prototipe)"
             >
-              {image(
-                "navigation",
-                "Beranda, Transaksi, Charge EV, Rewards, Akun",
-              )}
+              <img
+                src="./images/navigation-trimmed.svg"
+                alt="Beranda, Transaksi, Charge EV, Rewards, Akun"
+              />
             </nav>
           </main>
           <main id="detail" hidden>

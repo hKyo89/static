@@ -38,3 +38,7 @@ simulated.
 Edit `Page.tsx`, `model.ts`, `src/`, and `static/`; regenerate Pages output from
 the root before committing. Keep other projects and their service-worker scopes
 intact.
+
+The bottom navigation uses `navigation-trimmed.svg`, which clips the original
+screenshot pixels to the navigation silhouette, leaving the area above
+transparent.
