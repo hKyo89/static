@@ -37,3 +37,35 @@ close the preview browser tab and stop its local service.
 
 The conversion utilities and source inventory are retained locally under the
 chat workspace `work/`; no SketchUp original or native SDK is published.
+
+## Additional suites and facade — 18 October 2026
+
+The supplied `MODELING INTERIOR LT 2 MASTER BEDROOM.skp`,
+`MODELING INTERIOR LT.2 - KAMAR ANAK.skp` and `MODELING FACADE.skb` are read
+through the installed SketchUp C API, including the facade backup file. The
+originals remain unchanged. Selected geometry is exported to `master.glb`,
+`girl.glb`, `boy.glb` and `facade.glb` with embedded textures, limited to 1024
+pixels.
+
+All three files share the original source coordinates and upstairs floor at 4.38
+m. No translation or rescaling is applied beyond the established house
+registration. Master exports include bed, wall treatment, dressing furniture,
+makeup furniture and lighting. The children's file includes a boy's room and
+detached study copies; both bedrooms and their WICs are included. Its dressing
+and makeup inspection bounds now follow the supplied fitted furniture.
+
+Facade additions replace the corresponding original front upper architectural
+roots (10, 15, 17, 18); the original garage canopy and canceled fences remain
+excluded. Master finish roots 46–49 are replaced by the supplied versions.
+Duplicate house shells, garage gates, surrounding context and detached studies
+are omitted. Other architecture is retained.
+
+`src/additional-models.js` loads the selected additions, assigns storey and
+ceiling visibility, and applies the same room isolation planes as the house.
+Source material UVs and geometry are retained. Water and lighting depictions
+remain illustrative; native design files are not published.
+
+The added exports total approximately 69 MB (master 31.3 MB, girl 23.0 MB, boy
+14.4 MB, facade 0.3 MB). These load once per page and are reused across room
+navigation. The Boy’s WIC uses the shared fitted wardrobe geometry from the
+children’s source file; it also has a dedicated inspection view.

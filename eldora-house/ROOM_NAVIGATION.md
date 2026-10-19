@@ -1,8 +1,8 @@
 # Floor and room navigation
 
 Room names and order follow the user’s numbered bird’s-eye screenshots: 15
-first-floor areas (including Food storage) and 13 second-floor areas. Shared
-source-coordinate inspection bounds live in
+first-floor areas (including Food storage) and 14 second-floor areas (including
+the added Boy’s WIC). Shared source-coordinate inspection bounds live in
 [room-navigation.ts](room-navigation.ts). These bounds are viewing regions
 rather than new architectural walls; crop-based shared edges, particularly the
 second-floor dressing areas, remain adjustable.

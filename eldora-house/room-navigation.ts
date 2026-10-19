@@ -156,6 +156,13 @@ export const roomNavigation = [
     z: 4.38,
   },
   {
+    id: "2f-boys-wic",
+    floor: 2,
+    name: "Boy’s WIC",
+    bounds: [3.8232, 17.5813, 5.6232, 19.4063],
+    z: 4.38,
+  },
+  {
     id: "2f-girls-bedroom",
     floor: 2,
     name: "Girl’s bedroom",
@@ -166,14 +173,14 @@ export const roomNavigation = [
     id: "2f-girls-wic",
     floor: 2,
     name: "Girls’ WIC",
-    bounds: [3.8232, 17.5813, 5.1732, 19.4063],
+    bounds: [5.7732, 17.5813, 7.8232, 19.4063],
     z: 4.38,
   },
   {
     id: "2f-girls-makeup",
     floor: 2,
     name: "Girl’s makeup",
-    bounds: [5.3232, 17.5813, 7.7482, 20.2063],
+    bounds: [6.3732, 19.4063, 7.8232, 20.2063],
     z: 4.38,
   },
   {
@@ -198,3 +205,18 @@ export const roomNavigation = [
     z: 3.65,
   },
 ] as const;
+
+// Interior viewpoints face the supplied furnishings rather than entrance walls.
+export const roomViewpoints: Record<string, {
+  camera: number[];
+  target: number[];
+}> = {
+  "2f-master": { camera: [6.7, 8.4, 5.95], target: [9.1, 8.4, 5.15] },
+  "2f-master-makeup": { camera: [9.4, 11.9, 5.95], target: [8.1, 11.9, 5.55] },
+  "2f-master-wic": { camera: [9.5, 13.9, 5.95], target: [10.0, 15.7, 5.55] },
+  "2f-girls-bedroom": { camera: [8.3, 17.4, 5.95], target: [10.4, 19.0, 5.15] },
+  "2f-girls-wic": { camera: [7.4, 18.5, 5.95], target: [5.9, 18.5, 5.55] },
+  "2f-girls-makeup": { camera: [6.9, 19.5, 5.95], target: [7.0, 20.15, 5.55] },
+  "2f-boys-bedroom": { camera: [4.3, 18.5, 5.95], target: [2.9, 20.0, 5.15] },
+  "2f-boys-wic": { camera: [4.2, 18.4, 5.95], target: [5.4, 18.4, 5.55] },
+};

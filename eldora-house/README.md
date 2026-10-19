@@ -362,3 +362,11 @@ All six up/down lights use full cylindrical black housings, matching the latest
 product photos. Each 7 cm diameter body touches the wall at its rear edge; full
 circular lenses are centred on its top and bottom. Warm light remains enabled by
 Night mode. The illustrated dimensions remain assumptions.
+
+## Second-floor interiors and facade
+
+The additional supplied models add the master bedroom, makeup area and WIC; the
+girl’s bedroom, makeup area and WIC; the boy’s bedroom and WIC; and the front
+facade details. These use the existing house coordinates and floor/room
+controls. See [SketchUp import](SKETCHUP_IMPORT.md) for export selections and
+[room navigation](ROOM_NAVIGATION.md) for the added Boy’s WIC view.

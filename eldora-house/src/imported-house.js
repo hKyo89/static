@@ -1,3 +1,4 @@
+import { createAdditionalModels } from "./additional-models.js";
 import * as THREE from "three";
 import { GLTFLoader } from "three/addons/loaders/GLTFLoader.js";
 import { importedModel as data } from "../imported-model.ts";
@@ -14,18 +15,52 @@ export function createImportedHouse(parent, onLoad) {
     windows: true,
     layers: { floor1: true },
   };
+  function replacedRoot(node, id) {
+    const kind = node.userData.sourceKind, index = node.userData.sourceIndex;
+    if (kind === "Groups") {
+      return (id === "facade"
+        ? [10, 15, 17, 18]
+        : id === "master"
+        ? [46, 47, 48, 49]
+        : []).includes(index);
+    }
+    if (kind === "Instances") {
+      return (id === "master"
+        ? [0, 1, 10, 11, 12]
+        : id === "girl"
+        ? [2, 9]
+        : id === "boy"
+        ? [4, 8]
+        : []).includes(index);
+    }
+    return false;
+  }
+  const additions = createAdditionalModels(parent, (error, id) => {
+    if (error) {
+      onLoad(error);
+      return;
+    }
+    // Replace only original roots that have a selected replacement export.
+    group.traverse((node) => {
+      if (replacedRoot(node, id)) node.userData.replacedAddition = true;
+    });
+    apply();
+    onLoad(null);
+  });
   let ready = false;
   let night = false;
   function apply() {
     group.visible = state.visible;
+    additions.setState(state);
     if (!ready) return;
     group.traverse((node) => {
       if (node.userData.sourceKind) {
-        const excluded = node.userData.sourceKind === "Groups"
-          ? [...data.excludedGroups, ...revisions.hiddenGroups].includes(
-            node.userData.sourceIndex,
-          )
-          : revisions.hiddenInstances.includes(node.userData.sourceIndex);
+        const excluded = node.userData.replacedAddition ||
+          (node.userData.sourceKind === "Groups"
+            ? [...data.excludedGroups, ...revisions.hiddenGroups].includes(
+              node.userData.sourceIndex,
+            )
+            : revisions.hiddenInstances.includes(node.userData.sourceIndex));
         node.visible = !excluded;
         if (!node.visible) return;
       }
@@ -82,6 +117,11 @@ export function createImportedHouse(parent, onLoad) {
         }
       }
       tag(source, undefined);
+      source.traverse((node) => {
+        node.userData.replacedAddition = [...additions.loaded].some((id) =>
+          replacedRoot(node, id)
+        );
+      });
       // Remove canceled objects from the scene graph permanently, so filters
       // and resets cannot restore nested fence pieces.
       const canceled = [];

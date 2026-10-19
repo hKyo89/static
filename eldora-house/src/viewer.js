@@ -1,4 +1,4 @@
-import { roomNavigation } from "../room-navigation.ts";
+import { roomNavigation, roomViewpoints } from "../room-navigation.ts";
 import { createWetKitchenExhaust } from "./wet-kitchen-exhaust.js";
 import { openingReferences } from "../openings.ts";
 import { filmMaterials } from "./window-film.js";
@@ -893,8 +893,10 @@ function createViewer() {
           x2 - importedModel.sourceOrigin[0] + houseModel.gardenOffsetX,
           importedModel.sourceOrigin[1] - y,
         ],
-        insideCamera: preset?.insideCamera ?? [centre[0], y + .18, centre[2]],
-        insideTarget: preset?.insideTarget ?? [centre[0], y2 - .18, centre[2]],
+        insideCamera: roomViewpoints[id]?.camera ?? preset?.insideCamera ??
+          [centre[0], y + .18, centre[2]],
+        insideTarget: roomViewpoints[id]?.target ?? preset?.insideTarget ??
+          [centre[0], y2 - .18, centre[2]],
       };
     } else focusedRoom = null;
     if (updateUrl) history.replaceState(null, "", `#${activeRoom?.id ?? id}`);
