@@ -1,3 +1,4 @@
+import { EvPage } from "./ev-prototype/Page.tsx";
 import type { ComponentType } from "preact";
 import { BackyardPage } from "./eldora-house/Page.tsx";
 import { DuctPage } from "./duct/Page.tsx";
@@ -16,6 +17,15 @@ export interface Project {
 }
 // Add a project here once: both Fresh routing and static export use this list.
 export const projects: Project[] = [
+  {
+    slug: "ev-prototype",
+    title: "PLN EV prototype",
+    description: "PLN Mobile home and Home Charging Services promotion.",
+    Page: EvPage,
+    assets: "ev-prototype/static",
+    client: "ev-prototype/src/viewer.js",
+    stylesheet: "ev-prototype/src/styles.css",
+  },
   {
     slug: "eldora-house",
     title: "Eldora House",

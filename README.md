@@ -40,3 +40,9 @@ The complete Eldora House continuation package is kept in this repository under
 [eldora-house/](eldora-house/README.md), following the user's chosen working
 repository. It adapts the reusable session-backup template from the `prompts`
 repository; it does not create a second package in `prompts`.
+
+## EV prototype
+
+[PLN EV prototype](ev-prototype/README.md) recreates the supplied home
+screenshots and links the first promotion to the approved Home Charging Services
+detail.

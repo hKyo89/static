@@ -277,3 +277,10 @@ exporter and publisher also regenerate the compatibility redirect.
 
 Eldora House testing: stop preview services and close viewer tabs after each
 verification. Use terminal service PIDs, not Activity Monitor, for cleanup.
+
+## EV prototype
+
+`ev-prototype/` uses the shared registry and exporter. Screenshot crops preserve
+the supplied artwork; only the first promo and detail back navigation are
+active. Its manifest and offline cache are scoped to `/static/ev-prototype/`.
+See [project documentation](ev-prototype/README.md).

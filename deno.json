@@ -19,7 +19,7 @@
     ]
   },
   "tasks": {
-    "dev": "deno run -A --watch=main.tsx,projects.ts,routes,scripts,eldora-house/src,eldora-house/model.ts,eldora-house/static,duct/page.html,duct/src,shopee/components,shopee/data,shopee/static scripts/dev.ts",
+    "dev": "deno run -A --watch=ev-prototype,main.tsx,projects.ts,routes,scripts,eldora-house/src,eldora-house/model.ts,eldora-house/static,duct/page.html,duct/src,shopee/components,shopee/data,shopee/static scripts/dev.ts",
     "build": "deno run -A scripts/build.ts",
     "preview": "deno run -A scripts/preview.ts",
     "publish:files": "deno run -A scripts/publish.ts",
@@ -48,7 +48,12 @@
       "eldora-house/viewer.js",
       "eldora-house/styles.css",
       ".published-files.json",
-      "backyard-garden/index.html"
+      "backyard-garden/index.html",
+      "ev-prototype/index.html",
+      "ev-prototype/viewer.js",
+      "ev-prototype/styles.css",
+      "ev-prototype/sw.js",
+      "ev-prototype/manifest.webmanifest"
     ]
   },
   "lint": {
@@ -61,7 +66,9 @@
       "shopee/static/",
       "shopee/interactions.js",
       "shopee/sw.js",
-      "eldora-house/viewer.js"
+      "eldora-house/viewer.js",
+      "ev-prototype/viewer.js",
+      "ev-prototype/sw.js"
     ]
   }
 }
